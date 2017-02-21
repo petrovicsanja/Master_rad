@@ -1,0 +1,150 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j">
+
+	<!-- IZLISTAVANJE SVIH PREDMETA -->
+	<h:form id="izlistavanjePredmeta">
+		<rich:collapsiblePanel header="Izlistavanje svih predmeta"
+			switchType="client" styleClass="panel panel-primary"
+			headerClass="panel-heading" bodyClass="panel-body">
+			<rich:dataTable id="listaPredmeta" var="predmet" rows="10"
+				value="#{subjectsController.listSubjects()}"
+				iterationStatusVar="it" styleClass="table table-bordered">
+
+				<rich:column id="kolonaNazivPredmeta"
+					sortBy="#{predmet.nazivPredmeta}"
+					sortOrder="#{subjectsController.nameOrder}" sortType="custom">
+					<f:facet name="header">
+						<a4j:commandLink value="Naziv predmeta" render="listaPredmeta"
+							execute="@this" action="#{subjectsController.sortByName()}" />
+					</f:facet>
+					<h:outputText value="#{predmet.nazivPredmeta}" />
+				</rich:column>
+
+				<rich:column id="kolonaOznakaPredmeta"
+					sortBy="#{predmet.oznakaPredmeta}"
+					sortOrder="#{subjectsController.markOrder}" sortType="custom">
+					<f:facet name="header">
+						<a4j:commandLink value="Oznaka predmeta" render="listaPredmeta"
+							execute="@this" action="#{subjectsController.sortByMark()}" />
+					</f:facet>
+					<h:outputText value="#{predmet.oznakaPredmeta}" />
+				</rich:column>
+
+				<rich:column styleClass="text-center"
+					rendered="#{loginController.userType() eq 2}">
+					<f:facet name="header">
+							Brisanje i izmena
+					</f:facet>
+					<a4j:commandLink
+						oncomplete="#{rich:component('potvrdaBrisanjaPredmeta')}.show()"
+						execute="@this" render="@none" title="Obriši predmet">
+						<h:graphicImage value="/images/delete.gif" alt="delete" />
+						<a4j:param value="#{it.index}"
+							assignTo="#{subjectsController.selectedSubjectIndex}" />
+					</a4j:commandLink>
+					<a4j:commandLink
+						oncomplete="#{rich:component('izmenaPredmeta')}.show()"
+						resetValues="true" execute="@this" render="izmenaPredmetaGrid"
+						title="Izmeni podatke o predmetu">
+						<h:graphicImage value="/images/edit.gif" alt="edit" />
+						<a4j:param value="#{it.index}"
+							assignTo="#{subjectsController.selectedSubjectIndex}" />
+						<f:setPropertyActionListener value="#{predmet}"
+							target="#{subjectsController.subjectToUpdate}" />
+					</a4j:commandLink>
+				</rich:column>
+
+				<f:facet name="footer">
+					<rich:dataScroller renderIfSinglePage="false" />
+				</f:facet>
+			</rich:dataTable>
+		</rich:collapsiblePanel>
+
+		<!-- POPUP ZA POTVRDU BRISANJA -->
+		<rich:popupPanel id="potvrdaBrisanjaPredmeta" modal="false"
+			autosized="true" resizeable="false" styleClass="panel panel-info"
+			headerClass="panel-heading">
+			<f:facet name="header">
+				<h:outputText value="Upozorenje" />
+			</f:facet>
+			<f:facet name="controls">
+				<h:outputLink value="#"
+					onclick="#{rich:component('potvrdaBrisanjaPredmeta')}.hide(); return false;"
+					style="color: inherit"> X </h:outputLink>
+			</f:facet>
+			<p>Da li ste sigurni da želite da obrišete predmet?</p>
+			<a4j:commandButton action="#{subjectsController.deleteSubject()}"
+				value="Obriši"
+				oncomplete="#{rich:component('potvrdaBrisanjaPredmeta')}.hide();">
+				<a4j:ajax execute="@this" render=":izlistavanjePredmeta" />
+			</a4j:commandButton>
+			<a4j:commandButton value="Odustani"
+				onclick="#{rich:component('potvrdaBrisanjaPredmeta')}.hide(); return false;" />
+		</rich:popupPanel>
+
+		<!-- POPUP ZA IZMENU PODATAKA O PREDMETU -->
+		<rich:popupPanel id="izmenaPredmeta" domElementAttachment="parent"
+			autosized="true" resizeable="false" styleClass="panel panel-info"
+			headerClass="panel-heading">
+			<f:facet name="header">
+				<h:outputText value="Izmena podataka o predmetu" />
+			</f:facet>
+			<f:facet name="controls">
+				<h:outputLink value="#"
+					onclick="#{rich:component('izmenaPredmeta')}.hide(); return false;"
+					style="color: inherit"> X </h:outputLink>
+			</f:facet>
+			<h:panelGrid id="izmenaPredmetaGrid" columns="3">
+				<h:outputLabel value="Unesite naziv predmeta:" />
+				<h:inputText id="predmetZaIzmenuNaziv" label="Naziv predmeta"
+					value="#{subjectsController.subjectToUpdate.nazivPredmeta}"
+					required="true" />
+				<rich:message for="predmetZaIzmenuNaziv" ajaxRendered="true" />
+
+				<h:outputLabel value="Unesite oznaku predmeta:" />
+				<h:inputText id="predmetZaIzmenuOznaka" label="Oznaka predmeta"
+					value="#{subjectsController.subjectToUpdate.oznakaPredmeta}"
+					required="true" />
+				<rich:message for="predmetZaIzmenuOznaka" ajaxRendered="true" />
+
+				<a4j:commandButton action="#{subjectsController.updateSubject()}"
+					value="Izmeni"
+					oncomplete="#{rich:component('izmenaPredmeta')}.hide();"
+					execute="izmenaPredmeta" render="listaPredmeta" />
+				<a4j:commandButton value="Odustani"
+					onclick="#{rich:component('izmenaPredmeta')}.hide(); return false;" />
+			</h:panelGrid>
+		</rich:popupPanel>
+	</h:form>
+
+	<!-- DODAVANJE NOVOG PREDMETA -->
+	<h:form id="dodavanjePredmeta">
+		<rich:collapsiblePanel header="Dodavanje novog predmeta"
+			switchType="client" rendered="#{loginController.userType() eq 2}"
+			styleClass="panel panel-primary" headerClass="panel-heading"
+			bodyClass="panel-body">
+			<h:panelGrid columns="3">
+				<h:outputLabel value="Unesite naziv predmeta:" />
+				<h:inputText id="noviPredmetNaziv" label="Naziv predmeta"
+					value="#{subjectsController.newSubject.nazivPredmeta}"
+					required="true" />
+				<rich:message for="noviPredmetNaziv" ajaxRendered="true" />
+
+				<h:outputLabel value="Unesite oznaku predmeta:" />
+				<h:inputText id="noviPredmetOznaka" label="Oznaka predmeta"
+					value="#{subjectsController.newSubject.oznakaPredmeta}"
+					required="true" />
+				<rich:message for="noviPredmetOznaka" ajaxRendered="true" />
+			</h:panelGrid>
+
+			<h:commandButton action="#{subjectsController.addSubject()}"
+				value="Dodaj predmet" styleClass="btn btn-sm btn-primary">
+				<f:ajax execute="@form" render="@form :izlistavanjePredmeta" />
+			</h:commandButton>
+		</rich:collapsiblePanel>
+	</h:form>
+</ui:composition>

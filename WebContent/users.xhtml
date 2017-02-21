@@ -1,0 +1,203 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j">
+
+	<h:form id="izlistavanjeKorisnika">
+		<rich:collapsiblePanel header="Izlistavanje svih korisnika"
+			switchType="client" styleClass="panel panel-primary"
+			headerClass="panel-heading" bodyClass="panel-body">
+			<rich:dataTable id="listaKorisnika" var="korisnik" rows="10"
+				value="#{usersController.listUsers()}"
+				iterationStatusVar="it" styleClass="table table-bordered">
+
+				<rich:column id="kolonaIme" sortBy="#{korisnik.ime}"
+					sortOrder="#{usersController.nameOrder}" sortType="custom">
+					<f:facet name="header">
+						<a4j:commandLink value="Ime" render="listaKorisnika"
+							execute="@this" action="#{usersController.sortByName()}" />
+					</f:facet>
+					<h:outputText value="#{korisnik.ime}" />
+				</rich:column>
+
+				<rich:column id="kolonaPrezime" sortBy="#{korisnik.prezime}"
+					sortOrder="#{usersController.surnameOrder}" sortType="custom">
+					<f:facet name="header">
+						<a4j:commandLink value="Prezime" render="listaKorisnika"
+							execute="@this" action="#{usersController.sortBySurname()}" />
+					</f:facet>
+					<h:outputText value="#{korisnik.prezime}" />
+				</rich:column>
+
+				<rich:column id="kolonaKorisnickoIme"
+					sortBy="#{korisnik.korisnickoIme}"
+					sortOrder="#{usersController.usernameOrder}" sortType="custom">
+					<f:facet name="header">
+						<a4j:commandLink value="Korisnicko ime" render="listaKorisnika"
+							execute="@this"
+							action="#{usersController.sortByUsername()}" />
+					</f:facet>
+					<h:outputText value="#{korisnik.korisnickoIme}" />
+				</rich:column>
+
+				<rich:column id="kolonaTipKorisnika"
+					sortBy="#{korisnik.tipKorisnika}"
+					sortOrder="#{usersController.userTypeOrder}" sortType="custom"
+					comparator="#{usersController.userTypeComparator}">
+					<f:facet name="header">
+						<a4j:commandLink value="Tip korisnika" render="listaKorisnika"
+							execute="@this"
+							action="#{usersController.sortByUserType()}" />
+					</f:facet>
+					<h:outputText value="Profesor"
+						rendered="#{korisnik.tipKorisnika eq 1}" />
+					<h:outputText value="Administrator"
+						rendered="#{korisnik.tipKorisnika eq 2}" />
+				</rich:column>
+
+				<rich:column styleClass="text-center"
+					rendered="#{loginController.userType() eq 2}">
+					<f:facet name="header">
+							Brisanje i izmena
+					</f:facet>
+					<a4j:commandLink execute="@this" render="@none"
+						title="Obriši korisnika"
+						oncomplete="#{rich:component('potvrdaBrisanjaKorisnika')}.show()">
+						<h:graphicImage value="/images/delete.gif" alt="delete" />
+						<a4j:param value="#{it.index}"
+							assignTo="#{usersController.selectedUserIndex}" />
+					</a4j:commandLink>
+					<a4j:commandLink
+						oncomplete="#{rich:component('izmenaKorisnika')}.show()"
+						execute="@this" render="izmenaKorisnikaGrid"
+						title="Izmeni podatke o korisniku">
+						<h:graphicImage value="/images/edit.gif" alt="edit" />
+						<a4j:param value="#{it.index}"
+							assignTo="#{usersController.selectedUserIndex}" />
+						<f:setPropertyActionListener value="#{korisnik}"
+							target="#{usersController.selectedUser}" />
+					</a4j:commandLink>
+				</rich:column>
+
+				<f:facet name="footer">
+					<rich:dataScroller renderIfSinglePage="false" />
+				</f:facet>
+			</rich:dataTable>
+		</rich:collapsiblePanel>
+
+		<rich:popupPanel id="potvrdaBrisanjaKorisnika" modal="false"
+			autosized="true" resizeable="false" styleClass="panel panel-info"
+			headerClass="panel-heading">
+			<f:facet name="header">
+				<h:outputText value="Upozorenje" />
+			</f:facet>
+			<f:facet name="controls">
+				<h:outputLink value="#"
+					onclick="#{rich:component('potvrdaBrisanjaKorisnika')}.hide(); return false;"
+					style="color: inherit"> X </h:outputLink>
+			</f:facet>
+			<p>Da li ste sigurni da želite da obrišete korisnika?</p>
+			<a4j:commandButton action="#{usersController.deleteUser}"
+				value="Obriši"
+				oncomplete="#{rich:component('potvrdaBrisanjaKorisnika')}.hide();">
+				<a4j:ajax execute="@this"
+					render=":izmenaKorisnika :izlistavanjeKorisnika" />
+			</a4j:commandButton>
+			<a4j:commandButton value="Odustani"
+				onclick="#{rich:component('potvrdaBrisanjaKorisnika')}.hide(); return false;" />
+		</rich:popupPanel>
+
+		<rich:popupPanel id="izmenaKorisnika" autosized="true"
+			resizeable="false" domElementAttachment="parent"
+			styleClass="panel panel-info" headerClass="panel-heading">
+			<f:facet name="header">
+				<h:outputText value="Izmena podataka o korisniku" />
+			</f:facet>
+			<f:facet name="controls">
+				<h:outputLink value="#"
+					onclick="#{rich:component('izmenaKorisnika')}.hide(); return false;"
+					style="color: inherit"> X </h:outputLink>
+			</f:facet>
+			<h:panelGrid columns="3" id="izmenaKorisnikaGrid">
+				<h:outputLabel value="Ime korisnika:" />
+				<h:inputText id="izmenaKorisnikaIme" label="Ime korisnika"
+					value="#{usersController.selectedUser.ime}" required="true" />
+				<rich:message for="izmenaKorisnikaIme" ajaxRendered="true" />
+
+				<h:outputLabel value="Prezime korisnika:" />
+				<h:inputText id="izmenaKorisnikaPrezime" label="Prezime korisnika"
+					value="#{usersController.selectedUser.prezime}"
+					required="true" />
+				<rich:message for="izmenaKorisnikaPrezime" ajaxRendered="true" />
+
+				<h:outputLabel value="Korisnicko ime korisnika:" />
+				<h:outputLabel
+					value="#{usersController.selectedUser.korisnickoIme}" />
+				<h:outputLabel value="" />
+
+				<h:outputLabel value="Tip korisnika:" />
+				<h:selectOneRadio id="izmenaKorisnikaTip" required="true"
+					label="Tip korisnika"
+					value="#{usersController.selectedUser.tipKorisnika}">
+					<f:selectItem itemLabel="Profesor" itemValue="1" />
+					<f:selectItem itemLabel="Administrator" itemValue="2" />
+				</h:selectOneRadio>
+				<rich:message for="izmenaKorisnikaTip" ajaxRendered="true" />
+
+				<a4j:commandButton action="#{usersController.updateUser()}"
+					value="Izmeni"
+					oncomplete="#{rich:component('izmenaKorisnika')}.hide();"
+					execute="izmenaKorisnika" render="listaKorisnika" />
+				<a4j:commandButton value="Odustani"
+					onclick="#{rich:component('izmenaKorisnika')}.hide(); return false;" />
+			</h:panelGrid>
+		</rich:popupPanel>
+	</h:form>
+
+	<h:form id="dodavanjeKorisnika">
+		<rich:collapsiblePanel header="Dodavanje novog korisnika"
+			switchType="client" rendered="#{loginController.userType() eq 2}"
+			styleClass="panel panel-primary" headerClass="panel-heading"
+			bodyClass="panel-body">
+			<h:panelGrid columns="3">
+				<h:outputLabel value="Unesite ime korisnika:" />
+				<h:inputText id="noviKorisnikIme" label="Ime korisnika"
+					value="#{usersController.newUser.ime}" required="true" />
+				<rich:message for="noviKorisnikIme" ajaxRendered="true" />
+
+				<h:outputLabel value="Unesite prezime korisnika:" />
+				<h:inputText id="noviKorisnikPrezime" label="Prezime korisnika"
+					value="#{usersController.newUser.prezime}" required="true" />
+				<rich:message for="noviKorisnikPrezime" ajaxRendered="true" />
+
+				<h:outputLabel value="Unesite korisničko ime korisnika:" />
+				<h:inputText id="noviKorisnikKorisnickoIme" label="Korisnicko ime"
+					value="#{usersController.newUser.korisnickoIme}"
+					required="true" />
+				<rich:message for="noviKorisnikKorisnickoIme" ajaxRendered="true" />
+
+				<h:outputLabel value="Unesite lozinku korisnika:" />
+				<h:inputSecret id="noviKorisnikLozinka" label="Lozinka korisnika"
+					value="#{usersController.newUser.lozinka}" required="true" />
+				<rich:message for="noviKorisnikLozinka" ajaxRendered="true" />
+
+				<h:outputLabel value="Unesite tip korisnika:" />
+				<h:selectOneRadio id="noviKorisnikTip" required="true"
+					label="Tip korisnika"
+					value="#{usersController.newUser.tipKorisnika}">
+					<f:selectItem id="profesor" itemLabel="Profesor" itemValue="1" />
+					<f:selectItem id="admin" itemLabel="Administrator" itemValue="2" />
+				</h:selectOneRadio>
+				<rich:message for="noviKorisnikTip" ajaxRendered="true" />
+			</h:panelGrid>
+
+			<h:commandButton action="#{usersController.addUser()}"
+				value="Dodaj korisnika" styleClass="btn btn-sm btn-primary">
+				<f:ajax execute="@form"
+					render="@form :izmenaKorisnika :izlistavanjeKorisnika" />
+			</h:commandButton>
+		</rich:collapsiblePanel>
+	</h:form>
+</ui:composition>

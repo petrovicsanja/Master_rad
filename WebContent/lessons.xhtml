@@ -1,0 +1,245 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j">
+
+	<rich:collapsiblePanel header="Izlistavanje časova" switchType="client"
+		styleClass="panel panel-primary" headerClass="panel-heading"
+		bodyClass="panel-body">
+		<h:form id="listLessons">
+			<div class="row">
+				<div class="col-sm-3">
+					<h:outputLabel value="Izaberite predmet: " />
+				</div>
+				<div class="col-sm-3">
+					<h:selectOneMenu
+						value="#{lessonsController.lessonsSearchSubjectId}"
+						required="true" label="Izbor predmeta">
+						<f:selectItem itemLabel="-- Izaberite predmet --"
+							itemValue="#{null}" />
+						<f:selectItems value="#{lessonsController.listAllSubjects()}"
+							var="subject" itemLabel="#{subject.toString()}"
+							itemValue="#{subject.idPredmeta}" />
+					</h:selectOneMenu>
+				</div>
+				<div class="col-sm-3">
+					<h:commandButton
+						action="#{lessonsController.listLessonsForSubject()}"
+						value="Pretrazi">
+						<f:ajax execute="@form" render="@form" />
+					</h:commandButton>
+				</div>
+			</div>
+
+			<rich:dataTable id="subjectLessonsList" var="lesson" rows="10"
+				value="#{lessonsController.subjectLessonsList}"
+				iterationStatusVar="it" styleClass="table table-bordered">
+				<rich:column>
+					<f:facet name="header">
+							Ime predmeta
+						</f:facet>
+					<h:outputText value="#{lesson.subject.nazivPredmeta}" />
+				</rich:column>
+
+				<rich:column>
+					<f:facet name="header">
+							Profesori
+						</f:facet>
+					<ui:repeat var="teacher" value="#{lesson.teachers}">
+						<h:outputText value="#{teacher.toString()} " />
+					</ui:repeat>
+				</rich:column>
+
+				<rich:column>
+					<f:facet name="header">
+							Grupe
+						</f:facet>
+					<ui:repeat var="group" value="#{lesson.groups}">
+						<h:outputText value="#{group.toString()} " />
+					</ui:repeat>
+				</rich:column>
+
+				<rich:column>
+					<f:facet name="header">
+							Fond casova
+						</f:facet>
+					<h:outputText value="#{lesson.terms}" />
+				</rich:column>
+
+				<rich:column>
+					<f:facet name="header">
+							Učionice
+						</f:facet>
+					<ui:repeat var="room" value="#{lesson.rooms}">
+						<h:outputText value="#{room.toString()} " />
+					</ui:repeat>
+				</rich:column>
+
+				<rich:column>
+					<f:facet name="header">
+							Napomena
+						</f:facet>
+					<h:outputText value="#{lesson.note}" />
+				</rich:column>
+			</rich:dataTable>
+		</h:form>
+	</rich:collapsiblePanel>
+
+	<rich:collapsiblePanel header="Unos časova" switchType="client"
+		styleClass="panel panel-primary" headerClass="panel-heading"
+		bodyClass="panel-body">
+		<h:form id="insertLesson">
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-3">
+						<h:outputLabel value="Izaberite predmet:" />
+					</div>
+					<div class="col-sm-3">
+						<h:selectOneMenu id="lessonSubject"
+							value="#{lessonsController.subject}" required="true"
+							label="Izbor predmeta" converter="#{subjectConverter}">
+							<f:selectItem itemLabel="-- Izaberite predmet --"
+								itemValue="#{null}" />
+							<f:selectItems value="#{lessonsController.listAllSubjects()}"
+								var="subject" itemLabel="#{subject.toString()}"
+								itemValue="#{subject}" />
+							<f:ajax event="change" execute="@this" />
+						</h:selectOneMenu>
+					</div>
+					<div class="col-sm-3">
+						<rich:message for="lessonSubject" ajaxRendered="true" />
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-sm-3">
+						<h:outputLabel value="Izaberite profesore:" />
+					</div>
+					<div class="col-sm-3">
+						<h:selectOneMenu id="lessonTeacher" styleClass="col-sm-9"
+							value="#{lessonsController.teacher}" required="true"
+							label="Izbor profesora" converter="#{teacherConverter}">
+							<f:selectItem itemLabel="-- Izaberite profesora --"
+								itemValue="#{null}" />
+							<f:selectItems value="#{lessonsController.listAllTeachers()}"
+								var="teacher" itemLabel="#{teacher.toString()}"
+								itemValue="#{teacher}" />
+							<f:ajax event="change" execute="@this" />
+						</h:selectOneMenu>
+
+						<h:commandButton action="#{lessonsController.addTeacherToList()}"
+							value="Dodaj" styleClass="col-sm-3">
+							<f:ajax execute="lessonTeacher" render="@form" />
+						</h:commandButton>
+					</div>
+					<div class="col-sm-3">
+						<h:dataTable id="selectedTeachersList"
+							styleClass="table text-center" var="teacher"
+							value="#{lessonsController.selectedTeachers}"
+							rendered="#{lessonsController.selectedTeachers.size() gt 0}">
+							<h:column>
+								<h:outputLabel value="#{teacher.toString()}" />
+							</h:column>
+						</h:dataTable>
+					</div>
+					<div class="col-sm-3">
+						<rich:message for="lessonTeacher" ajaxRendered="true" />
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-sm-3">
+						<h:outputLabel value="Izaberite grupe:" />
+					</div>
+					<div class="col-sm-3">
+						<h:selectOneMenu id="lessonGroup" styleClass="col-sm-9"
+							value="#{lessonsController.group}" required="true"
+							label="Izbor grupe" converter="#{groupConverter}">
+							<f:selectItem itemLabel="-- Izaberite grupu --"
+								itemValue="#{null}" />
+							<f:selectItems value="#{lessonsController.listAllGroups()}"
+								var="group" itemLabel="#{group.toString()}" itemValue="#{group}" />
+							<f:ajax event="change" execute="@this" />
+						</h:selectOneMenu>
+
+						<h:commandButton action="#{lessonsController.addGroupToList()}"
+							value="Dodaj" styleClass="col-sm-3">
+							<f:ajax execute="lessonGroup" render="@form" />
+						</h:commandButton>
+					</div>
+					<div class="col-sm-3">
+						<h:dataTable id="selectedGroupsList" var="group"
+							styleClass="table text-center"
+							value="#{lessonsController.selectedGroups}"
+							rendered="#{lessonsController.selectedGroups.size() gt 0}">
+							<h:column>
+								<h:outputLabel value="#{group.toString()}" />
+							</h:column>
+						</h:dataTable>
+					</div>
+					<div class="col-sm-3">
+						<rich:message for="lessonGroup" ajaxRendered="true" />
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-sm-3">
+						<h:outputLabel value="Unesite termine:" />
+					</div>
+					<div class="col-sm-3">
+						<h:inputText id="lessonTerms" value="#{lessonsController.terms}"
+							required="true" label="Unos termina" />
+					</div>
+					<div class="col-sm-3">
+						<rich:message for="lessonTerms" ajaxRendered="true" />
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-sm-3">
+						<h:outputLabel value="Napomena: " />
+					</div>
+					<div class="col-sm-6">
+						<h:inputTextarea id="lessonNote" value="#{lessonsController.note}"
+							rows="5" cols="80" />
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-sm-3">
+						<h:outputLabel value="Izaberite sale:" />
+					</div>
+					<div class="col-sm-9">
+						<rich:pickList value="#{lessonsController.selectedRooms}"
+							var="room" listHeight="200px" converter="#{roomConverter}"
+							required="true">
+							<f:selectItems value="#{lessonsController.listAllRooms()}" />
+							<rich:column>
+								<f:facet name="header">Naziv sale</f:facet>
+								#{room.naziv}
+							</rich:column>
+							<rich:column>
+								<f:facet name="header">Velicina</f:facet>
+                    			#{room.velicina}
+                			</rich:column>
+							<rich:column>
+								<f:facet name="header">Zgrada</f:facet>
+                    			#{room.zgrada}
+                			</rich:column>
+						</rich:pickList>
+					</div>
+				</div>
+
+				<div class="row text-right">
+					<h:commandButton styleClass="btn btn-sm btn-primary"
+						action="#{lessonsController.addLesson()}" value="Sacuvaj">
+						<f:ajax execute="@form" render="@form" />
+					</h:commandButton>
+				</div>
+			</div>
+		</h:form>
+	</rich:collapsiblePanel>
+
+</ui:composition>

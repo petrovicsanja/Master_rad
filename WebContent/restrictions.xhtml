@@ -1,0 +1,312 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j">
+
+	<div class="row">
+		<rich:collapsiblePanel header="Ogranicenja na broj radnih dana"
+			switchType="client" styleClass="panel panel-primary"
+			headerClass="panel-heading" bodyClass="panel-body">
+			<h:form id="numDaysGroupRestrictions">
+				<div class="container">
+					<div class="row">
+						<div class="col-sm-3">
+							<h:outputLabel value="Izaberite grupu:" />
+						</div>
+						<div class="col-sm-3">
+							<h:outputLabel value="Minimalan broj dana:" />
+						</div>
+						<div class="col-sm-3">
+							<h:outputLabel value="Optimalan broj dana:" />
+						</div>
+						<div class="col-sm-3">
+							<h:outputLabel value="Maksimalan broj dana:" />
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-sm-3">
+							<h:selectOneMenu id="restrictionNumDaysGroup" required="true"
+								value="#{restrictionsController.numDaysGroup}"
+								converter="#{groupConverter}">
+								<f:selectItem itemLabel="-- Izaberite grupu --"
+									itemValue="#{null}" />
+								<f:selectItems value="#{restrictionsController.listAllGroups()}"
+									var="group" itemLabel="#{group.naziv}" itemValue="#{group}" />
+								<f:ajax event="change" execute="@this" />
+							</h:selectOneMenu>
+						</div>
+						<div class="col-sm-3">
+							<h:inputText required="true"
+								value="#{restrictionsController.minNumDaysGroup}" />
+						</div>
+						<div class="col-sm-3">
+							<h:inputText required="true"
+								value="#{restrictionsController.optNumDaysGroup}" />
+						</div>
+						<div class="col-sm-3">
+							<h:inputText required="true"
+								value="#{restrictionsController.maxNumDaysGroup}" />
+						</div>
+					</div>
+
+					<div class="row text-right">
+						<h:commandButton styleClass="btn btn-sm btn-primary"
+							action="#{restrictionsController.addNewNumDaysGroupRestriction()}"
+							value="Sacuvaj">
+							<f:ajax execute="@form" render="@form" />
+						</h:commandButton>
+					</div>
+				</div>
+			</h:form>
+
+			<h:form id="numDaysTeacherRestrictions">
+				<div class="container">
+					<div class="row">
+						<div class="col-sm-3">
+							<h:outputLabel value="Izaberite profesora:" />
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-sm-3">
+							<h:selectOneMenu id="restrictionNumDaysTeacher" required="true"
+								value="#{restrictionsController.numDaysTeacher}"
+								converter="#{teacherConverter}">
+								<f:selectItem itemLabel="-- Izaberite profesora --"
+									itemValue="#{null}" />
+								<f:selectItems
+									value="#{restrictionsController.listAllTeachers()}"
+									var="teacher" itemLabel="#{teacher.toString()}"
+									itemValue="#{teacher}" />
+								<f:ajax event="change" execute="@this" />
+							</h:selectOneMenu>
+						</div>
+						<div class="col-sm-3">
+							<h:inputText required="true"
+								value="#{restrictionsController.minNumDaysTeacher}" />
+						</div>
+						<div class="col-sm-3">
+							<h:inputText required="true"
+								value="#{restrictionsController.optNumDaysTeacher}" />
+						</div>
+						<div class="col-sm-3">
+							<h:inputText required="true"
+								value="#{restrictionsController.maxNumDaysTeacher}" />
+						</div>
+					</div>
+
+					<div class="row text-right">
+						<h:commandButton styleClass="btn btn-sm btn-primary"
+							action="#{restrictionsController.addNewNumDaysTeacherRestriction()}"
+							value="Sacuvaj">
+							<f:ajax execute="@form" render="@form" />
+						</h:commandButton>
+					</div>
+				</div>
+			</h:form>
+		</rich:collapsiblePanel>
+	</div>
+
+	<div class="row">
+		<rich:collapsiblePanel header="Pauze u toku nastave"
+			switchType="client" styleClass="panel panel-primary"
+			headerClass="panel-heading" bodyClass="panel-body">
+			<h:form id="idlesGroupsRestrictions">
+				<div class="container">
+					<div class="row">
+						<div class="col-sm-3">
+							<h:outputLabel value="Izaberite grupu:" />
+						</div>
+						<div class="col-sm-3">
+							<h:outputLabel value="Maksimalna duzina pauza u toku dana:" />
+						</div>
+						<div class="col-sm-3">
+							<h:outputLabel value="Dozvoljene visestruke pauze u toku dana:" />
+						</div>
+						<div class="col-sm-3">
+							<h:outputLabel value="Broj dana u kojima postoje pauze:" />
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-sm-3">
+							<h:selectOneMenu id="restrictionIdlesGroup" required="true"
+								value="#{restrictionsController.idlesGroup}"
+								converter="#{groupConverter}">
+								<f:selectItem itemLabel="-- Izaberite grupu --"
+									itemValue="#{null}" />
+								<f:selectItems value="#{restrictionsController.listAllGroups()}"
+									var="group" itemLabel="#{group.naziv}" itemValue="#{group}" />
+								<f:ajax event="change" execute="@this" />
+							</h:selectOneMenu>
+						</div>
+						<div class="col-sm-3">
+							<h:inputText required="true"
+								value="#{restrictionsController.maxIdlesGroup}" />
+						</div>
+						<div class="col-sm-3">
+							<h:selectBooleanCheckbox
+								value="#{restrictionsController.multipleIdlesGroup}" />
+						</div>
+						<div class="col-sm-3">
+							<h:inputText required="true"
+								value="#{restrictionsController.daysIdlesGroup}" />
+						</div>
+					</div>
+
+					<div class="row text-right">
+						<h:commandButton styleClass="btn btn-sm btn-primary"
+							action="#{restrictionsController.addIdlesGroupRestriction()}"
+							value="Sacuvaj">
+							<f:ajax execute="@form" render="@form" />
+						</h:commandButton>
+					</div>
+				</div>
+			</h:form>
+
+			<h:form id="idlesTeachersRestrictions">
+				<div class="container">
+					<div class="row">
+						<div class="col-sm-3">
+							<h:outputLabel value="Izaberite profesora:" />
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-sm-3">
+							<h:selectOneMenu id="restrictionIdlesTeacher" required="true"
+								value="#{restrictionsController.idlesTeacher}"
+								converter="#{teacherConverter}">
+								<f:selectItem itemLabel="-- Izaberite profesora --"
+									itemValue="#{null}" />
+								<f:selectItems
+									value="#{restrictionsController.listAllTeachers()}"
+									var="teacher" itemLabel="#{teacher.toString()}"
+									itemValue="#{teacher}" />
+								<f:ajax event="change" execute="@this" />
+							</h:selectOneMenu>
+						</div>
+						<div class="col-sm-3">
+							<h:inputText required="true"
+								value="#{restrictionsController.maxIdlesTeacher}" />
+						</div>
+						<div class="col-sm-3">
+							<h:selectBooleanCheckbox
+								value="#{restrictionsController.multipleIdlesTeacher}" />
+						</div>
+						<div class="col-sm-3">
+							<h:inputText required="true"
+								value="#{restrictionsController.daysIdlesTeacher}" />
+						</div>
+					</div>
+
+					<div class="row text-right">
+						<h:commandButton styleClass="btn btn-sm btn-primary"
+							action="#{restrictionsController.addIdlesTeacherRestriction()}"
+							value="Sacuvaj">
+							<f:ajax execute="@form" render="@form" />
+						</h:commandButton>
+					</div>
+				</div>
+			</h:form>
+		</rich:collapsiblePanel>
+	</div>
+
+	<div class="row">
+		<rich:collapsiblePanel header="Broj termina u toku dana"
+			switchType="client" styleClass="panel panel-primary"
+			headerClass="panel-heading" bodyClass="panel-body">
+			<h:form id="loadGroupsRestrictions">
+				<div class="container">
+					<div class="row">
+						<div class="col-sm-3">
+							<h:outputLabel value="Izaberite grupu:" />
+						</div>
+						<div class="col-sm-3">
+							<h:outputLabel value="Najmanji broj termina:" />
+						</div>
+						<div class="col-sm-3">
+							<h:outputLabel value="Najveci broj termina:" />
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-sm-3">
+							<h:selectOneMenu id="restrictionLoadsGroup" required="true"
+								value="#{restrictionsController.loadGroup}"
+								converter="#{groupConverter}">
+								<f:selectItem itemLabel="-- Izaberite grupu --"
+									itemValue="#{null}" />
+								<f:selectItems value="#{restrictionsController.listAllGroups()}"
+									var="group" itemLabel="#{group.naziv}" itemValue="#{group}" />
+								<f:ajax event="change" execute="@this" />
+							</h:selectOneMenu>
+						</div>
+						<div class="col-sm-3">
+							<h:inputText required="true"
+								value="#{restrictionsController.minLoadGroup}" />
+						</div>
+						<div class="col-sm-3">
+							<h:inputText required="true"
+								value="#{restrictionsController.maxLoadGroup}" />
+						</div>
+					</div>
+
+					<div class="row text-right">
+						<h:commandButton styleClass="btn btn-sm btn-primary"
+							action="#{restrictionsController.addLoadGroupRestriction()}"
+							value="Sacuvaj">
+							<f:ajax execute="@form" render="@form" />
+						</h:commandButton>
+					</div>
+				</div>
+			</h:form>
+
+			<h:form id="loadTeachersRestrictions">
+				<div class="container">
+					<div class="row">
+						<div class="col-sm-3">
+							<h:outputLabel value="Izaberite profesora:" />
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-sm-3">
+							<h:selectOneMenu id="restrictionLoadsTeacher" required="true"
+								value="#{restrictionsController.loadTeacher}"
+								converter="#{teacherConverter}">
+								<f:selectItem itemLabel="-- Izaberite profesora --"
+									itemValue="#{null}" />
+								<f:selectItems
+									value="#{restrictionsController.listAllTeachers()}"
+									var="teacher" itemLabel="#{teacher.toString()}"
+									itemValue="#{teacher}" />
+								<f:ajax event="change" execute="@this" />
+							</h:selectOneMenu>
+						</div>
+						<div class="col-sm-3">
+							<h:inputText required="true"
+								value="#{restrictionsController.minLoadTeacher}" />
+						</div>
+						<div class="col-sm-3">
+							<h:inputText required="true"
+								value="#{restrictionsController.maxLoadTeacher}" />
+						</div>
+					</div>
+
+					<div class="row text-right">
+						<h:commandButton styleClass="btn btn-sm btn-primary"
+							action="#{restrictionsController.addLoadTeacherRestriction()}"
+							value="Sacuvaj">
+							<f:ajax execute="@form" render="@form" />
+						</h:commandButton>
+					</div>
+				</div>
+			</h:form>
+		</rich:collapsiblePanel>
+	</div>
+
+</ui:composition>

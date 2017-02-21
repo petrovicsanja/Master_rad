@@ -1,0 +1,376 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j">
+
+	<rich:collapsiblePanel header="Dostupni/nedostupni termini - profesori"
+		switchType="client" styleClass="panel panel-primary"
+		headerClass="panel-heading" bodyClass="panel-body">
+		<h:form id="insertTeacherAvailability">
+			<rich:dataTable id="teacherAvailabilitiesList"
+				var="teacherAvailability" rows="10"
+				value="#{availabilitiesController.listAllTeacherAvailabilities()}"
+				iterationStatusVar="it" styleClass="table table-bordered">
+
+				<rich:column id="teacherColumn"
+					sortBy="#{teacherAvailability.teacher.ime}">
+					<f:facet name="header">
+								Profesor
+							</f:facet>
+					<h:outputText value="#{teacherAvailability.teacher}" />
+				</rich:column>
+
+				<rich:column id="typeColumn">
+					<f:facet name="header">
+								Tip termina
+							</f:facet>
+					<h:outputText value="#{teacherAvailability.type}" />
+				</rich:column>
+
+				<rich:column id="dayMarkColumn">
+					<f:facet name="header">
+								Oznaka termina
+							</f:facet>
+					<h:outputText value="#{teacherAvailability.dayMark}" />
+				</rich:column>
+
+				<rich:column id="termNumberColumn">
+					<f:facet name="header">
+								Redni broj termina
+							</f:facet>
+					<h:outputText value="#{teacherAvailability.termNumber}" />
+				</rich:column>
+
+				<f:facet name="footer">
+					<rich:dataScroller renderIfSinglePage="false" />
+				</f:facet>
+			</rich:dataTable>
+
+			<div class="container">
+				<div class="row text-center">
+					<h3>Unos vrsta termina za nastavnika</h3>
+				</div>
+
+				<div class="row">
+					<div class="col-sm-3">
+						<h:outputLabel value="Profesor:" />
+					</div>
+
+					<div class="col-sm-3">
+						<h:outputLabel value="Vrsta termina:" />
+					</div>
+
+					<div class="col-sm-3">
+						<h:outputLabel value="Radni dan:" />
+					</div>
+
+					<div class="col-sm-3">
+						<h:outputLabel value="Redni broj termina:" />
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-sm-3">
+						<h:selectOneMenu id="teacherAvailability" required="true"
+							value="#{availabilitiesController.teacher}"
+							converter="#{teacherConverter}"
+							rendered="#{loginController.userType() eq 2}">
+							<f:selectItem itemLabel="-- Izaberite profesora --"
+								itemValue="#{null}" />
+							<f:selectItems
+								value="#{availabilitiesController.listAllTeachers()}"
+								var="teacher" itemLabel="#{teacher.toString()}"
+								itemValue="#{teacher}" />
+							<f:ajax event="change" execute="@this" />
+						</h:selectOneMenu>
+
+						<h:outputLabel value="#{loginController.user.toString()}"
+							rendered="#{loginController.userType() eq 1}" />
+					</div>
+					<div class="col-sm-3">
+						<h:selectOneRadio layout="pageDirection"
+							value="#{availabilitiesController.teacherAvailabilityType}">
+							<f:selectItem itemValue="FORBIDDEN" itemLabel="Zabranjeni" />
+							<f:selectItem itemValue="UNDESIRABLE" itemLabel="Nepozeljni" />
+							<f:selectItem itemValue="DESIRABLE" itemLabel="Pozeljni" />
+							<f:selectItem itemValue="MANDATORY" itemLabel="Obavezni" />
+						</h:selectOneRadio>
+					</div>
+					<div class="col-sm-3">
+						<h:selectOneRadio
+							value="#{availabilitiesController.teacherAvailabilityDayMark}"
+							layout="pageDirection">
+							<f:selectItems
+								value="#{availabilitiesController.listAllAvailablePeriods()}"
+								var="period" itemValue="#{period.dayMark}"
+								itemLabel="#{period.day}" />
+							<f:ajax event="click" execute="@this"
+								render="teacherAvailabilityTermNumbers"
+								listener="#{availabilitiesController.listAllTeacherAvailableTermsForSelectedDay()}" />
+						</h:selectOneRadio>
+					</div>
+					<div class="col-sm-3">
+						<h:selectManyCheckbox id="teacherAvailabilityTermNumbers"
+							value="#{availabilitiesController.teacherAvailabilityTermNumbers}"
+							layout="pageDirection">
+							<f:selectItems
+								value="#{availabilitiesController.teacherAvailabilityTermsForSelectedDay}"
+								var="term" itemValue="#{term}" itemLabel="#{term}" />
+						</h:selectManyCheckbox>
+					</div>
+				</div>
+				<div class="row text-right">
+					<h:commandButton
+						action="#{availabilitiesController.addTeacherAvailability()}"
+						value="Sacuvaj" styleClass="btn btn-sm btn-primary">
+						<f:ajax execute="@form" render="@form" />
+					</h:commandButton>
+				</div>
+			</div>
+		</h:form>
+	</rich:collapsiblePanel>
+
+	<rich:collapsiblePanel header="Dostupni/nedostupni termini - grupe"
+		switchType="client" styleClass="panel panel-primary"
+		headerClass="panel-heading" bodyClass="panel-body">
+		<h:form id="insertGroupAvailability">
+			<rich:dataTable id="groupAvailabilitiesList" var="groupAvailability"
+				rows="10"
+				value="#{availabilitiesController.listAllGroupAvailabilities()}"
+				iterationStatusVar="it" styleClass="table table-bordered">
+
+				<rich:column id="groupColumn"
+					sortBy="#{groupAvailability.group.naziv}">
+					<f:facet name="header">
+								Grupa
+							</f:facet>
+					<h:outputText value="#{groupAvailability.group}" />
+				</rich:column>
+
+				<rich:column id="typeColumn">
+					<f:facet name="header">
+								Tip termina
+							</f:facet>
+					<h:outputText value="#{groupAvailability.type}" />
+				</rich:column>
+
+				<rich:column id="dayMarkColumn">
+					<f:facet name="header">
+								Oznaka termina
+							</f:facet>
+					<h:outputText value="#{groupAvailability.dayMark}" />
+				</rich:column>
+
+				<rich:column id="termNumberColumn">
+					<f:facet name="header">
+								Redni broj termina
+							</f:facet>
+					<h:outputText value="#{groupAvailability.termNumber}" />
+				</rich:column>
+
+				<f:facet name="footer">
+					<rich:dataScroller renderIfSinglePage="false" />
+				</f:facet>
+			</rich:dataTable>
+
+			<div class="container">
+				<div class="row text-center">
+					<h3>Unos vrsta termina za grupu</h3>
+				</div>
+
+				<div class="row">
+					<div class="col-sm-3">
+						<h:outputLabel value="Grupa::" />
+					</div>
+
+					<div class="col-sm-3">
+						<h:outputLabel value="Vrsta termina:" />
+					</div>
+
+					<div class="col-sm-3">
+						<h:outputLabel value="Radni dan:" />
+					</div>
+
+					<div class="col-sm-3">
+						<h:outputLabel value="Redni broj termina:" />
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-sm-3">
+						<h:selectOneMenu id="groupAvailability" required="true"
+							value="#{availabilitiesController.group}"
+							converter="#{groupConverter}">
+							<f:selectItem itemLabel="-- Izaberite grupu --"
+								itemValue="#{null}" />
+							<f:selectItems
+								value="#{availabilitiesController.listAllGroups()}" var="group"
+								itemLabel="#{group.toString()}" itemValue="#{group}" />
+							<f:ajax event="change" execute="@this" />
+						</h:selectOneMenu>
+					</div>
+					<div class="col-sm-3">
+						<h:selectOneRadio layout="pageDirection"
+							value="#{availabilitiesController.groupAvailabilityType}">
+							<f:selectItem itemValue="FORBIDDEN" itemLabel="Zabranjeni" />
+							<f:selectItem itemValue="UNDESIRABLE" itemLabel="Nepozeljni" />
+							<f:selectItem itemValue="DESIRABLE" itemLabel="Pozeljni" />
+							<f:selectItem itemValue="MANDATORY" itemLabel="Obavezni" />
+						</h:selectOneRadio>
+					</div>
+					<div class="col-sm-3">
+						<h:selectOneRadio
+							value="#{availabilitiesController.groupAvailabilityDayMark}"
+							layout="pageDirection">
+							<f:selectItems
+								value="#{availabilitiesController.listAllAvailablePeriods()}"
+								var="period" itemValue="#{period.dayMark}"
+								itemLabel="#{period.day}" />
+							<f:ajax event="click" execute="@this"
+								render="groupAvailabilityTermNumbers"
+								listener="#{availabilitiesController.listAllGroupAvailableTermsForSelectedDay()}" />
+						</h:selectOneRadio>
+					</div>
+					<div class="col-sm-3">
+						<h:selectManyCheckbox id="groupAvailabilityTermNumbers"
+							value="#{availabilitiesController.groupAvailabilityTermNumbers}"
+							layout="pageDirection">
+							<f:selectItems
+								value="#{availabilitiesController.groupAvailabilityTermsForSelectedDay}"
+								var="term" itemValue="#{term}" itemLabel="#{term}" />
+						</h:selectManyCheckbox>
+					</div>
+				</div>
+				<div class="row text-right">
+					<h:commandButton
+						action="#{availabilitiesController.addGroupAvailability()}"
+						value="Sacuvaj" styleClass="btn btn-sm btn-primary">
+						<f:ajax execute="@form" render="@form" />
+					</h:commandButton>
+				</div>
+			</div>
+		</h:form>
+	</rich:collapsiblePanel>
+
+	<rich:collapsiblePanel header="Dostupni/nedostupni termini - ucionice"
+		switchType="client" styleClass="panel panel-primary"
+		headerClass="panel-heading" bodyClass="panel-body">
+		<h:form id="insertRoomAvailability">
+			<rich:dataTable id="roomAvailabilitiesList" var="roomAvailability"
+				rows="10"
+				value="#{availabilitiesController.listAllRoomAvailabilities()}"
+				iterationStatusVar="it" styleClass="table table-bordered">
+
+				<rich:column id="roomColumn" sortBy="#{roomAvailability.room.naziv}">
+					<f:facet name="header">
+								Ucionica
+							</f:facet>
+					<h:outputText value="#{roomAvailability.room}" />
+				</rich:column>
+
+				<rich:column id="typeColumn">
+					<f:facet name="header">
+								Tip termina
+							</f:facet>
+					<h:outputText value="#{roomAvailability.type}" />
+				</rich:column>
+
+				<rich:column id="dayMarkColumn">
+					<f:facet name="header">
+								Oznaka termina
+							</f:facet>
+					<h:outputText value="#{roomAvailability.dayMark}" />
+				</rich:column>
+
+				<rich:column id="termNumberColumn">
+					<f:facet name="header">
+								Redni broj termina
+							</f:facet>
+					<h:outputText value="#{roomAvailability.termNumber}" />
+				</rich:column>
+
+				<f:facet name="footer">
+					<rich:dataScroller renderIfSinglePage="false" />
+				</f:facet>
+			</rich:dataTable>
+
+			<div class="container">
+				<div class="row text-center">
+					<h3>Unos vrsta termina za grupu</h3>
+				</div>
+
+				<div class="row">
+					<div class="col-sm-3">
+						<h:outputLabel value="Grupa:" />
+					</div>
+
+					<div class="col-sm-3">
+						<h:outputLabel value="Vrsta termina:" />
+					</div>
+
+					<div class="col-sm-3">
+						<h:outputLabel value="Radni dan:" />
+					</div>
+
+					<div class="col-sm-3">
+						<h:outputLabel value="Redni broj termina:" />
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-sm-3">
+						<h:selectOneMenu id="roomAvailability" required="true"
+							value="#{availabilitiesController.room}"
+							converter="#{roomConverter}">
+							<f:selectItem itemLabel="-- Izaberite ucionicu --"
+								itemValue="#{null}" />
+							<f:selectItems value="#{availabilitiesController.listAllRooms()}"
+								var="room" itemLabel="#{room.toString()}" itemValue="#{room}" />
+							<f:ajax event="change" execute="@this" />
+						</h:selectOneMenu>
+					</div>
+					<div class="col-sm-3">
+						<h:selectOneRadio layout="pageDirection"
+							value="#{availabilitiesController.roomAvailabilityType}">
+							<f:selectItem itemValue="FORBIDDEN" itemLabel="Zabranjeni" />
+							<f:selectItem itemValue="UNDESIRABLE" itemLabel="Nepozeljni" />
+							<f:selectItem itemValue="DESIRABLE" itemLabel="Pozeljni" />
+							<f:selectItem itemValue="MANDATORY" itemLabel="Obavezni" />
+						</h:selectOneRadio>
+					</div>
+					<div class="col-sm-3">
+						<h:selectOneRadio
+							value="#{availabilitiesController.roomAvailabilityDayMark}"
+							layout="pageDirection">
+							<f:selectItems
+								value="#{availabilitiesController.listAllAvailablePeriods()}"
+								var="period" itemValue="#{period.dayMark}"
+								itemLabel="#{period.day}" />
+							<f:ajax event="click" execute="@this"
+								render="roomAvailabilityTermNumbers"
+								listener="#{availabilitiesController.listAllRoomAvailableTermsForSelectedDay()}" />
+						</h:selectOneRadio>
+					</div>
+					<div class="col-sm-3">
+						<h:selectManyCheckbox id="roomAvailabilityTermNumbers"
+							value="#{availabilitiesController.roomAvailabilityTermNumbers}"
+							layout="pageDirection">
+							<f:selectItems
+								value="#{availabilitiesController.roomAvailabilityTermsForSelectedDay}"
+								var="term" itemValue="#{term}" itemLabel="#{term}" />
+						</h:selectManyCheckbox>
+					</div>
+				</div>
+				<div class="row text-right">
+					<h:commandButton
+						action="#{availabilitiesController.addRoomAvailability()}"
+						value="Sacuvaj" styleClass="btn btn-sm btn-primary">
+						<f:ajax execute="@form" render="@form" />
+					</h:commandButton>
+				</div>
+			</div>
+		</h:form>
+	</rich:collapsiblePanel>
+</ui:composition>

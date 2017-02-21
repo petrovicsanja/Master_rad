@@ -1,0 +1,65 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j">
+
+	<!-- IZLISTAVANJE TERMINA -->
+	<h:form id="periods">
+		<rich:panel header="Izlistavanje termina">
+			<rich:list value="#{periodsController.allPeriods}" id="periodsList"
+				var="period">
+				<h:outputText value="#{period.day}" />
+				<h:outputLabel value=" - " />
+				<h:outputText value="#{period.termsNumber}" />
+			</rich:list>
+		</rich:panel>
+
+		<rich:panel header="Unos i izmena termina"
+			rendered="#{loginController.userType() eq 2}">
+			<h:panelGrid columns="3">
+				<h:outputLabel value="Unesite duzinu trajanja termina/casa:" />
+				<h:inputText value="#{periodsController.termLength}" />
+				<h:outputLabel value="minuta" />
+
+				<h:outputLabel value="Radni dan" />
+				<h:outputLabel value="Broj termina u smeni" />
+				<h:outputLabel value="" />
+
+				<h:outputLabel value="Ponedeljak: " />
+				<h:inputText value="#{periodsController.termsMonday}" />
+				<h:outputLabel value="" />
+
+				<h:outputLabel value="Utorak: " />
+				<h:inputText value="#{periodsController.termsThuesday}" />
+				<h:outputLabel value="" />
+
+				<h:outputLabel value="Sreda: " />
+				<h:inputText value="#{periodsController.termsWednesday}" />
+				<h:outputLabel value="" />
+
+				<h:outputLabel value="Cetvrtak: " />
+				<h:inputText value="#{periodsController.termsThursday}" />
+				<h:outputLabel value="" />
+
+				<h:outputLabel value="Petak: " />
+				<h:inputText value="#{periodsController.termsFriday}" />
+				<h:outputLabel value="" />
+
+				<h:outputLabel value="Subota: " />
+				<h:inputText value="#{periodsController.termsSaturday}" />
+				<h:outputLabel value="" />
+
+				<h:outputLabel value="Nedelja: " />
+				<h:inputText value="#{periodsController.termsSunday}" />
+				<h:outputLabel value="" />
+
+				<h:commandButton value="Dodaj termine"
+					action="#{periodsController.addPeriods()}">
+					<f:ajax execute="@form" render="@form" />
+				</h:commandButton>
+			</h:panelGrid>
+		</rich:panel>
+	</h:form>
+</ui:composition>

@@ -1,0 +1,29 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j">
+
+	<rich:collapsiblePanel header="Upravljanje smerovima"
+		switchType="client" styleClass="panel panel-primary"
+		headerClass="panel-heading" bodyClass="panel-body">
+
+	</rich:collapsiblePanel>
+
+	<rich:collapsiblePanel header="Semestar" switchType="client"
+		styleClass="panel panel-primary" headerClass="panel-heading"
+		bodyClass="panel-body">
+		<h:form id="semesterForm">
+			<div class="row">
+				<div class="col-sm-3">
+					<h:outputLabel value="Trenutno aktivni semestar: " />
+				</div>
+				<div class="col-sm-6">
+					<h:outputLabel value="" />
+				</div>
+			</div>
+		</h:form>
+	</rich:collapsiblePanel>
+
+</ui:composition>
