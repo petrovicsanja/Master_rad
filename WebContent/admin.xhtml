@@ -23,6 +23,89 @@
 					<h:outputLabel value="#{semesterController.activeSemester}" />
 				</div>
 			</div>
+
+			<rich:dataTable id="semesterList" var="semester" rows="5"
+				value="#{semesterController.listSemesters()}"
+				iterationStatusVar="it" styleClass="table table-bordered">
+
+				<rich:column id="semesterColumn" sortBy="#{semester.toString()}">
+					<f:facet name="header">
+						Semestar
+					</f:facet>
+					<h:outputText value="#{semester.toString()}" />
+				</rich:column>
+
+				<rich:column id="statusColumn">
+					<f:facet name="header">
+						Status
+					</f:facet>
+					<h:outputText value="#{semester.active}" />
+				</rich:column>
+
+				<rich:column id="actionColumn" styleClass="text-center">
+					<f:facet name="header">
+						Aktivacija/Deaktivacija
+					</f:facet>
+					<h:commandButton style="btn"
+						action="#{semesterController.activateSemester(semester.id)}"
+						value="Aktivacija">
+						<f:ajax execute="@this" render="@form" />
+					</h:commandButton>
+					<h:commandButton style="btn"
+						action="#{semesterController.deactivateSemester(semester.id)}"
+						value="Deaktivacija">
+						<f:ajax execute="@this" render="@form" />
+					</h:commandButton>
+				</rich:column>
+			</rich:dataTable>
+
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-6">
+						<h:outputLabel value="Skolska godina: " />
+					</div>
+					<div class="col-sm-6">
+						<h:inputText value="#{semesterController.schoolYear}" />
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-sm-6">
+						<h:outputLabel value="Pocetak semestra: " />
+					</div>
+					<div class="col-sm-6">
+						<rich:calendar value="#{semesterController.startDate}" />
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-sm-6">
+						<h:outputLabel value="Kraj semestra: " />
+					</div>
+					<div class="col-sm-6">
+						<rich:calendar value="#{semesterController.endDate}" />
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-sm-6">
+						<h:outputLabel value="Tip semestra: " />
+					</div>
+					<div class="col-sm-6">
+						<h:selectOneMenu value="#{semesterController.ordinalNumber}">
+							<f:selectItem itemLabel="Zimski" itemValue="true" />
+							<f:selectItem itemLabel="Letnji" itemValue="false" />
+						</h:selectOneMenu>
+					</div>
+				</div>
+
+				<div class="row text-right">
+					<h:commandButton action="#{semesterController.addNewSemester()}"
+						value="Sacuvaj" styleClass="btn btn-sm btn-primary">
+						<f:ajax execute="@form" render="@form" />
+					</h:commandButton>
+				</div>
+			</div>
 		</h:form>
 	</rich:collapsiblePanel>
 

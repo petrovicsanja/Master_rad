@@ -1,5 +1,8 @@
 package com.gui.controllers;
 
+import java.util.Date;
+import java.util.List;
+
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -14,6 +17,13 @@ public class SemesterController {
 	@EJB
 	private SemesterService semesterService;
 
+	private List<Semester> semesterList = null;
+
+	private String schoolYear;
+	private Date startDate;
+	private Date endDate;
+	private Integer ordinalNumber;
+
 	public String getActiveSemester() {
 		Semester activeSemester = semesterService.getActiveSemester();
 		if (activeSemester != null) {
@@ -21,5 +31,56 @@ public class SemesterController {
 		} else {
 			return "Trenutno nijedan semestar nije aktivan";
 		}
+	}
+
+	public List<Semester> listSemesters() {
+		if (semesterList == null) {
+			semesterList = semesterService.listSemesters();
+		}
+		return semesterList;
+	}
+
+	public void addNewSemester() {
+		semesterService.addNewSemester(schoolYear, startDate, endDate, ordinalNumber);
+	}
+
+	public void activateSemester(Long semesterId) {
+		semesterService.activateSemester(semesterId);
+	}
+
+	public void deactivateSemester(Long semesterId) {
+		semesterService.deactivateSemester(semesterId);
+	}
+
+	public String getSchoolYear() {
+		return schoolYear;
+	}
+
+	public void setSchoolYear(String schoolYear) {
+		this.schoolYear = schoolYear;
+	}
+
+	public Date getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
+	}
+
+	public Date getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
+	}
+
+	public Integer getOrdinalNumber() {
+		return ordinalNumber;
+	}
+
+	public void setOrdinalNumber(Integer ordinalNumber) {
+		this.ordinalNumber = ordinalNumber;
 	}
 }

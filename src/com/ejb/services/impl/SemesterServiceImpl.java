@@ -1,5 +1,8 @@
 package com.ejb.services.impl;
 
+import java.util.Date;
+import java.util.List;
+
 import javax.ejb.Stateful;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -27,5 +30,50 @@ public class SemesterServiceImpl implements SemesterService {
 		}
 
 		return result;
+	}
+
+	@Override
+	public List<Semester> listSemesters() {
+		TypedQuery<Semester> semesterList = em.createQuery("SELECT s FROM Semester s ORDER BY s.schoolYear",
+				Semester.class);
+		return semesterList.getResultList();
+	}
+
+	@Override
+	public void addNewSemester(String schoolYear, Date startDate, Date endDate, Integer ordinalNumber) {
+		Semester semester = new Semester();
+		semester.setSchoolYear(schoolYear);
+		semester.setStartDate(startDate);
+		semester.setEndDate(endDate);
+		semester.setOrdinalNumber(ordinalNumber);
+		semester.setActive(false);
+		em.persist(semester);
+	}
+
+	@Override
+	public void activateSemester(Long semesterId) {
+		TypedQuery<Semester> activeSemesterQuery = em.createQuery("SELECT s FROM Semester s WHERE s.active = :active",
+				Semester.class);
+		activeSemesterQuery.setParameter("active", true);
+
+		Semester activeSemester;
+		try {
+			activeSemester = activeSemesterQuery.getSingleResult();
+		} catch (NoResultException e) {
+			activeSemester = null;
+		}
+
+		if (activeSemester == null) {
+			Semester semester = em.find(Semester.class, semesterId);
+			semester.setActive(true);
+
+			System.out.println("Semestar je uspesno aktiviran.");
+		}
+	}
+
+	@Override
+	public void deactivateSemester(Long semesterId) {
+		Semester semester = em.find(Semester.class, semesterId);
+		semester.setActive(false);
 	}
 }

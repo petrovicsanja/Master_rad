@@ -76,6 +76,6 @@ public class Semester {
 
 	@Override
 	public String toString() {
-		return schoolYear + " - " + ordinalNumber + ". semester";
+		return schoolYear + " - " + ordinalNumber + ". semester - duration: " + startDate + " - " + endDate;
 	}
 }
