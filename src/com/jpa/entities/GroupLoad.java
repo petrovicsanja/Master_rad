@@ -14,7 +14,7 @@ public class GroupLoad {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long groupLoadId;
+	private Long id;
 
 	@OneToOne
 	@JoinColumn(name = "groupId")
@@ -24,12 +24,16 @@ public class GroupLoad {
 
 	private Integer min;
 
-	public Long getGroupLoadId() {
-		return groupLoadId;
+	private Integer semester;
+
+	private String year;
+
+	public Long getId() {
+		return id;
 	}
 
-	public void setGroupLoadId(Long groupLoadId) {
-		this.groupLoadId = groupLoadId;
+	public void setId(Long groupLoadId) {
+		this.id = groupLoadId;
 	}
 
 	public Group getGroup() {
@@ -56,4 +60,19 @@ public class GroupLoad {
 		this.min = min;
 	}
 
+	public Integer getSemester() {
+		return semester;
+	}
+
+	public void setSemester(Integer semester) {
+		this.semester = semester;
+	}
+
+	public String getYear() {
+		return year;
+	}
+
+	public void setYear(String year) {
+		this.year = year;
+	}
 }

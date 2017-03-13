@@ -1,5 +1,6 @@
 package com.jpa.entities;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -11,6 +12,8 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "Semester")
 public class Semester {
+
+	private static final SimpleDateFormat dateFormat = new SimpleDateFormat("d.MM.yyyy");
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -76,6 +79,7 @@ public class Semester {
 
 	@Override
 	public String toString() {
-		return schoolYear + " - " + ordinalNumber + ". semester - duration: " + startDate + " - " + endDate;
+		return schoolYear + " - " + ordinalNumber + ". semestar - period: " + dateFormat.format(startDate) + " - "
+				+ dateFormat.format(endDate);
 	}
 }

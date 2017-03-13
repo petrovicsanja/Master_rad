@@ -6,6 +6,7 @@ import com.jpa.entities.Group;
 import com.jpa.entities.GroupAvailability;
 import com.jpa.entities.Room;
 import com.jpa.entities.RoomAvailability;
+import com.jpa.entities.Semester;
 import com.jpa.entities.TeacherAvailability;
 import com.jpa.entities.User;
 
@@ -18,12 +19,13 @@ import com.jpa.entities.User;
 public interface AvailabilitiesService {
 
 	public List<TeacherAvailability> addTeacherAvailability(User teacher, String dayMark, Integer[] termNumbers,
-			String type);
+			String type, Semester activeSemester);
 
-	public List<GroupAvailability> addGroupAvailability(Group group, String dayMark, Integer[] termNumbers,
-			String type);
+	public List<GroupAvailability> addGroupAvailability(Group group, String dayMark, Integer[] termNumbers, String type,
+			Semester activeSemester);
 
-	public List<RoomAvailability> addRoomAvailability(Room room, String dayMark, Integer[] termNumbers, String type);
+	public List<RoomAvailability> addRoomAvailability(Room room, String dayMark, Integer[] termNumbers, String type,
+			Semester activeSemester);
 
 	public List<TeacherAvailability> listAllTeacherAvailabilities();
 

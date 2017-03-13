@@ -20,7 +20,8 @@
 					<h:outputLabel value="Trenutno aktivni semestar: " />
 				</div>
 				<div class="col-sm-6">
-					<h:outputLabel value="#{semesterController.activeSemester}" />
+					<h:outputLabel
+						value="#{semesterController.activeSemester==null ? 'Trenutno nijedan semestar nije aktivan' : semesterController.activeSemester}" />
 				</div>
 			</div>
 
@@ -39,10 +40,12 @@
 					<f:facet name="header">
 						Status
 					</f:facet>
-					<h:outputText value="#{semester.active}" />
+					<h:outputText
+						value="#{semester.active==true ? 'aktivan' : 'neaktivan'}" />
 				</rich:column>
 
-				<rich:column id="actionColumn" styleClass="text-center">
+				<rich:column id="actionColumn" styleClass="text-center"
+					rendered="#{loginController.userType() eq 2}">
 					<f:facet name="header">
 						Aktivacija/Deaktivacija
 					</f:facet>
@@ -93,8 +96,8 @@
 					</div>
 					<div class="col-sm-6">
 						<h:selectOneMenu value="#{semesterController.ordinalNumber}">
-							<f:selectItem itemLabel="Zimski" itemValue="true" />
-							<f:selectItem itemLabel="Letnji" itemValue="false" />
+							<f:selectItem itemLabel="Zimski" itemValue="1" />
+							<f:selectItem itemLabel="Letnji" itemValue="2" />
 						</h:selectOneMenu>
 					</div>
 				</div>
@@ -106,6 +109,16 @@
 					</h:commandButton>
 				</div>
 			</div>
+		</h:form>
+	</rich:collapsiblePanel>
+
+	<rich:collapsiblePanel header="Kreiranje rasporeda casova"
+		switchType="client" styleClass="panel panel-primary"
+		headerClass="panel-heading" bodyClass="panel-body">
+		<h:form>
+			<h:commandButton styleClass="btn btn-sm btn-primary"
+				action="#{timetableController.createTimetable()}"
+				value="Kreiraj raspored" />
 		</h:form>
 	</rich:collapsiblePanel>
 

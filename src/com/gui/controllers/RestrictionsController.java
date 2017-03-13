@@ -30,6 +30,9 @@ public class RestrictionsController {
 	@ManagedProperty(value = "#{usersController}")
 	private UsersController usersController;
 
+	@ManagedProperty(value = "#{semesterController}")
+	private SemesterController semesterController;
+
 	// Group num days restriction
 	private Group numDaysGroup = null;
 	private Integer minNumDaysGroup = null;
@@ -119,7 +122,7 @@ public class RestrictionsController {
 			newGroupNumDays.setMin(minNumDaysGroup);
 			newGroupNumDays.setOpt(optNumDaysGroup);
 			newGroupNumDays.setMax(maxNumDaysGroup);
-			restrictionsService.addNewNumDaysGroupRestriction(newGroupNumDays);
+			restrictionsService.addNewNumDaysGroupRestriction(newGroupNumDays, semesterController.getActiveSemester());
 			resetNumDaysFields(true);
 		}
 	}
@@ -131,8 +134,8 @@ public class RestrictionsController {
 			newTeacherNumDays.setMin(minNumDaysTeacher);
 			newTeacherNumDays.setOpt(optNumDaysTeacher);
 			newTeacherNumDays.setMax(maxNumDaysTeacher);
-			restrictionsService
-					.addNewNumDaysTeacherRestriction(newTeacherNumDays);
+			restrictionsService.addNewNumDaysTeacherRestriction(newTeacherNumDays,
+					semesterController.getActiveSemester());
 			resetNumDaysFields(false);
 		}
 	}
@@ -144,7 +147,7 @@ public class RestrictionsController {
 			groupIdles.setMax(maxIdlesGroup);
 			groupIdles.setMultiple(multipleIdlesGroup);
 			groupIdles.setDays(daysIdlesGroup);
-			restrictionsService.addIdlesGroupRestriction(groupIdles);
+			restrictionsService.addIdlesGroupRestriction(groupIdles, semesterController.getActiveSemester());
 			resetIdlesFields(true);
 		}
 	}
@@ -156,7 +159,7 @@ public class RestrictionsController {
 			teacherIdles.setMax(maxIdlesTeacher);
 			teacherIdles.setMultiple(multipleIdlesTeacher);
 			teacherIdles.setDays(daysIdlesTeacher);
-			restrictionsService.addIdlesTeacherRestriction(teacherIdles);
+			restrictionsService.addIdlesTeacherRestriction(teacherIdles, semesterController.getActiveSemester());
 			resetIdlesFields(false);
 		}
 	}
@@ -167,7 +170,7 @@ public class RestrictionsController {
 			groupLoad.setGroup(loadGroup);
 			groupLoad.setMin(minLoadGroup);
 			groupLoad.setMax(maxLoadGroup);
-			restrictionsService.addLoadGroupRestriction(groupLoad);
+			restrictionsService.addLoadGroupRestriction(groupLoad, semesterController.getActiveSemester());
 			resetLoadFields(true);
 		}
 	}
@@ -178,7 +181,7 @@ public class RestrictionsController {
 			teacherLoad.setTeacher(loadTeacher);
 			teacherLoad.setMin(minLoadTeacher);
 			teacherLoad.setMax(maxLoadTeacher);
-			restrictionsService.addLoadTeacherRestriction(teacherLoad);
+			restrictionsService.addLoadTeacherRestriction(teacherLoad, semesterController.getActiveSemester());
 			resetLoadFields(false);
 		}
 	}
@@ -368,5 +371,9 @@ public class RestrictionsController {
 
 	public void setMinLoadTeacher(Integer minLoadTeacher) {
 		this.minLoadTeacher = minLoadTeacher;
+	}
+
+	public void setSemesterController(SemesterController semesterController) {
+		this.semesterController = semesterController;
 	}
 }

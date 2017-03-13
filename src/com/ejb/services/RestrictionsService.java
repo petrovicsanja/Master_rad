@@ -3,6 +3,7 @@ package com.ejb.services;
 import com.jpa.entities.GroupIdles;
 import com.jpa.entities.GroupLoad;
 import com.jpa.entities.GroupNumDays;
+import com.jpa.entities.Semester;
 import com.jpa.entities.TeacherIdles;
 import com.jpa.entities.TeacherLoad;
 import com.jpa.entities.TeacherNumDays;
@@ -18,42 +19,50 @@ public interface RestrictionsService {
 	/**
 	 * Add new restriction about number of working days per week for group
 	 * 
-	 * @param GroupNumDays groupNumDays
+	 * @param GroupNumDays
+	 *            groupNumDays
 	 */
-	public void addNewNumDaysGroupRestriction(GroupNumDays groupNumDays);
+	public void addNewNumDaysGroupRestriction(GroupNumDays groupNumDays, Semester activeSemester);
 
 	/**
 	 * Add new restriction about number of working days per week for teacher
 	 * 
-	 * @param TeacherNumDays teacherNumDays
+	 * @param TeacherNumDays
+	 *            teacherNumDays
 	 */
-	public void addNewNumDaysTeacherRestriction(TeacherNumDays teacherNumDays);
+	public void addNewNumDaysTeacherRestriction(TeacherNumDays teacherNumDays, Semester activeSemester);
 
 	/**
 	 * Add new restriction about idles for group
 	 * 
-	 * @param GroupIdles groupIdles
+	 * @param GroupIdles
+	 *            groupIdles
 	 */
-	public void addIdlesGroupRestriction(GroupIdles groupIdles);
+	public void addIdlesGroupRestriction(GroupIdles groupIdles, Semester activeSemester);
 
 	/**
 	 * Add new restriction about idles for teacher
 	 * 
-	 * @param TeacherIdles teacherIdles
+	 * @param TeacherIdles
+	 *            teacherIdles
 	 */
-	public void addIdlesTeacherRestriction(TeacherIdles teacherIdles);
+	public void addIdlesTeacherRestriction(TeacherIdles teacherIdles, Semester activeSemester);
 
 	/**
-	 * Add new restriction about minimum and maximum number of classes per day for group
+	 * Add new restriction about minimum and maximum number of classes per day
+	 * for group
 	 * 
-	 * @param GroupLoad groupLoad
+	 * @param GroupLoad
+	 *            groupLoad
 	 */
-	public void addLoadGroupRestriction(GroupLoad groupLoad);
+	public void addLoadGroupRestriction(GroupLoad groupLoad, Semester activeSemester);
 
 	/**
-	 * Add new restriction about minimum and maximum number of classes per day for teacher
+	 * Add new restriction about minimum and maximum number of classes per day
+	 * for teacher
 	 * 
-	 * @param TeacherLoad teacherLoad
+	 * @param TeacherLoad
+	 *            teacherLoad
 	 */
-	public void addLoadTeacherRestriction(TeacherLoad teacherLoad);
+	public void addLoadTeacherRestriction(TeacherLoad teacherLoad, Semester activeSemester);
 }

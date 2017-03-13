@@ -36,6 +36,9 @@ public class LessonsController {
 	@ManagedProperty(value = "#{subjectsController}")
 	private SubjectsController subjectsController;
 
+	@ManagedProperty(value = "#{semesterController}")
+	private SemesterController semesterController;
+
 	private Long lessonsSearchSubjectId;
 	private List<Lesson> subjectLessonsList;
 
@@ -102,7 +105,8 @@ public class LessonsController {
 
 	public void addLesson() {
 		Set<Room> selectedRoomsSet = new HashSet<>(selectedRooms);
-		lessonsService.addLesson(selectedTeachers, selectedGroups, subject, terms, selectedRoomsSet, note);
+		lessonsService.addLesson(selectedTeachers, selectedGroups, subject, terms, selectedRoomsSet, note,
+				semesterController.getActiveSemester());
 		resetFields();
 	}
 
@@ -204,5 +208,9 @@ public class LessonsController {
 
 	public void setSubjectsController(SubjectsController subjectsController) {
 		this.subjectsController = subjectsController;
+	}
+
+	public void setSemesterController(SemesterController semesterController) {
+		this.semesterController = semesterController;
 	}
 }

@@ -14,7 +14,7 @@ public class GroupIdles {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long groupIdlesId;
+	private Long id;
 
 	@OneToOne
 	@JoinColumn(name = "groupId")
@@ -26,12 +26,16 @@ public class GroupIdles {
 
 	private Integer days;
 
-	public Long getGroupIdlesId() {
-		return groupIdlesId;
+	private Integer semester;
+
+	private String year;
+
+	public Long getId() {
+		return id;
 	}
 
-	public void setGroupIdlesId(Long groupIdlesId) {
-		this.groupIdlesId = groupIdlesId;
+	public void setId(Long groupIdlesId) {
+		this.id = groupIdlesId;
 	}
 
 	public Group getGroup() {
@@ -64,5 +68,21 @@ public class GroupIdles {
 
 	public void setDays(Integer days) {
 		this.days = days;
+	}
+
+	public Integer getSemester() {
+		return semester;
+	}
+
+	public void setSemester(Integer semester) {
+		this.semester = semester;
+	}
+
+	public String getYear() {
+		return year;
+	}
+
+	public void setYear(String year) {
+		this.year = year;
 	}
 }

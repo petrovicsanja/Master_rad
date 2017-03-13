@@ -18,20 +18,12 @@ public class SemesterController {
 	private SemesterService semesterService;
 
 	private List<Semester> semesterList = null;
+	private Semester activeSemester;
 
 	private String schoolYear;
 	private Date startDate;
 	private Date endDate;
 	private Integer ordinalNumber;
-
-	public String getActiveSemester() {
-		Semester activeSemester = semesterService.getActiveSemester();
-		if (activeSemester != null) {
-			return activeSemester.toString();
-		} else {
-			return "Trenutno nijedan semestar nije aktivan";
-		}
-	}
 
 	public List<Semester> listSemesters() {
 		if (semesterList == null) {
@@ -50,6 +42,17 @@ public class SemesterController {
 
 	public void deactivateSemester(Long semesterId) {
 		semesterService.deactivateSemester(semesterId);
+	}
+
+	public Semester getActiveSemester() {
+		if (activeSemester == null) {
+			activeSemester = semesterService.getActiveSemester();
+		}
+		return activeSemester;
+	}
+
+	public void setActiveSemester(Semester activeSemester) {
+		this.activeSemester = activeSemester;
 	}
 
 	public String getSchoolYear() {

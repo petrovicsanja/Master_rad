@@ -14,7 +14,7 @@ public class TeacherNumDays {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long idRadniDaniProfesori;
+	private Long id;
 
 	@OneToOne
 	@JoinColumn(name = "idProfesora")
@@ -26,12 +26,16 @@ public class TeacherNumDays {
 
 	private Integer max;
 
-	public Long getIdRadniDaniProfesori() {
-		return idRadniDaniProfesori;
+	private Integer semester;
+
+	private String year;
+
+	public Long getId() {
+		return id;
 	}
 
-	public void setIdRadniDaniProfesori(Long idRadniDaniProfesori) {
-		this.idRadniDaniProfesori = idRadniDaniProfesori;
+	public void setId(Long idRadniDaniProfesori) {
+		this.id = idRadniDaniProfesori;
 	}
 
 	public User getTeacher() {
@@ -64,5 +68,21 @@ public class TeacherNumDays {
 
 	public void setMax(Integer max) {
 		this.max = max;
+	}
+
+	public Integer getSemester() {
+		return semester;
+	}
+
+	public void setSemester(Integer semester) {
+		this.semester = semester;
+	}
+
+	public String getYear() {
+		return year;
+	}
+
+	public void setYear(String year) {
+		this.year = year;
 	}
 }

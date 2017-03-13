@@ -13,6 +13,7 @@ import com.ejb.services.LessonsService;
 import com.jpa.entities.Group;
 import com.jpa.entities.Lesson;
 import com.jpa.entities.Room;
+import com.jpa.entities.Semester;
 import com.jpa.entities.Subject;
 import com.jpa.entities.User;
 
@@ -26,7 +27,7 @@ public class LessonsServiceImpl implements LessonsService {
 
 	@Override
 	public void addLesson(Set<User> teachers, Set<Group> groups, Subject subject, String terms, Set<Room> rooms,
-			String note) {
+			String note, Semester activeSemester) {
 		Lesson newLesson = new Lesson();
 		newLesson.setTeachers(teachers);
 		newLesson.setGroups(groups);
@@ -34,6 +35,8 @@ public class LessonsServiceImpl implements LessonsService {
 		newLesson.setTerms(terms);
 		newLesson.setRooms(rooms);
 		newLesson.setNote(note);
+		newLesson.setSemester(activeSemester.getOrdinalNumber());
+		newLesson.setYear(activeSemester.getSchoolYear());
 		em.persist(newLesson);
 
 		log.info("Novi cas je uspesno dodat, id: " + newLesson.getId());

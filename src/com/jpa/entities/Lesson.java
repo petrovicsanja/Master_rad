@@ -45,7 +45,7 @@ public class Lesson {
 
 	private Integer semester;
 
-	private Integer year;
+	private String year;
 
 	public Long getId() {
 		return id;
@@ -111,11 +111,11 @@ public class Lesson {
 		this.semester = semester;
 	}
 
-	public Integer getYear() {
+	public String getYear() {
 		return year;
 	}
 
-	public void setYear(Integer year) {
+	public void setYear(String year) {
 		this.year = year;
 	}
 }

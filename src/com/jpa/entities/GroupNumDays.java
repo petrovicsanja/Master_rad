@@ -14,7 +14,7 @@ public class GroupNumDays {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long idRadniDaniGrupe;
+	private Long id;
 
 	@OneToOne
 	@JoinColumn(name = "idGrupe")
@@ -26,12 +26,16 @@ public class GroupNumDays {
 
 	private Integer max;
 
-	public Long getIdRadniDaniGrupe() {
-		return idRadniDaniGrupe;
+	private Integer semester;
+
+	private String year;
+
+	public Long getId() {
+		return id;
 	}
 
-	public void setIdRadniDaniGrupe(Long idRadniDaniGrupe) {
-		this.idRadniDaniGrupe = idRadniDaniGrupe;
+	public void setId(Long idRadniDaniGrupe) {
+		this.id = idRadniDaniGrupe;
 	}
 
 	public Group getGroup() {
@@ -64,5 +68,21 @@ public class GroupNumDays {
 
 	public void setMax(Integer max) {
 		this.max = max;
+	}
+
+	public Integer getSemester() {
+		return semester;
+	}
+
+	public void setSemester(Integer semester) {
+		this.semester = semester;
+	}
+
+	public String getYear() {
+		return year;
+	}
+
+	public void setYear(String year) {
+		this.year = year;
 	}
 }

@@ -14,7 +14,7 @@ public class TeacherLoad {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long teacherLoadId;
+	private Long id;
 
 	@OneToOne
 	@JoinColumn(name = "teacherId")
@@ -24,12 +24,16 @@ public class TeacherLoad {
 
 	private Integer min;
 
-	public Long getTeacherLoadId() {
-		return teacherLoadId;
+	private Integer semester;
+
+	private String year;
+
+	public Long getId() {
+		return id;
 	}
 
-	public void setTeacherLoadId(Long teacherLoadId) {
-		this.teacherLoadId = teacherLoadId;
+	public void setId(Long teacherLoadId) {
+		this.id = teacherLoadId;
 	}
 
 	public User getTeacher() {
@@ -54,5 +58,21 @@ public class TeacherLoad {
 
 	public void setMin(Integer min) {
 		this.min = min;
+	}
+
+	public Integer getSemester() {
+		return semester;
+	}
+
+	public void setSemester(Integer semester) {
+		this.semester = semester;
+	}
+
+	public String getYear() {
+		return year;
+	}
+
+	public void setYear(String year) {
+		this.year = year;
 	}
 }

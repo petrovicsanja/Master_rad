@@ -39,6 +39,9 @@ public class AvailabilitiesController {
 	@ManagedProperty(value = "#{periodsController}")
 	private PeriodsController periodsController;
 
+	@ManagedProperty(value = "#{semesterController}")
+	private SemesterController semesterController;
+
 	// Teacher availability
 	private User teacher = null;
 	private String teacherAvailabilityDayMark;
@@ -164,7 +167,8 @@ public class AvailabilitiesController {
 		}
 
 		List<TeacherAvailability> teacherAvailabilityList = availabilitiesService.addTeacherAvailability(teacher,
-				teacherAvailabilityDayMark, teacherAvailabilityTermNumbers, teacherAvailabilityType);
+				teacherAvailabilityDayMark, teacherAvailabilityTermNumbers, teacherAvailabilityType,
+				semesterController.getActiveSemester());
 
 		allTeacherAvailabilities.addAll(teacherAvailabilityList);
 
@@ -173,7 +177,8 @@ public class AvailabilitiesController {
 
 	public void addGroupAvailability() {
 		List<GroupAvailability> groupAvailabilityList = availabilitiesService.addGroupAvailability(group,
-				groupAvailabilityDayMark, groupAvailabilityTermNumbers, groupAvailabilityType);
+				groupAvailabilityDayMark, groupAvailabilityTermNumbers, groupAvailabilityType,
+				semesterController.getActiveSemester());
 
 		allGroupAvailabilities.addAll(groupAvailabilityList);
 
@@ -182,7 +187,8 @@ public class AvailabilitiesController {
 
 	public void addRoomAvailability() {
 		List<RoomAvailability> roomAvailabilityList = availabilitiesService.addRoomAvailability(room,
-				roomAvailabilityDayMark, roomAvailabilityTermNumbers, roomAvailabilityType);
+				roomAvailabilityDayMark, roomAvailabilityTermNumbers, roomAvailabilityType,
+				semesterController.getActiveSemester());
 
 		allRoomAvailabilities.addAll(roomAvailabilityList);
 
@@ -275,6 +281,10 @@ public class AvailabilitiesController {
 
 	public void setPeriodsController(PeriodsController periodsController) {
 		this.periodsController = periodsController;
+	}
+
+	public void setSemesterController(SemesterController semesterController) {
+		this.semesterController = semesterController;
 	}
 
 	public Integer[] getTeacherAvailabilityTermNumbers() {

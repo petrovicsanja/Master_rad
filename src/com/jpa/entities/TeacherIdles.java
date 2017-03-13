@@ -14,7 +14,7 @@ public class TeacherIdles {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long teacherIdlesId;
+	private Long id;
 
 	@OneToOne
 	@JoinColumn(name = "teacherId")
@@ -26,12 +26,16 @@ public class TeacherIdles {
 
 	private Integer days;
 
-	public Long getTeacherIdlesId() {
-		return teacherIdlesId;
+	private Integer semester;
+
+	private String year;
+
+	public Long getId() {
+		return id;
 	}
 
-	public void setTeacherIdlesId(Long teacherIdlesId) {
-		this.teacherIdlesId = teacherIdlesId;
+	public void setId(Long teacherIdlesId) {
+		this.id = teacherIdlesId;
 	}
 
 	public User getTeacher() {
@@ -64,5 +68,21 @@ public class TeacherIdles {
 
 	public void setDays(Integer days) {
 		this.days = days;
+	}
+
+	public Integer getSemester() {
+		return semester;
+	}
+
+	public void setSemester(Integer semester) {
+		this.semester = semester;
+	}
+
+	public String getYear() {
+		return year;
+	}
+
+	public void setYear(String year) {
+		this.year = year;
 	}
 }

@@ -13,6 +13,7 @@ import com.jpa.entities.Group;
 import com.jpa.entities.GroupAvailability;
 import com.jpa.entities.Room;
 import com.jpa.entities.RoomAvailability;
+import com.jpa.entities.Semester;
 import com.jpa.entities.TeacherAvailability;
 import com.jpa.entities.User;
 
@@ -24,7 +25,7 @@ public class AvailabilitiesServiceImpl implements AvailabilitiesService {
 
 	@Override
 	public List<TeacherAvailability> addTeacherAvailability(User teacher, String dayMark, Integer[] termNumbers,
-			String type) {
+			String type, Semester activeSemester) {
 		List<TeacherAvailability> teacherAvailabilityList = new ArrayList<>();
 
 		for (int i = 0; i < termNumbers.length; i++) {
@@ -33,6 +34,8 @@ public class AvailabilitiesServiceImpl implements AvailabilitiesService {
 			teacherAvailability.setDayMark(dayMark);
 			teacherAvailability.setTermNumber(termNumbers[i]);
 			teacherAvailability.setType(type);
+			teacherAvailability.setSemester(activeSemester.getOrdinalNumber());
+			teacherAvailability.setYear(activeSemester.getSchoolYear());
 			teacherAvailabilityList.add(teacherAvailability);
 
 			em.persist(teacherAvailability);
@@ -43,8 +46,8 @@ public class AvailabilitiesServiceImpl implements AvailabilitiesService {
 	}
 
 	@Override
-	public List<GroupAvailability> addGroupAvailability(Group group, String dayMark, Integer[] termNumbers,
-			String type) {
+	public List<GroupAvailability> addGroupAvailability(Group group, String dayMark, Integer[] termNumbers, String type,
+			Semester activeSemester) {
 		List<GroupAvailability> groupAvailabilityList = new ArrayList<>();
 
 		for (int i = 0; i < termNumbers.length; i++) {
@@ -53,6 +56,8 @@ public class AvailabilitiesServiceImpl implements AvailabilitiesService {
 			groupAvailability.setDayMark(dayMark);
 			groupAvailability.setTermNumber(termNumbers[i]);
 			groupAvailability.setType(type);
+			groupAvailability.setSemester(activeSemester.getOrdinalNumber());
+			groupAvailability.setYear(activeSemester.getSchoolYear());
 			groupAvailabilityList.add(groupAvailability);
 
 			em.persist(groupAvailability);
@@ -63,7 +68,8 @@ public class AvailabilitiesServiceImpl implements AvailabilitiesService {
 	}
 
 	@Override
-	public List<RoomAvailability> addRoomAvailability(Room room, String dayMark, Integer[] termNumbers, String type) {
+	public List<RoomAvailability> addRoomAvailability(Room room, String dayMark, Integer[] termNumbers, String type,
+			Semester activeSemester) {
 		List<RoomAvailability> roomAvailabilityList = new ArrayList<>();
 
 		for (int i = 0; i < termNumbers.length; i++) {
@@ -72,6 +78,8 @@ public class AvailabilitiesServiceImpl implements AvailabilitiesService {
 			roomAvailability.setDayMark(dayMark);
 			roomAvailability.setTermNumber(termNumbers[i]);
 			roomAvailability.setType(type);
+			roomAvailability.setSemester(activeSemester.getOrdinalNumber());
+			roomAvailability.setYear(activeSemester.getSchoolYear());
 			roomAvailabilityList.add(roomAvailability);
 
 			em.persist(roomAvailability);
