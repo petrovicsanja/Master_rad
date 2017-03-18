@@ -59,14 +59,14 @@ public class GroupsController implements Serializable {
 			departmentSelectItems = new ArrayList<SelectItem>();
 			departmentList = groupsService.listDepartments();
 			for (Department smer : departmentList) {
-				departmentSelectItems.add(new SelectItem(smer.getIdSmera(), smer.getNazivSmera()));
+				departmentSelectItems.add(new SelectItem(smer.getId(), smer.getName()));
 			}
 		}
 	}
 
 	public Department findDepartmentById(Long departmentId) {
 		for (Department department : departmentList) {
-			if (department.getIdSmera().equals(departmentId)) {
+			if (department.getId().equals(departmentId)) {
 				return department;
 			}
 		}
@@ -77,7 +77,7 @@ public class GroupsController implements Serializable {
 		Long selectedDepartmentId = (Long) event.getNewValue();
 		Department department = findDepartmentById(selectedDepartmentId);
 		if (department != null) {
-			newGroup.setSmer(department);
+			newGroup.setDepartment(department);
 		}
 	}
 
@@ -90,7 +90,7 @@ public class GroupsController implements Serializable {
 
 	public void deleteGroup() {
 		Group groupToDelete = groupList.get(selectedGroupIndex);
-		groupsService.deleteGroup(groupToDelete.getIdGrupe());
+		groupsService.deleteGroup(groupToDelete.getId());
 		groupList.remove(groupToDelete);
 	}
 
@@ -101,7 +101,7 @@ public class GroupsController implements Serializable {
 
 	public Group findGroupById(Long groupId) {
 		for (Group group : groupList) {
-			if (group.getIdGrupe().equals(groupId)) {
+			if (group.getId().equals(groupId)) {
 				return group;
 			}
 		}
@@ -161,8 +161,8 @@ public class GroupsController implements Serializable {
 	public Comparator<Group> getDeapartmentComparator() {
 		return new Comparator<Group>() {
 			public int compare(Group g1, Group g2) {
-				String g1Department = g1.getSmer().getNazivSmera();
-				String g2Department = g2.getSmer().getNazivSmera();
+				String g1Department = g1.getDepartment().getName();
+				String g2Department = g2.getDepartment().getName();
 
 				return g1Department.compareToIgnoreCase(g2Department);
 			}

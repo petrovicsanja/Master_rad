@@ -14,7 +14,7 @@ public class GroupAvailability {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long groupAvailabilityId;
+	private Long id;
 
 	@ManyToOne
 	@JoinColumn(name = "groupId")
@@ -30,12 +30,12 @@ public class GroupAvailability {
 
 	private Integer semester;
 
-	public Long getGroupAvailabilityId() {
-		return groupAvailabilityId;
+	public Long getId() {
+		return id;
 	}
 
-	public void setGroupAvailabilityId(Long groupAvailabilityId) {
-		this.groupAvailabilityId = groupAvailabilityId;
+	public void setId(Long groupAvailabilityId) {
+		this.id = groupAvailabilityId;
 	}
 
 	public Group getGroup() {

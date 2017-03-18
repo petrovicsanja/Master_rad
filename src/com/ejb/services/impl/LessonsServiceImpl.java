@@ -45,7 +45,7 @@ public class LessonsServiceImpl implements LessonsService {
 	@Override
 	public List<Lesson> listLessons(Long subjectId) {
 		TypedQuery<Lesson> lessonsForSubject = em
-				.createQuery("SELECT l FROM Lesson l WHERE l.subject.idPredmeta = :subjectId", Lesson.class);
+				.createQuery("SELECT l FROM Lesson l WHERE l.subject.id = :subjectId", Lesson.class);
 		lessonsForSubject.setParameter("subjectId", subjectId);
 
 		return lessonsForSubject.getResultList();

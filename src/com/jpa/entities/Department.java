@@ -8,29 +8,29 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "Smerovi")
+@Table(name = "Department")
 public class Department {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long idSmera;
+	private Long id;
 
 	@NotNull
-	private String nazivSmera;
+	private String name;
 
-	public Long getIdSmera() {
-		return idSmera;
+	public Long getId() {
+		return id;
 	}
 
-	public void setIdSmera(Long idSmera) {
-		this.idSmera = idSmera;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
-	public String getNazivSmera() {
-		return nazivSmera;
+	public String getName() {
+		return name;
 	}
 
-	public void setNazivSmera(String nazivSmera) {
-		this.nazivSmera = nazivSmera;
+	public void setName(String name) {
+		this.name = name;
 	}
 }

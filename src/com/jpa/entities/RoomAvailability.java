@@ -14,7 +14,7 @@ public class RoomAvailability {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long roomAvailabilityId;
+	private Long id;
 
 	@ManyToOne
 	@JoinColumn(name = "roomId")
@@ -30,12 +30,12 @@ public class RoomAvailability {
 
 	private Integer semester;
 
-	public Long getRoomAvailabilityId() {
-		return roomAvailabilityId;
+	public Long getId() {
+		return id;
 	}
 
-	public void setRoomAvailabilityId(Long roomAvailabilityId) {
-		this.roomAvailabilityId = roomAvailabilityId;
+	public void setId(Long roomAvailabilityId) {
+		this.id = roomAvailabilityId;
 	}
 
 	public Room getRoom() {

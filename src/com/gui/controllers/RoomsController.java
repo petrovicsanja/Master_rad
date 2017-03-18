@@ -44,7 +44,7 @@ public class RoomsController {
 
 	public void deleteClassroom() {
 		Room ucionicaZaBrisanje = classroomList.get(selectedClassroomIndex);
-		roomsService.deleteClassroom(ucionicaZaBrisanje.getIdUcionice());
+		roomsService.deleteClassroom(ucionicaZaBrisanje.getId());
 		classroomList.remove(ucionicaZaBrisanje);
 	}
 
@@ -61,7 +61,7 @@ public class RoomsController {
 
 	public Room findRoomById(Long roomId) {
 		for (Room room : classroomList) {
-			if (roomId.equals(room.getIdUcionice())) {
+			if (roomId.equals(room.getId())) {
 				return room;
 			}
 		}

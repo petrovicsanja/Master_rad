@@ -15,7 +15,7 @@
 				iterationStatusVar="it" styleClass="table table-bordered">
 
 				<rich:column id="teacherColumn"
-					sortBy="#{teacherAvailability.teacher.ime}">
+					sortBy="#{teacherAvailability.teacher.firstName}">
 					<f:facet name="header">
 								Profesor
 							</f:facet>
@@ -142,7 +142,7 @@
 				iterationStatusVar="it" styleClass="table table-bordered">
 
 				<rich:column id="groupColumn"
-					sortBy="#{groupAvailability.group.naziv}">
+					sortBy="#{groupAvailability.group.name}">
 					<f:facet name="header">
 								Grupa
 							</f:facet>
@@ -263,7 +263,7 @@
 				value="#{availabilitiesController.listAllRoomAvailabilities()}"
 				iterationStatusVar="it" styleClass="table table-bordered">
 
-				<rich:column id="roomColumn" sortBy="#{roomAvailability.room.naziv}">
+				<rich:column id="roomColumn" sortBy="#{roomAvailability.room.name}">
 					<f:facet name="header">
 								Ucionica
 							</f:facet>

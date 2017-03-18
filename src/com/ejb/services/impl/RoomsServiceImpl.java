@@ -18,7 +18,7 @@ public class RoomsServiceImpl implements RoomsService {
 
 	@Override
 	public List<Room> listClassrooms() {
-		TypedQuery<Room> roomList = em.createQuery("SELECT r FROM Room r ORDER BY r.naziv", Room.class);
+		TypedQuery<Room> roomList = em.createQuery("SELECT r FROM Room r ORDER BY r.name", Room.class);
 		return roomList.getResultList();
 	}
 
@@ -37,12 +37,12 @@ public class RoomsServiceImpl implements RoomsService {
 
 	@Override
 	public void updateClassroom(Room room) {
-		Room roomToUpdate = em.find(Room.class, room.getIdUcionice());
-		roomToUpdate.setNaziv(room.getNaziv());
-		roomToUpdate.setSprat(room.getSprat());
-		roomToUpdate.setZgrada(room.getZgrada());
-		roomToUpdate.setVelicina(room.getVelicina());
-		roomToUpdate.setOznaka(room.getOznaka());
+		Room roomToUpdate = em.find(Room.class, room.getId());
+		roomToUpdate.setName(room.getName());
+		roomToUpdate.setFloor(room.getFloor());
+		roomToUpdate.setBuilding(room.getBuilding());
+		roomToUpdate.setSize(room.getSize());
+		roomToUpdate.setMark(room.getMark());
 		System.out.println("Ucionica je uspesno izmenjena.");
 	}
 }

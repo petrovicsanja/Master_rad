@@ -1,6 +1,5 @@
 package com.jpa.entities;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,70 +10,68 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "Grupe")
+@Table(name = "StudentGroup")
 public class Group {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long idGrupe;
+	private Long id;
 
 	@NotNull
-	@Column(name = "NazivGrupe")
-	private String naziv;
+	private String name;
 
 	@ManyToOne
-	@JoinColumn(name = "idSmera")
+	@JoinColumn(name = "departmentId")
 	@NotNull
-	private Department smer;
+	private Department department;
 
-	private Integer velicina;
+	private Integer size;
 
 	@NotNull
-	@Column(name = "OznakaGrupe")
-	private String oznaka;
+	private String mark;
 
-	public Long getIdGrupe() {
-		return idGrupe;
+	public Long getId() {
+		return id;
 	}
 
-	public void setIdGrupe(Long idGrupe) {
-		this.idGrupe = idGrupe;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
-	public String getNaziv() {
-		return naziv;
+	public String getName() {
+		return name;
 	}
 
-	public void setNaziv(String naziv) {
-		this.naziv = naziv;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public Department getSmer() {
-		return smer;
+	public Department getDepartment() {
+		return department;
 	}
 
-	public void setSmer(Department smer) {
-		this.smer = smer;
+	public void setDepartment(Department department) {
+		this.department = department;
 	}
 
-	public Integer getVelicina() {
-		return velicina;
+	public Integer getSize() {
+		return size;
 	}
 
-	public void setVelicina(Integer velicina) {
-		this.velicina = velicina;
+	public void setSize(Integer size) {
+		this.size = size;
 	}
 
-	public String getOznaka() {
-		return oznaka;
+	public String getMark() {
+		return mark;
 	}
 
-	public void setOznaka(String oznaka) {
-		this.oznaka = oznaka;
+	public void setMark(String mark) {
+		this.mark = mark;
 	}
-	
+
 	@Override
 	public String toString() {
-		return this.naziv;
+		return this.name;
 	}
 }

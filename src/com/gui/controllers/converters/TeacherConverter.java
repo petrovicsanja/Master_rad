@@ -30,7 +30,7 @@ public class TeacherConverter implements Converter {
 			Object value) {
 		if (value != null) {
 			User user = (User) value;
-			Long userId = user.getIdKorisnika();
+			Long userId = user.getId();
 			return userId.toString();
 		}
 		return "";

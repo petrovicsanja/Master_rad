@@ -14,49 +14,49 @@
 				value="#{roomsController.listClassrooms()}"
 				iterationStatusVar="it" styleClass="table table-bordered">
 
-				<rich:column id="kolonanaziv" sortBy="#{ucionica.naziv}"
+				<rich:column id="kolonanaziv" sortBy="#{ucionica.name}"
 					sortOrder="#{roomsController.nameOrder}" sortType="custom">
 					<f:facet name="header">
 						<a4j:commandLink value="Naziv učionice" render="listaUcionica"
 							execute="@this" action="#{roomsController.sortByName()}" />
 					</f:facet>
-					<h:outputText value="#{ucionica.naziv}" />
+					<h:outputText value="#{ucionica.name}" />
 				</rich:column>
 
-				<rich:column id="tabelaSprat" sortBy="#{ucionica.sprat}"
+				<rich:column id="tabelaSprat" sortBy="#{ucionica.floor}"
 					sortOrder="#{roomsController.floorOrder}" sortType="custom">
 					<f:facet name="header">
 						<a4j:commandLink value="Sprat" render="listaUcionica"
 							execute="@this" action="#{roomsController.sortByFloor()}" />
 					</f:facet>
-					<h:outputText value="#{ucionica.sprat}" />
+					<h:outputText value="#{ucionica.floor}" />
 				</rich:column>
 
-				<rich:column id="tabelaZgrada" sortBy="#{ucionica.zgrada}"
+				<rich:column id="tabelaZgrada" sortBy="#{ucionica.building}"
 					sortOrder="#{roomsController.zgradaRedosled}" sortType="custom">
 					<f:facet name="header">
 						<a4j:commandLink value="Zgrada" render="listaUcionica"
 							execute="@this" action="#{roomsController.sortByBuilding()}" />
 					</f:facet>
-					<h:outputText value="#{ucionica.zgrada}" />
+					<h:outputText value="#{ucionica.building}" />
 				</rich:column>
 
-				<rich:column id="tabelaVelicina" sortBy="#{ucionica.velicina}"
+				<rich:column id="tabelaVelicina" sortBy="#{ucionica.size}"
 					sortOrder="#{roomsController.velicinaRedosled}" sortType="custom">
 					<f:facet name="header">
 						<a4j:commandLink value="Velicina" render="listaUcionica"
 							execute="@this" action="#{roomsController.sortirajPoVelicini()}" />
 					</f:facet>
-					<h:outputText value="#{ucionica.velicina}" />
+					<h:outputText value="#{ucionica.size}" />
 				</rich:column>
 
-				<rich:column id="tabelaoznaka" sortBy="#{ucionica.oznaka}"
+				<rich:column id="tabelaoznaka" sortBy="#{ucionica.mark}"
 					sortOrder="#{roomsController.markOrder}" sortType="custom">
 					<f:facet name="header">
 						<a4j:commandLink value="Oznaka učionice" render="listaUcionica"
 							execute="@this" action="#{roomsController.sortByMark()}" />
 					</f:facet>
-					<h:outputText value="#{ucionica.oznaka}" />
+					<h:outputText value="#{ucionica.mark}" />
 				</rich:column>
 
 				<rich:column styleClass="text-center"
@@ -126,27 +126,27 @@
 			<h:panelGrid id="izmenaUcioniceGrid" columns="3">
 				<h:outputLabel value="Unesite naziv ucionice:" />
 				<h:inputText id="ucionicaZaIzmenuNaziv" label="Naziv ucionice"
-					value="#{roomsController.classroomToUpdate.naziv}" required="true" />
+					value="#{roomsController.classroomToUpdate.name}" required="true" />
 				<rich:message for="ucionicaZaIzmenuNaziv" ajaxRendered="true" />
 
 				<h:outputLabel value="Unesite sprat na kojem se ucionica nalazi:" />
 				<h:inputText id="ucionicaZaIzmenuSprat" label="Sprat ucionice"
-					value="#{roomsController.classroomToUpdate.sprat}" required="true" />
+					value="#{roomsController.classroomToUpdate.floor}" required="true" />
 				<rich:message for="ucionicaZaIzmenuSprat" ajaxRendered="true" />
 
 				<h:outputLabel value="Unesite zgradu u kojoj se ucinica nalazi:" />
 				<h:inputText id="ucionicaZaIzmenuZgrada" label="Zgrada ucionice"
-					value="#{roomsController.classroomToUpdate.zgrada}" />
+					value="#{roomsController.classroomToUpdate.building}" />
 				<rich:message for="ucionicaZaIzmenuZgrada" ajaxRendered="true" />
 
 				<h:outputLabel value="Unesite velicinu ucionice:" />
 				<h:inputText id="ucionicaZaIzmenuVelicina" label="Velicina ucionice"
-					value="#{roomsController.classroomToUpdate.velicina}" />
+					value="#{roomsController.classroomToUpdate.size}" />
 				<rich:message for="ucionicaZaIzmenuVelicina" ajaxRendered="true" />
 
 				<h:outputLabel value="Unesite oznaku ucionice:" />
 				<h:inputText id="ucionicaZaIzmenuOznaka" label="Oznaka ucionice"
-					value="#{roomsController.classroomToUpdate.oznaka}" required="true" />
+					value="#{roomsController.classroomToUpdate.mark}" required="true" />
 				<rich:message for="ucionicaZaIzmenuOznaka" ajaxRendered="true" />
 
 				<a4j:commandButton action="#{roomsController.updateClassroom()}"
@@ -168,27 +168,27 @@
 			<h:panelGrid columns="3">
 				<h:outputLabel value="Unesite naziv ucionice:" />
 				<h:inputText id="novaUcionicaNaziv" label="Naziv ucionice"
-					value="#{roomsController.newClassroom.naziv}" required="true" />
+					value="#{roomsController.newClassroom.name}" required="true" />
 				<rich:message for="novaUcionicaNaziv" ajaxRendered="true" />
 
 				<h:outputLabel value="Unesite sprat na kojem se ucionica nalazi:" />
 				<h:inputText id="novaUcionicaSprat" label="Sprat ucionice"
-					value="#{roomsController.newClassroom.sprat}" required="true" />
+					value="#{roomsController.newClassroom.floor}" required="true" />
 				<rich:message for="novaUcionicaSprat" ajaxRendered="true" />
 
 				<h:outputLabel value="Unesite zgradu u kojoj se ucinica nalazi:" />
 				<h:inputText id="novaUcionicaZgrada" label="Zgrada ucionice"
-					value="#{roomsController.newClassroom.zgrada}" />
+					value="#{roomsController.newClassroom.building}" />
 				<rich:message for="novaUcionicaZgrada" ajaxRendered="true" />
 
 				<h:outputLabel value="Unesite velicinu ucionice:" />
 				<h:inputText id="novaUcionicaVelicina" label="Velicina ucionice"
-					value="#{roomsController.newClassroom.velicina}" />
+					value="#{roomsController.newClassroom.size}" />
 				<rich:message for="novaUcionicaVelicina" ajaxRendered="true" />
 
 				<h:outputLabel value="Unesite oznaku ucionice:" />
 				<h:inputText id="novaUcionicaOznaka" label="Oznaka ucionice"
-					value="#{roomsController.newClassroom.oznaka}" required="true" />
+					value="#{roomsController.newClassroom.mark}" required="true" />
 				<rich:message for="novaUcionicaOznaka" ajaxRendered="true" />
 			</h:panelGrid>
 

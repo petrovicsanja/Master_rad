@@ -10,51 +10,46 @@
 			switchType="client" styleClass="panel panel-primary"
 			headerClass="panel-heading" bodyClass="panel-body">
 			<rich:dataTable id="listaKorisnika" var="korisnik" rows="10"
-				value="#{usersController.listUsers()}"
-				iterationStatusVar="it" styleClass="table table-bordered">
+				value="#{usersController.listUsers()}" iterationStatusVar="it"
+				styleClass="table table-bordered">
 
-				<rich:column id="kolonaIme" sortBy="#{korisnik.ime}"
+				<rich:column id="kolonaIme" sortBy="#{korisnik.firstName}"
 					sortOrder="#{usersController.nameOrder}" sortType="custom">
 					<f:facet name="header">
 						<a4j:commandLink value="Ime" render="listaKorisnika"
 							execute="@this" action="#{usersController.sortByName()}" />
 					</f:facet>
-					<h:outputText value="#{korisnik.ime}" />
+					<h:outputText value="#{korisnik.firstName}" />
 				</rich:column>
 
-				<rich:column id="kolonaPrezime" sortBy="#{korisnik.prezime}"
+				<rich:column id="kolonaPrezime" sortBy="#{korisnik.lastName}"
 					sortOrder="#{usersController.surnameOrder}" sortType="custom">
 					<f:facet name="header">
 						<a4j:commandLink value="Prezime" render="listaKorisnika"
 							execute="@this" action="#{usersController.sortBySurname()}" />
 					</f:facet>
-					<h:outputText value="#{korisnik.prezime}" />
+					<h:outputText value="#{korisnik.lastName}" />
 				</rich:column>
 
-				<rich:column id="kolonaKorisnickoIme"
-					sortBy="#{korisnik.korisnickoIme}"
+				<rich:column id="kolonaKorisnickoIme" sortBy="#{korisnik.username}"
 					sortOrder="#{usersController.usernameOrder}" sortType="custom">
 					<f:facet name="header">
 						<a4j:commandLink value="Korisnicko ime" render="listaKorisnika"
-							execute="@this"
-							action="#{usersController.sortByUsername()}" />
+							execute="@this" action="#{usersController.sortByUsername()}" />
 					</f:facet>
-					<h:outputText value="#{korisnik.korisnickoIme}" />
+					<h:outputText value="#{korisnik.username}" />
 				</rich:column>
 
-				<rich:column id="kolonaTipKorisnika"
-					sortBy="#{korisnik.tipKorisnika}"
+				<rich:column id="kolonaTipKorisnika" sortBy="#{korisnik.type}"
 					sortOrder="#{usersController.userTypeOrder}" sortType="custom"
 					comparator="#{usersController.userTypeComparator}">
 					<f:facet name="header">
 						<a4j:commandLink value="Tip korisnika" render="listaKorisnika"
-							execute="@this"
-							action="#{usersController.sortByUserType()}" />
+							execute="@this" action="#{usersController.sortByUserType()}" />
 					</f:facet>
-					<h:outputText value="Profesor"
-						rendered="#{korisnik.tipKorisnika eq 1}" />
+					<h:outputText value="Profesor" rendered="#{korisnik.type eq 1}" />
 					<h:outputText value="Administrator"
-						rendered="#{korisnik.tipKorisnika eq 2}" />
+						rendered="#{korisnik.type eq 2}" />
 				</rich:column>
 
 				<rich:column styleClass="text-center"
@@ -123,24 +118,21 @@
 			<h:panelGrid columns="3" id="izmenaKorisnikaGrid">
 				<h:outputLabel value="Ime korisnika:" />
 				<h:inputText id="izmenaKorisnikaIme" label="Ime korisnika"
-					value="#{usersController.selectedUser.ime}" required="true" />
+					value="#{usersController.selectedUser.firstName}" required="true" />
 				<rich:message for="izmenaKorisnikaIme" ajaxRendered="true" />
 
 				<h:outputLabel value="Prezime korisnika:" />
 				<h:inputText id="izmenaKorisnikaPrezime" label="Prezime korisnika"
-					value="#{usersController.selectedUser.prezime}"
-					required="true" />
+					value="#{usersController.selectedUser.lastName}" required="true" />
 				<rich:message for="izmenaKorisnikaPrezime" ajaxRendered="true" />
 
 				<h:outputLabel value="Korisnicko ime korisnika:" />
-				<h:outputLabel
-					value="#{usersController.selectedUser.korisnickoIme}" />
+				<h:outputLabel value="#{usersController.selectedUser.username}" />
 				<h:outputLabel value="" />
 
 				<h:outputLabel value="Tip korisnika:" />
 				<h:selectOneRadio id="izmenaKorisnikaTip" required="true"
-					label="Tip korisnika"
-					value="#{usersController.selectedUser.tipKorisnika}">
+					label="Tip korisnika" value="type">
 					<f:selectItem itemLabel="Profesor" itemValue="1" />
 					<f:selectItem itemLabel="Administrator" itemValue="2" />
 				</h:selectOneRadio>
@@ -164,29 +156,27 @@
 			<h:panelGrid columns="3">
 				<h:outputLabel value="Unesite ime korisnika:" />
 				<h:inputText id="noviKorisnikIme" label="Ime korisnika"
-					value="#{usersController.newUser.ime}" required="true" />
+					value="#{usersController.newUser.firstName}" required="true" />
 				<rich:message for="noviKorisnikIme" ajaxRendered="true" />
 
 				<h:outputLabel value="Unesite prezime korisnika:" />
 				<h:inputText id="noviKorisnikPrezime" label="Prezime korisnika"
-					value="#{usersController.newUser.prezime}" required="true" />
+					value="#{usersController.newUser.lastName}" required="true" />
 				<rich:message for="noviKorisnikPrezime" ajaxRendered="true" />
 
 				<h:outputLabel value="Unesite korisničko ime korisnika:" />
 				<h:inputText id="noviKorisnikKorisnickoIme" label="Korisnicko ime"
-					value="#{usersController.newUser.korisnickoIme}"
-					required="true" />
+					value="#{usersController.newUser.username}" required="true" />
 				<rich:message for="noviKorisnikKorisnickoIme" ajaxRendered="true" />
 
 				<h:outputLabel value="Unesite lozinku korisnika:" />
 				<h:inputSecret id="noviKorisnikLozinka" label="Lozinka korisnika"
-					value="#{usersController.newUser.lozinka}" required="true" />
+					value="#{usersController.newUser.password}" required="true" />
 				<rich:message for="noviKorisnikLozinka" ajaxRendered="true" />
 
 				<h:outputLabel value="Unesite tip korisnika:" />
 				<h:selectOneRadio id="noviKorisnikTip" required="true"
-					label="Tip korisnika"
-					value="#{usersController.newUser.tipKorisnika}">
+					label="Tip korisnika" value="#{usersController.newUser.type}">
 					<f:selectItem id="profesor" itemLabel="Profesor" itemValue="1" />
 					<f:selectItem id="admin" itemLabel="Administrator" itemValue="2" />
 				</h:selectOneRadio>

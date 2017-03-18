@@ -14,41 +14,41 @@
 				value="#{groupsController.listGroups()}" iterationStatusVar="it"
 				styleClass="table table-bordered">
 
-				<rich:column id="kolonanaziv" sortBy="#{grupa.naziv}"
+				<rich:column id="kolonanaziv" sortBy="#{grupa.name}"
 					sortOrder="#{groupsController.nameOrder}" sortType="custom">
 					<f:facet name="header">
 						<a4j:commandLink value="Naziv grupe" render="listaGrupa"
 							execute="@this" action="#{groupsController.sortByName()}" />
 					</f:facet>
-					<h:outputText value="#{grupa.naziv}" />
+					<h:outputText value="#{grupa.name}" />
 				</rich:column>
 
-				<rich:column id="kolonaNazivSmera" sortBy="#{grupa.smer.nazivSmera}"
+				<rich:column id="kolonaNazivSmera" sortBy="#{grupa.department.name}"
 					sortOrder="#{groupsController.departmentOrder}" sortType="custom"
 					comparator="#{groupsController.deapartmentComparator}">
 					<f:facet name="header">
 						<a4j:commandLink value="Smer" render="listaGrupa" execute="@this"
 							action="#{groupsController.sortByDepartment()}" />
 					</f:facet>
-					<h:outputText value="#{grupa.smer.nazivSmera}" />
+					<h:outputText value="#{grupa.department.name}" />
 				</rich:column>
 
-				<rich:column id="kolonaVelicina" sortBy="#{grupa.velicina}"
+				<rich:column id="kolonaVelicina" sortBy="#{grupa.size}"
 					sortOrder="#{groupsController.sizeOrder}" sortType="custom">
 					<f:facet name="header">
 						<a4j:commandLink value="Velicina" render="listaGrupa"
 							execute="@this" action="#{groupsController.sortBySize()}" />
 					</f:facet>
-					<h:outputText value="#{grupa.velicina}" />
+					<h:outputText value="#{grupa.size}" />
 				</rich:column>
 
-				<rich:column id="kolonaoznaka" sortBy="#{grupa.oznaka}"
+				<rich:column id="kolonaoznaka" sortBy="#{grupa.mark}"
 					sortOrder="#{groupsController.markOrder}" sortType="custom">
 					<f:facet name="header">
 						<a4j:commandLink value="Oznaka grupe" render="listaGrupa"
 							execute="@this" action="#{groupsController.sortByMark()}" />
 					</f:facet>
-					<h:outputText value="#{grupa.oznaka}" />
+					<h:outputText value="#{grupa.mark}" />
 				</rich:column>
 
 				<rich:column rendered="#{loginController.userType() eq 2}"
@@ -119,12 +119,12 @@
 				<h:panelGrid id="izmenaGrupeGrid" columns="3">
 					<h:outputLabel value="Unesite naziv grupe:" />
 					<h:inputText id="grupaZaIzmenuNaziv" label="Naziv grupe"
-						value="#{groupsController.groupToUpdate.naziv}" required="true" />
+						value="#{groupsController.groupToUpdate.name}" required="true" />
 					<rich:message for="grupaZaIzmenuNaziv" ajaxRendered="true" />
 
 					<h:outputLabel value="Izebrite smer kojem grupa pripada:" />
 					<h:selectOneMenu id="grupaZaIzmenuSmer" required="true"
-						value="#{groupsController.groupToUpdate.smer.idSmera}"
+						value="#{groupsController.groupToUpdate.department.id}"
 						valueChangeListener="#{groupsController.selectedValue}">
 						<f:selectItems value="#{groupsController.departmentSelectItems}" />
 						<f:ajax event="change" execute="@this" />
@@ -133,12 +133,12 @@
 
 					<h:outputLabel value="Unesite velicinu grupe:" />
 					<h:inputText id="grupaZaIzmenuVelicina" label="Velicina grupe"
-						value="#{groupsController.groupToUpdate.velicina}" />
+						value="#{groupsController.groupToUpdate.size}" />
 					<rich:message for="grupaZaIzmenuVelicina" ajaxRendered="true" />
 
 					<h:outputLabel value="Unesite oznaku grupe:" />
 					<h:inputText id="grupaZaIzmenuOznaka" label="Oznaka grupe"
-						value="#{groupsController.groupToUpdate.oznaka}" required="true" />
+						value="#{groupsController.groupToUpdate.mark}" required="true" />
 					<rich:message for="grupaZaIzmenuOznaka" ajaxRendered="true" />
 
 					<a4j:commandButton action="#{groupsController.updateGroup()}"
@@ -166,7 +166,7 @@
 					</div>
 					<div class="col-sm-4">
 						<h:inputText id="novaGrupaNaziv" label="Naziv grupe"
-							value="#{groupsController.newGroup.naziv}" required="true" />
+							value="#{groupsController.newGroup.name}" required="true" />
 					</div>
 					<div class="col-sm-4">
 						<rich:message for="novaGrupaNaziv" ajaxRendered="true" />
@@ -197,7 +197,7 @@
 					</div>
 					<div class="col-sm-4">
 						<h:inputText id="novaGrupaVelicina" label="Velicina grupe"
-							value="#{groupsController.newGroup.velicina}" />
+							value="#{groupsController.newGroup.size}" />
 					</div>
 					<div class="col-sm-4">
 						<rich:message for="novaGrupaVelicina" ajaxRendered="true" />
@@ -210,7 +210,7 @@
 					</div>
 					<div class="col-sm-4">
 						<h:inputText id="novaGrupaOznaka" label="Oznaka grupe"
-							value="#{groupsController.newGroup.oznaka}" required="true" />
+							value="#{groupsController.newGroup.mark}" required="true" />
 					</div>
 					<div class="col-sm-4">
 						<rich:message for="novaGrupaOznaka" ajaxRendered="true" />

@@ -27,7 +27,7 @@ public class GroupConverter implements Converter {
 	public String getAsString(FacesContext arg0, UIComponent arg1, Object value) {
 		if (value != null) {
 			Group group = (Group) value;
-			Long groupId = group.getIdGrupe();
+			Long groupId = group.getId();
 			return groupId.toString();
 		}
 		return "";

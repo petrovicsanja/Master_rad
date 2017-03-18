@@ -64,7 +64,7 @@ public class LoginController {
 	}
 
 	public int userType() {
-		return user.getTipKorisnika();
+		return user.getType();
 	}
 
 	/* Getters and setters */
@@ -81,16 +81,16 @@ public class LoginController {
 		return username;
 	}
 
-	public void setUsername(String korisnickoIme) {
-		this.username = korisnickoIme;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	public String getPassword() {
 		return password;
 	}
 
-	public void setPassword(String lozinka) {
-		this.password = lozinka;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public String getMessage() {

@@ -18,7 +18,7 @@ public class SubjectsServiceImpl implements SubjectsService {
 
 	@Override
 	public List<Subject> listSubjects() {
-		TypedQuery<Subject> subjectList = em.createQuery("SELECT s FROM Subject s ORDER BY s.nazivPredmeta",
+		TypedQuery<Subject> subjectList = em.createQuery("SELECT s FROM Subject s ORDER BY s.name",
 				Subject.class);
 		return subjectList.getResultList();
 	}
@@ -32,9 +32,9 @@ public class SubjectsServiceImpl implements SubjectsService {
 
 	@Override
 	public void updateSubject(Subject subject) {
-		Subject subjectToUpdate = em.find(Subject.class, subject.getIdPredmeta());
-		subjectToUpdate.setNazivPredmeta(subject.getNazivPredmeta());
-		subjectToUpdate.setOznakaPredmeta(subject.getOznakaPredmeta());
+		Subject subjectToUpdate = em.find(Subject.class, subject.getId());
+		subjectToUpdate.setName(subject.getName());
+		subjectToUpdate.setMark(subject.getMark());
 		System.out.println("Predmet je uspesno izmenjen.");
 	}
 

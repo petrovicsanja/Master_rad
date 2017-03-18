@@ -34,7 +34,7 @@
 								<f:selectItem itemLabel="-- Izaberite grupu --"
 									itemValue="#{null}" />
 								<f:selectItems value="#{restrictionsController.listAllGroups()}"
-									var="group" itemLabel="#{group.naziv}" itemValue="#{group}" />
+									var="group" itemLabel="#{group.name}" itemValue="#{group}" />
 								<f:ajax event="change" execute="@this" />
 							</h:selectOneMenu>
 						</div>
@@ -139,7 +139,7 @@
 								<f:selectItem itemLabel="-- Izaberite grupu --"
 									itemValue="#{null}" />
 								<f:selectItems value="#{restrictionsController.listAllGroups()}"
-									var="group" itemLabel="#{group.naziv}" itemValue="#{group}" />
+									var="group" itemLabel="#{group.name}" itemValue="#{group}" />
 								<f:ajax event="change" execute="@this" />
 							</h:selectOneMenu>
 						</div>
@@ -241,7 +241,7 @@
 								<f:selectItem itemLabel="-- Izaberite grupu --"
 									itemValue="#{null}" />
 								<f:selectItems value="#{restrictionsController.listAllGroups()}"
-									var="group" itemLabel="#{group.naziv}" itemValue="#{group}" />
+									var="group" itemLabel="#{group.name}" itemValue="#{group}" />
 								<f:ajax event="change" execute="@this" />
 							</h:selectOneMenu>
 						</div>

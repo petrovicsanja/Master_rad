@@ -201,7 +201,7 @@ public class AvailabilitiesController {
 				allTeacherAvailabilities = availabilitiesService.listAllTeacherAvailabilities();
 			} else {
 				allTeacherAvailabilities = availabilitiesService
-						.listAllAvailabilitiesForTeacher(loginController.getUser().getIdKorisnika());
+						.listAllAvailabilitiesForTeacher(loginController.getUser().getId());
 			}
 		}
 		return allTeacherAvailabilities;

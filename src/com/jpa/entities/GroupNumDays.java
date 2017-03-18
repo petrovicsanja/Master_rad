@@ -9,7 +9,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "RadniDaniGrupe")
+@Table(name = "GroupNumDays")
 public class GroupNumDays {
 
 	@Id
@@ -17,7 +17,7 @@ public class GroupNumDays {
 	private Long id;
 
 	@OneToOne
-	@JoinColumn(name = "idGrupe")
+	@JoinColumn(name = "groupId")
 	private Group group;
 
 	private Integer min;
@@ -34,8 +34,8 @@ public class GroupNumDays {
 		return id;
 	}
 
-	public void setId(Long idRadniDaniGrupe) {
-		this.id = idRadniDaniGrupe;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public Group getGroup() {

@@ -14,7 +14,7 @@ public class TeacherAvailability {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long teacherAvailabilityId;
+	private Long id;
 
 	@ManyToOne
 	@JoinColumn(name = "teacherId")
@@ -30,12 +30,12 @@ public class TeacherAvailability {
 
 	private Integer semester;
 
-	public Long getTeacherAvailabilityId() {
-		return teacherAvailabilityId;
+	public Long getId() {
+		return id;
 	}
 
-	public void setTeacherAvailabilityId(Long teacherAvailabilityId) {
-		this.teacherAvailabilityId = teacherAvailabilityId;
+	public void setId(Long teacherAvailabilityId) {
+		this.id = teacherAvailabilityId;
 	}
 
 	public User getTeacher() {

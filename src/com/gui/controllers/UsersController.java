@@ -52,7 +52,7 @@ public class UsersController {
 
 	public void deleteUser() {
 		User userToDelete = userList.get(selectedUserIndex);
-		usersService.deleteUser(userToDelete.getIdKorisnika());
+		usersService.deleteUser(userToDelete.getId());
 		userList.remove(userToDelete);
 	}
 
@@ -63,7 +63,7 @@ public class UsersController {
 
 	public User findUserById(Long userId) {
 		for (User user : userList) {
-			if (user.getIdKorisnika().equals(userId)) {
+			if (user.getId().equals(userId)) {
 				return user;
 			}
 		}
@@ -123,8 +123,8 @@ public class UsersController {
 	public Comparator<User> getUserTypeComparator() {
 		return new Comparator<User>() {
 			public int compare(User k1, User k2) {
-				int k1UserType = k1.getTipKorisnika();
-				int k2UserType = k2.getTipKorisnika();
+				int k1UserType = k1.getType();
+				int k2UserType = k2.getType();
 
 				if (k1UserType == k2UserType) {
 					return 0;

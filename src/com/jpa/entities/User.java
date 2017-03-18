@@ -9,80 +9,80 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
-@Table(name = "korisnik")
+@Table(name = "User")
 public class User {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long idKorisnika;
+	private Long id;
 
 	@NotNull
 	@Size(min = 3, max = 20)
-	private String korisnickoIme;
+	private String username;
 
 	@NotNull
 	@Size(min = 3, max = 20)
-	private String lozinka;
+	private String password;
 
 	@NotNull
-	private Integer tipKorisnika;
+	private Integer type;
 
 	@NotNull
-	private String ime;
+	private String firstName;
 
 	@NotNull
-	private String prezime;
+	private String lastName;
 
-	public Long getIdKorisnika() {
-		return idKorisnika;
+	public Long getId() {
+		return id;
 	}
 
-	public void setIdKorisnika(Long idKorisnika) {
-		this.idKorisnika = idKorisnika;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
-	public String getKorisnickoIme() {
-		return korisnickoIme;
+	public String getUsername() {
+		return username;
 	}
 
-	public void setKorisnickoIme(String korisnickoIme) {
-		this.korisnickoIme = korisnickoIme;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
-	public String getLozinka() {
-		return lozinka;
+	public String getPassword() {
+		return password;
 	}
 
-	public void setLozinka(String lozinka) {
-		this.lozinka = lozinka;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
-	public Integer getTipKorisnika() {
-		return tipKorisnika;
+	public Integer getType() {
+		return type;
 	}
 
-	public void setTipKorisnika(Integer tipKorisnika) {
-		this.tipKorisnika = tipKorisnika;
+	public void setType(Integer type) {
+		this.type = type;
 	}
 
-	public String getIme() {
-		return ime;
+	public String getFirstName() {
+		return firstName;
 	}
 
-	public void setIme(String ime) {
-		this.ime = ime;
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
 	}
 
-	public String getPrezime() {
-		return prezime;
+	public String getLastName() {
+		return lastName;
 	}
 
-	public void setPrezime(String prezime) {
-		this.prezime = prezime;
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
 
 	@Override
 	public String toString() {
-		return this.ime + " " + this.prezime;
+		return this.firstName + " " + this.lastName;
 	}
 }

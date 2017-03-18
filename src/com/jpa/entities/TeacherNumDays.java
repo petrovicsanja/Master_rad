@@ -9,7 +9,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "RadniDaniProfesori")
+@Table(name = "TeacherNumDays")
 public class TeacherNumDays {
 
 	@Id
@@ -17,7 +17,7 @@ public class TeacherNumDays {
 	private Long id;
 
 	@OneToOne
-	@JoinColumn(name = "idProfesora")
+	@JoinColumn(name = "teacherId")
 	private User teacher;
 
 	private Integer min;
@@ -34,8 +34,8 @@ public class TeacherNumDays {
 		return id;
 	}
 
-	public void setId(Long idRadniDaniProfesori) {
-		this.id = idRadniDaniProfesori;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public User getTeacher() {

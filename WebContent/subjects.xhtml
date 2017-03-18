@@ -15,23 +15,23 @@
 				iterationStatusVar="it" styleClass="table table-bordered">
 
 				<rich:column id="kolonaNazivPredmeta"
-					sortBy="#{predmet.nazivPredmeta}"
+					sortBy="#{predmet.name}"
 					sortOrder="#{subjectsController.nameOrder}" sortType="custom">
 					<f:facet name="header">
 						<a4j:commandLink value="Naziv predmeta" render="listaPredmeta"
 							execute="@this" action="#{subjectsController.sortByName()}" />
 					</f:facet>
-					<h:outputText value="#{predmet.nazivPredmeta}" />
+					<h:outputText value="#{predmet.name}" />
 				</rich:column>
 
 				<rich:column id="kolonaOznakaPredmeta"
-					sortBy="#{predmet.oznakaPredmeta}"
+					sortBy="#{predmet.mark}"
 					sortOrder="#{subjectsController.markOrder}" sortType="custom">
 					<f:facet name="header">
 						<a4j:commandLink value="Oznaka predmeta" render="listaPredmeta"
 							execute="@this" action="#{subjectsController.sortByMark()}" />
 					</f:facet>
-					<h:outputText value="#{predmet.oznakaPredmeta}" />
+					<h:outputText value="#{predmet.mark}" />
 				</rich:column>
 
 				<rich:column styleClass="text-center"
@@ -101,13 +101,13 @@
 			<h:panelGrid id="izmenaPredmetaGrid" columns="3">
 				<h:outputLabel value="Unesite naziv predmeta:" />
 				<h:inputText id="predmetZaIzmenuNaziv" label="Naziv predmeta"
-					value="#{subjectsController.subjectToUpdate.nazivPredmeta}"
+					value="#{subjectsController.subjectToUpdate.name}"
 					required="true" />
 				<rich:message for="predmetZaIzmenuNaziv" ajaxRendered="true" />
 
 				<h:outputLabel value="Unesite oznaku predmeta:" />
 				<h:inputText id="predmetZaIzmenuOznaka" label="Oznaka predmeta"
-					value="#{subjectsController.subjectToUpdate.oznakaPredmeta}"
+					value="#{subjectsController.subjectToUpdate.mark}"
 					required="true" />
 				<rich:message for="predmetZaIzmenuOznaka" ajaxRendered="true" />
 
@@ -130,13 +130,13 @@
 			<h:panelGrid columns="3">
 				<h:outputLabel value="Unesite naziv predmeta:" />
 				<h:inputText id="noviPredmetNaziv" label="Naziv predmeta"
-					value="#{subjectsController.newSubject.nazivPredmeta}"
+					value="#{subjectsController.newSubject.name}"
 					required="true" />
 				<rich:message for="noviPredmetNaziv" ajaxRendered="true" />
 
 				<h:outputLabel value="Unesite oznaku predmeta:" />
 				<h:inputText id="noviPredmetOznaka" label="Oznaka predmeta"
-					value="#{subjectsController.newSubject.oznakaPredmeta}"
+					value="#{subjectsController.newSubject.mark}"
 					required="true" />
 				<rich:message for="noviPredmetOznaka" ajaxRendered="true" />
 			</h:panelGrid>

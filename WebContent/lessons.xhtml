@@ -21,7 +21,7 @@
 							itemValue="#{null}" />
 						<f:selectItems value="#{lessonsController.listAllSubjects()}"
 							var="subject" itemLabel="#{subject.toString()}"
-							itemValue="#{subject.idPredmeta}" />
+							itemValue="#{subject.id}" />
 					</h:selectOneMenu>
 				</div>
 				<div class="col-sm-3">
@@ -40,7 +40,7 @@
 					<f:facet name="header">
 							Ime predmeta
 						</f:facet>
-					<h:outputText value="#{lesson.subject.nazivPredmeta}" />
+					<h:outputText value="#{lesson.subject.name}" />
 				</rich:column>
 
 				<rich:column>
@@ -218,15 +218,15 @@
 							<f:selectItems value="#{lessonsController.listAllRooms()}" />
 							<rich:column>
 								<f:facet name="header">Naziv sale</f:facet>
-								#{room.naziv}
+								#{room.name}
 							</rich:column>
 							<rich:column>
 								<f:facet name="header">Velicina</f:facet>
-                    			#{room.velicina}
+                    			#{room.size}
                 			</rich:column>
 							<rich:column>
 								<f:facet name="header">Zgrada</f:facet>
-                    			#{room.zgrada}
+                    			#{room.building}
                 			</rich:column>
 						</rich:pickList>
 					</div>

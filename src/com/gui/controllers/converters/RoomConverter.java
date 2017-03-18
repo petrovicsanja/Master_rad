@@ -28,7 +28,7 @@ public class RoomConverter implements Converter {
 	public String getAsString(FacesContext arg0, UIComponent arg1, Object value) {
 		if (value != null) {
 			Room room = (Room) value;
-			Long roomId = room.getIdUcionice();
+			Long roomId = room.getId();
 			return roomId.toString();
 		}
 		return "";

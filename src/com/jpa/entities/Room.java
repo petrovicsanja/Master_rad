@@ -1,6 +1,5 @@
 package com.jpa.entities;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -9,78 +8,76 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "Ucionice")
+@Table(name = "Room")
 public class Room {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long idUcionice;
+	private Long id;
 
 	@NotNull
-	@Column(name = "NazivUcionice")
-	private String naziv;
+	private String name;
 
 	@NotNull
-	private Integer sprat;
+	private Integer floor;
 
-	private String zgrada;
+	private String building;
 
-	private Integer velicina;
+	private Integer size;
 
 	@NotNull
-	@Column(name = "OznakaUcionice")
-	private String oznaka;
+	private String mark;
 
 	@Override
 	public String toString() {
-		return this.naziv;
+		return this.name;
 	}
 
-	public Long getIdUcionice() {
-		return idUcionice;
+	public Long getId() {
+		return id;
 	}
 
-	public void setIdUcionice(Long idUcionice) {
-		this.idUcionice = idUcionice;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
-	public String getNaziv() {
-		return naziv;
+	public String getName() {
+		return name;
 	}
 
-	public void setNaziv(String naziv) {
-		this.naziv = naziv;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public Integer getSprat() {
-		return sprat;
+	public Integer getFloor() {
+		return floor;
 	}
 
-	public void setSprat(Integer sprat) {
-		this.sprat = sprat;
+	public void setFloor(Integer floor) {
+		this.floor = floor;
 	}
 
-	public String getZgrada() {
-		return zgrada;
+	public String getBuilding() {
+		return building;
 	}
 
-	public void setZgrada(String zgrada) {
-		this.zgrada = zgrada;
+	public void setBuilding(String building) {
+		this.building = building;
 	}
 
-	public Integer getVelicina() {
-		return velicina;
+	public Integer getSize() {
+		return size;
 	}
 
-	public void setVelicina(Integer velicina) {
-		this.velicina = velicina;
+	public void setSize(Integer size) {
+		this.size = size;
 	}
 
-	public String getOznaka() {
-		return oznaka;
+	public String getMark() {
+		return mark;
 	}
 
-	public void setOznaka(String oznaka) {
-		this.oznaka = oznaka;
+	public void setMark(String mark) {
+		this.mark = mark;
 	}
 }

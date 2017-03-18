@@ -23,20 +23,20 @@ public class UsersServiceImpl implements UsersService {
 	 * @return User Nadjeni korisnik ili null ukoliko korisnik nije pronadjen
 	 */
 	@Override
-	public User findUser(String korisnickoIme, String lozinka) {
-		TypedQuery<User> pronadjiKorisnika = em.createQuery(
-				"SELECT u FROM User u WHERE u.korisnickoIme = :korisnickoIme AND u.lozinka = :lozinka", User.class);
-		pronadjiKorisnika.setParameter("korisnickoIme", korisnickoIme);
-		pronadjiKorisnika.setParameter("lozinka", lozinka);
+	public User findUser(String username, String password) {
+		TypedQuery<User> userQuery = em.createQuery(
+				"SELECT u FROM User u WHERE u.username = :username AND u.password = :password", User.class);
+		userQuery.setParameter("username", username);
+		userQuery.setParameter("password", password);
 
-		User korisnik;
+		User user;
 		try {
-			korisnik = pronadjiKorisnika.getSingleResult();
+			user = userQuery.getSingleResult();
 		} catch (NoResultException nre) {
-			korisnik = null;
+			user = null;
 		}
 
-		return korisnik;
+		return user;
 	}
 
 	/**
@@ -55,8 +55,8 @@ public class UsersServiceImpl implements UsersService {
 	 */
 	@Override
 	public List<User> listUsers() {
-		TypedQuery<User> izlistajKorisnike = em.createQuery("SELECT u FROM User u ORDER BY u.ime", User.class);
-		return izlistajKorisnike.getResultList();
+		TypedQuery<User> userList = em.createQuery("SELECT u FROM User u ORDER BY u.firstName", User.class);
+		return userList.getResultList();
 	}
 
 	/**
@@ -84,10 +84,10 @@ public class UsersServiceImpl implements UsersService {
 	 */
 	@Override
 	public void updateUser(User user) {
-		User userToUpdate = em.find(User.class, user.getIdKorisnika());
-		userToUpdate.setIme(user.getIme());
-		userToUpdate.setPrezime(user.getPrezime());
-		userToUpdate.setTipKorisnika(user.getTipKorisnika());
+		User userToUpdate = em.find(User.class, user.getId());
+		userToUpdate.setFirstName(user.getFirstName());
+		userToUpdate.setLastName(user.getLastName());
+		userToUpdate.setType(user.getType());
 		System.out.println("Podaci korisnika su uspesno izmenjeni.");
 	}
 }

@@ -40,7 +40,7 @@ public class AvailabilitiesServiceImpl implements AvailabilitiesService {
 
 			em.persist(teacherAvailability);
 		}
-		System.out.println("New teacher availabilities are added for user: " + teacher.getIdKorisnika());
+		System.out.println("New teacher availabilities are added for user: " + teacher.getId());
 
 		return teacherAvailabilityList;
 	}
@@ -62,7 +62,7 @@ public class AvailabilitiesServiceImpl implements AvailabilitiesService {
 
 			em.persist(groupAvailability);
 		}
-		System.out.println("New group availabilities are added for group: " + group.getIdGrupe());
+		System.out.println("New group availabilities are added for group: " + group.getId());
 
 		return groupAvailabilityList;
 	}
@@ -84,37 +84,36 @@ public class AvailabilitiesServiceImpl implements AvailabilitiesService {
 
 			em.persist(roomAvailability);
 		}
-		System.out.println("New room availabilities are added for room: " + room.getIdUcionice());
+		System.out.println("New room availabilities are added for room: " + room.getId());
 
 		return roomAvailabilityList;
 	}
 
 	@Override
 	public List<TeacherAvailability> listAllTeacherAvailabilities() {
-		TypedQuery<TeacherAvailability> allTeacherAvailabilities = em
-				.createQuery("SELECT a FROM TeacherAvailability a ORDER BY a.teacher.ime", TeacherAvailability.class);
+		TypedQuery<TeacherAvailability> allTeacherAvailabilities = em.createQuery(
+				"SELECT a FROM TeacherAvailability a ORDER BY a.teacher.firstName", TeacherAvailability.class);
 		return allTeacherAvailabilities.getResultList();
 	}
 
 	@Override
 	public List<GroupAvailability> listAllGroupAvailabilities() {
 		TypedQuery<GroupAvailability> allGroupAvailabilities = em
-				.createQuery("SELECT a FROM GroupAvailability a ORDER BY a.group.naziv", GroupAvailability.class);
+				.createQuery("SELECT a FROM GroupAvailability a ORDER BY a.group.name", GroupAvailability.class);
 		return allGroupAvailabilities.getResultList();
 	}
 
 	@Override
 	public List<RoomAvailability> listAllRoomAvailabilities() {
 		TypedQuery<RoomAvailability> allRoomAvailabilities = em
-				.createQuery("SELECT a FROM RoomAvailability a ORDER BY a.room.naziv", RoomAvailability.class);
+				.createQuery("SELECT a FROM RoomAvailability a ORDER BY a.room.name", RoomAvailability.class);
 		return allRoomAvailabilities.getResultList();
 	}
 
 	@Override
 	public List<TeacherAvailability> listAllAvailabilitiesForTeacher(Long teacherId) {
 		TypedQuery<TeacherAvailability> availabilityList = em.createQuery(
-				"SELECT a FROM TeacherAvailability a WHERE a.teacher.idKorisnika = :teacherId",
-				TeacherAvailability.class);
+				"SELECT a FROM TeacherAvailability a WHERE a.teacher.id = :teacherId", TeacherAvailability.class);
 		availabilityList.setParameter("teacherId", teacherId);
 		return availabilityList.getResultList();
 	}

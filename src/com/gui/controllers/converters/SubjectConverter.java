@@ -27,7 +27,7 @@ public class SubjectConverter implements Converter {
 	public String getAsString(FacesContext arg0, UIComponent arg1, Object value) {
 		if (value != null) {
 			Subject subject = (Subject) value;
-			Long subjectId = subject.getIdPredmeta();
+			Long subjectId = subject.getId();
 			return subjectId.toString();
 		}
 		return "";

@@ -41,7 +41,7 @@ public class SubjectsController {
 
 	public void deleteSubject() {
 		Subject subjectToDelete = subjectList.get(selectedSubjectIndex);
-		subjectsService.deleteSubject(subjectToDelete.getIdPredmeta());
+		subjectsService.deleteSubject(subjectToDelete.getId());
 		subjectList.remove(subjectToDelete);
 	}
 
@@ -58,7 +58,7 @@ public class SubjectsController {
 
 	public Subject findSubjectById(Long id) {
 		for (Subject subject : subjectList) {
-			if (subject.getIdPredmeta().equals(id)) {
+			if (subject.getId().equals(id)) {
 				return subject;
 			}
 		}

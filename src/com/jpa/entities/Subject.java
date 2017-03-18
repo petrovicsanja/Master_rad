@@ -8,45 +8,45 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "Predmeti")
+@Table(name = "Subject")
 public class Subject {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long idPredmeta;
+	private Long id;
 
 	@NotNull
-	private String nazivPredmeta;
+	private String name;
 
 	@NotNull
-	private String oznakaPredmeta;
+	private String mark;
 
-	public Long getIdPredmeta() {
-		return idPredmeta;
+	public Long getId() {
+		return id;
 	}
 
-	public void setIdPredmeta(Long idPredmeta) {
-		this.idPredmeta = idPredmeta;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
-	public String getNazivPredmeta() {
-		return nazivPredmeta;
+	public String getName() {
+		return name;
 	}
 
-	public void setNazivPredmeta(String nazivPredmeta) {
-		this.nazivPredmeta = nazivPredmeta;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public String getOznakaPredmeta() {
-		return oznakaPredmeta;
+	public String getMark() {
+		return mark;
 	}
 
-	public void setOznakaPredmeta(String oznakaPredmeta) {
-		this.oznakaPredmeta = oznakaPredmeta;
+	public void setMark(String mark) {
+		this.mark = mark;
 	}
 
 	@Override
 	public String toString() {
-		return nazivPredmeta;
+		return name;
 	}
 }
