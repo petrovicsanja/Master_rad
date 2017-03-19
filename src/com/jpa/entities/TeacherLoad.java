@@ -7,6 +7,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "TeacherLoad")
@@ -18,14 +19,19 @@ public class TeacherLoad {
 
 	@OneToOne
 	@JoinColumn(name = "teacherId")
+	@NotNull
 	private User teacher;
 
+	@NotNull
 	private Integer max;
 
+	@NotNull
 	private Integer min;
 
+	@NotNull
 	private Integer semester;
 
+	@NotNull
 	private String year;
 
 	public Long getId() {

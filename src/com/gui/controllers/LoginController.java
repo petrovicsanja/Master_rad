@@ -67,6 +67,10 @@ public class LoginController {
 		return user.getType();
 	}
 
+	public boolean isAdmin() {
+		return user.getType().equals(2);
+	}
+
 	/* Getters and setters */
 
 	public User getUser() {

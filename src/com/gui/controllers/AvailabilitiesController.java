@@ -197,7 +197,7 @@ public class AvailabilitiesController {
 
 	public List<TeacherAvailability> listAllTeacherAvailabilities() {
 		if (allTeacherAvailabilities == null) {
-			if (loginController.userType() == 2) {
+			if (loginController.isAdmin()) {
 				allTeacherAvailabilities = availabilitiesService.listAllTeacherAvailabilities();
 			} else {
 				allTeacherAvailabilities = availabilitiesService

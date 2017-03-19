@@ -2,7 +2,6 @@ package com.jpa.entities;
 
 import java.util.Set;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -13,6 +12,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "Lesson")
@@ -38,13 +38,15 @@ public class Lesson {
 	@JoinTable(name = "LessonRoom", joinColumns = @JoinColumn(name = "lessonId"), inverseJoinColumns = @JoinColumn(name = "roomId"))
 	private Set<Room> rooms;
 
-	@Column(nullable = false)
+	@NotNull
 	private String terms;
 
 	private String note;
 
+	@NotNull
 	private Integer semester;
 
+	@NotNull
 	private String year;
 
 	public Long getId() {

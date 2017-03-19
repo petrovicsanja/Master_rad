@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "Semester")
@@ -23,10 +24,12 @@ public class Semester {
 
 	private Date endDate;
 
+	@NotNull
 	private Integer ordinalNumber;
 
 	private boolean active;
 
+	@NotNull
 	private String schoolYear;
 
 	public Long getId() {

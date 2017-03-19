@@ -24,6 +24,9 @@ public class RestrictionsController {
 	@EJB
 	private RestrictionsService restrictionsService;
 
+	@ManagedProperty(value = "#{loginController}")
+	private LoginController loginController;
+
 	@ManagedProperty(value = "#{groupsController}")
 	private GroupsController groupsController;
 
@@ -34,35 +37,41 @@ public class RestrictionsController {
 	private SemesterController semesterController;
 
 	// Group num days restriction
+	private List<GroupNumDays> groupNumDaysRestrictionList = null;
 	private Group numDaysGroup = null;
 	private Integer minNumDaysGroup = null;
 	private Integer optNumDaysGroup = null;
 	private Integer maxNumDaysGroup = null;
 
 	// Teacher num days restriction
+	private List<TeacherNumDays> teacherNumDaysRestrictionList = null;
 	private User numDaysTeacher = null;
 	private Integer minNumDaysTeacher = null;
 	private Integer optNumDaysTeacher = null;
 	private Integer maxNumDaysTeacher = null;
 
 	// Group idles restriction
+	private List<GroupIdles> groupIdlesRestrictionList = null;
 	private Group idlesGroup = null;
 	private Integer maxIdlesGroup = null;
 	private Boolean multipleIdlesGroup = false;
 	private Integer daysIdlesGroup = null;
 
 	// Teacher idles restriction
+	private List<TeacherIdles> teacherIdlesRestrictionList = null;
 	private User idlesTeacher = null;
 	private Integer maxIdlesTeacher = null;
 	private Boolean multipleIdlesTeacher = false;
 	private Integer daysIdlesTeacher = null;
 
 	// Group load restriction
+	private List<GroupLoad> groupLoadRestrictionList = null;
 	private Group loadGroup = null;
 	private Integer maxLoadGroup = null;
 	private Integer minLoadGroup = null;
 
 	// Teacher load restriction
+	private List<TeacherLoad> teacherLoadRestrictionList = null;
 	private User loadTeacher = null;
 	private Integer maxLoadTeacher = null;
 	private Integer minLoadTeacher = null;
@@ -73,6 +82,57 @@ public class RestrictionsController {
 
 	public List<User> listAllTeachers() {
 		return usersController.listUsers();
+	}
+
+	public List<GroupNumDays> listNumDaysGroupRestrictions() {
+		if (groupNumDaysRestrictionList == null) {
+			groupNumDaysRestrictionList = restrictionsService
+					.listNumDaysGroupRestrictions(semesterController.getActiveSemester());
+		}
+		return groupNumDaysRestrictionList;
+	}
+
+	public List<TeacherNumDays> listNumDaysTeacherRestrictionList() {
+		if (teacherNumDaysRestrictionList == null) {
+			Long teacherId = loginController.isAdmin() ? null : loginController.getUser().getId();
+			teacherNumDaysRestrictionList = restrictionsService.listNumDaysTeacherRestrictions(teacherId,
+					semesterController.getActiveSemester());
+		}
+		return teacherNumDaysRestrictionList;
+	}
+
+	public List<GroupIdles> listGroupIdlesRestrictionList() {
+		if (groupIdlesRestrictionList == null) {
+			groupIdlesRestrictionList = restrictionsService
+					.listIdlesGroupRestrictions(semesterController.getActiveSemester());
+		}
+		return groupIdlesRestrictionList;
+	}
+
+	public List<TeacherIdles> listTeacherIdlesRestrictionList() {
+		if (teacherIdlesRestrictionList == null) {
+			Long teacherId = loginController.isAdmin() ? null : loginController.getUser().getId();
+			teacherIdlesRestrictionList = restrictionsService.listIdlesTeacherRestrictions(teacherId,
+					semesterController.getActiveSemester());
+		}
+		return teacherIdlesRestrictionList;
+	}
+
+	public List<GroupLoad> listGroupLoadRestrictionList() {
+		if (groupLoadRestrictionList == null) {
+			groupLoadRestrictionList = restrictionsService
+					.listLoadGroupRestrictions(semesterController.getActiveSemester());
+		}
+		return groupLoadRestrictionList;
+	}
+
+	public List<TeacherLoad> listTeacherLoadRestrictionList() {
+		if (teacherLoadRestrictionList == null) {
+			Long teacherId = loginController.isAdmin() ? null : loginController.getUser().getId();
+			teacherLoadRestrictionList = restrictionsService.listLoadTeacherRestrictions(teacherId,
+					semesterController.getActiveSemester());
+		}
+		return teacherLoadRestrictionList;
 	}
 
 	public void resetNumDaysFields(boolean group) {
@@ -122,6 +182,9 @@ public class RestrictionsController {
 			newGroupNumDays.setMin(minNumDaysGroup);
 			newGroupNumDays.setOpt(optNumDaysGroup);
 			newGroupNumDays.setMax(maxNumDaysGroup);
+			
+			
+			
 			restrictionsService.addNewNumDaysGroupRestriction(newGroupNumDays, semesterController.getActiveSemester());
 			resetNumDaysFields(true);
 		}
@@ -375,5 +438,9 @@ public class RestrictionsController {
 
 	public void setSemesterController(SemesterController semesterController) {
 		this.semesterController = semesterController;
+	}
+
+	public void setLoginController(LoginController loginController) {
+		this.loginController = loginController;
 	}
 }

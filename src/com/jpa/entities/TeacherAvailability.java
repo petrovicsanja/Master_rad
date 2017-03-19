@@ -7,6 +7,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "TeacherAvailability")
@@ -18,16 +19,22 @@ public class TeacherAvailability {
 
 	@ManyToOne
 	@JoinColumn(name = "teacherId")
+	@NotNull
 	private User teacher;
 
+	@NotNull
 	private String type;
 
+	@NotNull
 	private String dayMark;
 
+	@NotNull
 	private Integer termNumber;
 
+	@NotNull
 	private String year;
 
+	@NotNull
 	private Integer semester;
 
 	public Long getId() {

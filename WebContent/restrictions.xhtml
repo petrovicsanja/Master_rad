@@ -9,7 +9,42 @@
 		<rich:collapsiblePanel header="Ogranicenja na broj radnih dana"
 			switchType="client" styleClass="panel panel-primary"
 			headerClass="panel-heading" bodyClass="panel-body">
-			<h:form id="numDaysGroupRestrictions">
+
+			<rich:dataTable id="numDaysGroupRestrictionList" var="restriction"
+				rows="10"
+				value="#{restrictionsController.listNumDaysGroupRestrictions()}"
+				iterationStatusVar="it" styleClass="table table-bordered">
+				<rich:column sortBy="#{restriction.group.name}">
+					<f:facet name="header">
+						Naziv grupe
+					</f:facet>
+					<h:outputText value="#{restriction.group.name}" />
+				</rich:column>
+
+				<rich:column>
+					<f:facet name="header">
+						Minimum
+					</f:facet>
+					<h:outputText value="#{restriction.min}" />
+				</rich:column>
+
+				<rich:column>
+					<f:facet name="header">
+						Optimum
+					</f:facet>
+					<h:outputText value="#{restriction.opt}" />
+				</rich:column>
+
+				<rich:column>
+					<f:facet name="header">
+						Maksimum
+					</f:facet>
+					<h:outputText value="#{restriction.max}" />
+				</rich:column>
+			</rich:dataTable>
+
+			<h:form id="numDaysGroupRestrictions"
+				rendered="#{loginController.admin}">
 				<div class="container">
 					<div class="row">
 						<div class="col-sm-3">
@@ -62,7 +97,41 @@
 				</div>
 			</h:form>
 
-			<h:form id="numDaysTeacherRestrictions">
+			<rich:dataTable id="numDaysTeacherRestrictionList" var="restriction"
+				rows="10"
+				value="#{restrictionsController.listNumDaysTeacherRestrictionList()}"
+				iterationStatusVar="it" styleClass="table table-bordered">
+				<rich:column sortBy="#{restriction.teacher}">
+					<f:facet name="header">
+						Profesor
+					</f:facet>
+					<h:outputText value="#{restriction.teacher}" />
+				</rich:column>
+
+				<rich:column>
+					<f:facet name="header">
+						Minimum
+					</f:facet>
+					<h:outputText value="#{restriction.min}" />
+				</rich:column>
+
+				<rich:column>
+					<f:facet name="header">
+						Optimum
+					</f:facet>
+					<h:outputText value="#{restriction.opt}" />
+				</rich:column>
+
+				<rich:column>
+					<f:facet name="header">
+						Maksimum
+					</f:facet>
+					<h:outputText value="#{restriction.max}" />
+				</rich:column>
+			</rich:dataTable>
+
+			<h:form id="numDaysTeacherRestrictions"
+				rendered="#{loginController.admin}">
 				<div class="container">
 					<div class="row">
 						<div class="col-sm-3">
@@ -114,7 +183,41 @@
 		<rich:collapsiblePanel header="Pauze u toku nastave"
 			switchType="client" styleClass="panel panel-primary"
 			headerClass="panel-heading" bodyClass="panel-body">
-			<h:form id="idlesGroupsRestrictions">
+			<rich:dataTable id="idlesGroupRestrictionList" var="restriction"
+				rows="10"
+				value="#{restrictionsController.listGroupIdlesRestrictionList()}"
+				iterationStatusVar="it" styleClass="table table-bordered">
+				<rich:column sortBy="#{restriction.group.name}">
+					<f:facet name="header">
+						Naziv grupe
+					</f:facet>
+					<h:outputText value="#{restriction.group.name}" />
+				</rich:column>
+
+				<rich:column>
+					<f:facet name="header">
+						Maksimum
+					</f:facet>
+					<h:outputText value="#{restriction.max}" />
+				</rich:column>
+
+				<rich:column>
+					<f:facet name="header">
+						Višestruke pauze
+					</f:facet>
+					<h:outputText value="#{restriction.multiple}" />
+				</rich:column>
+
+				<rich:column>
+					<f:facet name="header">
+						Broj dana
+					</f:facet>
+					<h:outputText value="#{restriction.days}" />
+				</rich:column>
+			</rich:dataTable>
+
+			<h:form id="idlesGroupsRestrictions"
+				rendered="#{loginController.admin}">
 				<div class="container">
 					<div class="row">
 						<div class="col-sm-3">
@@ -167,7 +270,41 @@
 				</div>
 			</h:form>
 
-			<h:form id="idlesTeachersRestrictions">
+			<rich:dataTable id="idlesTeacherRestrictionList" var="restriction"
+				rows="10"
+				value="#{restrictionsController.listTeacherIdlesRestrictionList()}"
+				iterationStatusVar="it" styleClass="table table-bordered">
+				<rich:column sortBy="#{restriction.teacher}">
+					<f:facet name="header">
+						Profesor
+					</f:facet>
+					<h:outputText value="#{restriction.teacher}" />
+				</rich:column>
+
+				<rich:column>
+					<f:facet name="header">
+						Maksimum
+					</f:facet>
+					<h:outputText value="#{restriction.max}" />
+				</rich:column>
+
+				<rich:column>
+					<f:facet name="header">
+						Višestruke pauze
+					</f:facet>
+					<h:outputText value="#{restriction.multiple}" />
+				</rich:column>
+
+				<rich:column>
+					<f:facet name="header">
+						Broj dana
+					</f:facet>
+					<h:outputText value="#{restriction.days}" />
+				</rich:column>
+			</rich:dataTable>
+
+			<h:form id="idlesTeachersRestrictions"
+				rendered="#{loginController.admin}">
 				<div class="container">
 					<div class="row">
 						<div class="col-sm-3">
@@ -219,7 +356,35 @@
 		<rich:collapsiblePanel header="Broj termina u toku dana"
 			switchType="client" styleClass="panel panel-primary"
 			headerClass="panel-heading" bodyClass="panel-body">
-			<h:form id="loadGroupsRestrictions">
+			<rich:dataTable id="loadsGroupRestrictionList" var="restriction"
+				rows="10"
+				value="#{restrictionsController.listGroupLoadRestrictionList()}"
+				iterationStatusVar="it" styleClass="table table-bordered">
+				<rich:column sortBy="#{restriction.group.name}">
+					<f:facet name="header">
+						Naziv grupe
+					</f:facet>
+					<h:outputText value="#{restriction.group.name}" />
+				</rich:column>
+
+				<rich:column>
+					<f:facet name="header">
+						Minimum
+					</f:facet>
+					<h:outputText value="#{restriction.min}" />
+				</rich:column>
+
+				<rich:column>
+					<f:facet name="header">
+						Maksimum
+					</f:facet>
+					<h:outputText value="#{restriction.max}" />
+				</rich:column>
+			</rich:dataTable>
+
+
+			<h:form id="loadGroupsRestrictions"
+				rendered="#{loginController.admin}">
 				<div class="container">
 					<div class="row">
 						<div class="col-sm-3">
@@ -265,7 +430,34 @@
 				</div>
 			</h:form>
 
-			<h:form id="loadTeachersRestrictions">
+			<rich:dataTable id="loadsTeacherRestrictionList" var="restriction"
+				rows="10"
+				value="#{restrictionsController.listTeacherLoadRestrictionList()}"
+				iterationStatusVar="it" styleClass="table table-bordered">
+				<rich:column sortBy="#{restriction.teacher}">
+					<f:facet name="header">
+						Profesor
+					</f:facet>
+					<h:outputText value="#{restriction.teacher}" />
+				</rich:column>
+
+				<rich:column>
+					<f:facet name="header">
+						Minimum
+					</f:facet>
+					<h:outputText value="#{restriction.min}" />
+				</rich:column>
+
+				<rich:column>
+					<f:facet name="header">
+						Maksimum
+					</f:facet>
+					<h:outputText value="#{restriction.max}" />
+				</rich:column>
+			</rich:dataTable>
+
+			<h:form id="loadTeachersRestrictions"
+				rendered="#{loginController.admin}">
 				<div class="container">
 					<div class="row">
 						<div class="col-sm-3">

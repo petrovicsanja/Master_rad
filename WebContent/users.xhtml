@@ -153,35 +153,71 @@
 			switchType="client" rendered="#{loginController.userType() eq 2}"
 			styleClass="panel panel-primary" headerClass="panel-heading"
 			bodyClass="panel-body">
-			<h:panelGrid columns="3">
-				<h:outputLabel value="Unesite ime korisnika:" />
-				<h:inputText id="noviKorisnikIme" label="Ime korisnika"
-					value="#{usersController.newUser.firstName}" required="true" />
-				<rich:message for="noviKorisnikIme" ajaxRendered="true" />
-
-				<h:outputLabel value="Unesite prezime korisnika:" />
-				<h:inputText id="noviKorisnikPrezime" label="Prezime korisnika"
-					value="#{usersController.newUser.lastName}" required="true" />
-				<rich:message for="noviKorisnikPrezime" ajaxRendered="true" />
-
-				<h:outputLabel value="Unesite korisničko ime korisnika:" />
-				<h:inputText id="noviKorisnikKorisnickoIme" label="Korisnicko ime"
-					value="#{usersController.newUser.username}" required="true" />
-				<rich:message for="noviKorisnikKorisnickoIme" ajaxRendered="true" />
-
-				<h:outputLabel value="Unesite lozinku korisnika:" />
-				<h:inputSecret id="noviKorisnikLozinka" label="Lozinka korisnika"
-					value="#{usersController.newUser.password}" required="true" />
-				<rich:message for="noviKorisnikLozinka" ajaxRendered="true" />
-
-				<h:outputLabel value="Unesite tip korisnika:" />
-				<h:selectOneRadio id="noviKorisnikTip" required="true"
-					label="Tip korisnika" value="#{usersController.newUser.type}">
-					<f:selectItem id="profesor" itemLabel="Profesor" itemValue="1" />
-					<f:selectItem id="admin" itemLabel="Administrator" itemValue="2" />
-				</h:selectOneRadio>
-				<rich:message for="noviKorisnikTip" ajaxRendered="true" />
-			</h:panelGrid>
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-4">
+						<h:outputLabel value="Unesite ime korisnika:" />
+					</div>
+					<div class="col-sm-4">
+						<h:inputText id="noviKorisnikIme" label="Ime korisnika"
+							value="#{usersController.newUser.firstName}" required="true" />
+					</div>
+					<div class="col-sm-4">
+						<rich:message for="noviKorisnikIme" ajaxRendered="true" />
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-4">
+						<h:outputLabel value="Unesite prezime korisnika:" />
+					</div>
+					<div class="col-sm-4">
+						<h:inputText id="noviKorisnikPrezime" label="Prezime korisnika"
+							value="#{usersController.newUser.lastName}" required="true" />
+					</div>
+					<div class="col-sm-4">
+						<rich:message for="noviKorisnikPrezime" ajaxRendered="true" />
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-4">
+						<h:outputLabel value="Unesite korisničko ime korisnika:" />
+					</div>
+					<div class="col-sm-4">
+						<h:inputText id="noviKorisnikKorisnickoIme" label="Korisnicko ime"
+							value="#{usersController.newUser.username}" required="true" />
+					</div>
+					<div class="col-sm-4">
+						<rich:message for="noviKorisnikKorisnickoIme" ajaxRendered="true" />
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-4">
+						<h:outputLabel value="Unesite lozinku korisnika:" />
+					</div>
+					<div class="col-sm-4">
+						<h:inputSecret id="noviKorisnikLozinka" label="Lozinka korisnika"
+							value="#{usersController.newUser.password}" required="true" />
+					</div>
+					<div class="col-sm-4">
+						<rich:message for="noviKorisnikLozinka" ajaxRendered="true" />
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-4">
+						<h:outputLabel value="Unesite tip korisnika:" />
+					</div>
+					<div class="col-sm-4">
+						<h:selectOneRadio id="noviKorisnikTip" required="true"
+							label="Tip korisnika" value="#{usersController.newUser.type}">
+							<f:selectItem id="profesor" itemLabel="Profesor" itemValue="1" />
+							<f:selectItem id="admin" itemLabel="Administrator" itemValue="2" />
+						</h:selectOneRadio>
+					</div>
+					<div class="col-sm-4">
+						<rich:message for="noviKorisnikTip" ajaxRendered="true" />
+					</div>
+				</div>
+			</div>
 
 			<h:commandButton action="#{usersController.addUser()}"
 				value="Dodaj korisnika" styleClass="btn btn-sm btn-primary">

@@ -11,8 +11,8 @@
 			switchType="client" styleClass="panel panel-primary"
 			headerClass="panel-heading" bodyClass="panel-body">
 			<rich:dataTable id="listaUcionica" var="ucionica" rows="10"
-				value="#{roomsController.listClassrooms()}"
-				iterationStatusVar="it" styleClass="table table-bordered">
+				value="#{roomsController.listClassrooms()}" iterationStatusVar="it"
+				styleClass="table table-bordered">
 
 				<rich:column id="kolonanaziv" sortBy="#{ucionica.name}"
 					sortOrder="#{roomsController.nameOrder}" sortType="custom">
@@ -165,32 +165,70 @@
 			switchType="client" rendered="#{loginController.userType() eq 2}"
 			styleClass="panel panel-primary" headerClass="panel-heading"
 			bodyClass="panel-body">
-			<h:panelGrid columns="3">
-				<h:outputLabel value="Unesite naziv ucionice:" />
-				<h:inputText id="novaUcionicaNaziv" label="Naziv ucionice"
-					value="#{roomsController.newClassroom.name}" required="true" />
-				<rich:message for="novaUcionicaNaziv" ajaxRendered="true" />
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-4">
+						<h:outputLabel value="Unesite naziv ucionice:" />
+					</div>
+					<div class="col-sm-4">
+						<h:inputText id="novaUcionicaNaziv" label="Naziv ucionice"
+							value="#{roomsController.newClassroom.name}" required="true" />
+					</div>
+					<div class="col-sm-4">
+						<rich:message for="novaUcionicaNaziv" ajaxRendered="true" />
+					</div>
+				</div>
 
-				<h:outputLabel value="Unesite sprat na kojem se ucionica nalazi:" />
-				<h:inputText id="novaUcionicaSprat" label="Sprat ucionice"
-					value="#{roomsController.newClassroom.floor}" required="true" />
-				<rich:message for="novaUcionicaSprat" ajaxRendered="true" />
+				<div class="row">
+					<div class="col-sm-4">
+						<h:outputLabel value="Unesite sprat na kojem se ucionica nalazi:" />
+					</div>
+					<div class="col-sm-4">
+						<h:inputText id="novaUcionicaSprat" label="Sprat ucionice"
+							value="#{roomsController.newClassroom.floor}" required="true" />
+					</div>
+					<div class="col-sm-4">
+						<rich:message for="novaUcionicaSprat" ajaxRendered="true" />
+					</div>
+				</div>
 
-				<h:outputLabel value="Unesite zgradu u kojoj se ucinica nalazi:" />
-				<h:inputText id="novaUcionicaZgrada" label="Zgrada ucionice"
-					value="#{roomsController.newClassroom.building}" />
-				<rich:message for="novaUcionicaZgrada" ajaxRendered="true" />
-
-				<h:outputLabel value="Unesite velicinu ucionice:" />
-				<h:inputText id="novaUcionicaVelicina" label="Velicina ucionice"
-					value="#{roomsController.newClassroom.size}" />
-				<rich:message for="novaUcionicaVelicina" ajaxRendered="true" />
-
-				<h:outputLabel value="Unesite oznaku ucionice:" />
-				<h:inputText id="novaUcionicaOznaka" label="Oznaka ucionice"
-					value="#{roomsController.newClassroom.mark}" required="true" />
-				<rich:message for="novaUcionicaOznaka" ajaxRendered="true" />
-			</h:panelGrid>
+				<div class="row">
+					<div class="col-sm-4">
+						<h:outputLabel value="Unesite zgradu u kojoj se ucinica nalazi:" />
+					</div>
+					<div class="col-sm-4">
+						<h:inputText id="novaUcionicaZgrada" label="Zgrada ucionice"
+							value="#{roomsController.newClassroom.building}" />
+					</div>
+					<div class="col-sm-4">
+						<rich:message for="novaUcionicaZgrada" ajaxRendered="true" />
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-4">
+						<h:outputLabel value="Unesite velicinu ucionice:" />
+					</div>
+					<div class="col-sm-4">
+						<h:inputText id="novaUcionicaVelicina" label="Velicina ucionice"
+							value="#{roomsController.newClassroom.size}" />
+					</div>
+					<div class="col-sm-4">
+						<rich:message for="novaUcionicaVelicina" ajaxRendered="true" />
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-4">
+						<h:outputLabel value="Unesite oznaku ucionice:" />
+					</div>
+					<div class="col-sm-4">
+						<h:inputText id="novaUcionicaOznaka" label="Oznaka ucionice"
+							value="#{roomsController.newClassroom.mark}" required="true" />
+					</div>
+					<div class="col-sm-4">
+						<rich:message for="novaUcionicaOznaka" ajaxRendered="true" />
+					</div>
+				</div>
+			</div>
 
 			<h:commandButton action="#{roomsController.addClassroom()}"
 				value="Dodaj ucionicu" styleClass="btn btn-sm btn-primary">

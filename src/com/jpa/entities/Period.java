@@ -5,6 +5,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "Periods")
@@ -12,22 +13,25 @@ public class Period {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long periodId;
+	private Long id;
 
+	@NotNull
 	private String day;
 
+	@NotNull
 	private String dayMark;
 
+	@NotNull
 	private Integer termsNumber;
 
 	private Integer termLength;
 
-	public Long getPeriodId() {
-		return periodId;
+	public Long getId() {
+		return id;
 	}
 
-	public void setPeriodId(Long periodId) {
-		this.periodId = periodId;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getDay() {

@@ -7,6 +7,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "GroupNumDays")
@@ -18,16 +19,22 @@ public class GroupNumDays {
 
 	@OneToOne
 	@JoinColumn(name = "groupId")
+	@NotNull
 	private Group group;
 
+	@NotNull
 	private Integer min;
 
+	@NotNull
 	private Integer opt;
 
+	@NotNull
 	private Integer max;
 
+	@NotNull
 	private Integer semester;
 
+	@NotNull
 	private String year;
 
 	public Long getId() {
