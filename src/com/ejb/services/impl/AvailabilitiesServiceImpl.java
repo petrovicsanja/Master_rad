@@ -3,7 +3,7 @@ package com.ejb.services.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.ejb.Stateful;
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
@@ -17,7 +17,7 @@ import com.jpa.entities.Semester;
 import com.jpa.entities.TeacherAvailability;
 import com.jpa.entities.User;
 
-@Stateful
+@Stateless
 public class AvailabilitiesServiceImpl implements AvailabilitiesService {
 
 	@PersistenceContext(name = "Raspored_casova")

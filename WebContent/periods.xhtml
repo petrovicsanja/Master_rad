@@ -56,7 +56,8 @@
 				<h:outputLabel value="" />
 
 				<h:commandButton value="Dodaj termine"
-					action="#{periodsController.addPeriods()}">
+					action="#{periodsController.addPeriods()}"
+					styleClass="btn btn-sm btn-primary">
 					<f:ajax execute="@form" render="@form" />
 				</h:commandButton>
 			</h:panelGrid>

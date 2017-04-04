@@ -4,7 +4,7 @@ import java.util.List;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 
 import org.richfaces.component.SortOrder;
 
@@ -12,7 +12,7 @@ import com.ejb.services.RoomsService;
 import com.jpa.entities.Room;
 
 @ManagedBean
-@SessionScoped
+@ViewScoped
 public class RoomsController {
 
 	@EJB

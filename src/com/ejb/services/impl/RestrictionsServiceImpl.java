@@ -2,7 +2,7 @@ package com.ejb.services.impl;
 
 import java.util.List;
 
-import javax.ejb.Stateful;
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
@@ -16,7 +16,7 @@ import com.jpa.entities.TeacherIdles;
 import com.jpa.entities.TeacherLoad;
 import com.jpa.entities.TeacherNumDays;
 
-@Stateful
+@Stateless
 public class RestrictionsServiceImpl implements RestrictionsService {
 
 	@PersistenceContext(name = "Raspored_casova")

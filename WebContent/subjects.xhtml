@@ -148,12 +148,14 @@
 						<rich:message for="noviPredmetOznaka" ajaxRendered="true" />
 					</div>
 				</div>
-			</div>
 
-			<h:commandButton action="#{subjectsController.addSubject()}"
-				value="Dodaj predmet" styleClass="btn btn-sm btn-primary">
-				<f:ajax execute="@form" render="@form :izlistavanjePredmeta" />
-			</h:commandButton>
+				<div class="row text-right">
+					<h:commandButton action="#{subjectsController.addSubject()}"
+						value="Dodaj predmet" styleClass="btn btn-sm btn-primary">
+						<f:ajax execute="@form" render="@form :izlistavanjePredmeta" />
+					</h:commandButton>
+				</div>
+			</div>
 		</rich:collapsiblePanel>
 	</h:form>
 </ui:composition>

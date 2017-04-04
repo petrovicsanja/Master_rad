@@ -2,7 +2,7 @@ package com.ejb.services.impl;
 
 import java.util.List;
 
-import javax.ejb.Stateful;
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
@@ -10,7 +10,7 @@ import javax.persistence.TypedQuery;
 import com.ejb.services.RoomsService;
 import com.jpa.entities.Room;
 
-@Stateful
+@Stateless
 public class RoomsServiceImpl implements RoomsService {
 
 	@PersistenceContext(name = "Raspored_casova")
@@ -26,13 +26,13 @@ public class RoomsServiceImpl implements RoomsService {
 	public void deleteClassroom(Long roomId) {
 		Room roomToDelete = em.find(Room.class, roomId);
 		em.remove(roomToDelete);
-		System.out.println("Ucionica je uspesno obrisana.");
+		System.out.println("Classroom is successfully deleted from the database, id: " + roomId);
 	}
 
 	@Override
 	public void addClassroom(Room room) {
 		em.persist(room);
-		System.out.println("Nova ucionica je uspesno dodata u bazu.");
+		System.out.println("New classroom is successfully added to the database, id: " + room.getId());
 	}
 
 	@Override
@@ -43,6 +43,6 @@ public class RoomsServiceImpl implements RoomsService {
 		roomToUpdate.setBuilding(room.getBuilding());
 		roomToUpdate.setSize(room.getSize());
 		roomToUpdate.setMark(room.getMark());
-		System.out.println("Ucionica je uspesno izmenjena.");
+		System.out.println("Classroom is successfully updated in the database, id: " + room.getId());
 	}
 }

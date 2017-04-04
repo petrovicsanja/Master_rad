@@ -3,7 +3,7 @@ package com.ejb.services.impl;
 import java.util.Date;
 import java.util.List;
 
-import javax.ejb.Stateful;
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
@@ -12,7 +12,7 @@ import javax.persistence.TypedQuery;
 import com.ejb.services.SemesterService;
 import com.jpa.entities.Semester;
 
-@Stateful
+@Stateless
 public class SemesterServiceImpl implements SemesterService {
 
 	@PersistenceContext(name = "Raspored_casova")
@@ -48,6 +48,8 @@ public class SemesterServiceImpl implements SemesterService {
 		semester.setOrdinalNumber(ordinalNumber);
 		semester.setActive(false);
 		em.persist(semester);
+
+		System.out.println("Semester is successfully added to the database, id: " + semester.getId());
 	}
 
 	@Override
@@ -67,7 +69,7 @@ public class SemesterServiceImpl implements SemesterService {
 			Semester semester = em.find(Semester.class, semesterId);
 			semester.setActive(true);
 
-			System.out.println("Semestar je uspesno aktiviran.");
+			System.out.println("Semester is successfully activated.");
 		}
 	}
 

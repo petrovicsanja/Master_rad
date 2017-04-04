@@ -179,7 +179,7 @@
 					</div>
 					<div class="col-sm-4">
 						<h:selectOneMenu id="novaGrupaSmer" required="true"
-							value="#{groupsController.departmentId}"
+							value="#{groupsController.newGroup.department.id}"
 							valueChangeListener="#{groupsController.selectedValue}">
 							<f:selectItem itemValue="#{null}" itemLabel="Izaberite smer..." />
 							<f:selectItems value="#{groupsController.departmentSelectItems}" />

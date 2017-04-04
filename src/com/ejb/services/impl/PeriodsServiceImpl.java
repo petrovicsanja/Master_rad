@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.ejb.Stateful;
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
@@ -12,7 +12,7 @@ import javax.persistence.TypedQuery;
 import com.ejb.services.PeriodsService;
 import com.jpa.entities.Period;
 
-@Stateful
+@Stateless
 public class PeriodsServiceImpl implements PeriodsService {
 
 	@PersistenceContext(name = "Raspored_casova")
@@ -31,7 +31,7 @@ public class PeriodsServiceImpl implements PeriodsService {
 				period.setTermsNumber(entry.getValue());
 				period.setTermLength(termLength);
 				em.persist(period);
-				System.out.println("Sacuvano je " + entry.getValue() + " termina za " + entry.getKey().toLowerCase());
+				System.out.println(entry.getValue() + " terms are saved for " + entry.getKey().toLowerCase());
 			}
 		}
 	}

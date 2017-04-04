@@ -2,7 +2,7 @@ package com.ejb.services.impl;
 
 import java.util.List;
 
-import javax.ejb.Stateful;
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
@@ -11,7 +11,7 @@ import javax.persistence.TypedQuery;
 import com.ejb.services.UsersService;
 import com.jpa.entities.User;
 
-@Stateful
+@Stateless
 public class UsersServiceImpl implements UsersService {
 
 	@PersistenceContext(name = "Raspored_casova")
@@ -43,9 +43,9 @@ public class UsersServiceImpl implements UsersService {
 	 * Dodavanje novog korisnika u bazu
 	 */
 	@Override
-	public void addUser(User korisnik) {
-		em.persist(korisnik);
-		System.out.println("Novi korisnik je uspesno dodat u bazu.");
+	public void addUser(User user) {
+		em.persist(user);
+		System.out.println("New user is successfully added to the database, id: " + user.getId());
 	}
 
 	/**
@@ -76,7 +76,7 @@ public class UsersServiceImpl implements UsersService {
 	public void deleteUser(Long userId) {
 		User userToDelete = em.find(User.class, userId);
 		em.remove(userToDelete);
-		System.out.println("Korisnik je uspesno obrisan iz baze.");
+		System.out.println("User is successfully deleted from the database, id: " + userId);
 	}
 
 	/**
@@ -88,6 +88,6 @@ public class UsersServiceImpl implements UsersService {
 		userToUpdate.setFirstName(user.getFirstName());
 		userToUpdate.setLastName(user.getLastName());
 		userToUpdate.setType(user.getType());
-		System.out.println("Podaci korisnika su uspesno izmenjeni.");
+		System.out.println("User is successfully updated in the database, id: " + user.getId());
 	}
 }

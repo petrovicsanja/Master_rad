@@ -2,7 +2,7 @@ package com.ejb.services.impl;
 
 import java.util.List;
 
-import javax.ejb.Stateful;
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
@@ -10,7 +10,7 @@ import javax.persistence.TypedQuery;
 import com.ejb.services.SubjectsService;
 import com.jpa.entities.Subject;
 
-@Stateful
+@Stateless
 public class SubjectsServiceImpl implements SubjectsService {
 
 	@PersistenceContext(name = "Raspored_casova")
@@ -18,8 +18,7 @@ public class SubjectsServiceImpl implements SubjectsService {
 
 	@Override
 	public List<Subject> listSubjects() {
-		TypedQuery<Subject> subjectList = em.createQuery("SELECT s FROM Subject s ORDER BY s.name",
-				Subject.class);
+		TypedQuery<Subject> subjectList = em.createQuery("SELECT s FROM Subject s ORDER BY s.name", Subject.class);
 		return subjectList.getResultList();
 	}
 
@@ -27,7 +26,7 @@ public class SubjectsServiceImpl implements SubjectsService {
 	public void deleteSubject(Long subjectId) {
 		Subject subjectToDelete = em.find(Subject.class, subjectId);
 		em.remove(subjectToDelete);
-		System.out.println("Predmet je uspesno obrisan.");
+		System.out.println("Subject is successfully deleted from the database, id: " + subjectId);
 	}
 
 	@Override
@@ -35,13 +34,13 @@ public class SubjectsServiceImpl implements SubjectsService {
 		Subject subjectToUpdate = em.find(Subject.class, subject.getId());
 		subjectToUpdate.setName(subject.getName());
 		subjectToUpdate.setMark(subject.getMark());
-		System.out.println("Predmet je uspesno izmenjen.");
+		System.out.println("Subject is successfully updated in the database, id: " + subject.getId());
 	}
 
 	@Override
 	public void addSubject(Subject subject) {
 		em.persist(subject);
-		System.out.println("Novi predmet je uspesno dodat.");
+		System.out.println("New subject is successfully added to the database, id: " + subject.getId());
 	}
 
 	@Override

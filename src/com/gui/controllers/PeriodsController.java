@@ -6,13 +6,13 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 
 import com.ejb.services.PeriodsService;
 import com.jpa.entities.Period;
 
 @ManagedBean
-@SessionScoped
+@ViewScoped
 public class PeriodsController {
 
 	@EJB

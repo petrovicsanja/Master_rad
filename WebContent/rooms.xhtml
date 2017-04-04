@@ -228,12 +228,14 @@
 						<rich:message for="novaUcionicaOznaka" ajaxRendered="true" />
 					</div>
 				</div>
-			</div>
 
-			<h:commandButton action="#{roomsController.addClassroom()}"
-				value="Dodaj ucionicu" styleClass="btn btn-sm btn-primary">
-				<f:ajax execute="@form" render="@form :izlistavanjeUcionica" />
-			</h:commandButton>
+				<div class="row text-right">
+					<h:commandButton action="#{roomsController.addClassroom()}"
+						value="Dodaj ucionicu" styleClass="btn btn-sm btn-primary">
+						<f:ajax execute="@form" render="@form :izlistavanjeUcionica" />
+					</h:commandButton>
+				</div>
+			</div>
 		</rich:collapsiblePanel>
 	</h:form>
 

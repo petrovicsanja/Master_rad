@@ -1,6 +1,5 @@
 package com.gui.controllers;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -8,7 +7,8 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.ViewScoped;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 
@@ -19,18 +19,17 @@ import com.jpa.entities.Department;
 import com.jpa.entities.Group;
 
 @ManagedBean
-@SessionScoped
-public class GroupsController implements Serializable {
-
-	private static final long serialVersionUID = 1L;
+@ViewScoped
+public class GroupsController {
 
 	@EJB
 	private GroupsService groupsService;
 
+	@ManagedProperty(value = "#{departmentController}")
+	private DepartmentController departmentController;
+
 	private Group newGroup = new Group();
-	private List<Department> departmentList;
 	private List<SelectItem> departmentSelectItems = null;
-	private Long departmentId;
 	private List<Group> groupList = null;
 	private int selectedGroupIndex;
 	private Group groupToUpdate;
@@ -57,25 +56,15 @@ public class GroupsController implements Serializable {
 	private void listDepartments() {
 		if (departmentSelectItems == null) {
 			departmentSelectItems = new ArrayList<SelectItem>();
-			departmentList = groupsService.listDepartments();
-			for (Department smer : departmentList) {
+			for (Department smer : departmentController.listDepartments()) {
 				departmentSelectItems.add(new SelectItem(smer.getId(), smer.getName()));
 			}
 		}
 	}
 
-	public Department findDepartmentById(Long departmentId) {
-		for (Department department : departmentList) {
-			if (department.getId().equals(departmentId)) {
-				return department;
-			}
-		}
-		return null;
-	}
-
 	public void selectedValue(ValueChangeEvent event) {
 		Long selectedDepartmentId = (Long) event.getNewValue();
-		Department department = findDepartmentById(selectedDepartmentId);
+		Department department = departmentController.findDepartmentById(selectedDepartmentId);
 		if (department != null) {
 			newGroup.setDepartment(department);
 		}
@@ -187,14 +176,6 @@ public class GroupsController implements Serializable {
 		this.departmentSelectItems = departmentSelectItems;
 	}
 
-	public Long getDepartmentId() {
-		return departmentId;
-	}
-
-	public void setDepartmentId(Long departmentId) {
-		this.departmentId = departmentId;
-	}
-
 	public SortOrder getNameOrder() {
 		return nameOrder;
 	}
@@ -243,4 +224,7 @@ public class GroupsController implements Serializable {
 		this.groupToUpdate = groupToUpdate;
 	}
 
+	public void setDepartmentController(DepartmentController departmentController) {
+		this.departmentController = departmentController;
+	}
 }

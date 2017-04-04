@@ -217,13 +217,15 @@
 						<rich:message for="noviKorisnikTip" ajaxRendered="true" />
 					</div>
 				</div>
-			</div>
 
-			<h:commandButton action="#{usersController.addUser()}"
-				value="Dodaj korisnika" styleClass="btn btn-sm btn-primary">
-				<f:ajax execute="@form"
-					render="@form :izmenaKorisnika :izlistavanjeKorisnika" />
-			</h:commandButton>
+				<div class="row text-right">
+					<h:commandButton action="#{usersController.addUser()}"
+						value="Dodaj korisnika" styleClass="btn btn-sm btn-primary">
+						<f:ajax execute="@form"
+							render="@form :izmenaKorisnika :izlistavanjeKorisnika" />
+					</h:commandButton>
+				</div>
+			</div>
 		</rich:collapsiblePanel>
 	</h:form>
 </ui:composition>

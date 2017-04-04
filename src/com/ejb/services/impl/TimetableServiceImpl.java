@@ -40,13 +40,17 @@ public class TimetableServiceImpl implements TimetableService {
 	private EntityManager em;
 
 	final Charset ENCODING = StandardCharsets.UTF_8;
+	final String SUBJECT_PREFIX = "subject";
+	final String TEACHER_PREFIX = "teacher";
+	final String ROOM_PREFIX = "room";
+	final String GROUP_PREFIX = "group";
 
 	@Override
 	public void createTimetable(Semester activeSemester) {
 		Integer ordinalNumberOfSemester = activeSemester.getOrdinalNumber();
 		String schoolYear = activeSemester.getSchoolYear();
 
-		System.out.println("Writing timetable data to appropriate file...");
+		System.out.println("Writing timetable data to 'timetable.tts' file...");
 
 		String fileName = "timetable.tts";
 		Path path = Paths.get(fileName);
@@ -99,11 +103,11 @@ public class TimetableServiceImpl implements TimetableService {
 		StringBuffer teachers = new StringBuffer("[teachers]");
 		teachers.append("\n");
 
-		TypedQuery<User> teacherList = em
-				.createQuery("SELECT u FROM User u WHERE u.tipKorisnika = 1 ORDER BY u.id", User.class);
+		TypedQuery<User> teacherList = em.createQuery("SELECT u FROM User u WHERE u.tipKorisnika = 1 ORDER BY u.id",
+				User.class);
 
 		for (User teacher : teacherList.getResultList()) {
-			teachers.append(teacher.getId());
+			teachers.append(TEACHER_PREFIX + teacher.getId());
 			teachers.append("\t");
 			teachers.append(teacher.toString());
 			teachers.append("\n");
@@ -121,7 +125,7 @@ public class TimetableServiceImpl implements TimetableService {
 		TypedQuery<Group> groupList = em.createQuery("SELECT g FROM Group g ORDER BY g.id", Group.class);
 
 		for (Group group : groupList.getResultList()) {
-			groups.append(group.getId());
+			groups.append(GROUP_PREFIX + group.getId());
 			groups.append("\t");
 			groups.append(group.getName());
 			groups.append("\n");
@@ -136,11 +140,10 @@ public class TimetableServiceImpl implements TimetableService {
 		StringBuffer subjects = new StringBuffer("[subjects]");
 		subjects.append("\n");
 
-		TypedQuery<Subject> subjectList = em.createQuery("SELECT s FROM Subject s ORDER BY s.id",
-				Subject.class);
+		TypedQuery<Subject> subjectList = em.createQuery("SELECT s FROM Subject s ORDER BY s.id", Subject.class);
 
 		for (Subject subject : subjectList.getResultList()) {
-			subjects.append(subject.getId());
+			subjects.append(SUBJECT_PREFIX + subject.getId());
 			subjects.append("\t");
 			subjects.append(subject.getName());
 			subjects.append("\n");
@@ -158,7 +161,7 @@ public class TimetableServiceImpl implements TimetableService {
 		TypedQuery<Room> roomList = em.createQuery("SELECT r FROM Room r ORDER BY r.id", Room.class);
 
 		for (Room room : roomList.getResultList()) {
-			rooms.append(room.getId());
+			rooms.append(ROOM_PREFIX + room.getId());
 			rooms.append("\t");
 			rooms.append(room.getName());
 			rooms.append("\n");
@@ -184,7 +187,7 @@ public class TimetableServiceImpl implements TimetableService {
 
 			// teachers
 			for (User user : lesson.getTeachers()) {
-				lessons.append(user.getId());
+				lessons.append(TEACHER_PREFIX + user.getId());
 				if (i < lesson.getTeachers().size()) {
 					lessons.append(" ,");
 				}
@@ -195,7 +198,7 @@ public class TimetableServiceImpl implements TimetableService {
 			// groups
 			i = 1;
 			for (Group group : lesson.getGroups()) {
-				lessons.append(group.getId());
+				lessons.append(GROUP_PREFIX + group.getId());
 				if (i < lesson.getGroups().size()) {
 					lessons.append(" ,");
 				}
@@ -204,7 +207,7 @@ public class TimetableServiceImpl implements TimetableService {
 			lessons.append("\t");
 
 			// subject
-			lessons.append(lesson.getSubject().getId());
+			lessons.append(SUBJECT_PREFIX + lesson.getSubject().getId());
 			lessons.append("\t");
 
 			// terms
@@ -214,7 +217,7 @@ public class TimetableServiceImpl implements TimetableService {
 			// rooms
 			i = 1;
 			for (Room room : lesson.getRooms()) {
-				lessons.append(room.getId());
+				lessons.append(ROOM_PREFIX + room.getId());
 				if (i < lesson.getRooms().size()) {
 					lessons.append(" ,");
 				}
@@ -265,7 +268,7 @@ public class TimetableServiceImpl implements TimetableService {
 
 			if (forbidden.length() > 0 || undesirable.length() > 0 || desirable.length() > 0
 					|| mandatory.length() > 0) {
-				teacherAvailabilities.append(teacherId);
+				teacherAvailabilities.append(TEACHER_PREFIX + teacherId);
 				teacherAvailabilities.append("\t");
 				teacherAvailabilities.append(forbidden);
 				teacherAvailabilities.append("\t");
@@ -322,7 +325,7 @@ public class TimetableServiceImpl implements TimetableService {
 
 			if (forbidden.length() > 0 || undesirable.length() > 0 || desirable.length() > 0
 					|| mandatory.length() > 0) {
-				groupAvailabilities.append(groupId);
+				groupAvailabilities.append(GROUP_PREFIX + groupId);
 				groupAvailabilities.append("\t");
 				groupAvailabilities.append(forbidden);
 				groupAvailabilities.append("\t");
@@ -379,7 +382,7 @@ public class TimetableServiceImpl implements TimetableService {
 
 			if (forbidden.length() > 0 || undesirable.length() > 0 || desirable.length() > 0
 					|| mandatory.length() > 0) {
-				roomAvailabilities.append(roomId);
+				roomAvailabilities.append(ROOM_PREFIX + roomId);
 				roomAvailabilities.append("\t");
 				roomAvailabilities.append(forbidden);
 				roomAvailabilities.append("\t");
@@ -424,7 +427,7 @@ public class TimetableServiceImpl implements TimetableService {
 		teacherNumDayList.setParameter("schoolYear", schoolYear);
 
 		for (TeacherNumDays teacherNumDays : teacherNumDayList.getResultList()) {
-			numDays.append(teacherNumDays.getTeacher().getId());
+			numDays.append(TEACHER_PREFIX + teacherNumDays.getTeacher().getId());
 			numDays.append("\t");
 			numDays.append(teacherNumDays.getMin());
 			numDays.append("\t");
@@ -441,7 +444,7 @@ public class TimetableServiceImpl implements TimetableService {
 		groupNumDayList.setParameter("schoolYear", schoolYear);
 
 		for (GroupNumDays groupNumDays : groupNumDayList.getResultList()) {
-			numDays.append(groupNumDays.getGroup().getId());
+			numDays.append(GROUP_PREFIX + groupNumDays.getGroup().getId());
 			numDays.append("\t");
 			numDays.append(groupNumDays.getMin());
 			numDays.append("\t");
@@ -467,7 +470,7 @@ public class TimetableServiceImpl implements TimetableService {
 		teacherIdleList.setParameter("schoolYear", schoolYear);
 
 		for (TeacherIdles teacherIdles : teacherIdleList.getResultList()) {
-			idles.append(teacherIdles.getTeacher().getId());
+			idles.append(TEACHER_PREFIX + teacherIdles.getTeacher().getId());
 			idles.append("\t");
 			idles.append(teacherIdles.getMax());
 			idles.append("\t");
@@ -484,7 +487,7 @@ public class TimetableServiceImpl implements TimetableService {
 		groupIdleList.setParameter("schoolYear", schoolYear);
 
 		for (GroupIdles groupIdles : groupIdleList.getResultList()) {
-			idles.append(groupIdles.getGroup().getId());
+			idles.append(GROUP_PREFIX + groupIdles.getGroup().getId());
 			idles.append("\t");
 			idles.append(groupIdles.getMax());
 			idles.append("\t");
@@ -510,7 +513,7 @@ public class TimetableServiceImpl implements TimetableService {
 		teacherLoadList.setParameter("schoolYear", schoolYear);
 
 		for (TeacherLoad teacherLoad : teacherLoadList.getResultList()) {
-			loads.append(teacherLoad.getTeacher().getId());
+			loads.append(TEACHER_PREFIX + teacherLoad.getTeacher().getId());
 			loads.append("\t");
 			loads.append(teacherLoad.getMin());
 			loads.append("\t");
@@ -525,7 +528,7 @@ public class TimetableServiceImpl implements TimetableService {
 		groupLoadList.setParameter("schoolYear", schoolYear);
 
 		for (GroupLoad groupLoad : groupLoadList.getResultList()) {
-			loads.append(groupLoad.getGroup().getId());
+			loads.append(GROUP_PREFIX + groupLoad.getGroup().getId());
 			loads.append("\t");
 			loads.append(groupLoad.getMin());
 			loads.append("\t");
