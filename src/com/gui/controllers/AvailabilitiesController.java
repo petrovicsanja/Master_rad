@@ -198,10 +198,11 @@ public class AvailabilitiesController {
 	public List<TeacherAvailability> listAllTeacherAvailabilities() {
 		if (allTeacherAvailabilities == null) {
 			if (loginController.isAdmin()) {
-				allTeacherAvailabilities = availabilitiesService.listAllTeacherAvailabilities();
-			} else {
 				allTeacherAvailabilities = availabilitiesService
-						.listAllAvailabilitiesForTeacher(loginController.getUser().getId());
+						.listAllTeacherAvailabilities(semesterController.getActiveSemester().getId());
+			} else {
+				allTeacherAvailabilities = availabilitiesService.listAllAvailabilitiesForTeacher(
+						loginController.getUser().getId(), semesterController.getActiveSemester().getId());
 			}
 		}
 		return allTeacherAvailabilities;
@@ -209,14 +210,16 @@ public class AvailabilitiesController {
 
 	public List<GroupAvailability> listAllGroupAvailabilities() {
 		if (allGroupAvailabilities == null) {
-			allGroupAvailabilities = availabilitiesService.listAllGroupAvailabilities();
+			allGroupAvailabilities = availabilitiesService
+					.listAllGroupAvailabilities(semesterController.getActiveSemester().getId());
 		}
 		return allGroupAvailabilities;
 	}
 
 	public List<RoomAvailability> listAllRoomAvailabilities() {
 		if (allRoomAvailabilities == null) {
-			allRoomAvailabilities = availabilitiesService.listAllRoomAvailabilities();
+			allRoomAvailabilities = availabilitiesService
+					.listAllRoomAvailabilities(semesterController.getActiveSemester().getId());
 		}
 		return allRoomAvailabilities;
 	}

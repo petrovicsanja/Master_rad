@@ -5,6 +5,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -28,11 +29,10 @@ public class TeacherLoad {
 	@NotNull
 	private Integer min;
 
+	@ManyToOne
+	@JoinColumn(name = "semesterId")
 	@NotNull
-	private Integer semester;
-
-	@NotNull
-	private String year;
+	private Semester semester;
 
 	public Long getId() {
 		return id;
@@ -66,19 +66,11 @@ public class TeacherLoad {
 		this.min = min;
 	}
 
-	public Integer getSemester() {
+	public Semester getSemester() {
 		return semester;
 	}
 
-	public void setSemester(Integer semester) {
+	public void setSemester(Semester semester) {
 		this.semester = semester;
-	}
-
-	public String getYear() {
-		return year;
-	}
-
-	public void setYear(String year) {
-		this.year = year;
 	}
 }

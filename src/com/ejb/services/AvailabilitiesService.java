@@ -27,11 +27,11 @@ public interface AvailabilitiesService {
 	public List<RoomAvailability> addRoomAvailability(Room room, String dayMark, Integer[] termNumbers, String type,
 			Semester activeSemester);
 
-	public List<TeacherAvailability> listAllTeacherAvailabilities();
+	public List<TeacherAvailability> listAllTeacherAvailabilities(Long semesterId);
 
-	public List<GroupAvailability> listAllGroupAvailabilities();
+	public List<GroupAvailability> listAllGroupAvailabilities(Long semesterId);
 
-	public List<RoomAvailability> listAllRoomAvailabilities();
+	public List<RoomAvailability> listAllRoomAvailabilities(Long semesterId);
 
-	public List<TeacherAvailability> listAllAvailabilitiesForTeacher(Long teacherId);
+	public List<TeacherAvailability> listAllAvailabilitiesForTeacher(Long teacherId, Long semesterId);
 }

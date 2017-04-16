@@ -71,7 +71,8 @@ public class LessonsController {
 	}
 
 	public void listLessonsForSubject() {
-		subjectLessonsList = lessonsService.listLessons(lessonsSearchSubjectId);
+		subjectLessonsList = lessonsService.listLessons(lessonsSearchSubjectId,
+				semesterController.getActiveSemester().getId());
 	}
 
 	public void addTeacherToList() {

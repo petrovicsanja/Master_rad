@@ -34,8 +34,7 @@ public class AvailabilitiesServiceImpl implements AvailabilitiesService {
 			teacherAvailability.setDayMark(dayMark);
 			teacherAvailability.setTermNumber(termNumbers[i]);
 			teacherAvailability.setType(type);
-			teacherAvailability.setSemester(activeSemester.getOrdinalNumber());
-			teacherAvailability.setYear(activeSemester.getSchoolYear());
+			teacherAvailability.setSemester(activeSemester);
 			teacherAvailabilityList.add(teacherAvailability);
 
 			em.persist(teacherAvailability);
@@ -56,8 +55,7 @@ public class AvailabilitiesServiceImpl implements AvailabilitiesService {
 			groupAvailability.setDayMark(dayMark);
 			groupAvailability.setTermNumber(termNumbers[i]);
 			groupAvailability.setType(type);
-			groupAvailability.setSemester(activeSemester.getOrdinalNumber());
-			groupAvailability.setYear(activeSemester.getSchoolYear());
+			groupAvailability.setSemester(activeSemester);
 			groupAvailabilityList.add(groupAvailability);
 
 			em.persist(groupAvailability);
@@ -78,8 +76,7 @@ public class AvailabilitiesServiceImpl implements AvailabilitiesService {
 			roomAvailability.setDayMark(dayMark);
 			roomAvailability.setTermNumber(termNumbers[i]);
 			roomAvailability.setType(type);
-			roomAvailability.setSemester(activeSemester.getOrdinalNumber());
-			roomAvailability.setYear(activeSemester.getSchoolYear());
+			roomAvailability.setSemester(activeSemester);
 			roomAvailabilityList.add(roomAvailability);
 
 			em.persist(roomAvailability);
@@ -90,31 +87,39 @@ public class AvailabilitiesServiceImpl implements AvailabilitiesService {
 	}
 
 	@Override
-	public List<TeacherAvailability> listAllTeacherAvailabilities() {
+	public List<TeacherAvailability> listAllTeacherAvailabilities(Long semesterId) {
 		TypedQuery<TeacherAvailability> allTeacherAvailabilities = em.createQuery(
-				"SELECT a FROM TeacherAvailability a ORDER BY a.teacher.firstName", TeacherAvailability.class);
+				"SELECT a FROM TeacherAvailability a WHERE a.semester.id = :semesterId ORDER BY a.teacher.firstName",
+				TeacherAvailability.class);
+		allTeacherAvailabilities.setParameter("semesterId", semesterId);
 		return allTeacherAvailabilities.getResultList();
 	}
 
 	@Override
-	public List<GroupAvailability> listAllGroupAvailabilities() {
-		TypedQuery<GroupAvailability> allGroupAvailabilities = em
-				.createQuery("SELECT a FROM GroupAvailability a ORDER BY a.group.name", GroupAvailability.class);
+	public List<GroupAvailability> listAllGroupAvailabilities(Long semesterId) {
+		TypedQuery<GroupAvailability> allGroupAvailabilities = em.createQuery(
+				"SELECT a FROM GroupAvailability a WHERE a.semester.id = :semesterId ORDER BY a.group.name",
+				GroupAvailability.class);
+		allGroupAvailabilities.setParameter("semesterId", semesterId);
 		return allGroupAvailabilities.getResultList();
 	}
 
 	@Override
-	public List<RoomAvailability> listAllRoomAvailabilities() {
-		TypedQuery<RoomAvailability> allRoomAvailabilities = em
-				.createQuery("SELECT a FROM RoomAvailability a ORDER BY a.room.name", RoomAvailability.class);
+	public List<RoomAvailability> listAllRoomAvailabilities(Long semesterId) {
+		TypedQuery<RoomAvailability> allRoomAvailabilities = em.createQuery(
+				"SELECT a FROM RoomAvailability a WHERE a.semester.id = :semesterId ORDER BY a.room.name",
+				RoomAvailability.class);
+		allRoomAvailabilities.setParameter("semesterId", semesterId);
 		return allRoomAvailabilities.getResultList();
 	}
 
 	@Override
-	public List<TeacherAvailability> listAllAvailabilitiesForTeacher(Long teacherId) {
+	public List<TeacherAvailability> listAllAvailabilitiesForTeacher(Long teacherId, Long semesterId) {
 		TypedQuery<TeacherAvailability> availabilityList = em.createQuery(
-				"SELECT a FROM TeacherAvailability a WHERE a.teacher.id = :teacherId", TeacherAvailability.class);
+				"SELECT a FROM TeacherAvailability a WHERE a.teacher.id = :teacherId AND a.semester.id = :semesterId",
+				TeacherAvailability.class);
 		availabilityList.setParameter("teacherId", teacherId);
+		availabilityList.setParameter("semesterId", semesterId);
 		return availabilityList.getResultList();
 	}
 }

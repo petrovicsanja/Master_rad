@@ -25,10 +25,9 @@ public class RestrictionsServiceImpl implements RestrictionsService {
 	@Override
 	public List<GroupNumDays> listNumDaysGroupRestrictions(Semester activeSemester) {
 		TypedQuery<GroupNumDays> numDaysGroupList = em.createQuery(
-				"SELECT r FROM GroupNumDays r WHERE r.semester = :semester AND r.year = :schoolYear ORDER BY r.group.name",
+				"SELECT r FROM GroupNumDays r WHERE r.semester.id = :semesterId ORDER BY r.group.name",
 				GroupNumDays.class);
-		numDaysGroupList.setParameter("semester", activeSemester == null ? null : activeSemester.getOrdinalNumber());
-		numDaysGroupList.setParameter("schoolYear", activeSemester == null ? null : activeSemester.getSchoolYear());
+		numDaysGroupList.setParameter("semesterId", activeSemester == null ? null : activeSemester.getId());
 		return numDaysGroupList.getResultList();
 	}
 
@@ -38,26 +37,23 @@ public class RestrictionsServiceImpl implements RestrictionsService {
 
 		if (teacherId != null) {
 			numDaysTeacherList = em.createQuery(
-					"SELECT r FROM TeacherNumDays r WHERE r.semester = :semester AND year = :schoolYear AND r.teacher.id = :teacherId ORDER BY r.teacher.firstName",
+					"SELECT r FROM TeacherNumDays r WHERE r.semester.id = :semesterId AND r.teacher.id = :teacherId ORDER BY r.teacher.firstName",
 					TeacherNumDays.class);
 			numDaysTeacherList.setParameter("teacherId", teacherId);
 		} else {
 			numDaysTeacherList = em.createQuery(
-					"SELECT r FROM TeacherNumDays r WHERE r.semester = :semester AND year = :schoolYear ORDER BY r.teacher.firstName",
+					"SELECT r FROM TeacherNumDays r WHERE r.semester.id = :semesterId ORDER BY r.teacher.firstName",
 					TeacherNumDays.class);
 		}
-		numDaysTeacherList.setParameter("semester", activeSemester == null ? null : activeSemester.getOrdinalNumber());
-		numDaysTeacherList.setParameter("schoolYear", activeSemester == null ? null : activeSemester.getSchoolYear());
+		numDaysTeacherList.setParameter("semesterId", activeSemester == null ? null : activeSemester.getId());
 		return numDaysTeacherList.getResultList();
 	}
 
 	@Override
 	public List<GroupIdles> listIdlesGroupRestrictions(Semester activeSemester) {
 		TypedQuery<GroupIdles> idlesGroupList = em.createQuery(
-				"SELECT r FROM GroupIdles r WHERE r.semester = :semester AND r.year = :schoolYear ORDER BY r.group.name",
-				GroupIdles.class);
-		idlesGroupList.setParameter("semester", activeSemester == null ? null : activeSemester.getOrdinalNumber());
-		idlesGroupList.setParameter("schoolYear", activeSemester == null ? null : activeSemester.getSchoolYear());
+				"SELECT r FROM GroupIdles r WHERE r.semester.id = :semesterId ORDER BY r.group.name", GroupIdles.class);
+		idlesGroupList.setParameter("semesterId", activeSemester == null ? null : activeSemester.getId());
 		return idlesGroupList.getResultList();
 	}
 
@@ -67,26 +63,23 @@ public class RestrictionsServiceImpl implements RestrictionsService {
 
 		if (teacherId != null) {
 			idlesTeacherList = em.createQuery(
-					"SELECT r FROM TeacherIdles r WHERE r.semester = :semester AND r.year = :schoolYear AND r.teacher.id = :teacherId ORDER BY r.teacher.firstName",
+					"SELECT r FROM TeacherIdles r WHERE r.semester.id = :semesterId AND r.teacher.id = :teacherId ORDER BY r.teacher.firstName",
 					TeacherIdles.class);
 			idlesTeacherList.setParameter("teacherId", teacherId);
 		} else {
 			idlesTeacherList = em.createQuery(
-					"SELECT r FROM TeacherIdles r WHERE r.semester = :semester AND r.year = :schoolYear ORDER BY r.teacher.firstName",
+					"SELECT r FROM TeacherIdles r WHERE r.semester.id = :semesterId ORDER BY r.teacher.firstName",
 					TeacherIdles.class);
 		}
-		idlesTeacherList.setParameter("semester", activeSemester == null ? null : activeSemester.getOrdinalNumber());
-		idlesTeacherList.setParameter("schoolYear", activeSemester == null ? null : activeSemester.getSchoolYear());
+		idlesTeacherList.setParameter("semesterId", activeSemester == null ? null : activeSemester.getId());
 		return idlesTeacherList.getResultList();
 	}
 
 	@Override
 	public List<GroupLoad> listLoadGroupRestrictions(Semester activeSemester) {
 		TypedQuery<GroupLoad> loadGroupList = em.createQuery(
-				"SELECT r FROM GroupLoad r WHERE r.semester = :semester AND r.year = :schoolYear ORDER BY r.group.name",
-				GroupLoad.class);
-		loadGroupList.setParameter("semester", activeSemester == null ? null : activeSemester.getOrdinalNumber());
-		loadGroupList.setParameter("schoolYear", activeSemester == null ? null : activeSemester.getSchoolYear());
+				"SELECT r FROM GroupLoad r WHERE r.semester.id = :semesterId ORDER BY r.group.name", GroupLoad.class);
+		loadGroupList.setParameter("semesterId", activeSemester == null ? null : activeSemester.getId());
 		return loadGroupList.getResultList();
 	}
 
@@ -96,23 +89,21 @@ public class RestrictionsServiceImpl implements RestrictionsService {
 
 		if (teacherId != null) {
 			loadTeacherList = em.createQuery(
-					"SELECT r FROM TeacherLoad r WHERE r.semester = :semester AND r.year = :schoolYear AND r.teacher.id = :teacherId ORDER BY r.teacher.firstName",
+					"SELECT r FROM TeacherLoad r WHERE r.semester.id = :semesterId AND r.teacher.id = :teacherId ORDER BY r.teacher.firstName",
 					TeacherLoad.class);
 			loadTeacherList.setParameter("teacherId", teacherId);
 		} else {
 			loadTeacherList = em.createQuery(
-					"SELECT r FROM TeacherLoad r WHERE r.semester = :semester AND r.year = :schoolYear ORDER BY r.teacher.firstName",
+					"SELECT r FROM TeacherLoad r WHERE r.semester.id = :semesterId ORDER BY r.teacher.firstName",
 					TeacherLoad.class);
 		}
-		loadTeacherList.setParameter("semester", activeSemester == null ? null : activeSemester.getOrdinalNumber());
-		loadTeacherList.setParameter("schoolYear", activeSemester == null ? null : activeSemester.getSchoolYear());
+		loadTeacherList.setParameter("semesterId", activeSemester == null ? null : activeSemester.getId());
 		return loadTeacherList.getResultList();
 	}
 
 	@Override
 	public void addNewNumDaysGroupRestriction(GroupNumDays groupNumDays, Semester activeSemester) {
-		groupNumDays.setSemester(activeSemester.getOrdinalNumber());
-		groupNumDays.setYear(activeSemester.getSchoolYear());
+		groupNumDays.setSemester(activeSemester);
 		em.persist(groupNumDays);
 		System.out.println("New num days group restriction is successfuly added to the database.");
 
@@ -120,40 +111,35 @@ public class RestrictionsServiceImpl implements RestrictionsService {
 
 	@Override
 	public void addNewNumDaysTeacherRestriction(TeacherNumDays teacherNumDays, Semester activeSemester) {
-		teacherNumDays.setSemester(activeSemester.getOrdinalNumber());
-		teacherNumDays.setYear(activeSemester.getSchoolYear());
+		teacherNumDays.setSemester(activeSemester);
 		em.persist(teacherNumDays);
 		System.out.println("New num days teacher restriction is successfuly added to the database.");
 	}
 
 	@Override
 	public void addIdlesGroupRestriction(GroupIdles groupIdles, Semester activeSemester) {
-		groupIdles.setSemester(activeSemester.getOrdinalNumber());
-		groupIdles.setYear(activeSemester.getSchoolYear());
+		groupIdles.setSemester(activeSemester);
 		em.persist(groupIdles);
 		System.out.println("New idles group restriction is successfuly added to the database.");
 	}
 
 	@Override
 	public void addIdlesTeacherRestriction(TeacherIdles teacherIdles, Semester activeSemester) {
-		teacherIdles.setSemester(activeSemester.getOrdinalNumber());
-		teacherIdles.setYear(activeSemester.getSchoolYear());
+		teacherIdles.setSemester(activeSemester);
 		em.persist(teacherIdles);
 		System.out.println("New idles teacher restriction is successfuly added to the database.");
 	}
 
 	@Override
 	public void addLoadGroupRestriction(GroupLoad groupLoad, Semester activeSemester) {
-		groupLoad.setSemester(activeSemester.getOrdinalNumber());
-		groupLoad.setYear(activeSemester.getSchoolYear());
+		groupLoad.setSemester(activeSemester);
 		em.persist(groupLoad);
 		System.out.println("New load group restriction is successfuly added to the database");
 	}
 
 	@Override
 	public void addLoadTeacherRestriction(TeacherLoad teacherLoad, Semester activeSemester) {
-		teacherLoad.setSemester(activeSemester.getOrdinalNumber());
-		teacherLoad.setYear(activeSemester.getSchoolYear());
+		teacherLoad.setSemester(activeSemester);
 		em.persist(teacherLoad);
 		System.out.println("New load teacher restriction is successfuly added to the database");
 	}
