@@ -47,8 +47,7 @@ public class TimetableServiceImpl implements TimetableService {
 
 	@Override
 	public void createTimetable(Semester activeSemester) {
-		Integer ordinalNumberOfSemester = activeSemester.getOrdinalNumber();
-		String schoolYear = activeSemester.getSchoolYear();
+		Long semesterId = activeSemester.getId();
 
 		System.out.println("Writing timetable data to 'timetable.tts' file...");
 
@@ -62,11 +61,11 @@ public class TimetableServiceImpl implements TimetableService {
 			timetableData.append(getGroups());
 			timetableData.append(getSubjects());
 			timetableData.append(getRooms());
-			timetableData.append(getLessons(ordinalNumberOfSemester, schoolYear));
-			timetableData.append(getAvailabilities(ordinalNumberOfSemester, schoolYear));
-			timetableData.append(getNumDays(ordinalNumberOfSemester, schoolYear));
-			timetableData.append(getIdles(ordinalNumberOfSemester, schoolYear));
-			timetableData.append(getLoads(ordinalNumberOfSemester, schoolYear));
+			timetableData.append(getLessons(semesterId));
+			timetableData.append(getAvailabilities(semesterId));
+			timetableData.append(getNumDays(semesterId));
+			timetableData.append(getIdles(semesterId));
+			timetableData.append(getLoads(semesterId));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -103,7 +102,7 @@ public class TimetableServiceImpl implements TimetableService {
 		StringBuffer teachers = new StringBuffer("[teachers]");
 		teachers.append("\n");
 
-		TypedQuery<User> teacherList = em.createQuery("SELECT u FROM User u WHERE u.tipKorisnika = 1 ORDER BY u.id",
+		TypedQuery<User> teacherList = em.createQuery("SELECT u FROM User u WHERE u.type = 1 ORDER BY u.id",
 				User.class);
 
 		for (User teacher : teacherList.getResultList()) {
@@ -172,15 +171,13 @@ public class TimetableServiceImpl implements TimetableService {
 		return rooms;
 	}
 
-	private StringBuffer getLessons(Integer ordinalNumberOfSemester, String schoolYear) {
+	private StringBuffer getLessons(Long semesterId) {
 		StringBuffer lessons = new StringBuffer("[lessons]");
 		lessons.append("\n");
 
-		TypedQuery<Lesson> lessonList = em.createQuery(
-				"SELECT l FROM Lesson l WHERE l.semester = :semester AND l.year = :schoolYear ORDER BY l.id",
-				Lesson.class);
-		lessonList.setParameter("semester", ordinalNumberOfSemester);
-		lessonList.setParameter("schoolYear", schoolYear);
+		TypedQuery<Lesson> lessonList = em
+				.createQuery("SELECT l FROM Lesson l WHERE l.semester.id = :semesterId ORDER BY l.id", Lesson.class);
+		lessonList.setParameter("semesterId", semesterId);
 
 		for (Lesson lesson : lessonList.getResultList()) {
 			int i = 1;
@@ -232,14 +229,13 @@ public class TimetableServiceImpl implements TimetableService {
 		return lessons;
 	}
 
-	private StringBuffer getTeacherAvailabilities(Integer ordinalNumberOfSemester, String schoolYear) {
+	private StringBuffer getTeacherAvailabilities(Long semesterId) {
 		StringBuffer teacherAvailabilities = new StringBuffer("");
 
 		TypedQuery<Long> distinctTeacherList = em.createQuery(
-				"SELECT DISTINCT(a.tecacher.id) FROM TeacherAvailability a WHERE a.semester = :semester AND a.year = :schoolYear ORDER BY a.id",
+				"SELECT DISTINCT(a.teacher.id) FROM TeacherAvailability a WHERE a.semester.id = :semesterId",
 				Long.class);
-		distinctTeacherList.setParameter("semester", ordinalNumberOfSemester);
-		distinctTeacherList.setParameter("schoolYear", schoolYear);
+		distinctTeacherList.setParameter("semesterId", semesterId);
 
 		StringBuffer forbidden = new StringBuffer();
 		StringBuffer undesirable = new StringBuffer();
@@ -248,10 +244,9 @@ public class TimetableServiceImpl implements TimetableService {
 
 		for (Long teacherId : distinctTeacherList.getResultList()) {
 			TypedQuery<TeacherAvailability> teacherAvailabilityList = em.createQuery(
-					"SELECT a FROM TeacherAvailability a WHERE a.semester = :semester AND a.year = :schoolYear AND a.teacher.id - :teacherId ORDER BY a.id",
+					"SELECT a FROM TeacherAvailability a WHERE a.semester.id = :semesterId AND a.teacher.id - :teacherId ORDER BY a.id",
 					TeacherAvailability.class);
-			teacherAvailabilityList.setParameter("semester", ordinalNumberOfSemester);
-			teacherAvailabilityList.setParameter("schoolYear", schoolYear);
+			teacherAvailabilityList.setParameter("semesterId", semesterId);
 			teacherAvailabilityList.setParameter("teacherId", teacherId);
 
 			for (TeacherAvailability teacherAvailability : teacherAvailabilityList.getResultList()) {
@@ -289,14 +284,12 @@ public class TimetableServiceImpl implements TimetableService {
 		return teacherAvailabilities;
 	}
 
-	private StringBuffer getGroupAvailabilities(Integer ordinalNumberOfSemester, String schoolYear) {
+	private StringBuffer getGroupAvailabilities(Long semesterId) {
 		StringBuffer groupAvailabilities = new StringBuffer("");
 
 		TypedQuery<Long> distinctGroupList = em.createQuery(
-				"SELECT DISTINCT(a.group.id) FROM GroupAvailability a WHERE a.semester = :semester AND a.year = :schoolYear ORDER BY a.id",
-				Long.class);
-		distinctGroupList.setParameter("semester", ordinalNumberOfSemester);
-		distinctGroupList.setParameter("schoolYear", schoolYear);
+				"SELECT DISTINCT(a.group.id) FROM GroupAvailability a WHERE a.semester.id = :semesterId", Long.class);
+		distinctGroupList.setParameter("semesterId", semesterId);
 
 		StringBuffer forbidden = new StringBuffer();
 		StringBuffer undesirable = new StringBuffer();
@@ -305,10 +298,9 @@ public class TimetableServiceImpl implements TimetableService {
 
 		for (Long groupId : distinctGroupList.getResultList()) {
 			TypedQuery<GroupAvailability> groupAvailabilityList = em.createQuery(
-					"SELECT a FROM GroupAvailability a WHERE a.semester = :semester AND a.year = :schoolYear AND a.group.id - :groupId ORDER BY a.id",
+					"SELECT a FROM GroupAvailability a WHERE a.semester.id = :semesterId AND a.group.id - :groupId ORDER BY a.id",
 					GroupAvailability.class);
-			groupAvailabilityList.setParameter("semester", ordinalNumberOfSemester);
-			groupAvailabilityList.setParameter("schoolYear", schoolYear);
+			groupAvailabilityList.setParameter("semesterId", semesterId);
 			groupAvailabilityList.setParameter("groupId", groupId);
 
 			for (GroupAvailability groupAvailability : groupAvailabilityList.getResultList()) {
@@ -346,14 +338,12 @@ public class TimetableServiceImpl implements TimetableService {
 		return groupAvailabilities;
 	}
 
-	private StringBuffer getRoomAvailabilities(Integer ordinalNumberOfSemester, String schoolYear) {
+	private StringBuffer getRoomAvailabilities(Long semesterId) {
 		StringBuffer roomAvailabilities = new StringBuffer("");
 
 		TypedQuery<Long> distinctRoomList = em.createQuery(
-				"SELECT DISTINCT(a.room.id) FROM RoomAvailability a WHERE a.semester = :semester AND a.year = :schoolYear ORDER BY a.id",
-				Long.class);
-		distinctRoomList.setParameter("semester", ordinalNumberOfSemester);
-		distinctRoomList.setParameter("schoolYear", schoolYear);
+				"SELECT DISTINCT(a.room.id) FROM RoomAvailability a WHERE a.semester.id = :semesterId", Long.class);
+		distinctRoomList.setParameter("semesterId", semesterId);
 
 		StringBuffer forbidden = new StringBuffer();
 		StringBuffer undesirable = new StringBuffer();
@@ -362,10 +352,9 @@ public class TimetableServiceImpl implements TimetableService {
 
 		for (Long roomId : distinctRoomList.getResultList()) {
 			TypedQuery<RoomAvailability> roomAvailabilityList = em.createQuery(
-					"SELECT a FROM RoomAvailability a WHERE a.semester = :semester AND a.year = :schoolYear AND a.room.id - :roomId ORDER BY a.id",
+					"SELECT a FROM RoomAvailability a WHERE a.semester.id = :semesterId AND a.room.id - :roomId ORDER BY a.id",
 					RoomAvailability.class);
-			roomAvailabilityList.setParameter("semester", ordinalNumberOfSemester);
-			roomAvailabilityList.setParameter("schoolYear", schoolYear);
+			roomAvailabilityList.setParameter("semesterId", semesterId);
 			roomAvailabilityList.setParameter("roomId", roomId);
 
 			for (RoomAvailability roomAvailability : roomAvailabilityList.getResultList()) {
@@ -403,28 +392,26 @@ public class TimetableServiceImpl implements TimetableService {
 		return roomAvailabilities;
 	}
 
-	private StringBuffer getAvailabilities(Integer ordinalNumberOfSemester, String schoolYear) {
+	private StringBuffer getAvailabilities(Long semesterId) {
 		StringBuffer availabilities = new StringBuffer("[availability]");
 		availabilities.append("\n");
 
-		availabilities.append(getTeacherAvailabilities(ordinalNumberOfSemester, schoolYear));
-		availabilities.append(getGroupAvailabilities(ordinalNumberOfSemester, schoolYear));
-		availabilities.append(getRoomAvailabilities(ordinalNumberOfSemester, schoolYear));
+		availabilities.append(getTeacherAvailabilities(semesterId));
+		availabilities.append(getGroupAvailabilities(semesterId));
+		availabilities.append(getRoomAvailabilities(semesterId));
 
 		availabilities.append("\n");
 
 		return availabilities;
 	}
 
-	private StringBuffer getNumDays(Integer ordinalNumberOfSemester, String schoolYear) {
+	private StringBuffer getNumDays(Long semesterId) {
 		StringBuffer numDays = new StringBuffer("[num_days]");
 		numDays.append("\n");
 
 		TypedQuery<TeacherNumDays> teacherNumDayList = em.createQuery(
-				"SELECT n FROM TeacherNumDays n WHERE n.semester = :semester AND n.year = :schoolYear ORDER BY n.id",
-				TeacherNumDays.class);
-		teacherNumDayList.setParameter("semester", ordinalNumberOfSemester);
-		teacherNumDayList.setParameter("schoolYear", schoolYear);
+				"SELECT n FROM TeacherNumDays n WHERE n.semester.id = :semesterId ORDER BY n.id", TeacherNumDays.class);
+		teacherNumDayList.setParameter("semesterId", semesterId);
 
 		for (TeacherNumDays teacherNumDays : teacherNumDayList.getResultList()) {
 			numDays.append(TEACHER_PREFIX + teacherNumDays.getTeacher().getId());
@@ -438,10 +425,8 @@ public class TimetableServiceImpl implements TimetableService {
 		}
 
 		TypedQuery<GroupNumDays> groupNumDayList = em.createQuery(
-				"SELECT n FROM GroupNumDays n WHERE n.semester = :semester AND n.year = :schoolYear ORDER BY n.id",
-				GroupNumDays.class);
-		groupNumDayList.setParameter("semester", ordinalNumberOfSemester);
-		groupNumDayList.setParameter("schoolYear", schoolYear);
+				"SELECT n FROM GroupNumDays n WHERE n.semester.id = :semesterId ORDER BY n.id", GroupNumDays.class);
+		groupNumDayList.setParameter("semesterId", semesterId);
 
 		for (GroupNumDays groupNumDays : groupNumDayList.getResultList()) {
 			numDays.append(GROUP_PREFIX + groupNumDays.getGroup().getId());
@@ -459,15 +444,13 @@ public class TimetableServiceImpl implements TimetableService {
 		return numDays;
 	}
 
-	private StringBuffer getIdles(Integer ordinalNumberOfSemester, String schoolYear) {
+	private StringBuffer getIdles(Long semesterId) {
 		StringBuffer idles = new StringBuffer("[idles]");
 		idles.append("\n");
 
 		TypedQuery<TeacherIdles> teacherIdleList = em.createQuery(
-				"SELECT i FROM TeacherIdles i WHERE i.semester = :semester AND i.year = :schoolYear ORDER BY i.id",
-				TeacherIdles.class);
-		teacherIdleList.setParameter("semester", ordinalNumberOfSemester);
-		teacherIdleList.setParameter("schoolYear", schoolYear);
+				"SELECT i FROM TeacherIdles i WHERE i.semester.id = :semesterId ORDER BY i.id", TeacherIdles.class);
+		teacherIdleList.setParameter("semesterId", semesterId);
 
 		for (TeacherIdles teacherIdles : teacherIdleList.getResultList()) {
 			idles.append(TEACHER_PREFIX + teacherIdles.getTeacher().getId());
@@ -481,10 +464,8 @@ public class TimetableServiceImpl implements TimetableService {
 		}
 
 		TypedQuery<GroupIdles> groupIdleList = em.createQuery(
-				"SELECT i FROM GroupIdles i WHERE i.semester = :semester AND i.year = :schoolYear ORDER BY i.id",
-				GroupIdles.class);
-		groupIdleList.setParameter("semester", ordinalNumberOfSemester);
-		groupIdleList.setParameter("schoolYear", schoolYear);
+				"SELECT i FROM GroupIdles i WHERE i.semester.id = :semesterId ORDER BY i.id", GroupIdles.class);
+		groupIdleList.setParameter("semesterId", semesterId);
 
 		for (GroupIdles groupIdles : groupIdleList.getResultList()) {
 			idles.append(GROUP_PREFIX + groupIdles.getGroup().getId());
@@ -502,15 +483,13 @@ public class TimetableServiceImpl implements TimetableService {
 		return idles;
 	}
 
-	private StringBuffer getLoads(Integer ordinalNumberOfSemester, String schoolYear) {
+	private StringBuffer getLoads(Long semesterId) {
 		StringBuffer loads = new StringBuffer("[load]");
 		loads.append("\n");
 
 		TypedQuery<TeacherLoad> teacherLoadList = em.createQuery(
-				"SELECT l FROM TeacherLoad l WHERE l.semester = :semester AND l.year = :schoolYear ORDER BY l.id",
-				TeacherLoad.class);
-		teacherLoadList.setParameter("semester", ordinalNumberOfSemester);
-		teacherLoadList.setParameter("schoolYear", schoolYear);
+				"SELECT l FROM TeacherLoad l WHERE l.semester.id = :semesterId ORDER BY l.id", TeacherLoad.class);
+		teacherLoadList.setParameter("semesterId", semesterId);
 
 		for (TeacherLoad teacherLoad : teacherLoadList.getResultList()) {
 			loads.append(TEACHER_PREFIX + teacherLoad.getTeacher().getId());
@@ -522,10 +501,8 @@ public class TimetableServiceImpl implements TimetableService {
 		}
 
 		TypedQuery<GroupLoad> groupLoadList = em.createQuery(
-				"SELECT l FROM GroupLoad l WHERE l.semester = :semester AND l.year = :schoolYear ORDER BY l.id",
-				GroupLoad.class);
-		groupLoadList.setParameter("semester", ordinalNumberOfSemester);
-		groupLoadList.setParameter("schoolYear", schoolYear);
+				"SELECT l FROM GroupLoad l WHERE l.semester.id = :semesterId ORDER BY l.id", GroupLoad.class);
+		groupLoadList.setParameter("semesterId", semesterId);
 
 		for (GroupLoad groupLoad : groupLoadList.getResultList()) {
 			loads.append(GROUP_PREFIX + groupLoad.getGroup().getId());

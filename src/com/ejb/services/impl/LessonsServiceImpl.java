@@ -35,8 +35,7 @@ public class LessonsServiceImpl implements LessonsService {
 		newLesson.setTerms(terms);
 		newLesson.setRooms(rooms);
 		newLesson.setNote(note);
-		newLesson.setSemester(activeSemester.getOrdinalNumber());
-		newLesson.setYear(activeSemester.getSchoolYear());
+		newLesson.setSemester(activeSemester);
 		em.persist(newLesson);
 
 		log.info("New lesson is successfully added to the database, id: " + newLesson.getId());
