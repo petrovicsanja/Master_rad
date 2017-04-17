@@ -18,6 +18,9 @@ public class Department {
 	@NotNull
 	private String name;
 
+	@NotNull
+	private String studyProgram;
+
 	public Long getId() {
 		return id;
 	}
@@ -37,5 +40,13 @@ public class Department {
 	@Override
 	public String toString() {
 		return this.name;
+	}
+
+	public String getStudyProgram() {
+		return studyProgram;
+	}
+
+	public void setStudyProgram(String studyProgram) {
+		this.studyProgram = studyProgram;
 	}
 }

@@ -20,48 +20,53 @@
 		rendered="#{loginController.loggedIn}" />
 	<br />
 	<br />
-	<h:messages layout="table" globalOnly="true" infoClass="bg-success" errorClass="bg-danger"/>
-	<rich:tabPanel switchType="client" styleClass="panel"
-		rendered="#{loginController.loggedIn}">
-		<rich:tab header="Admin stranica"
-			rendered="#{loginController.userType() eq 2}">
-			<h2>Admin stranica</h2>
-			<ui:include src="/admin.xhtml" />
-		</rich:tab>
-		<rich:tab header="Termini">
-			<h2>Upravljanje terminima</h2>
-			<ui:include src="/periods.xhtml" />
-		</rich:tab>
-		<rich:tab header="Korisnici">
-			<h2>Upravljanje korisnicima</h2>
-			<ui:include src="/users.xhtml" />
-		</rich:tab>
-		<rich:tab header="Učionice">
-			<h2>Upravljanje učionicama</h2>
-			<ui:include src="/rooms.xhtml" />
-		</rich:tab>
-		<rich:tab header="Grupe">
-			<h2>Upravljanje grupama</h2>
-			<ui:include src="/groups.xhtml" />
-		</rich:tab>
-		<rich:tab header="Predmeti">
-			<h2>Upravljanje predmetima</h2>
-			<ui:include src="/subjects.xhtml" />
-		</rich:tab>
-		<rich:tab header="Ogranicenja">
-			<h2>Ograničenja profesora i grupa</h2>
-			<ui:include src="/restrictions.xhtml" />
-		</rich:tab>
-		<rich:tab header="Vrste termina">
-			<h2>Vrste termina za profesore, učionice i grupe</h2>
-			<ui:include src="/availability.xhtml" />
-		</rich:tab>
-		<rich:tab header="Časovi">
-			<h2>Časovi</h2>
-			<ui:include src="/lessons.xhtml" />
-		</rich:tab>
-	</rich:tabPanel>
-	<h:form>
+	<h:form id="contentForm">
+		<h:messages layout="table" globalOnly="true" infoClass="bg-success"
+			errorClass="bg-danger" />
+		<rich:tabPanel id="dataOverviewTabPanel" switchType="ajax"
+			immediate="true" styleClass="panel"
+			rendered="#{loginController.loggedIn}"
+			activeItem="#{loginController.activeTab}">
+			<rich:tab header="Admin stranica" name="admin"
+				rendered="#{loginController.userType() eq 2}">
+				<h2>Admin stranica</h2>
+				<ui:include src="/admin.xhtml" />
+			</rich:tab>
+			<rich:tab header="Termini" name="periods">
+				<h2>Upravljanje terminima</h2>
+				<ui:include src="/periods.xhtml" />
+			</rich:tab>
+			<rich:tab header="Korisnici" name="users">
+				<h2>Upravljanje korisnicima</h2>
+				<ui:include src="/users.xhtml" />
+			</rich:tab>
+			<rich:tab header="Učionice" name="rooms">
+				<h2>Upravljanje učionicama</h2>
+				<ui:include src="/rooms.xhtml" />
+			</rich:tab>
+			<rich:tab header="Grupe" name="groups">
+				<h2>Upravljanje grupama</h2>
+				<ui:include src="/groups.xhtml" />
+			</rich:tab>
+			<rich:tab header="Predmeti" name="subjects">
+				<h2>Upravljanje predmetima</h2>
+				<ui:include src="/subjects.xhtml" />
+			</rich:tab>
+			<rich:tab header="Ogranicenja" name="restrictions">
+				<h2>Ograničenja profesora i grupa</h2>
+				<ui:include src="/restrictions.xhtml" />
+			</rich:tab>
+			<rich:tab header="Vrste termina" name="availability">
+				<h2>Vrste termina za profesore, učionice i grupe</h2>
+				<ui:include src="/availability.xhtml" />
+			</rich:tab>
+			<rich:tab header="Časovi" name="lessons">
+				<h2>Časovi</h2>
+				<ui:include src="/lessons.xhtml" />
+			</rich:tab>
+		</rich:tabPanel>
+	</h:form>
+	<h:form id="logoutForm">
 		<h:commandButton value="Logout" action="#{loginController.logout()}"
 			rendered="#{loginController.loggedIn}"
 			styleClass="btn btn-sm btn-warning" />

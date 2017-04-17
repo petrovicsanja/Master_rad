@@ -40,7 +40,7 @@ public class SemesterServiceImpl implements SemesterService {
 	}
 
 	@Override
-	public void addNewSemester(String schoolYear, Date startDate, Date endDate, Integer ordinalNumber) {
+	public Semester addNewSemester(String schoolYear, Date startDate, Date endDate, Integer ordinalNumber) {
 		Semester semester = new Semester();
 		semester.setSchoolYear(schoolYear);
 		semester.setStartDate(startDate);
@@ -50,10 +50,11 @@ public class SemesterServiceImpl implements SemesterService {
 		em.persist(semester);
 
 		System.out.println("Semester is successfully added to the database, id: " + semester.getId());
+		return semester;
 	}
 
 	@Override
-	public void activateSemester(Long semesterId) {
+	public Semester activateSemester(Long semesterId) {
 		TypedQuery<Semester> activeSemesterQuery = em.createQuery("SELECT s FROM Semester s WHERE s.active = :active",
 				Semester.class);
 		activeSemesterQuery.setParameter("active", true);
@@ -70,12 +71,17 @@ public class SemesterServiceImpl implements SemesterService {
 			semester.setActive(true);
 
 			System.out.println("Semester is successfully activated.");
+			return semester;
 		}
+
+		return null;
 	}
 
 	@Override
 	public void deactivateSemester(Long semesterId) {
 		Semester semester = em.find(Semester.class, semesterId);
 		semester.setActive(false);
+
+		System.out.println("Semester is successfully deactivated.");
 	}
 }

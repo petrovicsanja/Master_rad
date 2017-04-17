@@ -33,7 +33,7 @@ public class GroupConverter implements Converter {
 		return "";
 	}
 
-	// Setter must exist because of dependency injection
+	// Setter must exists because of dependency injection
 	public void setGroupsController(GroupsController groupsController) {
 		this.groupsController = groupsController;
 	}

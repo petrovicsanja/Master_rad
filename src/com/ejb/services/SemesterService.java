@@ -11,9 +11,9 @@ public interface SemesterService {
 
 	List<Semester> listSemesters();
 
-	void addNewSemester(String schoolYear, Date startDate, Date endDate, Integer ordinalNumber);
+	Semester addNewSemester(String schoolYear, Date startDate, Date endDate, Integer ordinalNumber);
 
-	void activateSemester(Long semesterId);
+	Semester activateSemester(Long semesterId);
 
 	void deactivateSemester(Long semesterId);
 }

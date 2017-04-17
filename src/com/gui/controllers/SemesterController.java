@@ -32,16 +32,35 @@ public class SemesterController {
 		return semesterList;
 	}
 
+	private Semester findSemesterById(Long semesterId) {
+		for (Semester semester : semesterList) {
+			if (semester.getId().equals(semesterId)) {
+				return semester;
+			}
+		}
+		return null;
+	}
+
 	public void addNewSemester() {
-		semesterService.addNewSemester(schoolYear, startDate, endDate, ordinalNumber);
+		Semester newSemester = semesterService.addNewSemester(schoolYear, startDate, endDate, ordinalNumber);
+		semesterList.add(newSemester);
 	}
 
 	public void activateSemester(Long semesterId) {
-		semesterService.activateSemester(semesterId);
+		activeSemester = semesterService.activateSemester(semesterId);
+
+		// update record in data table
+		Semester semester = findSemesterById(semesterId);
+		semester.setActive(true);
 	}
 
 	public void deactivateSemester(Long semesterId) {
 		semesterService.deactivateSemester(semesterId);
+		activeSemester = null;
+
+		// update record in data table
+		Semester semester = findSemesterById(semesterId);
+		semester.setActive(false);
 	}
 
 	public Semester getActiveSemester() {

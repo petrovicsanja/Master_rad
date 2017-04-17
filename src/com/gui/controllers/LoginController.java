@@ -21,6 +21,8 @@ public class LoginController {
 	private String password;
 	private String message = null;
 
+	private String activeTab = "periods";
+
 	/**
 	 * User login
 	 * 
@@ -103,5 +105,13 @@ public class LoginController {
 
 	public void setMessage(String poruka) {
 		this.message = poruka;
+	}
+
+	public String getActiveTab() {
+		return activeTab;
+	}
+
+	public void setActiveTab(String activeTab) {
+		this.activeTab = activeTab;
 	}
 }

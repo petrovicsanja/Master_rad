@@ -8,46 +8,47 @@
 	<rich:collapsiblePanel header="Dostupni/nedostupni termini - profesori"
 		switchType="client" styleClass="panel panel-primary"
 		headerClass="panel-heading" bodyClass="panel-body">
-		<h:form id="insertTeacherAvailability">
-			<rich:dataTable id="teacherAvailabilitiesList"
-				var="teacherAvailability" rows="10"
-				value="#{availabilitiesController.listAllTeacherAvailabilities()}"
-				iterationStatusVar="it" styleClass="table table-bordered">
 
-				<rich:column id="teacherColumn"
-					sortBy="#{teacherAvailability.teacher.firstName}">
-					<f:facet name="header">
+		<rich:dataTable id="teacherAvailabilitiesList"
+			var="teacherAvailability" rows="10"
+			value="#{availabilitiesController.listAllTeacherAvailabilities()}"
+			iterationStatusVar="it" styleClass="table table-bordered">
+
+			<rich:column id="teacherColumn"
+				sortBy="#{teacherAvailability.teacher.firstName}">
+				<f:facet name="header">
 								Profesor
 							</f:facet>
-					<h:outputText value="#{teacherAvailability.teacher}" />
-				</rich:column>
+				<h:outputText value="#{teacherAvailability.teacher}" />
+			</rich:column>
 
-				<rich:column id="typeColumn">
-					<f:facet name="header">
+			<rich:column id="typeColumn">
+				<f:facet name="header">
 								Tip termina
 							</f:facet>
-					<h:outputText value="#{teacherAvailability.type}" />
-				</rich:column>
+				<h:outputText value="#{teacherAvailability.type}" />
+			</rich:column>
 
-				<rich:column id="dayMarkColumn">
-					<f:facet name="header">
+			<rich:column id="dayMarkColumn">
+				<f:facet name="header">
 								Oznaka termina
 							</f:facet>
-					<h:outputText value="#{teacherAvailability.dayMark}" />
-				</rich:column>
+				<h:outputText value="#{teacherAvailability.dayMark}" />
+			</rich:column>
 
-				<rich:column id="termNumberColumn">
-					<f:facet name="header">
+			<rich:column id="termNumberColumn">
+				<f:facet name="header">
 								Redni broj termina
 							</f:facet>
-					<h:outputText value="#{teacherAvailability.termNumber}" />
-				</rich:column>
+				<h:outputText value="#{teacherAvailability.termNumber}" />
+			</rich:column>
 
-				<f:facet name="footer">
-					<rich:dataScroller renderIfSinglePage="false" />
-				</f:facet>
-			</rich:dataTable>
+			<f:facet name="footer">
+				<rich:dataScroller renderIfSinglePage="false" />
+			</f:facet>
+		</rich:dataTable>
 
+		<a4j:region>
 			<div class="container">
 				<div class="row text-center">
 					<h3>Unos vrsta termina za nastavnika</h3>
@@ -125,56 +126,56 @@
 					<h:commandButton
 						action="#{availabilitiesController.addTeacherAvailability()}"
 						value="Sacuvaj" styleClass="btn btn-sm btn-primary">
-						<f:ajax execute="@form" render="@form" />
+						<a4j:ajax render="@form" />
 					</h:commandButton>
 				</div>
 			</div>
-		</h:form>
+		</a4j:region>
 	</rich:collapsiblePanel>
 
 	<rich:collapsiblePanel header="Dostupni/nedostupni termini - grupe"
 		switchType="client" styleClass="panel panel-primary"
 		headerClass="panel-heading" bodyClass="panel-body">
-		<h:form id="insertGroupAvailability">
-			<rich:dataTable id="groupAvailabilitiesList" var="groupAvailability"
-				rows="10"
-				value="#{availabilitiesController.listAllGroupAvailabilities()}"
-				iterationStatusVar="it" styleClass="table table-bordered">
+		<rich:dataTable id="groupAvailabilitiesList" var="groupAvailability"
+			rows="10"
+			value="#{availabilitiesController.listAllGroupAvailabilities()}"
+			iterationStatusVar="it" styleClass="table table-bordered">
 
-				<rich:column id="groupColumn"
-					sortBy="#{groupAvailability.group.name}">
-					<f:facet name="header">
+			<rich:column id="groupColumn"
+				sortBy="#{groupAvailability.group.name}">
+				<f:facet name="header">
 								Grupa
 							</f:facet>
-					<h:outputText value="#{groupAvailability.group}" />
-				</rich:column>
+				<h:outputText value="#{groupAvailability.group}" />
+			</rich:column>
 
-				<rich:column id="typeColumn">
-					<f:facet name="header">
+			<rich:column id="typeColumn">
+				<f:facet name="header">
 								Tip termina
 							</f:facet>
-					<h:outputText value="#{groupAvailability.type}" />
-				</rich:column>
+				<h:outputText value="#{groupAvailability.type}" />
+			</rich:column>
 
-				<rich:column id="dayMarkColumn">
-					<f:facet name="header">
+			<rich:column id="dayMarkColumn">
+				<f:facet name="header">
 								Oznaka termina
 							</f:facet>
-					<h:outputText value="#{groupAvailability.dayMark}" />
-				</rich:column>
+				<h:outputText value="#{groupAvailability.dayMark}" />
+			</rich:column>
 
-				<rich:column id="termNumberColumn">
-					<f:facet name="header">
+			<rich:column id="termNumberColumn">
+				<f:facet name="header">
 								Redni broj termina
 							</f:facet>
-					<h:outputText value="#{groupAvailability.termNumber}" />
-				</rich:column>
+				<h:outputText value="#{groupAvailability.termNumber}" />
+			</rich:column>
 
-				<f:facet name="footer">
-					<rich:dataScroller renderIfSinglePage="false" />
-				</f:facet>
-			</rich:dataTable>
+			<f:facet name="footer">
+				<rich:dataScroller renderIfSinglePage="false" />
+			</f:facet>
+		</rich:dataTable>
 
+		<a4j:region>
 			<div class="container">
 				<div class="row text-center">
 					<h3>Unos vrsta termina za grupu</h3>
@@ -247,55 +248,55 @@
 					<h:commandButton
 						action="#{availabilitiesController.addGroupAvailability()}"
 						value="Sacuvaj" styleClass="btn btn-sm btn-primary">
-						<f:ajax execute="@form" render="@form" />
+						<a4j:ajax render="@form" />
 					</h:commandButton>
 				</div>
 			</div>
-		</h:form>
+		</a4j:region>
 	</rich:collapsiblePanel>
 
 	<rich:collapsiblePanel header="Dostupni/nedostupni termini - ucionice"
 		switchType="client" styleClass="panel panel-primary"
 		headerClass="panel-heading" bodyClass="panel-body">
-		<h:form id="insertRoomAvailability">
-			<rich:dataTable id="roomAvailabilitiesList" var="roomAvailability"
-				rows="10"
-				value="#{availabilitiesController.listAllRoomAvailabilities()}"
-				iterationStatusVar="it" styleClass="table table-bordered">
+		<rich:dataTable id="roomAvailabilitiesList" var="roomAvailability"
+			rows="10"
+			value="#{availabilitiesController.listAllRoomAvailabilities()}"
+			iterationStatusVar="it" styleClass="table table-bordered">
 
-				<rich:column id="roomColumn" sortBy="#{roomAvailability.room.name}">
-					<f:facet name="header">
+			<rich:column id="roomColumn" sortBy="#{roomAvailability.room.name}">
+				<f:facet name="header">
 								Ucionica
 							</f:facet>
-					<h:outputText value="#{roomAvailability.room}" />
-				</rich:column>
+				<h:outputText value="#{roomAvailability.room}" />
+			</rich:column>
 
-				<rich:column id="typeColumn">
-					<f:facet name="header">
+			<rich:column id="typeColumn">
+				<f:facet name="header">
 								Tip termina
 							</f:facet>
-					<h:outputText value="#{roomAvailability.type}" />
-				</rich:column>
+				<h:outputText value="#{roomAvailability.type}" />
+			</rich:column>
 
-				<rich:column id="dayMarkColumn">
-					<f:facet name="header">
+			<rich:column id="dayMarkColumn">
+				<f:facet name="header">
 								Oznaka termina
 							</f:facet>
-					<h:outputText value="#{roomAvailability.dayMark}" />
-				</rich:column>
+				<h:outputText value="#{roomAvailability.dayMark}" />
+			</rich:column>
 
-				<rich:column id="termNumberColumn">
-					<f:facet name="header">
+			<rich:column id="termNumberColumn">
+				<f:facet name="header">
 								Redni broj termina
 							</f:facet>
-					<h:outputText value="#{roomAvailability.termNumber}" />
-				</rich:column>
+				<h:outputText value="#{roomAvailability.termNumber}" />
+			</rich:column>
 
-				<f:facet name="footer">
-					<rich:dataScroller renderIfSinglePage="false" />
-				</f:facet>
-			</rich:dataTable>
+			<f:facet name="footer">
+				<rich:dataScroller renderIfSinglePage="false" />
+			</f:facet>
+		</rich:dataTable>
 
+		<a4j:region>
 			<div class="container">
 				<div class="row text-center">
 					<h3>Unos vrsta termina za grupu</h3>
@@ -367,10 +368,10 @@
 					<h:commandButton
 						action="#{availabilitiesController.addRoomAvailability()}"
 						value="Sacuvaj" styleClass="btn btn-sm btn-primary">
-						<f:ajax execute="@form" render="@form" />
+						<a4j:ajax render="@form" />
 					</h:commandButton>
 				</div>
 			</div>
-		</h:form>
+		</a4j:region>
 	</rich:collapsiblePanel>
 </ui:composition>

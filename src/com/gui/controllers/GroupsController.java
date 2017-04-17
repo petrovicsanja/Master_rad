@@ -1,16 +1,12 @@
 package com.gui.controllers;
 
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
-import javax.faces.event.ValueChangeEvent;
-import javax.faces.model.SelectItem;
 
 import org.richfaces.component.SortOrder;
 
@@ -29,7 +25,6 @@ public class GroupsController {
 	private DepartmentController departmentController;
 
 	private Group newGroup = new Group();
-	private List<SelectItem> departmentSelectItems = null;
 	private List<Group> groupList = null;
 	private int selectedGroupIndex;
 	private Group groupToUpdate;
@@ -42,32 +37,14 @@ public class GroupsController {
 	private SortOrder sizeOrder = SortOrder.unsorted;
 	private SortOrder markOrder = SortOrder.unsorted;
 
-	@PostConstruct
-	public void init() {
-		listDepartments();
-	}
-
 	public void addGroup() {
 		groupsService.addGroup(newGroup);
 		groupList.add(newGroup);
 		newGroup = new Group();
 	}
 
-	private void listDepartments() {
-		if (departmentSelectItems == null) {
-			departmentSelectItems = new ArrayList<SelectItem>();
-			for (Department smer : departmentController.listDepartments()) {
-				departmentSelectItems.add(new SelectItem(smer.getId(), smer.getName()));
-			}
-		}
-	}
-
-	public void selectedValue(ValueChangeEvent event) {
-		Long selectedDepartmentId = (Long) event.getNewValue();
-		Department department = departmentController.findDepartmentById(selectedDepartmentId);
-		if (department != null) {
-			newGroup.setDepartment(department);
-		}
+	public List<Department> listDepartments() {
+		return departmentController.listDepartments();
 	}
 
 	public List<Group> listGroups() {
@@ -166,14 +143,6 @@ public class GroupsController {
 
 	public void setNewGroup(Group newGroup) {
 		this.newGroup = newGroup;
-	}
-
-	public List<SelectItem> getDepartmentSelectItems() {
-		return departmentSelectItems;
-	}
-
-	public void setDepartmentSelectItems(List<SelectItem> departmentSelectItems) {
-		this.departmentSelectItems = departmentSelectItems;
 	}
 
 	public SortOrder getNameOrder() {

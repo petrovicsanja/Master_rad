@@ -48,13 +48,9 @@ public class DepartmentController {
 		newDepartment = new Department();
 	}
 
-	public List<Department> getDepartmentList() {
-		return departmentList;
-	}
-
-	public void setDepartmentList(List<Department> departmentList) {
-		this.departmentList = departmentList;
-	}
+	/*
+	 * Getters and setters
+	 */
 
 	public int getSelectedDepartmentIndex() {
 		return selectedDepartmentIndex;

@@ -8,7 +8,7 @@
 	<rich:collapsiblePanel header="Izlistavanje časova" switchType="client"
 		styleClass="panel panel-primary" headerClass="panel-heading"
 		bodyClass="panel-body">
-		<h:form id="listLessons">
+		<a4j:region>
 			<div class="row">
 				<div class="col-sm-3">
 					<h:outputLabel value="Izaberite predmet: " />
@@ -28,69 +28,69 @@
 					<h:commandButton
 						action="#{lessonsController.listLessonsForSubject()}"
 						value="Pretrazi">
-						<f:ajax execute="@form" render="@form" />
+						<a4j:ajax render="@form" />
 					</h:commandButton>
 				</div>
 			</div>
+		</a4j:region>
 
-			<rich:dataTable id="subjectLessonsList" var="lesson" rows="10"
-				value="#{lessonsController.subjectLessonsList}"
-				iterationStatusVar="it" styleClass="table table-bordered">
-				<rich:column>
-					<f:facet name="header">
+		<rich:dataTable id="subjectLessonsList" var="lesson" rows="10"
+			value="#{lessonsController.subjectLessonsList}"
+			iterationStatusVar="it" styleClass="table table-bordered">
+			<rich:column>
+				<f:facet name="header">
 							Ime predmeta
 						</f:facet>
-					<h:outputText value="#{lesson.subject.name}" />
-				</rich:column>
+				<h:outputText value="#{lesson.subject.name}" />
+			</rich:column>
 
-				<rich:column>
-					<f:facet name="header">
+			<rich:column>
+				<f:facet name="header">
 							Profesori
 						</f:facet>
-					<ui:repeat var="teacher" value="#{lesson.teachers}">
-						<h:outputText value="#{teacher.toString()} " />
-					</ui:repeat>
-				</rich:column>
+				<ui:repeat var="teacher" value="#{lesson.teachers}">
+					<h:outputText value="#{teacher.toString()} " />
+				</ui:repeat>
+			</rich:column>
 
-				<rich:column>
-					<f:facet name="header">
+			<rich:column>
+				<f:facet name="header">
 							Grupe
 						</f:facet>
-					<ui:repeat var="group" value="#{lesson.groups}">
-						<h:outputText value="#{group.toString()} " />
-					</ui:repeat>
-				</rich:column>
+				<ui:repeat var="group" value="#{lesson.groups}">
+					<h:outputText value="#{group.toString()} " />
+				</ui:repeat>
+			</rich:column>
 
-				<rich:column>
-					<f:facet name="header">
+			<rich:column>
+				<f:facet name="header">
 							Fond casova
 						</f:facet>
-					<h:outputText value="#{lesson.terms}" />
-				</rich:column>
+				<h:outputText value="#{lesson.terms}" />
+			</rich:column>
 
-				<rich:column>
-					<f:facet name="header">
+			<rich:column>
+				<f:facet name="header">
 							Učionice
 						</f:facet>
-					<ui:repeat var="room" value="#{lesson.rooms}">
-						<h:outputText value="#{room.toString()} " />
-					</ui:repeat>
-				</rich:column>
+				<ui:repeat var="room" value="#{lesson.rooms}">
+					<h:outputText value="#{room.toString()} " />
+				</ui:repeat>
+			</rich:column>
 
-				<rich:column>
-					<f:facet name="header">
+			<rich:column>
+				<f:facet name="header">
 							Napomena
 						</f:facet>
-					<h:outputText value="#{lesson.note}" />
-				</rich:column>
-			</rich:dataTable>
-		</h:form>
+				<h:outputText value="#{lesson.note}" />
+			</rich:column>
+		</rich:dataTable>
 	</rich:collapsiblePanel>
 
 	<rich:collapsiblePanel header="Unos časova" switchType="client"
 		styleClass="panel panel-primary" headerClass="panel-heading"
 		bodyClass="panel-body">
-		<h:form id="insertLesson">
+		<a4j:region>
 			<div class="container">
 				<div class="row">
 					<div class="col-sm-3">
@@ -235,11 +235,11 @@
 				<div class="row text-right">
 					<h:commandButton styleClass="btn btn-sm btn-primary"
 						action="#{lessonsController.addLesson()}" value="Sacuvaj">
-						<f:ajax execute="@form" render="@form" />
+						<a4j:ajax render="@form" />
 					</h:commandButton>
 				</div>
 			</div>
-		</h:form>
+		</a4j:region>
 	</rich:collapsiblePanel>
 
 </ui:composition>

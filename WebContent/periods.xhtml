@@ -6,61 +6,59 @@
 	xmlns:a4j="http://richfaces.org/a4j">
 
 	<!-- IZLISTAVANJE TERMINA -->
-	<h:form id="periods">
-		<rich:panel header="Izlistavanje termina">
-			<rich:list value="#{periodsController.allPeriods}" id="periodsList"
-				var="period">
-				<h:outputText value="#{period.day}" />
-				<h:outputLabel value=" - " />
-				<h:outputText value="#{period.termsNumber}" />
-			</rich:list>
-		</rich:panel>
+	<rich:panel header="Izlistavanje termina">
+		<rich:list value="#{periodsController.allPeriods}" id="periodsList"
+			var="period">
+			<h:outputText value="#{period.day}" />
+			<h:outputLabel value=" - " />
+			<h:outputText value="#{period.termsNumber}" />
+		</rich:list>
+	</rich:panel>
 
-		<rich:panel header="Unos i izmena termina"
-			rendered="#{loginController.userType() eq 2}">
-			<h:panelGrid columns="3">
-				<h:outputLabel value="Unesite duzinu trajanja termina/casa:" />
-				<h:inputText value="#{periodsController.termLength}" />
-				<h:outputLabel value="minuta" />
+	<rich:panel header="Unos i izmena termina"
+		rendered="#{loginController.userType() eq 2}">
+		<h:panelGrid id="insertPeriods" columns="3">
+			<h:outputLabel value="Unesite duzinu trajanja termina/casa:" />
+			<h:inputText value="#{periodsController.termLength}" />
+			<h:outputLabel value="minuta" />
 
-				<h:outputLabel value="Radni dan" />
-				<h:outputLabel value="Broj termina u smeni" />
-				<h:outputLabel value="" />
+			<h:outputLabel value="Radni dan" />
+			<h:outputLabel value="Broj termina u smeni" />
+			<h:outputLabel value="" />
 
-				<h:outputLabel value="Ponedeljak: " />
-				<h:inputText value="#{periodsController.termsMonday}" />
-				<h:outputLabel value="" />
+			<h:outputLabel value="Ponedeljak: " />
+			<h:inputText value="#{periodsController.termsMonday}" />
+			<h:outputLabel value="" />
 
-				<h:outputLabel value="Utorak: " />
-				<h:inputText value="#{periodsController.termsThuesday}" />
-				<h:outputLabel value="" />
+			<h:outputLabel value="Utorak: " />
+			<h:inputText value="#{periodsController.termsThuesday}" />
+			<h:outputLabel value="" />
 
-				<h:outputLabel value="Sreda: " />
-				<h:inputText value="#{periodsController.termsWednesday}" />
-				<h:outputLabel value="" />
+			<h:outputLabel value="Sreda: " />
+			<h:inputText value="#{periodsController.termsWednesday}" />
+			<h:outputLabel value="" />
 
-				<h:outputLabel value="Cetvrtak: " />
-				<h:inputText value="#{periodsController.termsThursday}" />
-				<h:outputLabel value="" />
+			<h:outputLabel value="Cetvrtak: " />
+			<h:inputText value="#{periodsController.termsThursday}" />
+			<h:outputLabel value="" />
 
-				<h:outputLabel value="Petak: " />
-				<h:inputText value="#{periodsController.termsFriday}" />
-				<h:outputLabel value="" />
+			<h:outputLabel value="Petak: " />
+			<h:inputText value="#{periodsController.termsFriday}" />
+			<h:outputLabel value="" />
 
-				<h:outputLabel value="Subota: " />
-				<h:inputText value="#{periodsController.termsSaturday}" />
-				<h:outputLabel value="" />
+			<h:outputLabel value="Subota: " />
+			<h:inputText value="#{periodsController.termsSaturday}" />
+			<h:outputLabel value="" />
 
-				<h:outputLabel value="Nedelja: " />
-				<h:inputText value="#{periodsController.termsSunday}" />
-				<h:outputLabel value="" />
+			<h:outputLabel value="Nedelja: " />
+			<h:inputText value="#{periodsController.termsSunday}" />
+			<h:outputLabel value="" />
 
-				<h:commandButton value="Dodaj termine"
-					action="#{periodsController.addPeriods()}"
-					styleClass="btn btn-sm btn-primary">
-					<f:ajax execute="@form" render="@form" />
-				</h:commandButton>
-			</h:panelGrid>
-		</rich:panel>
-	</h:form>
+			<h:commandButton value="Dodaj termine"
+				action="#{periodsController.addPeriods()}"
+				styleClass="btn btn-sm btn-primary">
+				<f:ajax execute="insertPeriods" render="@form" />
+			</h:commandButton>
+		</h:panelGrid>
+	</rich:panel>
 </ui:composition>

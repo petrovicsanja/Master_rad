@@ -6,165 +6,164 @@
 	xmlns:a4j="http://richfaces.org/a4j">
 
 	<!-- IZLISTAVANJE SVIH UCIONICA -->
-	<h:form id="izlistavanjeUcionica">
-		<rich:collapsiblePanel header="Izlistavanje svih učionica"
-			switchType="client" styleClass="panel panel-primary"
-			headerClass="panel-heading" bodyClass="panel-body">
-			<rich:dataTable id="listaUcionica" var="ucionica" rows="10"
-				value="#{roomsController.listClassrooms()}" iterationStatusVar="it"
-				styleClass="table table-bordered">
+	<rich:collapsiblePanel header="Izlistavanje svih učionica"
+		switchType="client" styleClass="panel panel-primary"
+		headerClass="panel-heading" bodyClass="panel-body">
+		<rich:dataTable id="listaUcionica" var="ucionica" rows="10"
+			value="#{roomsController.listClassrooms()}" iterationStatusVar="it"
+			styleClass="table table-bordered">
 
-				<rich:column id="kolonanaziv" sortBy="#{ucionica.name}"
-					sortOrder="#{roomsController.nameOrder}" sortType="custom">
-					<f:facet name="header">
-						<a4j:commandLink value="Naziv učionice" render="listaUcionica"
-							execute="@this" action="#{roomsController.sortByName()}" />
-					</f:facet>
-					<h:outputText value="#{ucionica.name}" />
-				</rich:column>
+			<rich:column id="kolonanaziv" sortBy="#{ucionica.name}"
+				sortOrder="#{roomsController.nameOrder}" sortType="custom">
+				<f:facet name="header">
+					<a4j:commandLink value="Naziv učionice" render="listaUcionica"
+						execute="@this" action="#{roomsController.sortByName()}" />
+				</f:facet>
+				<h:outputText value="#{ucionica.name}" />
+			</rich:column>
 
-				<rich:column id="tabelaSprat" sortBy="#{ucionica.floor}"
-					sortOrder="#{roomsController.floorOrder}" sortType="custom">
-					<f:facet name="header">
-						<a4j:commandLink value="Sprat" render="listaUcionica"
-							execute="@this" action="#{roomsController.sortByFloor()}" />
-					</f:facet>
-					<h:outputText value="#{ucionica.floor}" />
-				</rich:column>
+			<rich:column id="tabelaSprat" sortBy="#{ucionica.floor}"
+				sortOrder="#{roomsController.floorOrder}" sortType="custom">
+				<f:facet name="header">
+					<a4j:commandLink value="Sprat" render="listaUcionica"
+						execute="@this" action="#{roomsController.sortByFloor()}" />
+				</f:facet>
+				<h:outputText value="#{ucionica.floor}" />
+			</rich:column>
 
-				<rich:column id="tabelaZgrada" sortBy="#{ucionica.building}"
-					sortOrder="#{roomsController.zgradaRedosled}" sortType="custom">
-					<f:facet name="header">
-						<a4j:commandLink value="Zgrada" render="listaUcionica"
-							execute="@this" action="#{roomsController.sortByBuilding()}" />
-					</f:facet>
-					<h:outputText value="#{ucionica.building}" />
-				</rich:column>
+			<rich:column id="tabelaZgrada" sortBy="#{ucionica.building}"
+				sortOrder="#{roomsController.zgradaRedosled}" sortType="custom">
+				<f:facet name="header">
+					<a4j:commandLink value="Zgrada" render="listaUcionica"
+						execute="@this" action="#{roomsController.sortByBuilding()}" />
+				</f:facet>
+				<h:outputText value="#{ucionica.building}" />
+			</rich:column>
 
-				<rich:column id="tabelaVelicina" sortBy="#{ucionica.size}"
-					sortOrder="#{roomsController.velicinaRedosled}" sortType="custom">
-					<f:facet name="header">
-						<a4j:commandLink value="Velicina" render="listaUcionica"
-							execute="@this" action="#{roomsController.sortirajPoVelicini()}" />
-					</f:facet>
-					<h:outputText value="#{ucionica.size}" />
-				</rich:column>
+			<rich:column id="tabelaVelicina" sortBy="#{ucionica.size}"
+				sortOrder="#{roomsController.velicinaRedosled}" sortType="custom">
+				<f:facet name="header">
+					<a4j:commandLink value="Velicina" render="listaUcionica"
+						execute="@this" action="#{roomsController.sortirajPoVelicini()}" />
+				</f:facet>
+				<h:outputText value="#{ucionica.size}" />
+			</rich:column>
 
-				<rich:column id="tabelaoznaka" sortBy="#{ucionica.mark}"
-					sortOrder="#{roomsController.markOrder}" sortType="custom">
-					<f:facet name="header">
-						<a4j:commandLink value="Oznaka učionice" render="listaUcionica"
-							execute="@this" action="#{roomsController.sortByMark()}" />
-					</f:facet>
-					<h:outputText value="#{ucionica.mark}" />
-				</rich:column>
+			<rich:column id="tabelaoznaka" sortBy="#{ucionica.mark}"
+				sortOrder="#{roomsController.markOrder}" sortType="custom">
+				<f:facet name="header">
+					<a4j:commandLink value="Oznaka učionice" render="listaUcionica"
+						execute="@this" action="#{roomsController.sortByMark()}" />
+				</f:facet>
+				<h:outputText value="#{ucionica.mark}" />
+			</rich:column>
 
-				<rich:column styleClass="text-center"
-					rendered="#{loginController.userType() eq 2}">
-					<f:facet name="header">
+			<rich:column styleClass="text-center"
+				rendered="#{loginController.userType() eq 2}">
+				<f:facet name="header">
 							Brisanje i izmena
 					</f:facet>
-					<a4j:commandLink
-						oncomplete="#{rich:component('potvrdaBrisanjaUcionice')}.show()"
-						execute="@this" render="@none" title="Obriši učionicu">
-						<h:graphicImage value="/images/delete.gif" alt="delete" />
-						<a4j:param value="#{it.index}"
-							assignTo="#{roomsController.selectedClassroomIndex}" />
-					</a4j:commandLink>
-					<a4j:commandLink
-						oncomplete="#{rich:component('izmenaUcionice')}.show()"
-						resetValues="true" execute="@this" render="izmenaUcioniceGrid"
-						title="Izmeni podatke o ucionici">
-						<h:graphicImage value="/images/edit.gif" alt="edit" />
-						<a4j:param value="#{it.index}"
-							assignTo="#{roomsController.selectedClassroomIndex}" />
-						<f:setPropertyActionListener value="#{ucionica}"
-							target="#{roomsController.classroomToUpdate}" />
-					</a4j:commandLink>
-				</rich:column>
+				<a4j:commandLink
+					oncomplete="#{rich:component('potvrdaBrisanjaUcionice')}.show()"
+					execute="@this" render="@none" title="Obriši učionicu">
+					<h:graphicImage value="/images/delete.gif" alt="delete" />
+					<a4j:param value="#{it.index}"
+						assignTo="#{roomsController.selectedClassroomIndex}" />
+				</a4j:commandLink>
+				<a4j:commandLink
+					oncomplete="#{rich:component('izmenaUcionice')}.show()"
+					resetValues="true" execute="@this" render="izmenaUcioniceGrid"
+					title="Izmeni podatke o ucionici">
+					<h:graphicImage value="/images/edit.gif" alt="edit" />
+					<a4j:param value="#{it.index}"
+						assignTo="#{roomsController.selectedClassroomIndex}" />
+					<f:setPropertyActionListener value="#{ucionica}"
+						target="#{roomsController.classroomToUpdate}" />
+				</a4j:commandLink>
+			</rich:column>
 
-				<f:facet name="footer">
-					<rich:dataScroller renderIfSinglePage="false" />
-				</f:facet>
-			</rich:dataTable>
-		</rich:collapsiblePanel>
+			<f:facet name="footer">
+				<rich:dataScroller renderIfSinglePage="false" />
+			</f:facet>
+		</rich:dataTable>
+	</rich:collapsiblePanel>
 
-		<!-- POPUP ZA POTVRDU BRISANJA -->
-		<rich:popupPanel id="potvrdaBrisanjaUcionice" modal="false"
-			autosized="true" resizeable="false" styleClass="panel panel-info"
-			headerClass="panel-heading">
-			<f:facet name="header">
-				<h:outputText value="Upozorenje" />
-			</f:facet>
-			<f:facet name="controls">
-				<h:outputLink value="#"
-					onclick="#{rich:component('potvrdaBrisanjaUcionice')}.hide(); return false;"
-					style="color: inherit"> X </h:outputLink>
-			</f:facet>
-			<p>Da li ste sigurni da želite da obrišete učionicu?</p>
-			<a4j:commandButton action="#{roomsController.deleteClassroom()}"
-				value="Obriši"
-				oncomplete="#{rich:component('potvrdaBrisanjaUcionice')}.hide();">
-				<a4j:ajax execute="@this" render=":izlistavanjeUcionica" />
-			</a4j:commandButton>
+	<!-- POPUP ZA POTVRDU BRISANJA -->
+	<rich:popupPanel id="potvrdaBrisanjaUcionice" modal="false"
+		autosized="true" resizeable="false" styleClass="panel panel-info"
+		headerClass="panel-heading">
+		<f:facet name="header">
+			<h:outputText value="Upozorenje" />
+		</f:facet>
+		<f:facet name="controls">
+			<h:outputLink value="#"
+				onclick="#{rich:component('potvrdaBrisanjaUcionice')}.hide(); return false;"
+				style="color: inherit"> X </h:outputLink>
+		</f:facet>
+		<p>Da li ste sigurni da želite da obrišete učionicu?</p>
+		<a4j:commandButton action="#{roomsController.deleteClassroom()}"
+			value="Obriši"
+			oncomplete="#{rich:component('potvrdaBrisanjaUcionice')}.hide();">
+			<a4j:ajax execute="@this" render=":izlistavanjeUcionica" />
+		</a4j:commandButton>
+		<a4j:commandButton value="Odustani"
+			onclick="#{rich:component('potvrdaBrisanjaUcionice')}.hide(); return false;" />
+	</rich:popupPanel>
+
+	<!-- POPUP ZA IZMENU PODATAKA O UCIONICI -->
+	<rich:popupPanel id="izmenaUcionice" domElementAttachment="parent"
+		autosized="true" resizeable="false" styleClass="panel panel-info"
+		headerClass="panel-heading">
+		<f:facet name="header">
+			<h:outputText value="Izmena podataka o ucionici" />
+		</f:facet>
+		<f:facet name="controls">
+			<h:outputLink value="#"
+				onclick="#{rich:component('izmenaUcionice')}.hide(); return false;"
+				style="color: inherit"> X </h:outputLink>
+		</f:facet>
+		<h:panelGrid id="izmenaUcioniceGrid" columns="3">
+			<h:outputLabel value="Unesite naziv ucionice:" />
+			<h:inputText id="ucionicaZaIzmenuNaziv" label="Naziv ucionice"
+				value="#{roomsController.classroomToUpdate.name}" required="true" />
+			<rich:message for="ucionicaZaIzmenuNaziv" ajaxRendered="true" />
+
+			<h:outputLabel value="Unesite sprat na kojem se ucionica nalazi:" />
+			<h:inputText id="ucionicaZaIzmenuSprat" label="Sprat ucionice"
+				value="#{roomsController.classroomToUpdate.floor}" required="true" />
+			<rich:message for="ucionicaZaIzmenuSprat" ajaxRendered="true" />
+
+			<h:outputLabel value="Unesite zgradu u kojoj se ucinica nalazi:" />
+			<h:inputText id="ucionicaZaIzmenuZgrada" label="Zgrada ucionice"
+				value="#{roomsController.classroomToUpdate.building}" />
+			<rich:message for="ucionicaZaIzmenuZgrada" ajaxRendered="true" />
+
+			<h:outputLabel value="Unesite velicinu ucionice:" />
+			<h:inputText id="ucionicaZaIzmenuVelicina" label="Velicina ucionice"
+				value="#{roomsController.classroomToUpdate.size}" />
+			<rich:message for="ucionicaZaIzmenuVelicina" ajaxRendered="true" />
+
+			<h:outputLabel value="Unesite oznaku ucionice:" />
+			<h:inputText id="ucionicaZaIzmenuOznaka" label="Oznaka ucionice"
+				value="#{roomsController.classroomToUpdate.mark}" required="true" />
+			<rich:message for="ucionicaZaIzmenuOznaka" ajaxRendered="true" />
+
+			<a4j:commandButton action="#{roomsController.updateClassroom()}"
+				value="Izmeni"
+				oncomplete="#{rich:component('izmenaUcionice')}.hide();"
+				execute="izmenaUcionice" render="listaUcionica" />
 			<a4j:commandButton value="Odustani"
-				onclick="#{rich:component('potvrdaBrisanjaUcionice')}.hide(); return false;" />
-		</rich:popupPanel>
-
-		<!-- POPUP ZA IZMENU PODATAKA O UCIONICI -->
-		<rich:popupPanel id="izmenaUcionice" domElementAttachment="parent"
-			autosized="true" resizeable="false" styleClass="panel panel-info"
-			headerClass="panel-heading">
-			<f:facet name="header">
-				<h:outputText value="Izmena podataka o ucionici" />
-			</f:facet>
-			<f:facet name="controls">
-				<h:outputLink value="#"
-					onclick="#{rich:component('izmenaUcionice')}.hide(); return false;"
-					style="color: inherit"> X </h:outputLink>
-			</f:facet>
-			<h:panelGrid id="izmenaUcioniceGrid" columns="3">
-				<h:outputLabel value="Unesite naziv ucionice:" />
-				<h:inputText id="ucionicaZaIzmenuNaziv" label="Naziv ucionice"
-					value="#{roomsController.classroomToUpdate.name}" required="true" />
-				<rich:message for="ucionicaZaIzmenuNaziv" ajaxRendered="true" />
-
-				<h:outputLabel value="Unesite sprat na kojem se ucionica nalazi:" />
-				<h:inputText id="ucionicaZaIzmenuSprat" label="Sprat ucionice"
-					value="#{roomsController.classroomToUpdate.floor}" required="true" />
-				<rich:message for="ucionicaZaIzmenuSprat" ajaxRendered="true" />
-
-				<h:outputLabel value="Unesite zgradu u kojoj se ucinica nalazi:" />
-				<h:inputText id="ucionicaZaIzmenuZgrada" label="Zgrada ucionice"
-					value="#{roomsController.classroomToUpdate.building}" />
-				<rich:message for="ucionicaZaIzmenuZgrada" ajaxRendered="true" />
-
-				<h:outputLabel value="Unesite velicinu ucionice:" />
-				<h:inputText id="ucionicaZaIzmenuVelicina" label="Velicina ucionice"
-					value="#{roomsController.classroomToUpdate.size}" />
-				<rich:message for="ucionicaZaIzmenuVelicina" ajaxRendered="true" />
-
-				<h:outputLabel value="Unesite oznaku ucionice:" />
-				<h:inputText id="ucionicaZaIzmenuOznaka" label="Oznaka ucionice"
-					value="#{roomsController.classroomToUpdate.mark}" required="true" />
-				<rich:message for="ucionicaZaIzmenuOznaka" ajaxRendered="true" />
-
-				<a4j:commandButton action="#{roomsController.updateClassroom()}"
-					value="Izmeni"
-					oncomplete="#{rich:component('izmenaUcionice')}.hide();"
-					execute="izmenaUcionice" render="listaUcionica" />
-				<a4j:commandButton value="Odustani"
-					onclick="#{rich:component('izmenaUcionice')}.hide(); return false;" />
-			</h:panelGrid>
-		</rich:popupPanel>
-	</h:form>
+				onclick="#{rich:component('izmenaUcionice')}.hide(); return false;" />
+		</h:panelGrid>
+	</rich:popupPanel>
 
 	<!-- DODAVANJE NOVE UCIONICE -->
-	<h:form id="dodavanjeUcionice">
-		<rich:collapsiblePanel header="Dodavanje nove ucionice"
-			switchType="client" rendered="#{loginController.userType() eq 2}"
-			styleClass="panel panel-primary" headerClass="panel-heading"
-			bodyClass="panel-body">
+	<rich:collapsiblePanel header="Dodavanje nove ucionice"
+		switchType="client" rendered="#{loginController.userType() eq 2}"
+		styleClass="panel panel-primary" headerClass="panel-heading"
+		bodyClass="panel-body">
+
+		<a4j:region>
 			<div class="container">
 				<div class="row">
 					<div class="col-sm-4">
@@ -232,11 +231,11 @@
 				<div class="row text-right">
 					<h:commandButton action="#{roomsController.addClassroom()}"
 						value="Dodaj ucionicu" styleClass="btn btn-sm btn-primary">
-						<f:ajax execute="@form" render="@form :izlistavanjeUcionica" />
+						<a4j:ajax render="@form" />
 					</h:commandButton>
 				</div>
 			</div>
-		</rich:collapsiblePanel>
-	</h:form>
+		</a4j:region>
+	</rich:collapsiblePanel>
 
 </ui:composition>
