@@ -49,11 +49,11 @@
 		</rich:dataTable>
 
 		<a4j:region>
-			<div class="container">
-				<div class="row text-center">
-					<h3>Unos vrsta termina za nastavnika</h3>
-				</div>
+			<div class="page-header">
+				<h3>Unos vrsta termina za nastavnika</h3>
+			</div>
 
+			<div class="container">
 				<div class="row">
 					<div class="col-sm-3">
 						<h:outputLabel value="Profesor:" />
@@ -135,7 +135,7 @@
 
 	<rich:collapsiblePanel header="Dostupni/nedostupni termini - grupe"
 		switchType="client" styleClass="panel panel-primary"
-		headerClass="panel-heading" bodyClass="panel-body">
+		headerClass="panel-heading" bodyClass="panel-body" expanded="false">
 		<rich:dataTable id="groupAvailabilitiesList" var="groupAvailability"
 			rows="10"
 			value="#{availabilitiesController.listAllGroupAvailabilities()}"
@@ -176,11 +176,11 @@
 		</rich:dataTable>
 
 		<a4j:region>
-			<div class="container">
-				<div class="row text-center">
-					<h3>Unos vrsta termina za grupu</h3>
-				</div>
+			<div class="page-header">
+				<h3>Unos vrsta termina za grupu</h3>
+			</div>
 
+			<div class="container">
 				<div class="row">
 					<div class="col-sm-3">
 						<h:outputLabel value="Grupa::" />
@@ -257,7 +257,7 @@
 
 	<rich:collapsiblePanel header="Dostupni/nedostupni termini - ucionice"
 		switchType="client" styleClass="panel panel-primary"
-		headerClass="panel-heading" bodyClass="panel-body">
+		headerClass="panel-heading" bodyClass="panel-body" expanded="false">
 		<rich:dataTable id="roomAvailabilitiesList" var="roomAvailability"
 			rows="10"
 			value="#{availabilitiesController.listAllRoomAvailabilities()}"
@@ -297,11 +297,11 @@
 		</rich:dataTable>
 
 		<a4j:region>
-			<div class="container">
-				<div class="row text-center">
-					<h3>Unos vrsta termina za grupu</h3>
-				</div>
+			<div class="page-header">
+				<h3>Unos vrsta termina za učionice</h3>
+			</div>
 
+			<div class="container">
 				<div class="row">
 					<div class="col-sm-3">
 						<h:outputLabel value="Grupa:" />

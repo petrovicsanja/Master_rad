@@ -5,494 +5,537 @@
 	xmlns:rich="http://richfaces.org/rich"
 	xmlns:a4j="http://richfaces.org/a4j">
 
-	<div class="row">
-		<rich:collapsiblePanel header="Ogranicenja na broj radnih dana"
-			switchType="client" styleClass="panel panel-primary"
-			headerClass="panel-heading" bodyClass="panel-body">
+	<rich:collapsiblePanel header="Ogranicenja na broj radnih dana"
+		switchType="client" styleClass="panel panel-primary"
+		headerClass="panel-heading" bodyClass="panel-body">
 
-			<rich:dataTable id="numDaysGroupRestrictionList" var="restriction"
-				rows="10"
-				value="#{restrictionsController.listNumDaysGroupRestrictions()}"
-				iterationStatusVar="it" styleClass="table table-bordered">
-				<rich:column sortBy="#{restriction.group.name}">
-					<f:facet name="header">
+		<div class="page-header">
+			<h3>Grupe</h3>
+		</div>
+
+		<rich:dataTable id="numDaysGroupRestrictionList" var="restriction"
+			rows="10"
+			value="#{restrictionsController.listNumDaysGroupRestrictions()}"
+			iterationStatusVar="it" styleClass="table table-bordered">
+			<rich:column sortBy="#{restriction.group.name}">
+				<f:facet name="header">
 						Naziv grupe
 					</f:facet>
-					<h:outputText value="#{restriction.group.name}" />
-				</rich:column>
+				<h:outputText value="#{restriction.group.name}" />
+			</rich:column>
 
-				<rich:column>
-					<f:facet name="header">
+			<rich:column>
+				<f:facet name="header">
 						Minimum
 					</f:facet>
-					<h:outputText value="#{restriction.min}" />
-				</rich:column>
+				<h:outputText value="#{restriction.min}" />
+			</rich:column>
 
-				<rich:column>
-					<f:facet name="header">
+			<rich:column>
+				<f:facet name="header">
 						Optimum
 					</f:facet>
-					<h:outputText value="#{restriction.opt}" />
-				</rich:column>
+				<h:outputText value="#{restriction.opt}" />
+			</rich:column>
 
-				<rich:column>
-					<f:facet name="header">
+			<rich:column>
+				<f:facet name="header">
 						Maksimum
 					</f:facet>
-					<h:outputText value="#{restriction.max}" />
-				</rich:column>
-			</rich:dataTable>
+				<h:outputText value="#{restriction.max}" />
+			</rich:column>
+		</rich:dataTable>
 
-			<a4j:region rendered="#{loginController.admin}">
-				<div class="container">
-					<div class="row">
-						<div class="col-sm-3">
-							<h:outputLabel value="Izaberite grupu:" />
-						</div>
-						<div class="col-sm-3">
-							<h:outputLabel value="Minimalan broj dana:" />
-						</div>
-						<div class="col-sm-3">
-							<h:outputLabel value="Optimalan broj dana:" />
-						</div>
-						<div class="col-sm-3">
-							<h:outputLabel value="Maksimalan broj dana:" />
-						</div>
+		<a4j:region rendered="#{loginController.admin}">
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-3">
+						<h:outputLabel value="Izaberite grupu:" />
 					</div>
-
-					<div class="row">
-						<div class="col-sm-3">
-							<h:selectOneMenu id="restrictionNumDaysGroup" required="true"
-								value="#{restrictionsController.numDaysGroup}"
-								converter="#{groupConverter}">
-								<f:selectItem itemLabel="-- Izaberite grupu --"
-									itemValue="#{null}" />
-								<f:selectItems value="#{restrictionsController.listAllGroups()}"
-									var="group" itemLabel="#{group.name}" itemValue="#{group}" />
-								<f:ajax event="change" execute="@this" />
-							</h:selectOneMenu>
-						</div>
-						<div class="col-sm-3">
-							<h:inputText required="true"
-								value="#{restrictionsController.minNumDaysGroup}" />
-						</div>
-						<div class="col-sm-3">
-							<h:inputText required="true"
-								value="#{restrictionsController.optNumDaysGroup}" />
-						</div>
-						<div class="col-sm-3">
-							<h:inputText required="true"
-								value="#{restrictionsController.maxNumDaysGroup}" />
-						</div>
+					<div class="col-sm-3">
+						<h:outputLabel value="Minimalan broj dana:" />
 					</div>
-
-					<div class="row text-right">
-						<h:commandButton styleClass="btn btn-sm btn-primary"
-							action="#{restrictionsController.addNewNumDaysGroupRestriction()}"
-							value="Sacuvaj">
-							<a4j:ajax render="@form" />
-						</h:commandButton>
+					<div class="col-sm-3">
+						<h:outputLabel value="Optimalan broj dana:" />
+					</div>
+					<div class="col-sm-3">
+						<h:outputLabel value="Maksimalan broj dana:" />
 					</div>
 				</div>
-			</a4j:region>
 
-			<rich:dataTable id="numDaysTeacherRestrictionList" var="restriction"
-				rows="10"
-				value="#{restrictionsController.listNumDaysTeacherRestrictionList()}"
-				iterationStatusVar="it" styleClass="table table-bordered">
-				<rich:column sortBy="#{restriction.teacher}">
-					<f:facet name="header">
+				<div class="row">
+					<div class="col-sm-3">
+						<h:selectOneMenu id="restrictionNumDaysGroup" required="true"
+							value="#{restrictionsController.newGroupNumDays.group}"
+							converter="#{groupConverter}">
+							<f:selectItem itemLabel="-- Izaberite grupu --"
+								itemValue="#{null}" />
+							<f:selectItems value="#{restrictionsController.listAllGroups()}"
+								var="group" itemLabel="#{group.name}" itemValue="#{group}" />
+							<f:ajax event="change" execute="@this" />
+						</h:selectOneMenu>
+					</div>
+					<div class="col-sm-3">
+						<h:inputText required="true"
+							value="#{restrictionsController.newGroupNumDays.min}" />
+					</div>
+					<div class="col-sm-3">
+						<h:inputText required="true"
+							value="#{restrictionsController.newGroupNumDays.opt}" />
+					</div>
+					<div class="col-sm-3">
+						<h:inputText required="true"
+							value="#{restrictionsController.newGroupNumDays.max}" />
+					</div>
+				</div>
+
+				<div class="row text-right">
+					<h:commandButton styleClass="btn btn-sm btn-primary"
+						action="#{restrictionsController.addNewNumDaysGroupRestriction()}"
+						value="Sacuvaj">
+						<a4j:ajax render=":numDaysGroupRestrictionList" />
+					</h:commandButton>
+				</div>
+			</div>
+		</a4j:region>
+
+		<div class="page-header">
+			<h3>Profesori</h3>
+		</div>
+
+		<rich:dataTable id="numDaysTeacherRestrictionList" var="restriction"
+			rows="10"
+			value="#{restrictionsController.listNumDaysTeacherRestrictionList()}"
+			iterationStatusVar="it" styleClass="table table-bordered">
+			<rich:column sortBy="#{restriction.teacher}">
+				<f:facet name="header">
 						Profesor
 					</f:facet>
-					<h:outputText value="#{restriction.teacher}" />
-				</rich:column>
+				<h:outputText value="#{restriction.teacher}" />
+			</rich:column>
 
-				<rich:column>
-					<f:facet name="header">
+			<rich:column>
+				<f:facet name="header">
 						Minimum
 					</f:facet>
-					<h:outputText value="#{restriction.min}" />
-				</rich:column>
+				<h:outputText value="#{restriction.min}" />
+			</rich:column>
 
-				<rich:column>
-					<f:facet name="header">
+			<rich:column>
+				<f:facet name="header">
 						Optimum
 					</f:facet>
-					<h:outputText value="#{restriction.opt}" />
-				</rich:column>
+				<h:outputText value="#{restriction.opt}" />
+			</rich:column>
 
-				<rich:column>
-					<f:facet name="header">
+			<rich:column>
+				<f:facet name="header">
 						Maksimum
 					</f:facet>
-					<h:outputText value="#{restriction.max}" />
-				</rich:column>
-			</rich:dataTable>
+				<h:outputText value="#{restriction.max}" />
+			</rich:column>
+		</rich:dataTable>
 
-			<a4j:region rendered="#{loginController.admin}">
-				<div class="container">
-					<div class="row">
-						<div class="col-sm-3">
-							<h:outputLabel value="Izaberite profesora:" />
-						</div>
+		<a4j:region rendered="#{loginController.admin}">
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-3">
+						<h:outputLabel value="Izaberite profesora:" />
 					</div>
-
-					<div class="row">
-						<div class="col-sm-3">
-							<h:selectOneMenu id="restrictionNumDaysTeacher" required="true"
-								value="#{restrictionsController.numDaysTeacher}"
-								converter="#{teacherConverter}">
-								<f:selectItem itemLabel="-- Izaberite profesora --"
-									itemValue="#{null}" />
-								<f:selectItems
-									value="#{restrictionsController.listAllTeachers()}"
-									var="teacher" itemLabel="#{teacher.toString()}"
-									itemValue="#{teacher}" />
-								<f:ajax event="change" execute="@this" />
-							</h:selectOneMenu>
-						</div>
-						<div class="col-sm-3">
-							<h:inputText required="true"
-								value="#{restrictionsController.minNumDaysTeacher}" />
-						</div>
-						<div class="col-sm-3">
-							<h:inputText required="true"
-								value="#{restrictionsController.optNumDaysTeacher}" />
-						</div>
-						<div class="col-sm-3">
-							<h:inputText required="true"
-								value="#{restrictionsController.maxNumDaysTeacher}" />
-						</div>
+					<div class="col-sm-3">
+						<h:outputLabel value="Minimalan broj dana:" />
 					</div>
-
-					<div class="row text-right">
-						<h:commandButton styleClass="btn btn-sm btn-primary"
-							action="#{restrictionsController.addNewNumDaysTeacherRestriction()}"
-							value="Sacuvaj">
-							<a4j:ajax render="@form" />
-						</h:commandButton>
+					<div class="col-sm-3">
+						<h:outputLabel value="Optimalan broj dana:" />
+					</div>
+					<div class="col-sm-3">
+						<h:outputLabel value="Maksimalan broj dana:" />
 					</div>
 				</div>
-			</a4j:region>
-		</rich:collapsiblePanel>
-	</div>
 
-	<div class="row">
-		<rich:collapsiblePanel header="Pauze u toku nastave"
-			switchType="client" styleClass="panel panel-primary"
-			headerClass="panel-heading" bodyClass="panel-body">
-			<rich:dataTable id="idlesGroupRestrictionList" var="restriction"
-				rows="10"
-				value="#{restrictionsController.listGroupIdlesRestrictionList()}"
-				iterationStatusVar="it" styleClass="table table-bordered">
-				<rich:column sortBy="#{restriction.group.name}">
-					<f:facet name="header">
+				<div class="row">
+					<div class="col-sm-3">
+						<h:selectOneMenu id="restrictionNumDaysTeacher" required="true"
+							value="#{restrictionsController.newTeacherNumDays.teacher}"
+							converter="#{teacherConverter}">
+							<f:selectItem itemLabel="-- Izaberite profesora --"
+								itemValue="#{null}" />
+							<f:selectItems
+								value="#{restrictionsController.listAllTeachers()}"
+								var="teacher" itemLabel="#{teacher.toString()}"
+								itemValue="#{teacher}" />
+							<f:ajax event="change" execute="@this" />
+						</h:selectOneMenu>
+					</div>
+					<div class="col-sm-3">
+						<h:inputText required="true"
+							value="#{restrictionsController.newTeacherNumDays.min}" />
+					</div>
+					<div class="col-sm-3">
+						<h:inputText required="true"
+							value="#{restrictionsController.newTeacherNumDays.opt}" />
+					</div>
+					<div class="col-sm-3">
+						<h:inputText required="true"
+							value="#{restrictionsController.newTeacherNumDays.max}" />
+					</div>
+				</div>
+
+				<div class="row text-right">
+					<h:commandButton styleClass="btn btn-sm btn-primary"
+						action="#{restrictionsController.addNewNumDaysTeacherRestriction()}"
+						value="Sacuvaj">
+						<a4j:ajax render=":numDaysTeacherRestrictionList" />
+					</h:commandButton>
+				</div>
+			</div>
+		</a4j:region>
+	</rich:collapsiblePanel>
+
+	<rich:collapsiblePanel header="Pauze u toku nastave"
+		switchType="client" styleClass="panel panel-primary"
+		headerClass="panel-heading" bodyClass="panel-body" expanded="false">
+
+		<div class="page-header">
+			<h3>Grupe</h3>
+		</div>
+
+		<rich:dataTable id="idlesGroupRestrictionList" var="restriction"
+			rows="10"
+			value="#{restrictionsController.listGroupIdlesRestrictionList()}"
+			iterationStatusVar="it" styleClass="table table-bordered">
+			<rich:column sortBy="#{restriction.group.name}">
+				<f:facet name="header">
 						Naziv grupe
 					</f:facet>
-					<h:outputText value="#{restriction.group.name}" />
-				</rich:column>
+				<h:outputText value="#{restriction.group.name}" />
+			</rich:column>
 
-				<rich:column>
-					<f:facet name="header">
+			<rich:column>
+				<f:facet name="header">
 						Maksimum
 					</f:facet>
-					<h:outputText value="#{restriction.max}" />
-				</rich:column>
+				<h:outputText value="#{restriction.max}" />
+			</rich:column>
 
-				<rich:column>
-					<f:facet name="header">
+			<rich:column>
+				<f:facet name="header">
 						Višestruke pauze
 					</f:facet>
-					<h:outputText value="#{restriction.multiple}" />
-				</rich:column>
+				<h:outputText value="#{restriction.multiple}" />
+			</rich:column>
 
-				<rich:column>
-					<f:facet name="header">
+			<rich:column>
+				<f:facet name="header">
 						Broj dana
 					</f:facet>
-					<h:outputText value="#{restriction.days}" />
-				</rich:column>
-			</rich:dataTable>
+				<h:outputText value="#{restriction.days}" />
+			</rich:column>
+		</rich:dataTable>
 
-			<a4j:region rendered="#{loginController.admin}">
-				<div class="container">
-					<div class="row">
-						<div class="col-sm-3">
-							<h:outputLabel value="Izaberite grupu:" />
-						</div>
-						<div class="col-sm-3">
-							<h:outputLabel value="Maksimalna duzina pauza u toku dana:" />
-						</div>
-						<div class="col-sm-3">
-							<h:outputLabel value="Dozvoljene visestruke pauze u toku dana:" />
-						</div>
-						<div class="col-sm-3">
-							<h:outputLabel value="Broj dana u kojima postoje pauze:" />
-						</div>
+		<a4j:region rendered="#{loginController.admin}">
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-3">
+						<h:outputLabel value="Izaberite grupu:" />
 					</div>
-
-					<div class="row">
-						<div class="col-sm-3">
-							<h:selectOneMenu id="restrictionIdlesGroup" required="true"
-								value="#{restrictionsController.idlesGroup}"
-								converter="#{groupConverter}">
-								<f:selectItem itemLabel="-- Izaberite grupu --"
-									itemValue="#{null}" />
-								<f:selectItems value="#{restrictionsController.listAllGroups()}"
-									var="group" itemLabel="#{group.name}" itemValue="#{group}" />
-								<f:ajax event="change" execute="@this" />
-							</h:selectOneMenu>
-						</div>
-						<div class="col-sm-3">
-							<h:inputText required="true"
-								value="#{restrictionsController.maxIdlesGroup}" />
-						</div>
-						<div class="col-sm-3">
-							<h:selectBooleanCheckbox
-								value="#{restrictionsController.multipleIdlesGroup}" />
-						</div>
-						<div class="col-sm-3">
-							<h:inputText required="true"
-								value="#{restrictionsController.daysIdlesGroup}" />
-						</div>
+					<div class="col-sm-3">
+						<h:outputLabel value="Maksimalna duzina pauza u toku dana:" />
 					</div>
-
-					<div class="row text-right">
-						<h:commandButton styleClass="btn btn-sm btn-primary"
-							action="#{restrictionsController.addIdlesGroupRestriction()}"
-							value="Sacuvaj">
-							<a4j:ajax render="@form" />
-						</h:commandButton>
+					<div class="col-sm-3">
+						<h:outputLabel value="Dozvoljene visestruke pauze u toku dana:" />
+					</div>
+					<div class="col-sm-3">
+						<h:outputLabel value="Broj dana u kojima postoje pauze:" />
 					</div>
 				</div>
-			</a4j:region>
 
-			<rich:dataTable id="idlesTeacherRestrictionList" var="restriction"
-				rows="10"
-				value="#{restrictionsController.listTeacherIdlesRestrictionList()}"
-				iterationStatusVar="it" styleClass="table table-bordered">
-				<rich:column sortBy="#{restriction.teacher}">
-					<f:facet name="header">
+				<div class="row">
+					<div class="col-sm-3">
+						<h:selectOneMenu id="restrictionIdlesGroup" required="true"
+							value="#{restrictionsController.newGroupIdles.group}"
+							converter="#{groupConverter}">
+							<f:selectItem itemLabel="-- Izaberite grupu --"
+								itemValue="#{null}" />
+							<f:selectItems value="#{restrictionsController.listAllGroups()}"
+								var="group" itemLabel="#{group.name}" itemValue="#{group}" />
+							<f:ajax event="change" execute="@this" />
+						</h:selectOneMenu>
+					</div>
+					<div class="col-sm-3">
+						<h:inputText required="true"
+							value="#{restrictionsController.newGroupIdles.max}" />
+					</div>
+					<div class="col-sm-3">
+						<h:selectBooleanCheckbox
+							value="#{restrictionsController.newGroupIdles.multiple}" />
+					</div>
+					<div class="col-sm-3">
+						<h:inputText required="true"
+							value="#{restrictionsController.newGroupIdles.days}" />
+					</div>
+				</div>
+
+				<div class="row text-right">
+					<h:commandButton styleClass="btn btn-sm btn-primary"
+						action="#{restrictionsController.addIdlesGroupRestriction()}"
+						value="Sacuvaj">
+						<a4j:ajax render=":idlesGroupRestrictionList" />
+					</h:commandButton>
+				</div>
+			</div>
+		</a4j:region>
+
+		<div class="page-header">
+			<h3>Profesori</h3>
+		</div>
+
+		<rich:dataTable id="idlesTeacherRestrictionList" var="restriction"
+			rows="10"
+			value="#{restrictionsController.listTeacherIdlesRestrictionList()}"
+			iterationStatusVar="it" styleClass="table table-bordered">
+			<rich:column sortBy="#{restriction.teacher}">
+				<f:facet name="header">
 						Profesor
 					</f:facet>
-					<h:outputText value="#{restriction.teacher}" />
-				</rich:column>
+				<h:outputText value="#{restriction.teacher}" />
+			</rich:column>
 
-				<rich:column>
-					<f:facet name="header">
+			<rich:column>
+				<f:facet name="header">
 						Maksimum
 					</f:facet>
-					<h:outputText value="#{restriction.max}" />
-				</rich:column>
+				<h:outputText value="#{restriction.max}" />
+			</rich:column>
 
-				<rich:column>
-					<f:facet name="header">
+			<rich:column>
+				<f:facet name="header">
 						Višestruke pauze
 					</f:facet>
-					<h:outputText value="#{restriction.multiple}" />
-				</rich:column>
+				<h:outputText value="#{restriction.multiple}" />
+			</rich:column>
 
-				<rich:column>
-					<f:facet name="header">
+			<rich:column>
+				<f:facet name="header">
 						Broj dana
 					</f:facet>
-					<h:outputText value="#{restriction.days}" />
-				</rich:column>
-			</rich:dataTable>
+				<h:outputText value="#{restriction.days}" />
+			</rich:column>
+		</rich:dataTable>
 
-			<a4j:region rendered="#{loginController.admin}">
-				<div class="container">
-					<div class="row">
-						<div class="col-sm-3">
-							<h:outputLabel value="Izaberite profesora:" />
-						</div>
+		<a4j:region rendered="#{loginController.admin}">
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-3">
+						<h:outputLabel value="Izaberite profesora:" />
 					</div>
-
-					<div class="row">
-						<div class="col-sm-3">
-							<h:selectOneMenu id="restrictionIdlesTeacher" required="true"
-								value="#{restrictionsController.idlesTeacher}"
-								converter="#{teacherConverter}">
-								<f:selectItem itemLabel="-- Izaberite profesora --"
-									itemValue="#{null}" />
-								<f:selectItems
-									value="#{restrictionsController.listAllTeachers()}"
-									var="teacher" itemLabel="#{teacher.toString()}"
-									itemValue="#{teacher}" />
-								<f:ajax event="change" execute="@this" />
-							</h:selectOneMenu>
-						</div>
-						<div class="col-sm-3">
-							<h:inputText required="true"
-								value="#{restrictionsController.maxIdlesTeacher}" />
-						</div>
-						<div class="col-sm-3">
-							<h:selectBooleanCheckbox
-								value="#{restrictionsController.multipleIdlesTeacher}" />
-						</div>
-						<div class="col-sm-3">
-							<h:inputText required="true"
-								value="#{restrictionsController.daysIdlesTeacher}" />
-						</div>
+					<div class="col-sm-3">
+						<h:outputLabel value="Maksimalna duzina pauza u toku dana:" />
 					</div>
-
-					<div class="row text-right">
-						<h:commandButton styleClass="btn btn-sm btn-primary"
-							action="#{restrictionsController.addIdlesTeacherRestriction()}"
-							value="Sacuvaj">
-							<a4j:ajax render="@form" />
-						</h:commandButton>
+					<div class="col-sm-3">
+						<h:outputLabel value="Dozvoljene visestruke pauze u toku dana:" />
+					</div>
+					<div class="col-sm-3">
+						<h:outputLabel value="Broj dana u kojima postoje pauze:" />
 					</div>
 				</div>
-			</a4j:region>
-		</rich:collapsiblePanel>
-	</div>
 
-	<div class="row">
-		<rich:collapsiblePanel header="Broj termina u toku dana"
-			switchType="client" styleClass="panel panel-primary"
-			headerClass="panel-heading" bodyClass="panel-body">
-			<rich:dataTable id="loadsGroupRestrictionList" var="restriction"
-				rows="10"
-				value="#{restrictionsController.listGroupLoadRestrictionList()}"
-				iterationStatusVar="it" styleClass="table table-bordered">
-				<rich:column sortBy="#{restriction.group.name}">
-					<f:facet name="header">
+				<div class="row">
+					<div class="col-sm-3">
+						<h:selectOneMenu id="restrictionIdlesTeacher" required="true"
+							value="#{restrictionsController.newTeacherIdles.teacher}"
+							converter="#{teacherConverter}">
+							<f:selectItem itemLabel="-- Izaberite profesora --"
+								itemValue="#{null}" />
+							<f:selectItems
+								value="#{restrictionsController.listAllTeachers()}"
+								var="teacher" itemLabel="#{teacher.toString()}"
+								itemValue="#{teacher}" />
+							<f:ajax event="change" execute="@this" />
+						</h:selectOneMenu>
+					</div>
+					<div class="col-sm-3">
+						<h:inputText required="true"
+							value="#{restrictionsController.newTeacherIdles.max}" />
+					</div>
+					<div class="col-sm-3">
+						<h:selectBooleanCheckbox
+							value="#{restrictionsController.newTeacherIdles.multiple}" />
+					</div>
+					<div class="col-sm-3">
+						<h:inputText required="true"
+							value="#{restrictionsController.newTeacherIdles.days}" />
+					</div>
+				</div>
+
+				<div class="row text-right">
+					<h:commandButton styleClass="btn btn-sm btn-primary"
+						action="#{restrictionsController.addIdlesTeacherRestriction()}"
+						value="Sacuvaj">
+						<a4j:ajax render=":idlesTeacherRestrictionList" />
+					</h:commandButton>
+				</div>
+			</div>
+		</a4j:region>
+	</rich:collapsiblePanel>
+
+	<rich:collapsiblePanel header="Broj termina u toku dana"
+		switchType="client" styleClass="panel panel-primary"
+		headerClass="panel-heading" bodyClass="panel-body" expanded="false">
+
+		<div class="page-header">
+			<h3>Grupe</h3>
+		</div>
+
+		<rich:dataTable id="loadsGroupRestrictionList" var="restriction"
+			rows="10"
+			value="#{restrictionsController.listGroupLoadRestrictionList()}"
+			iterationStatusVar="it" styleClass="table table-bordered">
+			<rich:column sortBy="#{restriction.group.name}">
+				<f:facet name="header">
 						Naziv grupe
 					</f:facet>
-					<h:outputText value="#{restriction.group.name}" />
-				</rich:column>
+				<h:outputText value="#{restriction.group.name}" />
+			</rich:column>
 
-				<rich:column>
-					<f:facet name="header">
+			<rich:column>
+				<f:facet name="header">
 						Minimum
 					</f:facet>
-					<h:outputText value="#{restriction.min}" />
-				</rich:column>
+				<h:outputText value="#{restriction.min}" />
+			</rich:column>
 
-				<rich:column>
-					<f:facet name="header">
+			<rich:column>
+				<f:facet name="header">
 						Maksimum
 					</f:facet>
-					<h:outputText value="#{restriction.max}" />
-				</rich:column>
-			</rich:dataTable>
+				<h:outputText value="#{restriction.max}" />
+			</rich:column>
+		</rich:dataTable>
 
-
-			<a4j:region rendered="#{loginController.admin}">
-				<div class="container">
-					<div class="row">
-						<div class="col-sm-3">
-							<h:outputLabel value="Izaberite grupu:" />
-						</div>
-						<div class="col-sm-3">
-							<h:outputLabel value="Najmanji broj termina:" />
-						</div>
-						<div class="col-sm-3">
-							<h:outputLabel value="Najveci broj termina:" />
-						</div>
+		<a4j:region rendered="#{loginController.admin}">
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-3">
+						<h:outputLabel value="Izaberite grupu:" />
 					</div>
-
-					<div class="row">
-						<div class="col-sm-3">
-							<h:selectOneMenu id="restrictionLoadsGroup" required="true"
-								value="#{restrictionsController.loadGroup}"
-								converter="#{groupConverter}">
-								<f:selectItem itemLabel="-- Izaberite grupu --"
-									itemValue="#{null}" />
-								<f:selectItems value="#{restrictionsController.listAllGroups()}"
-									var="group" itemLabel="#{group.name}" itemValue="#{group}" />
-								<f:ajax event="change" execute="@this" />
-							</h:selectOneMenu>
-						</div>
-						<div class="col-sm-3">
-							<h:inputText required="true"
-								value="#{restrictionsController.minLoadGroup}" />
-						</div>
-						<div class="col-sm-3">
-							<h:inputText required="true"
-								value="#{restrictionsController.maxLoadGroup}" />
-						</div>
+					<div class="col-sm-3">
+						<h:outputLabel value="Najmanji broj termina:" />
 					</div>
-
-					<div class="row text-right">
-						<h:commandButton styleClass="btn btn-sm btn-primary"
-							action="#{restrictionsController.addLoadGroupRestriction()}"
-							value="Sacuvaj">
-							<a4j:ajax render="@form" />
-						</h:commandButton>
+					<div class="col-sm-3">
+						<h:outputLabel value="Najveci broj termina:" />
 					</div>
 				</div>
-			</a4j:region>
 
-			<rich:dataTable id="loadsTeacherRestrictionList" var="restriction"
-				rows="10"
-				value="#{restrictionsController.listTeacherLoadRestrictionList()}"
-				iterationStatusVar="it" styleClass="table table-bordered">
-				<rich:column sortBy="#{restriction.teacher}">
-					<f:facet name="header">
+				<div class="row">
+					<div class="col-sm-3">
+						<h:selectOneMenu id="restrictionLoadsGroup" required="true"
+							value="#{restrictionsController.newGroupLoad.group}"
+							converter="#{groupConverter}">
+							<f:selectItem itemLabel="-- Izaberite grupu --"
+								itemValue="#{null}" />
+							<f:selectItems value="#{restrictionsController.listAllGroups()}"
+								var="group" itemLabel="#{group.name}" itemValue="#{group}" />
+							<f:ajax event="change" execute="@this" />
+						</h:selectOneMenu>
+					</div>
+					<div class="col-sm-3">
+						<h:inputText required="true"
+							value="#{restrictionsController.newGroupLoad.min}" />
+					</div>
+					<div class="col-sm-3">
+						<h:inputText required="true"
+							value="#{restrictionsController.newGroupLoad.max}" />
+					</div>
+				</div>
+
+				<div class="row text-right">
+					<h:commandButton styleClass="btn btn-sm btn-primary"
+						action="#{restrictionsController.addLoadGroupRestriction()}"
+						value="Sacuvaj">
+						<a4j:ajax render=":loadsGroupRestrictionList" />
+					</h:commandButton>
+				</div>
+			</div>
+		</a4j:region>
+
+		<div class="page-header">
+			<h3>Profesori</h3>
+		</div>
+
+		<rich:dataTable id="loadsTeacherRestrictionList" var="restriction"
+			rows="10"
+			value="#{restrictionsController.listTeacherLoadRestrictionList()}"
+			iterationStatusVar="it" styleClass="table table-bordered">
+			<rich:column sortBy="#{restriction.teacher}">
+				<f:facet name="header">
 						Profesor
 					</f:facet>
-					<h:outputText value="#{restriction.teacher}" />
-				</rich:column>
+				<h:outputText value="#{restriction.teacher}" />
+			</rich:column>
 
-				<rich:column>
-					<f:facet name="header">
+			<rich:column>
+				<f:facet name="header">
 						Minimum
 					</f:facet>
-					<h:outputText value="#{restriction.min}" />
-				</rich:column>
+				<h:outputText value="#{restriction.min}" />
+			</rich:column>
 
-				<rich:column>
-					<f:facet name="header">
+			<rich:column>
+				<f:facet name="header">
 						Maksimum
 					</f:facet>
-					<h:outputText value="#{restriction.max}" />
-				</rich:column>
-			</rich:dataTable>
+				<h:outputText value="#{restriction.max}" />
+			</rich:column>
+		</rich:dataTable>
 
-			<a4j:region rendered="#{loginController.admin}">
-				<div class="container">
-					<div class="row">
-						<div class="col-sm-3">
-							<h:outputLabel value="Izaberite profesora:" />
-						</div>
+		<a4j:region rendered="#{loginController.admin}">
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-3">
+						<h:outputLabel value="Izaberite profesora:" />
 					</div>
-
-					<div class="row">
-						<div class="col-sm-3">
-							<h:selectOneMenu id="restrictionLoadsTeacher" required="true"
-								value="#{restrictionsController.loadTeacher}"
-								converter="#{teacherConverter}">
-								<f:selectItem itemLabel="-- Izaberite profesora --"
-									itemValue="#{null}" />
-								<f:selectItems
-									value="#{restrictionsController.listAllTeachers()}"
-									var="teacher" itemLabel="#{teacher.toString()}"
-									itemValue="#{teacher}" />
-								<f:ajax event="change" execute="@this" />
-							</h:selectOneMenu>
-						</div>
-						<div class="col-sm-3">
-							<h:inputText required="true"
-								value="#{restrictionsController.minLoadTeacher}" />
-						</div>
-						<div class="col-sm-3">
-							<h:inputText required="true"
-								value="#{restrictionsController.maxLoadTeacher}" />
-						</div>
+					<div class="col-sm-3">
+						<h:outputLabel value="Najmanji broj termina:" />
 					</div>
-
-					<div class="row text-right">
-						<h:commandButton styleClass="btn btn-sm btn-primary"
-							action="#{restrictionsController.addLoadTeacherRestriction()}"
-							value="Sacuvaj">
-							<a4j:ajax render="@form" />
-						</h:commandButton>
+					<div class="col-sm-3">
+						<h:outputLabel value="Najveci broj termina:" />
 					</div>
 				</div>
-			</a4j:region>
-		</rich:collapsiblePanel>
-	</div>
+
+				<div class="row">
+					<div class="col-sm-3">
+						<h:selectOneMenu id="restrictionLoadsTeacher" required="true"
+							value="#{restrictionsController.newTeacherLoad.teacher}"
+							converter="#{teacherConverter}">
+							<f:selectItem itemLabel="-- Izaberite profesora --"
+								itemValue="#{null}" />
+							<f:selectItems
+								value="#{restrictionsController.listAllTeachers()}"
+								var="teacher" itemLabel="#{teacher.toString()}"
+								itemValue="#{teacher}" />
+							<f:ajax event="change" execute="@this" />
+						</h:selectOneMenu>
+					</div>
+					<div class="col-sm-3">
+						<h:inputText required="true"
+							value="#{restrictionsController.newTeacherLoad.min}" />
+					</div>
+					<div class="col-sm-3">
+						<h:inputText required="true"
+							value="#{restrictionsController.newTeacherLoad.max}" />
+					</div>
+				</div>
+
+				<div class="row text-right">
+					<h:commandButton styleClass="btn btn-sm btn-primary"
+						action="#{restrictionsController.addLoadTeacherRestriction()}"
+						value="Sacuvaj">
+						<a4j:ajax render=":loadsTeacherRestrictionList" />
+					</h:commandButton>
+				</div>
+			</div>
+		</a4j:region>
+	</rich:collapsiblePanel>
 
 </ui:composition>
