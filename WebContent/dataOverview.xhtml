@@ -17,18 +17,17 @@
 </h:head>
 <h:body>
 	<h:outputLabel value="Dobrodošli, #{loginController.user.firstName}"
-		rendered="#{loginController.loggedIn}" />
+		rendered="#{not empty user}" />
 	<br />
 	<br />
 	<h:form id="contentForm">
 		<h:messages layout="table" globalOnly="true" infoClass="bg-success"
 			errorClass="bg-danger" />
 		<rich:tabPanel id="dataOverviewTabPanel" switchType="ajax"
-			immediate="true" styleClass="panel"
-			rendered="#{loginController.loggedIn}"
+			immediate="true" styleClass="panel" rendered="#{not empty user}"
 			activeItem="#{loginController.activeTab}">
 			<rich:tab header="Admin stranica" name="admin"
-				rendered="#{loginController.userType() eq 2}">
+				rendered="#{user.type eq 2}">
 				<h2>Admin stranica</h2>
 				<ui:include src="/admin.xhtml" />
 			</rich:tab>
@@ -68,8 +67,7 @@
 	</h:form>
 	<h:form id="logoutForm">
 		<h:commandButton value="Logout" action="#{loginController.logout()}"
-			rendered="#{loginController.loggedIn}"
-			styleClass="btn btn-sm btn-warning" />
+			rendered="#{not empty user}" styleClass="btn btn-sm btn-warning" />
 	</h:form>
 </h:body>
 </html>

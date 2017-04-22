@@ -19,7 +19,7 @@
 		styleClass="panel panel-primary" headerClass="panel-heading"
 		bodyClass="panel-body">
 		<h:form>
-			<h:panelGrid columns="1" rendered="#{!loginController.loggedIn}">
+			<h:panelGrid columns="1" rendered="#{empty user}">
 				<h:panelGroup rendered="#{loginController.message ne null}">
 					<div class="alert alert-info">
 						<h:outputLabel value="#{loginController.message}" />
@@ -34,8 +34,7 @@
 						</h:outputLabel>
 						</div>
 						<div class="col-sm-6">
-							<h:inputText id="username"
-								value="#{loginController.username}" />
+							<h:inputText id="username" value="#{loginController.username}" />
 						</div>
 					</div>
 				</h:panelGroup>
@@ -53,11 +52,9 @@
 
 				<h:panelGroup>
 					<h:commandButton value="Login" action="#{loginController.login()}"
-						rendered="#{!loginController.loggedIn}"
-						styleClass="btn btn-sm btn-primary" />
+						rendered="#{empty user}" styleClass="btn btn-sm btn-primary" />
 					<h:commandButton value="Logout"
-						action="#{loginController.logout()}"
-						rendered="#{loginController.loggedIn}"
+						action="#{loginController.logout()}" rendered="#{not empty user}"
 						styleClass="btn btn-sm btn-warning" />
 				</h:panelGroup>
 			</h:panelGrid>

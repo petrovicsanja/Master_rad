@@ -37,7 +37,7 @@ public class LoginController {
 		if (user != null) {
 			System.out.println("Korisnik je uspesno ulogovan.");
 			action = "dataOverview?faces-redirect=true";
-			context.getExternalContext().getSessionMap().put("korisnik", user);
+			context.getExternalContext().getSessionMap().put("user", user);
 			this.message = null;
 		} else {
 			System.out.println("Korisnik nije pronadjen");
@@ -59,14 +59,6 @@ public class LoginController {
 		FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
 		this.user = null;
 		return "index?faces-redirect=true";
-	}
-
-	public boolean isLoggedIn() {
-		return user != null;
-	}
-
-	public int userType() {
-		return user.getType();
 	}
 
 	public boolean isAdmin() {

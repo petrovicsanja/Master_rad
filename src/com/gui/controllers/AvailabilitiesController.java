@@ -162,7 +162,7 @@ public class AvailabilitiesController {
 	}
 
 	public void addTeacherAvailability() {
-		if (loginController.userType() == 1) {
+		if (!loginController.isAdmin()) {
 			teacher = loginController.getUser();
 		}
 

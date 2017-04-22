@@ -28,8 +28,7 @@
 				<h:outputText value="#{department.studyProgram}" />
 			</rich:column>
 
-			<rich:column rendered="#{loginController.userType() eq 2}"
-				styleClass="text-center">
+			<rich:column styleClass="text-center">
 				<f:facet name="header">
 							Brisanje
 					</f:facet>
@@ -105,9 +104,9 @@
 		</a4j:region>
 	</rich:collapsiblePanel>
 
-	<rich:collapsiblePanel id="semesterPanel" header="Semestar" switchType="client"
-		styleClass="panel panel-primary" headerClass="panel-heading"
-		bodyClass="panel-body">
+	<rich:collapsiblePanel id="semesterPanel" header="Semestar"
+		switchType="client" styleClass="panel panel-primary"
+		headerClass="panel-heading" bodyClass="panel-body">
 
 		<div class="row">
 			<div class="col-sm-3">
@@ -138,8 +137,7 @@
 					value="#{semester.active==true ? 'aktivan' : 'neaktivan'}" />
 			</rich:column>
 
-			<rich:column id="actionColumn" styleClass="text-center"
-				rendered="#{loginController.userType() eq 2}">
+			<rich:column id="actionColumn" styleClass="text-center">
 				<f:facet name="header">
 						Aktivacija/Deaktivacija
 					</f:facet>

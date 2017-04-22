@@ -50,8 +50,7 @@
 				<h:outputText value="Administrator" rendered="#{korisnik.type eq 2}" />
 			</rich:column>
 
-			<rich:column styleClass="text-center"
-				rendered="#{loginController.userType() eq 2}">
+			<rich:column styleClass="text-center" rendered="#{user.type eq 2}">
 				<f:facet name="header">
 							Brisanje i izmena
 					</f:facet>
@@ -146,7 +145,7 @@
 	</rich:popupPanel>
 
 	<rich:collapsiblePanel header="Dodavanje novog korisnika"
-		switchType="client" rendered="#{loginController.userType() eq 2}"
+		switchType="client" rendered="#{user.type eq 2}"
 		styleClass="panel panel-primary" headerClass="panel-heading"
 		bodyClass="panel-body">
 

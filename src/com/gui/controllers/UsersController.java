@@ -5,7 +5,7 @@ import java.util.List;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.model.SelectItem;
 
 import org.richfaces.component.SortOrder;
@@ -14,7 +14,7 @@ import com.ejb.services.UsersService;
 import com.jpa.entities.User;
 
 @ManagedBean
-@ViewScoped
+@SessionScoped
 public class UsersController {
 
 	@EJB

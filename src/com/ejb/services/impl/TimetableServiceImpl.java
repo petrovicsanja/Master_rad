@@ -46,31 +46,35 @@ public class TimetableServiceImpl implements TimetableService {
 	final String GROUP_PREFIX = "group";
 
 	@Override
-	public void createTimetable(Semester activeSemester) {
+	public String createTimetable(Semester activeSemester) {
 		Long semesterId = activeSemester.getId();
 
 		System.out.println("Writing timetable data to 'timetable.tts' file...");
 
-		String fileName = "timetable.tts";
+		String fileName = "timetable/timetable.tts";
 		Path path = Paths.get(fileName);
 
-		try (BufferedWriter timetableData = Files.newBufferedWriter(path, ENCODING, StandardOpenOption.APPEND,
-				StandardOpenOption.CREATE)) {
-			timetableData.append(getPeriods());
-			timetableData.append(getTeachers());
-			timetableData.append(getGroups());
-			timetableData.append(getSubjects());
-			timetableData.append(getRooms());
-			timetableData.append(getLessons(semesterId));
-			timetableData.append(getAvailabilities(semesterId));
-			timetableData.append(getNumDays(semesterId));
-			timetableData.append(getIdles(semesterId));
-			timetableData.append(getLoads(semesterId));
+		StringBuffer timetableResult = new StringBuffer();
+		timetableResult.append(getPeriods());
+		timetableResult.append(getTeachers());
+		timetableResult.append(getGroups());
+		timetableResult.append(getSubjects());
+		timetableResult.append(getRooms());
+		timetableResult.append(getLessons(semesterId));
+		timetableResult.append(getAvailabilities(semesterId));
+		timetableResult.append(getNumDays(semesterId));
+		timetableResult.append(getIdles(semesterId));
+		timetableResult.append(getLoads(semesterId));
+
+		try (BufferedWriter timetableData = Files.newBufferedWriter(path, ENCODING,
+				StandardOpenOption.TRUNCATE_EXISTING, StandardOpenOption.CREATE)) {
+			timetableData.write(timetableResult.toString());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
 		System.out.println("Done!");
+		return timetableResult.toString();
 	}
 
 	private StringBuffer getPeriods() {
@@ -102,8 +106,7 @@ public class TimetableServiceImpl implements TimetableService {
 		StringBuffer teachers = new StringBuffer("[teachers]");
 		teachers.append("\n");
 
-		TypedQuery<User> teacherList = em.createQuery("SELECT u FROM User u WHERE u.type = 1 ORDER BY u.id",
-				User.class);
+		TypedQuery<User> teacherList = em.createQuery("SELECT u FROM User u ORDER BY u.id", User.class);
 
 		for (User teacher : teacherList.getResultList()) {
 			teachers.append(TEACHER_PREFIX + teacher.getId());
@@ -186,7 +189,7 @@ public class TimetableServiceImpl implements TimetableService {
 			for (User user : lesson.getTeachers()) {
 				lessons.append(TEACHER_PREFIX + user.getId());
 				if (i < lesson.getTeachers().size()) {
-					lessons.append(" ,");
+					lessons.append(",");
 				}
 				i++;
 			}
@@ -197,7 +200,7 @@ public class TimetableServiceImpl implements TimetableService {
 			for (Group group : lesson.getGroups()) {
 				lessons.append(GROUP_PREFIX + group.getId());
 				if (i < lesson.getGroups().size()) {
-					lessons.append(" ,");
+					lessons.append(",");
 				}
 				i++;
 			}
@@ -216,7 +219,7 @@ public class TimetableServiceImpl implements TimetableService {
 			for (Room room : lesson.getRooms()) {
 				lessons.append(ROOM_PREFIX + room.getId());
 				if (i < lesson.getRooms().size()) {
-					lessons.append(" ,");
+					lessons.append(",");
 				}
 				i++;
 			}
@@ -244,19 +247,31 @@ public class TimetableServiceImpl implements TimetableService {
 
 		for (Long teacherId : distinctTeacherList.getResultList()) {
 			TypedQuery<TeacherAvailability> teacherAvailabilityList = em.createQuery(
-					"SELECT a FROM TeacherAvailability a WHERE a.semester.id = :semesterId AND a.teacher.id - :teacherId ORDER BY a.id",
+					"SELECT a FROM TeacherAvailability a WHERE a.semester.id = :semesterId AND a.teacher.id = :teacherId ORDER BY a.id",
 					TeacherAvailability.class);
 			teacherAvailabilityList.setParameter("semesterId", semesterId);
 			teacherAvailabilityList.setParameter("teacherId", teacherId);
 
 			for (TeacherAvailability teacherAvailability : teacherAvailabilityList.getResultList()) {
-				if (teacherAvailability.getType().equals(AvailabilityType.FORBIDDEN)) {
+				if (teacherAvailability.getType().equals(AvailabilityType.FORBIDDEN.toString())) {
+					if (forbidden.length() > 0) {
+						forbidden.append(",");
+					}
 					forbidden.append(teacherAvailability.getDayMark() + "_" + teacherAvailability.getTermNumber());
-				} else if (teacherAvailability.getType().equals(AvailabilityType.UNDESIRABLE)) {
+				} else if (teacherAvailability.getType().equals(AvailabilityType.UNDESIRABLE.toString())) {
+					if (undesirable.length() > 0) {
+						undesirable.append(",");
+					}
 					undesirable.append(teacherAvailability.getDayMark() + "_" + teacherAvailability.getTermNumber());
-				} else if (teacherAvailability.getType().equals(AvailabilityType.DESIRABLE)) {
+				} else if (teacherAvailability.getType().equals(AvailabilityType.DESIRABLE.toString())) {
+					if (desirable.length() > 0) {
+						desirable.append(",");
+					}
 					desirable.append(teacherAvailability.getDayMark() + "_" + teacherAvailability.getTermNumber());
-				} else if (teacherAvailability.getType().equals(AvailabilityType.MANDATORY)) {
+				} else if (teacherAvailability.getType().equals(AvailabilityType.MANDATORY.toString())) {
+					if (mandatory.length() > 0) {
+						mandatory.append(",");
+					}
 					mandatory.append(teacherAvailability.getDayMark() + "_" + teacherAvailability.getTermNumber());
 				}
 			}
@@ -457,7 +472,7 @@ public class TimetableServiceImpl implements TimetableService {
 			idles.append("\t");
 			idles.append(teacherIdles.getMax());
 			idles.append("\t");
-			idles.append(teacherIdles.getMultiple());
+			idles.append(teacherIdles.getMultiple() == true ? 1 : 0);
 			idles.append("\t");
 			idles.append(teacherIdles.getDays());
 			idles.append("\n");
@@ -472,7 +487,7 @@ public class TimetableServiceImpl implements TimetableService {
 			idles.append("\t");
 			idles.append(groupIdles.getMax());
 			idles.append("\t");
-			idles.append(groupIdles.getMultiple());
+			idles.append(groupIdles.getMultiple() == true ? 1 : 0);
 			idles.append("\t");
 			idles.append(groupIdles.getDays());
 			idles.append("\n");

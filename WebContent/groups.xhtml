@@ -50,8 +50,7 @@
 				<h:outputText value="#{grupa.mark}" />
 			</rich:column>
 
-			<rich:column rendered="#{loginController.userType() eq 2}"
-				styleClass="text-center">
+			<rich:column rendered="#{user.type eq 2}" styleClass="text-center">
 				<f:facet name="header">
 							Brisanje i izmena
 					</f:facet>
@@ -156,7 +155,7 @@
 
 	<!-- DODAVANJE NOVE GRUPE -->
 	<rich:collapsiblePanel header="Dodavanje nove grupe"
-		switchType="client" rendered="#{loginController.userType() eq 2}"
+		switchType="client" rendered="#{user.type eq 2}"
 		styleClass="panel panel-primary" headerClass="panel-heading"
 		bodyClass="panel-body">
 

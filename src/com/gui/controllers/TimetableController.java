@@ -1,11 +1,15 @@
 package com.gui.controllers;
 
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.List;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 
 import com.ejb.services.TimetableService;
 import com.jpa.entities.Group;
@@ -14,7 +18,7 @@ import com.jpa.entities.Semester;
 import com.jpa.entities.User;
 
 @ManagedBean
-@ViewScoped
+@SessionScoped
 public class TimetableController {
 
 	@EJB
@@ -35,17 +39,42 @@ public class TimetableController {
 	private User selectedTeacher = null;
 	private Group selectedGroup = null;
 	private Room selectedRoom = null;
+	private String timetableData;
 
 	public String createTimetable() {
 		Semester activeSemester = semesterController.getActiveSemester();
 		String action = null;
 
 		if (activeSemester != null) {
-			timetableService.createTimetable(activeSemester);
+			timetableData = timetableService.createTimetable(activeSemester);
 			action = "timetable?faces-redirect=true";
 		}
 
 		return action;
+	}
+
+	public void download() {
+		if (timetableData != null && timetableData.length() > 0) {
+			byte[] exportContent = timetableData.getBytes();
+			FacesContext fc = FacesContext.getCurrentInstance();
+			ExternalContext ec = fc.getExternalContext();
+
+			ec.responseReset();
+			ec.setResponseContentType("text/plain");
+			ec.setResponseContentLength(exportContent.length);
+			String attachmentName = "attachment; filename=\"timetable.tts\"";
+			ec.setResponseHeader("Content-Disposition", attachmentName);
+
+			try {
+				OutputStream output = ec.getResponseOutputStream();
+				output.write(exportContent);
+				output.flush();
+				output.close();
+			} catch (IOException ex) {
+				ex.printStackTrace();
+			}
+			fc.responseComplete();
+		}
 	}
 
 	public List<Group> listGroups() {
@@ -63,6 +92,14 @@ public class TimetableController {
 	/*
 	 * Getters and setters
 	 */
+
+	public String getTimetableData() {
+		return timetableData;
+	}
+
+	public void setTimetableData(String timetableData) {
+		this.timetableData = timetableData;
+	}
 
 	public User getSelectedTeacher() {
 		return selectedTeacher;

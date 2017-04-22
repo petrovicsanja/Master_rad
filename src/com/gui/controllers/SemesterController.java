@@ -5,13 +5,13 @@ import java.util.List;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
 
 import com.ejb.services.SemesterService;
 import com.jpa.entities.Semester;
 
 @ManagedBean
-@ViewScoped
+@SessionScoped
 public class SemesterController {
 
 	@EJB

@@ -15,8 +15,7 @@
 		</rich:list>
 	</rich:panel>
 
-	<rich:panel header="Unos i izmena termina"
-		rendered="#{loginController.userType() eq 2}">
+	<rich:panel header="Unos i izmena termina" rendered="#{user.type eq 2}">
 		<h:panelGrid id="insertPeriods" columns="3">
 			<h:outputLabel value="Unesite duzinu trajanja termina/casa:" />
 			<h:inputText value="#{periodsController.termLength}" />

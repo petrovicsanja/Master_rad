@@ -58,8 +58,7 @@
 				<h:outputText value="#{ucionica.mark}" />
 			</rich:column>
 
-			<rich:column styleClass="text-center"
-				rendered="#{loginController.userType() eq 2}">
+			<rich:column styleClass="text-center" rendered="#{user.type eq 2}">
 				<f:facet name="header">
 							Brisanje i izmena
 					</f:facet>
@@ -159,7 +158,7 @@
 
 	<!-- DODAVANJE NOVE UCIONICE -->
 	<rich:collapsiblePanel header="Dodavanje nove ucionice"
-		switchType="client" rendered="#{loginController.userType() eq 2}"
+		switchType="client" rendered="#{user.type eq 2}"
 		styleClass="panel panel-primary" headerClass="panel-heading"
 		bodyClass="panel-body">
 

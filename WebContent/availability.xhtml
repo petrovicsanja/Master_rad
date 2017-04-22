@@ -76,8 +76,7 @@
 					<div class="col-sm-3">
 						<h:selectOneMenu id="teacherAvailability" required="true"
 							value="#{availabilitiesController.teacher}"
-							converter="#{teacherConverter}"
-							rendered="#{loginController.userType() eq 2}">
+							converter="#{teacherConverter}" rendered="#{user.type eq 2}">
 							<f:selectItem itemLabel="-- Izaberite profesora --"
 								itemValue="#{null}" />
 							<f:selectItems
@@ -88,7 +87,7 @@
 						</h:selectOneMenu>
 
 						<h:outputLabel value="#{loginController.user.toString()}"
-							rendered="#{loginController.userType() eq 1}" />
+							rendered="#{user.type eq 1}" />
 					</div>
 					<div class="col-sm-3">
 						<h:selectOneRadio layout="pageDirection"
