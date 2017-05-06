@@ -49,7 +49,7 @@ public class TimetableServiceImpl implements TimetableService {
 	public String createTimetable(Semester activeSemester) {
 		Long semesterId = activeSemester.getId();
 
-		System.out.println("Writing timetable data to 'timetable.tts' file...");
+		System.out.println("Writting timetable data to 'timetable.tts' file...");
 
 		String fileName = "timetable/timetable.tts";
 		Path path = Paths.get(fileName);

@@ -143,4 +143,48 @@ public class RestrictionsServiceImpl implements RestrictionsService {
 		em.persist(teacherLoad);
 		System.out.println("New load teacher restriction is successfuly added to the database");
 	}
+
+	@Override
+	public void deleteNumDaysGroupRestriction(Long groupNumDaysId) {
+		GroupNumDays groupNumDaysToDelete = em.find(GroupNumDays.class, groupNumDaysId);
+		em.remove(groupNumDaysToDelete);
+		System.out
+				.println("Group num days restriction is successfully deleted from the database, id:" + groupNumDaysId);
+	}
+
+	@Override
+	public void deleteNumDaysTeacherRestriction(Long teacherNumDaysId) {
+		TeacherNumDays teacherNumDaysToDelete = em.find(TeacherNumDays.class, teacherNumDaysId);
+		em.remove(teacherNumDaysToDelete);
+		System.out.println(
+				"Teacher num days restriction is successfully deleted from the database, id:" + teacherNumDaysId);
+	}
+
+	@Override
+	public void deleteIdlesGroupRestriction(Long groupIdlesId) {
+		GroupIdles groupIdlesToDelete = em.find(GroupIdles.class, groupIdlesId);
+		em.remove(groupIdlesToDelete);
+		System.out.println("Group idles restriction is successfully deleted from the database, id:" + groupIdlesId);
+	}
+
+	@Override
+	public void deleteIdlesTeacherRestriction(Long teacherIdlesId) {
+		TeacherIdles teacherIdlesToDelete = em.find(TeacherIdles.class, teacherIdlesId);
+		em.remove(teacherIdlesToDelete);
+		System.out.println("Teacher idles restriction is successfully deleted from the database, id:" + teacherIdlesId);
+	}
+
+	@Override
+	public void deleteLoadGroupRestriction(Long groupLoadId) {
+		GroupLoad groupLoadToDelete = em.find(GroupLoad.class, groupLoadId);
+		em.remove(groupLoadToDelete);
+		System.out.println("Group load restriction is successfully deleted from the database, id:" + groupLoadId);
+	}
+
+	@Override
+	public void deleteLoadTeacherRestriction(Long teacherLoadId) {
+		TeacherLoad teacherLoadToDelete = em.find(TeacherLoad.class, teacherLoadId);
+		em.remove(teacherLoadToDelete);
+		System.out.println("Teacher load restriction is successfully deleted from the database, id:" + teacherLoadId);
+	}
 }

@@ -26,7 +26,7 @@ public class LessonsServiceImpl implements LessonsService {
 	private EntityManager em;
 
 	@Override
-	public void addLesson(Set<User> teachers, Set<Group> groups, Subject subject, String terms, Set<Room> rooms,
+	public Lesson addLesson(Set<User> teachers, Set<Group> groups, Subject subject, String terms, Set<Room> rooms,
 			String note, Semester activeSemester) {
 		Lesson newLesson = new Lesson();
 		newLesson.setTeachers(teachers);
@@ -39,6 +39,7 @@ public class LessonsServiceImpl implements LessonsService {
 		em.persist(newLesson);
 
 		log.info("New lesson is successfully added to the database, id: " + newLesson.getId());
+		return newLesson;
 	}
 
 	@Override
@@ -49,5 +50,12 @@ public class LessonsServiceImpl implements LessonsService {
 		lessonsForSubject.setParameter("subjectId", subjectId);
 
 		return lessonsForSubject.getResultList();
+	}
+
+	@Override
+	public void deleteLesson(Long lessonId) {
+		Lesson lessonToDelete = em.find(Lesson.class, lessonId);
+		em.remove(lessonToDelete);
+		System.out.println("Lesson is seccussfully deleted from the database, id: " + lessonId);
 	}
 }

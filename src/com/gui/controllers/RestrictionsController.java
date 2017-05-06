@@ -60,6 +60,10 @@ public class RestrictionsController {
 	private List<TeacherLoad> teacherLoadRestrictionList = null;
 	private TeacherLoad newTeacherLoad = new TeacherLoad();
 
+	// Indexes for deleting
+	private int selectedRestrictionIndex;
+	private String restrictionType;
+
 	public List<Group> listAllGroups() {
 		return groupsController.listGroups();
 	}
@@ -174,6 +178,34 @@ public class RestrictionsController {
 		}
 	}
 
+	public void deleteRestriction() {
+		if (restrictionType.equals("GroupNumDays")) {
+			GroupNumDays groupNumDaysToDelete = groupNumDaysRestrictionList.get(selectedRestrictionIndex);
+			restrictionsService.deleteNumDaysGroupRestriction(groupNumDaysToDelete.getId());
+			groupNumDaysRestrictionList.remove(selectedRestrictionIndex);
+		} else if (restrictionType.equals("TeacherNumDays")) {
+			TeacherNumDays teacherNumDaysToDelete = teacherNumDaysRestrictionList.get(selectedRestrictionIndex);
+			restrictionsService.deleteNumDaysTeacherRestriction(teacherNumDaysToDelete.getId());
+			teacherNumDaysRestrictionList.remove(selectedRestrictionIndex);
+		} else if (restrictionType.equals("GroupIdles")) {
+			GroupIdles groupIdlesToDelete = groupIdlesRestrictionList.get(selectedRestrictionIndex);
+			restrictionsService.deleteIdlesGroupRestriction(groupIdlesToDelete.getId());
+			groupIdlesRestrictionList.remove(selectedRestrictionIndex);
+		} else if (restrictionType.equals("TeacherIdles")) {
+			TeacherIdles teacherIdlesToDelete = teacherIdlesRestrictionList.get(selectedRestrictionIndex);
+			restrictionsService.deleteIdlesTeacherRestriction(teacherIdlesToDelete.getId());
+			teacherIdlesRestrictionList.remove(selectedRestrictionIndex);
+		} else if (restrictionType.equals("GroupLoad")) {
+			GroupLoad groupLoadToDelete = groupLoadRestrictionList.get(selectedRestrictionIndex);
+			restrictionsService.deleteLoadGroupRestriction(groupLoadToDelete.getId());
+			groupLoadRestrictionList.remove(selectedRestrictionIndex);
+		} else if (restrictionType.equals("TeacherLoad")) {
+			TeacherLoad teacherLoadToDelete = teacherLoadRestrictionList.get(selectedRestrictionIndex);
+			restrictionsService.deleteLoadTeacherRestriction(teacherLoadToDelete.getId());
+			teacherLoadRestrictionList.remove(selectedRestrictionIndex);
+		}
+	}
+
 	/*
 	 * Getters and setters
 	 */
@@ -240,5 +272,21 @@ public class RestrictionsController {
 
 	public void setNewTeacherLoad(TeacherLoad newTeacherLoad) {
 		this.newTeacherLoad = newTeacherLoad;
+	}
+
+	public int getSelectedRestrictionIndex() {
+		return selectedRestrictionIndex;
+	}
+
+	public void setSelectedRestrictionIndex(int selectedRestrictionIndex) {
+		this.selectedRestrictionIndex = selectedRestrictionIndex;
+	}
+
+	public String getRestrictionType() {
+		return restrictionType;
+	}
+
+	public void setRestrictionType(String restrictionType) {
+		this.restrictionType = restrictionType;
 	}
 }

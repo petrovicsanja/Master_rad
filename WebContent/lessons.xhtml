@@ -33,23 +33,23 @@
 				</div>
 			</div>
 		</a4j:region>
-		
-		<br/>
+
+		<br />
 
 		<rich:dataTable id="subjectLessonsList" var="lesson" rows="10"
 			value="#{lessonsController.subjectLessonsList}"
 			iterationStatusVar="it" styleClass="table table-bordered">
 			<rich:column>
 				<f:facet name="header">
-							Ime predmeta
-						</f:facet>
+					Ime predmeta
+				</f:facet>
 				<h:outputText value="#{lesson.subject.name}" />
 			</rich:column>
 
 			<rich:column>
 				<f:facet name="header">
-							Profesori
-						</f:facet>
+					Profesori
+				</f:facet>
 				<ui:repeat var="teacher" value="#{lesson.teachers}">
 					<h:outputText value="#{teacher.toString()} " />
 				</ui:repeat>
@@ -57,8 +57,8 @@
 
 			<rich:column>
 				<f:facet name="header">
-							Grupe
-						</f:facet>
+					Grupe
+				</f:facet>
 				<ui:repeat var="group" value="#{lesson.groups}">
 					<h:outputText value="#{group.toString()} " />
 				</ui:repeat>
@@ -66,15 +66,15 @@
 
 			<rich:column>
 				<f:facet name="header">
-							Fond casova
-						</f:facet>
+					Fond casova
+				</f:facet>
 				<h:outputText value="#{lesson.terms}" />
 			</rich:column>
 
 			<rich:column>
 				<f:facet name="header">
-							Učionice
-						</f:facet>
+					Učionice
+				</f:facet>
 				<ui:repeat var="room" value="#{lesson.rooms}">
 					<h:outputText value="#{room.toString()} " />
 				</ui:repeat>
@@ -82,12 +82,51 @@
 
 			<rich:column>
 				<f:facet name="header">
-							Napomena
-						</f:facet>
+					Napomena
+				</f:facet>
 				<h:outputText value="#{lesson.note}" />
+			</rich:column>
+
+			<rich:column styleClass="text-center" rendered="#{user.type eq 2}">
+				<f:facet name="header">
+					Brisanje
+				</f:facet>
+				<a4j:commandLink
+					oncomplete="#{rich:component('deleteLessonWarning')}.show()"
+					execute="@this" render="@none" title="Obriši ogranicenje za grupu">
+					<h:graphicImage value="/images/delete.gif" alt="delete" />
+					<a4j:param value="#{it.index}"
+						assignTo="#{lessonsController.selectedLessonIndex}" />
+				</a4j:commandLink>
+
+				<f:facet name="footer">
+					<rich:dataScroller renderIfSinglePage="false" />
+				</f:facet>
 			</rich:column>
 		</rich:dataTable>
 	</rich:collapsiblePanel>
+
+	<!-- POPUP ZA POTVRDU BRISANJA -->
+	<rich:popupPanel id="deleteLessonWarning" modal="false"
+		autosized="true" resizeable="false" styleClass="panel panel-info"
+		headerClass="panel-heading">
+		<f:facet name="header">
+			<h:outputText value="Upozorenje" />
+		</f:facet>
+		<f:facet name="controls">
+			<h:outputLink value="#"
+				onclick="#{rich:component('deleteLessonWarning')}.hide(); return false;"
+				style="color: inherit"> X </h:outputLink>
+		</f:facet>
+		<p>Da li ste sigurni da želite da obrišete cas?</p>
+		<a4j:commandButton action="#{lessonsController.deleteLesson()}"
+			value="Obriši"
+			oncomplete="#{rich:component('deleteLessonWarning')}.hide();">
+			<a4j:ajax execute="@this" render="@form" />
+		</a4j:commandButton>
+		<a4j:commandButton value="Odustani"
+			onclick="#{rich:component('deleteLessonWarning')}.hide(); return false;" />
+	</rich:popupPanel>
 
 	<rich:collapsiblePanel header="Unos časova" switchType="client"
 		styleClass="panel panel-primary" headerClass="panel-heading"
@@ -132,7 +171,7 @@
 						</h:selectOneMenu>
 
 						<h:commandButton action="#{lessonsController.addTeacherToList()}"
-							value="Dodaj" styleClass="col-sm-3">
+							value="Dodaj" styleClass="col-sm-3 btn btn-sm btn-primary">
 							<f:ajax execute="lessonTeacher" render="@form" />
 						</h:commandButton>
 					</div>
@@ -167,7 +206,7 @@
 						</h:selectOneMenu>
 
 						<h:commandButton action="#{lessonsController.addGroupToList()}"
-							value="Dodaj" styleClass="col-sm-3">
+							value="Dodaj" styleClass="col-sm-3 btn btn-sm btn-primary">
 							<f:ajax execute="lessonGroup" render="@form" />
 						</h:commandButton>
 					</div>

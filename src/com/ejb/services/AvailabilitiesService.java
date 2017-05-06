@@ -34,4 +34,10 @@ public interface AvailabilitiesService {
 	public List<RoomAvailability> listAllRoomAvailabilities(Long semesterId);
 
 	public List<TeacherAvailability> listAllAvailabilitiesForTeacher(Long teacherId, Long semesterId);
+
+	public void deleteTeacherAvailability(Long teacherAvailabilityId);
+
+	public void deleteGroupAvailability(Long groupAvailabilityId);
+
+	public void deleteRoomAvailability(Long roomAvailabilityId);
 }

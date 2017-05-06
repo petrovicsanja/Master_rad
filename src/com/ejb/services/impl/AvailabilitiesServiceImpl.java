@@ -122,4 +122,26 @@ public class AvailabilitiesServiceImpl implements AvailabilitiesService {
 		availabilityList.setParameter("semesterId", semesterId);
 		return availabilityList.getResultList();
 	}
+
+	@Override
+	public void deleteTeacherAvailability(Long teacherAvailabilityId) {
+		TeacherAvailability teacherAvailabilityToDelete = em.find(TeacherAvailability.class, teacherAvailabilityId);
+		em.remove(teacherAvailabilityToDelete);
+		System.out.println(
+				"Teacher availability is successfully deleted from the database, id: " + teacherAvailabilityId);
+	}
+
+	@Override
+	public void deleteGroupAvailability(Long groupAvailabilityId) {
+		GroupAvailability groupAvailabilityToDelete = em.find(GroupAvailability.class, groupAvailabilityId);
+		em.remove(groupAvailabilityToDelete);
+		System.out.println("Group availability is successfully deleted from the database, id: " + groupAvailabilityId);
+	}
+
+	@Override
+	public void deleteRoomAvailability(Long roomAvailabilityId) {
+		RoomAvailability roomAvailabilityToDelete = em.find(RoomAvailability.class, roomAvailabilityId);
+		em.remove(roomAvailabilityToDelete);
+		System.out.println("Room availability is successfully deleted from the database, id: " + roomAvailabilityId);
+	}
 }

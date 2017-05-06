@@ -54,6 +54,8 @@ public class LessonsController {
 	private String terms;
 	private String note;
 
+	private int selectedLessonIndex;
+
 	public List<Group> listAllGroups() {
 		return groupsController.listGroups();
 	}
@@ -105,10 +107,21 @@ public class LessonsController {
 	}
 
 	public void addLesson() {
-		Set<Room> selectedRoomsSet = new HashSet<>(selectedRooms);
-		lessonsService.addLesson(selectedTeachers, selectedGroups, subject, terms, selectedRoomsSet, note,
+		Lesson newLesson = lessonsService.addLesson(new HashSet<User>(selectedTeachers),
+				new HashSet<Group>(selectedGroups), subject, terms, new HashSet<Room>(selectedRooms), note,
 				semesterController.getActiveSemester());
+
+		if (lessonsSearchSubjectId != null && lessonsSearchSubjectId.equals(subject.getId())) {
+			subjectLessonsList.add(newLesson);
+		}
+
 		resetFields();
+	}
+
+	public void deleteLesson() {
+		Lesson lessonToDelete = subjectLessonsList.get(selectedLessonIndex);
+		lessonsService.deleteLesson(lessonToDelete.getId());
+		subjectLessonsList.remove(selectedLessonIndex);
 	}
 
 	/*
@@ -213,5 +226,13 @@ public class LessonsController {
 
 	public void setSemesterController(SemesterController semesterController) {
 		this.semesterController = semesterController;
+	}
+
+	public int getSelectedLessonIndex() {
+		return selectedLessonIndex;
+	}
+
+	public void setSelectedLessonIndex(int selectedLessonIndex) {
+		this.selectedLessonIndex = selectedLessonIndex;
 	}
 }

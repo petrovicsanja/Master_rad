@@ -79,4 +79,16 @@ public interface RestrictionsService {
 	 *            teacherLoad
 	 */
 	void addLoadTeacherRestriction(TeacherLoad teacherLoad, Semester activeSemester);
+
+	void deleteNumDaysGroupRestriction(Long groupNumDaysId);
+
+	void deleteNumDaysTeacherRestriction(Long teacherNumDaysId);
+
+	void deleteIdlesGroupRestriction(Long groupIdlesId);
+
+	void deleteIdlesTeacherRestriction(Long teacherIdlesId);
+
+	void deleteLoadGroupRestriction(Long groupLoadId);
+
+	void deleteLoadTeacherRestriction(Long teacherLoadId);
 }

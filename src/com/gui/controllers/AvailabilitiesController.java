@@ -47,24 +47,30 @@ public class AvailabilitiesController {
 	private String teacherAvailabilityDayMark;
 	private Integer[] teacherAvailabilityTermNumbers;
 	private String teacherAvailabilityType;
+
 	private List<Integer> teacherAvailabilityTermsForSelectedDay = null;
 	private List<TeacherAvailability> allTeacherAvailabilities = null;
+	private int selectedTeacherAvailabilityIndex;
 
 	// Group availability
 	private Group group = null;
 	private String groupAvailabilityDayMark;
 	private Integer[] groupAvailabilityTermNumbers;
 	private String groupAvailabilityType;
+
 	private List<Integer> groupAvailabilityTermsForSelectedDay = null;
 	private List<GroupAvailability> allGroupAvailabilities = null;
+	private int selectedGroupAvailabilityIndex;
 
 	// Room availability
 	private Room room = null;
 	private String roomAvailabilityDayMark;
 	private Integer[] roomAvailabilityTermNumbers;
 	private String roomAvailabilityType;
+
 	private List<Integer> roomAvailabilityTermsForSelectedDay = null;
 	private List<RoomAvailability> allRoomAvailabilities = null;
+	private int selectedRoomAvailabilityIndex;
 
 	public List<Group> listAllGroups() {
 		return groupsController.listGroups();
@@ -224,6 +230,25 @@ public class AvailabilitiesController {
 		return allRoomAvailabilities;
 	}
 
+	public void deleteTeacherAvailability() {
+		TeacherAvailability teacherAvailabilityToDelete = allTeacherAvailabilities
+				.get(selectedTeacherAvailabilityIndex);
+		availabilitiesService.deleteTeacherAvailability(teacherAvailabilityToDelete.getId());
+		allTeacherAvailabilities.remove(selectedTeacherAvailabilityIndex);
+	}
+
+	public void deleteGroupAvailability() {
+		GroupAvailability groupAvailabilityToDelete = allGroupAvailabilities.get(selectedGroupAvailabilityIndex);
+		availabilitiesService.deleteGroupAvailability(groupAvailabilityToDelete.getId());
+		allGroupAvailabilities.remove(selectedGroupAvailabilityIndex);
+	}
+
+	public void deleteRoomAvailability() {
+		RoomAvailability roomAvailabilityToDelete = allRoomAvailabilities.get(selectedRoomAvailabilityIndex);
+		availabilitiesService.deleteRoomAvailability(roomAvailabilityToDelete.getId());
+		allRoomAvailabilities.remove(selectedRoomAvailabilityIndex);
+	}
+
 	/* Getters and setters */
 
 	public User getTeacher() {
@@ -368,5 +393,29 @@ public class AvailabilitiesController {
 
 	public void setRoomAvailabilityTermsForSelectedDay(List<Integer> roomAvailabilityTermsForSelectedDay) {
 		this.roomAvailabilityTermsForSelectedDay = roomAvailabilityTermsForSelectedDay;
+	}
+
+	public int getSelectedTeacherAvailabilityIndex() {
+		return selectedTeacherAvailabilityIndex;
+	}
+
+	public void setSelectedTeacherAvailabilityIndex(int selectedTeacherAvailabilityIndex) {
+		this.selectedTeacherAvailabilityIndex = selectedTeacherAvailabilityIndex;
+	}
+
+	public int getSelectedGroupAvailabilityIndex() {
+		return selectedGroupAvailabilityIndex;
+	}
+
+	public void setSelectedGroupAvailabilityIndex(int selectedGroupAvailabilityIndex) {
+		this.selectedGroupAvailabilityIndex = selectedGroupAvailabilityIndex;
+	}
+
+	public int getSelectedRoomAvailabilityIndex() {
+		return selectedRoomAvailabilityIndex;
+	}
+
+	public void setSelectedRoomAvailabilityIndex(int selectedRoomAvailabilityIndex) {
+		this.selectedRoomAvailabilityIndex = selectedRoomAvailabilityIndex;
 	}
 }

@@ -17,36 +17,72 @@
 			<rich:column id="teacherColumn"
 				sortBy="#{teacherAvailability.teacher.firstName}">
 				<f:facet name="header">
-								Profesor
-							</f:facet>
+					Profesor
+				</f:facet>
 				<h:outputText value="#{teacherAvailability.teacher}" />
 			</rich:column>
 
 			<rich:column id="typeColumn">
 				<f:facet name="header">
-								Tip termina
-							</f:facet>
+					Tip termina
+				</f:facet>
 				<h:outputText value="#{teacherAvailability.type}" />
 			</rich:column>
 
 			<rich:column id="dayMarkColumn">
 				<f:facet name="header">
-								Oznaka termina
-							</f:facet>
+					Oznaka termina
+				</f:facet>
 				<h:outputText value="#{teacherAvailability.dayMark}" />
 			</rich:column>
 
 			<rich:column id="termNumberColumn">
 				<f:facet name="header">
-								Redni broj termina
-							</f:facet>
+					Redni broj termina
+				</f:facet>
 				<h:outputText value="#{teacherAvailability.termNumber}" />
+			</rich:column>
+
+			<rich:column styleClass="text-center" rendered="#{user.type eq 2}">
+				<f:facet name="header">
+					Brisanje
+				</f:facet>
+				<a4j:commandLink
+					oncomplete="#{rich:component('deleteTeacherAvailabilityWarning')}.show()"
+					execute="@this" render="@none" title="Obriši termin za profesora">
+					<h:graphicImage value="/images/delete.gif" alt="delete" />
+					<a4j:param value="#{it.index}"
+						assignTo="#{availabilitiesController.selectedTeacherAvailabilityIndex}" />
+				</a4j:commandLink>
 			</rich:column>
 
 			<f:facet name="footer">
 				<rich:dataScroller renderIfSinglePage="false" />
 			</f:facet>
 		</rich:dataTable>
+
+		<!-- POPUP ZA POTVRDU BRISANJA -->
+		<rich:popupPanel id="deleteTeacherAvailabilityWarning" modal="false"
+			autosized="true" resizeable="false" styleClass="panel panel-info"
+			headerClass="panel-heading">
+			<f:facet name="header">
+				<h:outputText value="Upozorenje" />
+			</f:facet>
+			<f:facet name="controls">
+				<h:outputLink value="#"
+					onclick="#{rich:component('deleteTeacherAvailabilityWarning')}.hide(); return false;"
+					style="color: inherit"> X </h:outputLink>
+			</f:facet>
+			<p>Da li ste sigurni da želite da obrišete termin za profesora?</p>
+			<a4j:commandButton
+				action="#{availabilitiesController.deleteTeacherAvailability()}"
+				value="Obriši"
+				oncomplete="#{rich:component('deleteTeacherAvailabilityWarning')}.hide();">
+				<a4j:ajax execute="@this" render="@form" />
+			</a4j:commandButton>
+			<a4j:commandButton value="Odustani"
+				onclick="#{rich:component('deleteTeacherAvailabilityWarning')}.hide(); return false;" />
+		</rich:popupPanel>
 
 		<a4j:region>
 			<div class="page-header">
@@ -143,36 +179,72 @@
 			<rich:column id="groupColumn"
 				sortBy="#{groupAvailability.group.name}">
 				<f:facet name="header">
-								Grupa
-							</f:facet>
+					Grupa
+				</f:facet>
 				<h:outputText value="#{groupAvailability.group}" />
 			</rich:column>
 
 			<rich:column id="typeColumn">
 				<f:facet name="header">
-								Tip termina
-							</f:facet>
+					Tip termina
+				</f:facet>
 				<h:outputText value="#{groupAvailability.type}" />
 			</rich:column>
 
 			<rich:column id="dayMarkColumn">
 				<f:facet name="header">
-								Oznaka termina
-							</f:facet>
+					Oznaka termina
+				</f:facet>
 				<h:outputText value="#{groupAvailability.dayMark}" />
 			</rich:column>
 
 			<rich:column id="termNumberColumn">
 				<f:facet name="header">
-								Redni broj termina
-							</f:facet>
+					Redni broj termina
+				</f:facet>
 				<h:outputText value="#{groupAvailability.termNumber}" />
+			</rich:column>
+
+			<rich:column styleClass="text-center" rendered="#{user.type eq 2}">
+				<f:facet name="header">
+					Brisanje
+				</f:facet>
+				<a4j:commandLink
+					oncomplete="#{rich:component('deleteGroupAvailabilityWarning')}.show()"
+					execute="@this" render="@none" title="Obriši termin za grupu">
+					<h:graphicImage value="/images/delete.gif" alt="delete" />
+					<a4j:param value="#{it.index}"
+						assignTo="#{availabilitiesController.selectedGroupAvailabilityIndex}" />
+				</a4j:commandLink>
 			</rich:column>
 
 			<f:facet name="footer">
 				<rich:dataScroller renderIfSinglePage="false" />
 			</f:facet>
 		</rich:dataTable>
+
+		<!-- POPUP ZA POTVRDU BRISANJA -->
+		<rich:popupPanel id="deleteGroupAvailabilityWarning" modal="false"
+			autosized="true" resizeable="false" styleClass="panel panel-info"
+			headerClass="panel-heading">
+			<f:facet name="header">
+				<h:outputText value="Upozorenje" />
+			</f:facet>
+			<f:facet name="controls">
+				<h:outputLink value="#"
+					onclick="#{rich:component('deleteGroupAvailabilityWarning')}.hide(); return false;"
+					style="color: inherit"> X </h:outputLink>
+			</f:facet>
+			<p>Da li ste sigurni da želite da obrišete termin za grupu?</p>
+			<a4j:commandButton
+				action="#{availabilitiesController.deleteGroupAvailability()}"
+				value="Obriši"
+				oncomplete="#{rich:component('deleteGroupAvailabilityWarning')}.hide();">
+				<a4j:ajax execute="@this" render="@form" />
+			</a4j:commandButton>
+			<a4j:commandButton value="Odustani"
+				onclick="#{rich:component('deleteGroupAvailabilityWarning')}.hide(); return false;" />
+		</rich:popupPanel>
 
 		<a4j:region>
 			<div class="page-header">
@@ -264,8 +336,8 @@
 
 			<rich:column id="roomColumn" sortBy="#{roomAvailability.room.name}">
 				<f:facet name="header">
-								Ucionica
-							</f:facet>
+							Ucionica
+						</f:facet>
 				<h:outputText value="#{roomAvailability.room}" />
 			</rich:column>
 
@@ -278,22 +350,58 @@
 
 			<rich:column id="dayMarkColumn">
 				<f:facet name="header">
-								Oznaka termina
-							</f:facet>
+					Oznaka termina
+				</f:facet>
 				<h:outputText value="#{roomAvailability.dayMark}" />
 			</rich:column>
 
 			<rich:column id="termNumberColumn">
 				<f:facet name="header">
-								Redni broj termina
-							</f:facet>
+					Redni broj termina
+				</f:facet>
 				<h:outputText value="#{roomAvailability.termNumber}" />
+			</rich:column>
+
+			<rich:column styleClass="text-center" rendered="#{user.type eq 2}">
+				<f:facet name="header">
+					Brisanje
+				</f:facet>
+				<a4j:commandLink
+					oncomplete="#{rich:component('deleteRoomAvailabilityWarning')}.show()"
+					execute="@this" render="@none" title="Obriši termin za ucionicu">
+					<h:graphicImage value="/images/delete.gif" alt="delete" />
+					<a4j:param value="#{it.index}"
+						assignTo="#{availabilitiesController.selectedRoomAvailabilityIndex}" />
+				</a4j:commandLink>
 			</rich:column>
 
 			<f:facet name="footer">
 				<rich:dataScroller renderIfSinglePage="false" />
 			</f:facet>
 		</rich:dataTable>
+
+		<!-- POPUP ZA POTVRDU BRISANJA -->
+		<rich:popupPanel id="deleteRoomAvailabilityWarning" modal="false"
+			autosized="true" resizeable="false" styleClass="panel panel-info"
+			headerClass="panel-heading">
+			<f:facet name="header">
+				<h:outputText value="Upozorenje" />
+			</f:facet>
+			<f:facet name="controls">
+				<h:outputLink value="#"
+					onclick="#{rich:component('deleteRoomAvailabilityWarning')}.hide(); return false;"
+					style="color: inherit"> X </h:outputLink>
+			</f:facet>
+			<p>Da li ste sigurni da želite da obrišete termin za grupu?</p>
+			<a4j:commandButton
+				action="#{availabilitiesController.deleteRoomAvailability()}"
+				value="Obriši"
+				oncomplete="#{rich:component('deleteRoomAvailabilityWarning')}.hide();">
+				<a4j:ajax execute="@this" render="@form" />
+			</a4j:commandButton>
+			<a4j:commandButton value="Odustani"
+				onclick="#{rich:component('deleteRoomAvailabilityWarning')}.hide(); return false;" />
+		</rich:popupPanel>
 
 		<a4j:region>
 			<div class="page-header">
