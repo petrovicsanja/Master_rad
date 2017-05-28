@@ -13,7 +13,7 @@
 		<rich:dataTable id="listaUcionica" var="ucionica" rows="10"
 			value="#{roomsController.listClassrooms()}" iterationStatusVar="it"
 			filterVar="filterValue" styleClass="table table-bordered">
-			
+
 			<f:facet name="noData">
 				Nema traženih podataka
 			</f:facet>
@@ -109,9 +109,8 @@
 		<p>Da li ste sigurni da želite da obrišete učionicu?</p>
 		<a4j:commandButton action="#{roomsController.deleteClassroom()}"
 			value="Obriši"
-			oncomplete="#{rich:component('potvrdaBrisanjaUcionice')}.hide();">
-			<a4j:ajax execute="@this" render=":izlistavanjeUcionica" />
-		</a4j:commandButton>
+			oncomplete="#{rich:component('potvrdaBrisanjaUcionice')}.hide();"
+			execute="@this" render=":izlistavanjeUcionica" />
 		<a4j:commandButton value="Odustani"
 			onclick="#{rich:component('potvrdaBrisanjaUcionice')}.hide(); return false;" />
 	</rich:popupPanel>

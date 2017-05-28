@@ -447,9 +447,8 @@
 		<a4j:commandButton
 			action="#{availabilitiesController.deleteAvailability()}"
 			value="Obriši"
-			oncomplete="#{rich:component('deleteAvailabilityWarning')}.hide();">
-			<a4j:ajax execute="@this" render="@form" />
-		</a4j:commandButton>
+			oncomplete="#{rich:component('deleteAvailabilityWarning')}.hide();"
+			execute="@this" render="@form" />
 		<a4j:commandButton value="Odustani"
 			onclick="#{rich:component('deleteAvailabilityWarning')}.hide(); return false;" />
 	</rich:popupPanel>

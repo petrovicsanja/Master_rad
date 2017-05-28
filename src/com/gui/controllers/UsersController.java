@@ -79,7 +79,7 @@ public class UsersController {
 
 	/* Filtering of columns */
 
-	public Filter<?> getFilterNameImpl() {
+	public Filter<User> getFilterNameImpl() {
 		return new Filter<User>() {
 			public boolean accept(User user) {
 				String firstName = getNameFilter();
@@ -91,7 +91,7 @@ public class UsersController {
 		};
 	}
 
-	public Filter<?> getFilterSurnameImpl() {
+	public Filter<User> getFilterSurnameImpl() {
 		return new Filter<User>() {
 			public boolean accept(User user) {
 				String lastName = getNameFilter();

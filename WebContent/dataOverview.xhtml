@@ -20,7 +20,7 @@
 		rendered="#{not empty user}" />
 	<br />
 	<br />
-	<h:form id="contentForm">
+	<h:form id="contentForm" onkeypress="return event.keyCode != 13;">
 		<h:messages layout="table" globalOnly="true" infoClass="bg-success"
 			errorClass="bg-danger" />
 		<rich:tabPanel id="dataOverviewTabPanel" switchType="ajax"

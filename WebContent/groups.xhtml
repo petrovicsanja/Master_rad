@@ -101,9 +101,8 @@
 		<p>Da li ste sigurni da želite da obrišete grupu?</p>
 		<a4j:commandButton action="#{groupsController.deleteGroup()}"
 			value="Obriši"
-			oncomplete="#{rich:component('potvrdaBrisanjaGrupe')}.hide();">
-			<a4j:ajax execute="@this" render=":izlistavanjeGrupa" />
-		</a4j:commandButton>
+			oncomplete="#{rich:component('potvrdaBrisanjaGrupe')}.hide();" 
+			execute="@this" render=":izlistavanjeGrupa" />
 		<a4j:commandButton value="Odustani"
 			onclick="#{rich:component('potvrdaBrisanjaGrupe')}.hide(); return false;" />
 	</rich:popupPanel>

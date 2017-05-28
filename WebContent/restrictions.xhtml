@@ -17,11 +17,11 @@
 			rows="10"
 			value="#{restrictionsController.listNumDaysGroupRestrictions()}"
 			iterationStatusVar="it" styleClass="table table-bordered">
-			
+
 			<f:facet name="noData">
 				Nema traženih podataka
 			</f:facet>
-			
+
 			<rich:column sortBy="#{restriction.group.name}">
 				<f:facet name="header">
 						Naziv grupe
@@ -134,11 +134,11 @@
 			rows="10"
 			value="#{restrictionsController.listNumDaysTeacherRestrictionList()}"
 			iterationStatusVar="it" styleClass="table table-bordered">
-			
+
 			<f:facet name="noData">
 				Nema traženih podataka
 			</f:facet>
-			
+
 			<rich:column sortBy="#{restriction.teacher}">
 				<f:facet name="header">
 						Profesor
@@ -260,11 +260,11 @@
 			rows="10"
 			value="#{restrictionsController.listGroupIdlesRestrictionList()}"
 			iterationStatusVar="it" styleClass="table table-bordered">
-			
+
 			<f:facet name="noData">
 				Nema traženih podataka
 			</f:facet>
-			
+
 			<rich:column sortBy="#{restriction.group.name}">
 				<f:facet name="header">
 						Naziv grupe
@@ -378,11 +378,11 @@
 			rows="10"
 			value="#{restrictionsController.listTeacherIdlesRestrictionList()}"
 			iterationStatusVar="it" styleClass="table table-bordered">
-			
+
 			<f:facet name="noData">
 				Nema traženih podataka
 			</f:facet>
-			
+
 			<rich:column sortBy="#{restriction.teacher}">
 				<f:facet name="header">
 						Profesor
@@ -504,11 +504,11 @@
 			rows="10"
 			value="#{restrictionsController.listGroupLoadRestrictionList()}"
 			iterationStatusVar="it" styleClass="table table-bordered">
-			
+
 			<f:facet name="noData">
 				Nema traženih podataka
 			</f:facet>
-			
+
 			<rich:column sortBy="#{restriction.group.name}">
 				<f:facet name="header">
 						Naziv grupe
@@ -608,11 +608,11 @@
 			rows="10"
 			value="#{restrictionsController.listTeacherLoadRestrictionList()}"
 			iterationStatusVar="it" styleClass="table table-bordered">
-			
+
 			<f:facet name="noData">
 				Nema traženih podataka
 			</f:facet>
-			
+
 			<rich:column sortBy="#{restriction.teacher}">
 				<f:facet name="header">
 						Profesor
@@ -723,9 +723,8 @@
 		<p>Da li ste sigurni da želite da obrišete ogranicenje?</p>
 		<a4j:commandButton
 			action="#{restrictionsController.deleteRestriction()}" value="Obriši"
-			oncomplete="#{rich:component('deleteRestrictionWarning')}.hide();">
-			<a4j:ajax execute="@this" render="@form" />
-		</a4j:commandButton>
+			oncomplete="#{rich:component('deleteRestrictionWarning')}.hide();"
+			execute="@this" render="@form" />
 		<a4j:commandButton value="Odustani"
 			onclick="#{rich:component('deleteRestrictionWarning')}.hide(); return false;" />
 	</rich:popupPanel>
