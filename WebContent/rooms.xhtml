@@ -3,7 +3,8 @@
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:rich="http://richfaces.org/rich"
-	xmlns:a4j="http://richfaces.org/a4j">
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
 
 	<!-- IZLISTAVANJE SVIH UCIONICA -->
 	<rich:collapsiblePanel header="Izlistavanje svih učionica"
@@ -11,10 +12,16 @@
 		headerClass="panel-heading" bodyClass="panel-body">
 		<rich:dataTable id="listaUcionica" var="ucionica" rows="10"
 			value="#{roomsController.listClassrooms()}" iterationStatusVar="it"
-			styleClass="table table-bordered">
+			filterVar="filterValue" styleClass="table table-bordered">
+			
+			<f:facet name="noData">
+				Nema traženih podataka
+			</f:facet>
 
 			<rich:column id="kolonanaziv" sortBy="#{ucionica.name}"
-				sortOrder="#{roomsController.nameOrder}" sortType="custom">
+				sortOrder="#{roomsController.nameOrder}" sortType="custom"
+				filterExpression="#{empty filterValue or fn:containsIgnoreCase(ucionica.name, filterValue)}"
+				filterValue="#{roomsController.nameFilter}">
 				<f:facet name="header">
 					<a4j:commandLink value="Naziv učionice" render="listaUcionica"
 						execute="@this" action="#{roomsController.sortByName()}" />

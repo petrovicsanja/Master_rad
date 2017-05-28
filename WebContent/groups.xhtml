@@ -3,7 +3,8 @@
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:rich="http://richfaces.org/rich"
-	xmlns:a4j="http://richfaces.org/a4j">
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
 
 	<!-- IZLISTAVANJE SVIH GRUPA -->
 	<rich:collapsiblePanel header="Izlistavanje svih grupa"
@@ -11,10 +12,16 @@
 		headerClass="panel-heading" bodyClass="panel-body">
 		<rich:dataTable id="listaGrupa" var="grupa" rows="10"
 			value="#{groupsController.listGroups()}" iterationStatusVar="it"
-			styleClass="table table-bordered">
+			filterVar="filterValue" styleClass="table table-bordered">
+			
+			<f:facet name="noData">
+				Nema traženih podataka
+			</f:facet>
 
 			<rich:column id="kolonanaziv" sortBy="#{grupa.name}"
-				sortOrder="#{groupsController.nameOrder}" sortType="custom">
+				sortOrder="#{groupsController.nameOrder}" sortType="custom"
+				filterExpression="#{empty filterValue or fn:containsIgnoreCase(grupa.name, filterValue)}"
+				filterValue="#{roomsController.nameFilter}">
 				<f:facet name="header">
 					<a4j:commandLink value="Naziv grupe" render="listaGrupa"
 						execute="@this" action="#{groupsController.sortByName()}" />

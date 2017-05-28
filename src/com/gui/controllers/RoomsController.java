@@ -7,6 +7,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
 import org.richfaces.component.SortOrder;
+import org.richfaces.model.Filter;
 
 import com.ejb.services.RoomsService;
 import com.jpa.entities.Room;
@@ -22,6 +23,11 @@ public class RoomsController {
 	private List<Room> classroomList = null;
 	private int selectedClassroomIndex;
 	private Room classroomToUpdate;
+
+	/*
+	 * Filtering
+	 */
+	private String nameFilter;
 
 	/*
 	 * Sort order of columns
@@ -66,6 +72,20 @@ public class RoomsController {
 			}
 		}
 		return null;
+	}
+
+	/* Filtering */
+
+	public Filter<?> getFilterNameImpl() {
+		return new Filter<Room>() {
+			public boolean accept(Room room) {
+				String name = getNameFilter();
+				if (name == null || name.length() == 0 || name.equals(room.getName())) {
+					return true;
+				}
+				return false;
+			}
+		};
 	}
 
 	/* Sorting of columns */
@@ -199,5 +219,13 @@ public class RoomsController {
 
 	public void setMarkOrder(SortOrder markOrder) {
 		this.markOrder = markOrder;
+	}
+
+	public String getNameFilter() {
+		return nameFilter;
+	}
+
+	public void setNameFilter(String nameFilter) {
+		this.nameFilter = nameFilter;
 	}
 }

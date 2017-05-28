@@ -3,17 +3,24 @@
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:rich="http://richfaces.org/rich"
-	xmlns:a4j="http://richfaces.org/a4j">
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
 
 	<rich:collapsiblePanel header="Izlistavanje svih korisnika"
 		switchType="client" styleClass="panel panel-primary"
 		headerClass="panel-heading" bodyClass="panel-body">
 		<rich:dataTable id="listaKorisnika" var="korisnik" rows="10"
 			value="#{usersController.listUsers()}" iterationStatusVar="it"
-			styleClass="table table-bordered">
+			filterVar="filterValue" styleClass="table table-bordered">
+
+			<f:facet name="noData">
+				Nema traženih podataka
+			</f:facet>
 
 			<rich:column id="kolonaIme" sortBy="#{korisnik.firstName}"
-				sortOrder="#{usersController.nameOrder}" sortType="custom">
+				sortOrder="#{usersController.nameOrder}" sortType="custom"
+				filterExpression="#{empty filterValue or fn:containsIgnoreCase(korisnik.firstName, filterValue)}"
+				filterValue="#{usersController.nameFilter}">
 				<f:facet name="header">
 					<a4j:commandLink value="Ime" render="listaKorisnika"
 						execute="@this" action="#{usersController.sortByName()}" />
@@ -22,7 +29,9 @@
 			</rich:column>
 
 			<rich:column id="kolonaPrezime" sortBy="#{korisnik.lastName}"
-				sortOrder="#{usersController.surnameOrder}" sortType="custom">
+				sortOrder="#{usersController.surnameOrder}" sortType="custom"
+				filterExpression="#{empty filterValue or fn:containsIgnoreCase(korisnik.lastName, filterValue)}"
+				filterValue="#{usersController.surnameFilter}">
 				<f:facet name="header">
 					<a4j:commandLink value="Prezime" render="listaKorisnika"
 						execute="@this" action="#{usersController.sortBySurname()}" />

@@ -17,6 +17,11 @@
 			rows="10"
 			value="#{restrictionsController.listNumDaysGroupRestrictions()}"
 			iterationStatusVar="it" styleClass="table table-bordered">
+			
+			<f:facet name="noData">
+				Nema traženih podataka
+			</f:facet>
+			
 			<rich:column sortBy="#{restriction.group.name}">
 				<f:facet name="header">
 						Naziv grupe
@@ -129,6 +134,11 @@
 			rows="10"
 			value="#{restrictionsController.listNumDaysTeacherRestrictionList()}"
 			iterationStatusVar="it" styleClass="table table-bordered">
+			
+			<f:facet name="noData">
+				Nema traženih podataka
+			</f:facet>
+			
 			<rich:column sortBy="#{restriction.teacher}">
 				<f:facet name="header">
 						Profesor
@@ -250,6 +260,11 @@
 			rows="10"
 			value="#{restrictionsController.listGroupIdlesRestrictionList()}"
 			iterationStatusVar="it" styleClass="table table-bordered">
+			
+			<f:facet name="noData">
+				Nema traženih podataka
+			</f:facet>
+			
 			<rich:column sortBy="#{restriction.group.name}">
 				<f:facet name="header">
 						Naziv grupe
@@ -363,6 +378,11 @@
 			rows="10"
 			value="#{restrictionsController.listTeacherIdlesRestrictionList()}"
 			iterationStatusVar="it" styleClass="table table-bordered">
+			
+			<f:facet name="noData">
+				Nema traženih podataka
+			</f:facet>
+			
 			<rich:column sortBy="#{restriction.teacher}">
 				<f:facet name="header">
 						Profesor
@@ -484,6 +504,11 @@
 			rows="10"
 			value="#{restrictionsController.listGroupLoadRestrictionList()}"
 			iterationStatusVar="it" styleClass="table table-bordered">
+			
+			<f:facet name="noData">
+				Nema traženih podataka
+			</f:facet>
+			
 			<rich:column sortBy="#{restriction.group.name}">
 				<f:facet name="header">
 						Naziv grupe
@@ -583,6 +608,11 @@
 			rows="10"
 			value="#{restrictionsController.listTeacherLoadRestrictionList()}"
 			iterationStatusVar="it" styleClass="table table-bordered">
+			
+			<f:facet name="noData">
+				Nema traženih podataka
+			</f:facet>
+			
 			<rich:column sortBy="#{restriction.teacher}">
 				<f:facet name="header">
 						Profesor

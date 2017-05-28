@@ -9,6 +9,7 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 
 import org.richfaces.component.SortOrder;
+import org.richfaces.model.Filter;
 
 import com.ejb.services.GroupsService;
 import com.jpa.entities.Department;
@@ -29,7 +30,12 @@ public class GroupsController {
 	private int selectedGroupIndex;
 	private Group groupToUpdate;
 
-	/**
+	/*
+	 * Filtering
+	 */
+	private String nameFilter;
+
+	/*
 	 * Sort order of columns
 	 */
 	private SortOrder nameOrder = SortOrder.unsorted;
@@ -72,6 +78,20 @@ public class GroupsController {
 			}
 		}
 		return null;
+	}
+
+	/* Filtering */
+
+	public Filter<?> getFilterNameImpl() {
+		return new Filter<Group>() {
+			public boolean accept(Group group) {
+				String name = getNameFilter();
+				if (name == null || name.length() == 0 || name.equals(group.getName())) {
+					return true;
+				}
+				return false;
+			}
+		};
 	}
 
 	/* Sorting of columns */
@@ -195,5 +215,13 @@ public class GroupsController {
 
 	public void setDepartmentController(DepartmentController departmentController) {
 		this.departmentController = departmentController;
+	}
+
+	public String getNameFilter() {
+		return nameFilter;
+	}
+
+	public void setNameFilter(String filterName) {
+		this.nameFilter = filterName;
 	}
 }

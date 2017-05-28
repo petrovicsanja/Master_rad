@@ -7,6 +7,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
 import org.richfaces.component.SortOrder;
+import org.richfaces.model.Filter;
 
 import com.ejb.services.SubjectsService;
 import com.jpa.entities.Subject;
@@ -22,6 +23,11 @@ public class SubjectsController {
 	private int selectedSubjectIndex;
 	private Subject subjectToUpdate;
 	private Subject newSubject = new Subject();
+
+	/*
+	 * Filtering
+	 */
+	private String nameFilter;
 
 	/*
 	 * Sort order of columns
@@ -63,6 +69,20 @@ public class SubjectsController {
 			}
 		}
 		return null;
+	}
+
+	/* Filtering of columns */
+
+	public Filter<?> getFilterNameImpl() {
+		return new Filter<Subject>() {
+			public boolean accept(Subject subject) {
+				String name = getNameFilter();
+				if (name == null || name.length() == 0 || name.equals(subject.getName())) {
+					return true;
+				}
+				return false;
+			}
+		};
 	}
 
 	/* Sorting of columns */
@@ -127,5 +147,13 @@ public class SubjectsController {
 
 	public void setMarkOrder(SortOrder markOrder) {
 		this.markOrder = markOrder;
+	}
+
+	public String getNameFilter() {
+		return nameFilter;
+	}
+
+	public void setNameFilter(String nameFilter) {
+		this.nameFilter = nameFilter;
 	}
 }

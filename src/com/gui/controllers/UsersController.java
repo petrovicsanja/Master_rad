@@ -9,6 +9,7 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.model.SelectItem;
 
 import org.richfaces.component.SortOrder;
+import org.richfaces.model.Filter;
 
 import com.ejb.services.UsersService;
 import com.jpa.entities.User;
@@ -25,6 +26,12 @@ public class UsersController {
 	private List<User> userList = null;
 	private int selectedUserIndex;
 	private User selectedUser;
+
+	/*
+	 * Filtering
+	 */
+	private String nameFilter;
+	private String surnameFilter;
 
 	/*
 	 * Sort order for columns
@@ -68,6 +75,32 @@ public class UsersController {
 			}
 		}
 		return null;
+	}
+
+	/* Filtering of columns */
+
+	public Filter<?> getFilterNameImpl() {
+		return new Filter<User>() {
+			public boolean accept(User user) {
+				String firstName = getNameFilter();
+				if (firstName == null || firstName.length() == 0 || firstName.equals(user.getFirstName())) {
+					return true;
+				}
+				return false;
+			}
+		};
+	}
+
+	public Filter<?> getFilterSurnameImpl() {
+		return new Filter<User>() {
+			public boolean accept(User user) {
+				String lastName = getNameFilter();
+				if (lastName == null || lastName.length() == 0 || lastName.equals(user.getLastName())) {
+					return true;
+				}
+				return false;
+			}
+		};
 	}
 
 	/* Sorting of columns */
@@ -201,5 +234,21 @@ public class UsersController {
 
 	public void setUserTypeOrder(SortOrder userTypeOrder) {
 		this.userTypeOrder = userTypeOrder;
+	}
+
+	public String getNameFilter() {
+		return nameFilter;
+	}
+
+	public void setNameFilter(String nameFilter) {
+		this.nameFilter = nameFilter;
+	}
+
+	public String getSurnameFilter() {
+		return surnameFilter;
+	}
+
+	public void setSurnameFilter(String surnameFilter) {
+		this.surnameFilter = surnameFilter;
 	}
 }

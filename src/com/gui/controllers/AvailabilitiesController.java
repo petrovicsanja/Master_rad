@@ -50,7 +50,6 @@ public class AvailabilitiesController {
 
 	private List<Integer> teacherAvailabilityTermsForSelectedDay = null;
 	private List<TeacherAvailability> allTeacherAvailabilities = null;
-	private int selectedTeacherAvailabilityIndex;
 
 	// Group availability
 	private Group group = null;
@@ -60,7 +59,6 @@ public class AvailabilitiesController {
 
 	private List<Integer> groupAvailabilityTermsForSelectedDay = null;
 	private List<GroupAvailability> allGroupAvailabilities = null;
-	private int selectedGroupAvailabilityIndex;
 
 	// Room availability
 	private Room room = null;
@@ -70,7 +68,10 @@ public class AvailabilitiesController {
 
 	private List<Integer> roomAvailabilityTermsForSelectedDay = null;
 	private List<RoomAvailability> allRoomAvailabilities = null;
-	private int selectedRoomAvailabilityIndex;
+
+	// Indexes for deleting
+	private int selectedAvailabilityIndex;
+	private String availabilityObject;
 
 	public List<Group> listAllGroups() {
 		return groupsController.listGroups();
@@ -230,23 +231,20 @@ public class AvailabilitiesController {
 		return allRoomAvailabilities;
 	}
 
-	public void deleteTeacherAvailability() {
-		TeacherAvailability teacherAvailabilityToDelete = allTeacherAvailabilities
-				.get(selectedTeacherAvailabilityIndex);
-		availabilitiesService.deleteTeacherAvailability(teacherAvailabilityToDelete.getId());
-		allTeacherAvailabilities.remove(selectedTeacherAvailabilityIndex);
-	}
-
-	public void deleteGroupAvailability() {
-		GroupAvailability groupAvailabilityToDelete = allGroupAvailabilities.get(selectedGroupAvailabilityIndex);
-		availabilitiesService.deleteGroupAvailability(groupAvailabilityToDelete.getId());
-		allGroupAvailabilities.remove(selectedGroupAvailabilityIndex);
-	}
-
-	public void deleteRoomAvailability() {
-		RoomAvailability roomAvailabilityToDelete = allRoomAvailabilities.get(selectedRoomAvailabilityIndex);
-		availabilitiesService.deleteRoomAvailability(roomAvailabilityToDelete.getId());
-		allRoomAvailabilities.remove(selectedRoomAvailabilityIndex);
+	public void deleteAvailability() {
+		if (availabilityObject.equals("Teacher")) {
+			TeacherAvailability teacherAvailabilityToDelete = allTeacherAvailabilities.get(selectedAvailabilityIndex);
+			availabilitiesService.deleteTeacherAvailability(teacherAvailabilityToDelete.getId());
+			allTeacherAvailabilities.remove(selectedAvailabilityIndex);
+		} else if (availabilityObject.equals("Group")) {
+			GroupAvailability groupAvailabilityToDelete = allGroupAvailabilities.get(selectedAvailabilityIndex);
+			availabilitiesService.deleteGroupAvailability(groupAvailabilityToDelete.getId());
+			allGroupAvailabilities.remove(selectedAvailabilityIndex);
+		} else if (availabilityObject.equals("Room")) {
+			RoomAvailability roomAvailabilityToDelete = allRoomAvailabilities.get(selectedAvailabilityIndex);
+			availabilitiesService.deleteRoomAvailability(roomAvailabilityToDelete.getId());
+			allRoomAvailabilities.remove(selectedAvailabilityIndex);
+		}
 	}
 
 	/* Getters and setters */
@@ -395,27 +393,19 @@ public class AvailabilitiesController {
 		this.roomAvailabilityTermsForSelectedDay = roomAvailabilityTermsForSelectedDay;
 	}
 
-	public int getSelectedTeacherAvailabilityIndex() {
-		return selectedTeacherAvailabilityIndex;
+	public int getSelectedAvailabilityIndex() {
+		return selectedAvailabilityIndex;
 	}
 
-	public void setSelectedTeacherAvailabilityIndex(int selectedTeacherAvailabilityIndex) {
-		this.selectedTeacherAvailabilityIndex = selectedTeacherAvailabilityIndex;
+	public void setSelectedAvailabilityIndex(int selectedAvailabilityIndex) {
+		this.selectedAvailabilityIndex = selectedAvailabilityIndex;
 	}
 
-	public int getSelectedGroupAvailabilityIndex() {
-		return selectedGroupAvailabilityIndex;
+	public String getAvailabilityObject() {
+		return availabilityObject;
 	}
 
-	public void setSelectedGroupAvailabilityIndex(int selectedGroupAvailabilityIndex) {
-		this.selectedGroupAvailabilityIndex = selectedGroupAvailabilityIndex;
-	}
-
-	public int getSelectedRoomAvailabilityIndex() {
-		return selectedRoomAvailabilityIndex;
-	}
-
-	public void setSelectedRoomAvailabilityIndex(int selectedRoomAvailabilityIndex) {
-		this.selectedRoomAvailabilityIndex = selectedRoomAvailabilityIndex;
+	public void setAvailabilityObject(String availabilityObject) {
+		this.availabilityObject = availabilityObject;
 	}
 }
