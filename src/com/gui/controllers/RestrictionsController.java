@@ -36,6 +36,9 @@ public class RestrictionsController {
 	@ManagedProperty(value = "#{semesterController}")
 	private SemesterController semesterController;
 
+	@ManagedProperty(value = "#{periodsController}")
+	private PeriodsController periodsController;
+
 	// Group num days restriction
 	private List<GroupNumDays> groupNumDaysRestrictionList = null;
 	private GroupNumDays newGroupNumDays = new GroupNumDays();
@@ -124,21 +127,35 @@ public class RestrictionsController {
 	}
 
 	public void addNewNumDaysGroupRestriction() {
-		if (newGroupNumDays.getGroup() != null) {
+		boolean numDaysCondition = (newGroupNumDays.getMin() >= 1)
+				&& (newGroupNumDays.getOpt() >= newGroupNumDays.getMin())
+				&& (newGroupNumDays.getMax() >= newGroupNumDays.getOpt())
+				&& (periodsController.getNumberOfWorkingDays() >= newGroupNumDays.getMax());
+
+		if (numDaysCondition && newGroupNumDays.getGroup() != null) {
 			restrictionsService.addNewNumDaysGroupRestriction(newGroupNumDays, semesterController.getActiveSemester());
 			groupNumDaysRestrictionList.add(newGroupNumDays);
 
 			newGroupNumDays = new GroupNumDays();
+		} else {
+			System.out.println("Conditions for NumDays restriction are not fulfilled.");
 		}
 	}
 
 	public void addNewNumDaysTeacherRestriction() {
-		if (newTeacherNumDays.getTeacher() != null) {
+		boolean numDaysCondition = (newTeacherNumDays.getMin() >= 1)
+				&& (newTeacherNumDays.getOpt() >= newTeacherNumDays.getMin())
+				&& (newTeacherNumDays.getMax() >= newTeacherNumDays.getOpt())
+				&& (periodsController.getNumberOfWorkingDays() >= newTeacherNumDays.getMax());
+
+		if (numDaysCondition && newTeacherNumDays.getTeacher() != null) {
 			restrictionsService.addNewNumDaysTeacherRestriction(newTeacherNumDays,
 					semesterController.getActiveSemester());
 			teacherNumDaysRestrictionList.add(newTeacherNumDays);
 
 			newTeacherNumDays = new TeacherNumDays();
+		} else {
+			System.out.println("Conditions for NumDays restriction are not fulfilled.");
 		}
 	}
 
@@ -224,6 +241,10 @@ public class RestrictionsController {
 
 	public void setLoginController(LoginController loginController) {
 		this.loginController = loginController;
+	}
+
+	public void setPeriodsController(PeriodsController periodsController) {
+		this.periodsController = periodsController;
 	}
 
 	public GroupNumDays getNewGroupNumDays() {

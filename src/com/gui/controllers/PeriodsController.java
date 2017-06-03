@@ -1,5 +1,6 @@
 package com.gui.controllers;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -66,6 +67,16 @@ public class PeriodsController {
 			allPeriods = periodsService.listAllPeriods();
 		}
 		return allPeriods;
+	}
+
+	public int getNumberOfWorkingDays() {
+		List<String> distinctPeriods = new ArrayList<>();
+		for (Period period : getAllPeriods()) {
+			if (distinctPeriods.contains(period.getDay())) {
+				distinctPeriods.add(period.getDay());
+			}
+		}
+		return distinctPeriods.size();
 	}
 
 	/*

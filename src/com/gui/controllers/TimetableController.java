@@ -41,6 +41,8 @@ public class TimetableController {
 	private Room selectedRoom = null;
 	private String timetableData;
 
+	private String heading;
+
 	public String createTimetable() {
 		Semester activeSemester = semesterController.getActiveSemester();
 		String action = null;
@@ -75,6 +77,27 @@ public class TimetableController {
 			}
 			fc.responseComplete();
 		}
+	}
+
+	public void getTimetableForGroup() {
+		selectedTeacher = null;
+		selectedRoom = null;
+
+		setHeading("Raspored časova za grupu: " + selectedGroup.toString());
+	}
+
+	public void getTimetableForTeacher() {
+		selectedGroup = null;
+		selectedRoom = null;
+
+		setHeading("Raspored časova za profesora: " + selectedTeacher.toString());
+	}
+
+	public void getTimeTableForRoom() {
+		selectedGroup = null;
+		selectedTeacher = null;
+
+		setHeading("Raspored časova za učionicu: " + selectedRoom.toString());
 	}
 
 	public List<Group> listGroups() {
@@ -139,5 +162,13 @@ public class TimetableController {
 
 	public void setRoomsController(RoomsController roomsController) {
 		this.roomsController = roomsController;
+	}
+
+	public String getHeading() {
+		return heading;
+	}
+
+	public void setHeading(String test) {
+		this.heading = test;
 	}
 }
