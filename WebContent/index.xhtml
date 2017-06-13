@@ -11,14 +11,15 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
 	<h:outputStylesheet library="css" name="bootstrap.min.css" />
+	<h:outputStylesheet library="css" name="login.css" />
 
 	<title>Logovanje korisnika</title>
 </h:head>
 <h:body>
-	<rich:panel header="Logovanje korisnika"
-		styleClass="panel panel-primary" headerClass="panel-heading"
-		bodyClass="panel-body">
-		<h:form>
+	<div class="container">
+		<h:form styleClass="form-signin">
+			<h2 class="form-signin-heading">#{msg['heading.login']}</h2>
+		
 			<h:panelGrid columns="1" rendered="#{empty user}">
 				<h:panelGroup rendered="#{loginController.message ne null}">
 					<div class="alert alert-info">
@@ -28,38 +29,36 @@
 
 				<h:panelGroup>
 					<div class="row">
-						<div class="col-sm-6">
-							<h:outputLabel for="username">
-							Korisničko ime:
-						</h:outputLabel>
+						<div class="col-sm-5">
+							<h:outputLabel for="username" value="#{msg.username}"/>
 						</div>
-						<div class="col-sm-6">
-							<h:inputText id="username" value="#{loginController.username}" />
+						<div class="col-sm-7">
+							<h:inputText id="username" value="#{loginController.username}"  styleClass="form-control"/>
 						</div>
 					</div>
 				</h:panelGroup>
 
 				<h:panelGroup>
 					<div class="row">
-						<div class="col-sm-6">
-							<h:outputLabel for="password">Lozinka:</h:outputLabel>
+						<div class="col-sm-5">
+							<h:outputLabel for="password" value="#{msg.password}" />
 						</div>
-						<div class="col-sm-6">
-							<h:inputSecret id="password" value="#{loginController.password}" />
+						<div class="col-sm-7">
+							<h:inputSecret id="password" value="#{loginController.password}" styleClass="form-control" />
 						</div>
 					</div>
 				</h:panelGroup>
 
 				<h:panelGroup>
-					<h:commandButton value="Login" action="#{loginController.login()}"
-						rendered="#{empty user}" styleClass="btn btn-sm btn-primary" />
-					<h:commandButton value="Logout"
+					<h:commandButton value="#{msg.login}" action="#{loginController.login()}"
+						rendered="#{empty user}" styleClass="btn btn-lg btn-primary btn-block" />
+					<h:commandButton value="#{msg.logout}"
 						action="#{loginController.logout()}" rendered="#{not empty user}"
-						styleClass="btn btn-sm btn-warning" />
+						styleClass="btn btn-lg btn-warning" />
 				</h:panelGroup>
 			</h:panelGrid>
 		</h:form>
-	</rich:panel>
+	</div>
 
 </h:body>
 </html>

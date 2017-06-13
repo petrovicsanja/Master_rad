@@ -38,7 +38,7 @@
 
 		<rich:dataTable id="subjectLessonsList" var="lesson" rows="10"
 			value="#{lessonsController.subjectLessonsList}"
-			iterationStatusVar="it" styleClass="table table-bordered">
+			iterationStatusVar="it" styleClass="table table-striped">
 			
 			<f:facet name="noData">
 				Za odabrani kriterijum nema traženih podataka
@@ -97,9 +97,9 @@
 					Brisanje
 				</f:facet>
 				<a4j:commandLink
-					oncomplete="#{rich:component('deleteLessonWarning')}.show()"
+					oncomplete="#{rich:component('deleteLessonConfirmation')}.show()"
 					execute="@this" render="@none" title="Obriši ogranicenje za grupu">
-					<h:graphicImage value="/images/delete.gif" alt="delete" />
+					<h:graphicImage value="/images/delete.png" alt="delete" />
 					<a4j:param value="#{it.index}"
 						assignTo="#{lessonsController.selectedLessonIndex}" />
 				</a4j:commandLink>
@@ -111,26 +111,25 @@
 		</rich:dataTable>
 	</rich:collapsiblePanel>
 
-	<!-- POPUP ZA POTVRDU BRISANJA -->
-	<rich:popupPanel id="deleteLessonWarning" modal="false"
+	<rich:popupPanel id="deleteLessonConfirmation" modal="false"
 		autosized="true" resizeable="false" styleClass="panel panel-info"
 		headerClass="panel-heading">
 		<f:facet name="header">
-			<h:outputText value="Upozorenje" />
+			<h:outputText value="#{msg.warning}" />
 		</f:facet>
 		<f:facet name="controls">
 			<h:outputLink value="#"
-				onclick="#{rich:component('deleteLessonWarning')}.hide(); return false;"
+				onclick="#{rich:component('deleteLessonConfirmation')}.hide(); return false;"
 				style="color: inherit"> X </h:outputLink>
 		</f:facet>
 		<p>Da li ste sigurni da želite da obrišete cas?</p>
 		<a4j:commandButton action="#{lessonsController.deleteLesson()}"
 			value="Obriši"
-			oncomplete="#{rich:component('deleteLessonWarning')}.hide();">
+			oncomplete="#{rich:component('deleteLessonConfirmation')}.hide();">
 			<a4j:ajax execute="@this" render="@form" />
 		</a4j:commandButton>
-		<a4j:commandButton value="Odustani"
-			onclick="#{rich:component('deleteLessonWarning')}.hide(); return false;" />
+		<a4j:commandButton value="#{msg.cancel}"
+			onclick="#{rich:component('deleteLessonConfirmation')}.hide(); return false;" />
 	</rich:popupPanel>
 
 	<rich:collapsiblePanel header="Unos časova" switchType="client"
@@ -280,7 +279,7 @@
 
 				<div class="row text-right">
 					<h:commandButton styleClass="btn btn-sm btn-primary"
-						action="#{lessonsController.addLesson()}" value="Sacuvaj">
+						action="#{lessonsController.addLesson()}" value="#{msg['element.save']}">
 						<a4j:ajax render="@form" />
 					</h:commandButton>
 				</div>

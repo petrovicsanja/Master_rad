@@ -6,76 +6,76 @@
 	xmlns:a4j="http://richfaces.org/a4j"
 	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
 
-	<!-- IZLISTAVANJE SVIH GRUPA -->
-	<rich:collapsiblePanel header="Izlistavanje svih grupa"
+	<rich:collapsiblePanel header="#{msg['subheading.groups.list']}"
 		switchType="client" styleClass="panel panel-primary"
 		headerClass="panel-heading" bodyClass="panel-body">
-		<rich:dataTable id="listaGrupa" var="grupa" rows="10"
+
+		<rich:dataTable id="groupList" var="group" rows="10"
 			value="#{groupsController.listGroups()}" iterationStatusVar="it"
-			filterVar="filterValue" styleClass="table table-bordered">
-			
+			filterVar="filterValue" styleClass="table table-striped">
+
 			<f:facet name="noData">
-				Nema traženih podataka
+				#{msg['no.data']}
 			</f:facet>
 
-			<rich:column id="kolonanaziv" sortBy="#{grupa.name}"
+			<rich:column sortBy="#{group.name}"
 				sortOrder="#{groupsController.nameOrder}" sortType="custom"
-				filterExpression="#{empty filterValue or fn:containsIgnoreCase(grupa.name, filterValue)}"
+				filterExpression="#{empty filterValue or fn:containsIgnoreCase(group.name, filterValue)}"
 				filterValue="#{roomsController.nameFilter}">
 				<f:facet name="header">
-					<a4j:commandLink value="Naziv grupe" render="listaGrupa"
+					<a4j:commandLink value="#{msg.name}" render="groupList"
 						execute="@this" action="#{groupsController.sortByName()}" />
 				</f:facet>
-				<h:outputText value="#{grupa.name}" />
+				<h:outputText value="#{group.name}" />
 			</rich:column>
 
-			<rich:column id="kolonaNazivSmera" sortBy="#{grupa.department.name}"
+			<rich:column sortBy="#{group.department.name}"
 				sortOrder="#{groupsController.departmentOrder}" sortType="custom"
 				comparator="#{groupsController.deapartmentComparator}">
 				<f:facet name="header">
-					<a4j:commandLink value="Smer" render="listaGrupa" execute="@this"
-						action="#{groupsController.sortByDepartment()}" />
+					<a4j:commandLink value="#{msg.department}" render="groupList"
+						execute="@this" action="#{groupsController.sortByDepartment()}" />
 				</f:facet>
-				<h:outputText value="#{grupa.department.name}" />
+				<h:outputText value="#{group.department.name}" />
 			</rich:column>
 
-			<rich:column id="kolonaVelicina" sortBy="#{grupa.size}"
+			<rich:column sortBy="#{group.size}"
 				sortOrder="#{groupsController.sizeOrder}" sortType="custom">
 				<f:facet name="header">
-					<a4j:commandLink value="Velicina" render="listaGrupa"
+					<a4j:commandLink value="#{msg.size}" render="groupList"
 						execute="@this" action="#{groupsController.sortBySize()}" />
 				</f:facet>
-				<h:outputText value="#{grupa.size}" />
+				<h:outputText value="#{group.size}" />
 			</rich:column>
 
-			<rich:column id="kolonaoznaka" sortBy="#{grupa.mark}"
+			<rich:column sortBy="#{group.mark}"
 				sortOrder="#{groupsController.markOrder}" sortType="custom">
 				<f:facet name="header">
-					<a4j:commandLink value="Oznaka grupe" render="listaGrupa"
+					<a4j:commandLink value="#{msg.mark}" render="groupList"
 						execute="@this" action="#{groupsController.sortByMark()}" />
 				</f:facet>
-				<h:outputText value="#{grupa.mark}" />
+				<h:outputText value="#{group.mark}" />
 			</rich:column>
 
 			<rich:column rendered="#{user.type eq 2}" styleClass="text-center">
 				<f:facet name="header">
-							Brisanje i izmena
-					</f:facet>
+					#{msg['column.update']}
+				</f:facet>
 				<a4j:commandLink
-					oncomplete="#{rich:component('potvrdaBrisanjaGrupe')}.show()"
-					execute="@this" render="@none" title="Obriši grupu">
-					<h:graphicImage value="/images/delete.gif" alt="delete" />
+					oncomplete="#{rich:component('deleteGroupConfirmation')}.show()"
+					execute="@this" render="@none" title="#{msg['element.delete']}">
+					<h:graphicImage value="/images/delete.png" alt="delete" />
 					<a4j:param value="#{it.index}"
 						assignTo="#{groupsController.selectedGroupIndex}" />
 				</a4j:commandLink>
 				<a4j:commandLink
-					oncomplete="#{rich:component('izmenaGrupe')}.show()"
-					resetValues="true" execute="@this" render="izmenaGrupeGrid"
-					title="Izmeni podatke o grupi">
-					<h:graphicImage value="/images/edit.gif" alt="edit" />
+					oncomplete="#{rich:component('groupUpdate')}.show()"
+					resetValues="true" execute="@this" render="groupUpdateGrid"
+					title="#{msg['element.update']}">
+					<h:graphicImage value="/images/edit.png" alt="edit" />
 					<a4j:param value="#{it.index}"
 						assignTo="#{groupsController.selectedGroupIndex}" />
-					<f:setPropertyActionListener value="#{grupa}"
+					<f:setPropertyActionListener value="#{group}"
 						target="#{groupsController.groupToUpdate}" />
 				</a4j:commandLink>
 			</rich:column>
@@ -86,47 +86,45 @@
 		</rich:dataTable>
 	</rich:collapsiblePanel>
 
-	<!-- POPUP ZA POTVRDU BRISANJA -->
-	<rich:popupPanel id="potvrdaBrisanjaGrupe" modal="false"
+	<rich:popupPanel id="deleteGroupConfirmation" modal="false"
 		autosized="true" resizeable="false" styleClass="panel panel-info"
 		headerClass="panel-heading">
 		<f:facet name="header">
-			<h:outputText value="Upozorenje" />
+			<h:outputText value="#{msg.warning}" />
 		</f:facet>
 		<f:facet name="controls">
 			<h:outputLink value="#"
-				onclick="#{rich:component('potvrdaBrisanjaGrupe')}.hide(); return false;"
+				onclick="#{rich:component('deleteGroupConfirmation')}.hide(); return false;"
 				style="color: inherit"> X </h:outputLink>
 		</f:facet>
-		<p>Da li ste sigurni da želite da obrišete grupu?</p>
+		<p>#{msg['group.delete.confirmation']}</p>
 		<a4j:commandButton action="#{groupsController.deleteGroup()}"
-			value="Obriši"
-			oncomplete="#{rich:component('potvrdaBrisanjaGrupe')}.hide();" 
-			execute="@this" render=":izlistavanjeGrupa" />
-		<a4j:commandButton value="Odustani"
-			onclick="#{rich:component('potvrdaBrisanjaGrupe')}.hide(); return false;" />
+			value="#{msg['element.delete']}"
+			oncomplete="#{rich:component('deleteGroupConfirmation')}.hide();"
+			execute="@this" render=":groupList" />
+		<a4j:commandButton value="#{msg.cancel}"
+			onclick="#{rich:component('deleteGroupConfirmation')}.hide(); return false;" />
 	</rich:popupPanel>
 
-	<!-- POPUP ZA IZMENU PODATAKA O GRUPI -->
-	<rich:popupPanel id="izmenaGrupe" domElementAttachment="parent"
+	<rich:popupPanel id="groupUpdate" domElementAttachment="parent"
 		autosized="true" resizeable="false" styleClass="panel panel-info"
 		headerClass="panel-heading">
 		<f:facet name="header">
-			<h:outputText value="Izmena podataka o grupi" />
+			<h:outputText value="#{msg['element.update']}" />
 		</f:facet>
 		<f:facet name="controls">
 			<h:outputLink value="#"
-				onclick="#{rich:component('izmenaGrupe')}.hide(); return false;"
+				onclick="#{rich:component('groupUpdate')}.hide(); return false;"
 				style="color: inherit"> X </h:outputLink>
 		</f:facet>
 		<div class="panel-body">
-			<h:panelGrid id="izmenaGrupeGrid" columns="3">
-				<h:outputLabel value="Unesite naziv grupe:" />
-				<h:inputText id="grupaZaIzmenuNaziv" label="Naziv grupe"
+			<h:panelGrid id="groupUpdateGrid" columns="3">
+				<h:outputLabel value="#{msg.name}" />
+				<h:inputText id="groupUpdateName" label="#{msg.name}"
 					value="#{groupsController.groupToUpdate.name}" required="true" />
-				<rich:message for="grupaZaIzmenuNaziv" ajaxRendered="true" />
+				<rich:message for="groupUpdateName" ajaxRendered="true" />
 
-				<h:outputLabel value="Izebrite smer kojem grupa pripada:" />
+				<h:outputLabel value="Smer kojem grupa pripada" />
 				<h:selectOneMenu id="updateGroupDepartment" required="true"
 					value="#{groupsController.groupToUpdate.department}"
 					converter="#{departmentConverter}">
@@ -138,54 +136,56 @@
 				</h:selectOneMenu>
 				<rich:message for="updateGroupDepartment" ajaxRendered="true" />
 
-				<h:outputLabel value="Unesite velicinu grupe:" />
-				<h:inputText id="grupaZaIzmenuVelicina" label="Velicina grupe"
+				<h:outputLabel value="#{msg.size}" />
+				<h:inputText id="groupUpdateSize" label="#{msg.size}"
 					value="#{groupsController.groupToUpdate.size}" />
-				<rich:message for="grupaZaIzmenuVelicina" ajaxRendered="true" />
+				<rich:message for="groupUpdateSize" ajaxRendered="true" />
 
-				<h:outputLabel value="Unesite oznaku grupe:" />
-				<h:inputText id="grupaZaIzmenuOznaka" label="Oznaka grupe"
+				<h:outputLabel value="#{msg.mark}" />
+				<h:inputText id="groupUpdateMark" label="#{msg.mark}"
 					value="#{groupsController.groupToUpdate.mark}" required="true" />
-				<rich:message for="grupaZaIzmenuOznaka" ajaxRendered="true" />
+				<rich:message for="groupUpdateMark" ajaxRendered="true" />
 
 				<a4j:commandButton action="#{groupsController.updateGroup()}"
-					value="Izmeni" styleClass="btn btn-sm btn-primary"
-					oncomplete="#{rich:component('izmenaGrupe')}.hide();"
-					execute="izmenaGrupe" render="listaGrupa" />
-				<a4j:commandButton value="Odustani"
+					value="#{msg['element.save']}" styleClass="btn btn-sm btn-primary"
+					oncomplete="#{rich:component('groupUpdate')}.hide();"
+					execute="groupUpdate" render="groupList" />
+				<a4j:commandButton value="#{msg.cancel}"
 					styleClass="btn btn-sm btn-warning"
-					onclick="#{rich:component('izmenaGrupe')}.hide(); return false;" />
+					onclick="#{rich:component('groupUpdate')}.hide(); return false;" />
 			</h:panelGrid>
 		</div>
 	</rich:popupPanel>
 
-	<!-- DODAVANJE NOVE GRUPE -->
-	<rich:collapsiblePanel header="Dodavanje nove grupe"
+	<rich:collapsiblePanel header="#{msg['subheading.groups.add']}"
 		switchType="client" rendered="#{user.type eq 2}"
 		styleClass="panel panel-primary" headerClass="panel-heading"
 		bodyClass="panel-body">
 
 		<a4j:region>
 			<div class="container">
-				<div class="row">
-					<div class="col-sm-4">
-						<h:outputLabel value="Unesite naziv grupe:" />
+				<div class="row form-group">
+					<div class="col-sm-3">
+						<h:outputLabel value="#{msg.name}" styleClass="col-form-label" />
 					</div>
-					<div class="col-sm-4">
-						<h:inputText id="novaGrupaNaziv" label="Naziv grupe"
-							value="#{groupsController.newGroup.name}" required="true" />
+					<div class="col-sm-6">
+						<h:inputText id="newGroupName" label="#{msg.name}"
+							value="#{groupsController.newGroup.name}" required="true"
+							styleClass="form-control" />
 					</div>
-					<div class="col-sm-4">
-						<rich:message for="novaGrupaNaziv" ajaxRendered="true" />
+					<div class="col-sm-3">
+						<rich:message for="newGroupName" ajaxRendered="true" />
 					</div>
 				</div>
 
-				<div class="row">
-					<div class="col-sm-4">
-						<h:outputLabel value="Izaberite smer kojem grupa pripada:" />
+				<div class="row form-group">
+					<div class="col-sm-3">
+						<h:outputLabel value="Smer kojem grupa pripada"
+							styleClass="col-form-label" />
 					</div>
-					<div class="col-sm-4">
+					<div class="col-sm-6">
 						<h:selectOneMenu id="newGroupDepartment" required="true"
+							styleClass="form-check-input"
 							value="#{groupsController.newGroup.department}"
 							converter="#{departmentConverter}">
 							<f:selectItem itemLabel="-- Izaberite smer --"
@@ -196,40 +196,42 @@
 							<f:ajax event="change" execute="@this" />
 						</h:selectOneMenu>
 					</div>
-					<div class="col-sm-4">
+					<div class="col-sm-3">
 						<rich:message for="newGroupDepartment" ajaxRendered="true" />
 					</div>
 				</div>
 
-				<div class="row">
-					<div class="col-sm-4">
-						<h:outputLabel value="Unesite broj studenata u grupi:" />
+				<div class="row form-group">
+					<div class="col-sm-3">
+						<h:outputLabel value="#{msg.size}" styleClass="col-form-label" />
 					</div>
-					<div class="col-sm-4">
-						<h:inputText id="novaGrupaVelicina" label="Velicina grupe"
-							value="#{groupsController.newGroup.size}" />
+					<div class="col-sm-6">
+						<h:inputText id="newGroupSize" label="#{msg.size}"
+							value="#{groupsController.newGroup.size}"
+							styleClass="form-control" />
 					</div>
-					<div class="col-sm-4">
-						<rich:message for="novaGrupaVelicina" ajaxRendered="true" />
+					<div class="col-sm-3">
+						<rich:message for="newGroupSize" ajaxRendered="true" />
 					</div>
 				</div>
 
-				<div class="row">
-					<div class="col-sm-4">
-						<h:outputLabel value="Unesite oznaku grupe:" />
+				<div class="row form-group">
+					<div class="col-sm-3">
+						<h:outputLabel value="#{msg.mark}" styleClass="col-form-label" />
 					</div>
-					<div class="col-sm-4">
-						<h:inputText id="novaGrupaOznaka" label="Oznaka grupe"
-							value="#{groupsController.newGroup.mark}" required="true" />
+					<div class="col-sm-6">
+						<h:inputText id="newGroupMark" label="#{msg.mark}"
+							value="#{groupsController.newGroup.mark}" required="true"
+							styleClass="form-control" />
 					</div>
-					<div class="col-sm-4">
-						<rich:message for="novaGrupaOznaka" ajaxRendered="true" />
+					<div class="col-sm-3">
+						<rich:message for="newGroupMark" ajaxRendered="true" />
 					</div>
 				</div>
 
 				<div class="row text-right">
 					<h:commandButton action="#{groupsController.addGroup()}"
-						value="Dodaj grupu" styleClass="btn btn-sm btn-primary">
+						value="#{msg['element.save']}" styleClass="btn btn-md btn-primary">
 						<a4j:ajax render="@form" />
 					</h:commandButton>
 				</div>

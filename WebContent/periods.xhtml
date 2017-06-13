@@ -5,7 +5,6 @@
 	xmlns:rich="http://richfaces.org/rich"
 	xmlns:a4j="http://richfaces.org/a4j">
 
-	<!-- IZLISTAVANJE TERMINA -->
 	<rich:panel header="Izlistavanje termina">
 		<rich:list value="#{periodsController.allPeriods}" id="periodsList"
 			var="period">
@@ -53,7 +52,7 @@
 			<h:inputText value="#{periodsController.termsSunday}" />
 			<h:outputLabel value="" />
 
-			<h:commandButton value="Dodaj termine"
+			<h:commandButton value="#{msg['element.save']}"
 				action="#{periodsController.addPeriods()}"
 				styleClass="btn btn-sm btn-primary">
 				<f:ajax execute="insertPeriods" render="@form" />

@@ -12,10 +12,10 @@
 		<rich:dataTable id="teacherAvailabilitiesList"
 			var="teacherAvailability" rows="10"
 			value="#{availabilitiesController.listAllTeacherAvailabilities()}"
-			iterationStatusVar="it" styleClass="table table-bordered">
+			iterationStatusVar="it" styleClass="table table-striped">
 
 			<f:facet name="noData">
-				Nema traženih podataka
+				#{msg['no.data']}
 			</f:facet>
 
 			<rich:column id="teacherColumn"
@@ -52,9 +52,9 @@
 					Brisanje
 				</f:facet>
 				<a4j:commandLink
-					oncomplete="#{rich:component('deleteAvailabilityWarning')}.show()"
+					oncomplete="#{rich:component('deleteAvailabilityConfirmation')}.show()"
 					execute="@this" render="@none" title="Obriši termin za profesora">
-					<h:graphicImage value="/images/delete.gif" alt="delete" />
+					<h:graphicImage value="/images/delete.png" alt="delete" />
 					<a4j:param value="#{it.index}"
 						assignTo="#{availabilitiesController.selectedAvailabilityIndex}" />
 					<a4j:param value="Teacher"
@@ -143,7 +143,7 @@
 				<div class="row text-right">
 					<h:commandButton
 						action="#{availabilitiesController.addTeacherAvailability()}"
-						value="Sacuvaj" styleClass="btn btn-sm btn-primary">
+						value="#{msg['element.save']}" styleClass="btn btn-sm btn-primary">
 						<a4j:ajax render="@form" />
 					</h:commandButton>
 				</div>
@@ -157,10 +157,10 @@
 		<rich:dataTable id="groupAvailabilitiesList" var="groupAvailability"
 			rows="10"
 			value="#{availabilitiesController.listAllGroupAvailabilities()}"
-			iterationStatusVar="it" styleClass="table table-bordered">
+			iterationStatusVar="it" styleClass="table table-striped">
 
 			<f:facet name="noData">
-				Nema traženih podataka
+				#{msg['no.data']}
 			</f:facet>
 
 			<rich:column id="groupColumn"
@@ -197,9 +197,9 @@
 					Brisanje
 				</f:facet>
 				<a4j:commandLink
-					oncomplete="#{rich:component('deleteAvailabilityWarning')}.show()"
+					oncomplete="#{rich:component('deleteAvailabilityConfirmation')}.show()"
 					execute="@this" render="@none" title="Obriši termin za grupu">
-					<h:graphicImage value="/images/delete.gif" alt="delete" />
+					<h:graphicImage value="/images/delete.png" alt="delete" />
 					<a4j:param value="#{it.index}"
 						assignTo="#{availabilitiesController.selectedAvailabilityIndex}" />
 					<a4j:param value="Group"
@@ -284,7 +284,7 @@
 				<div class="row text-right">
 					<h:commandButton
 						action="#{availabilitiesController.addGroupAvailability()}"
-						value="Sacuvaj" styleClass="btn btn-sm btn-primary">
+						value="#{msg['element.save']}" styleClass="btn btn-sm btn-primary">
 						<a4j:ajax render="@form" />
 					</h:commandButton>
 				</div>
@@ -298,23 +298,23 @@
 		<rich:dataTable id="roomAvailabilitiesList" var="roomAvailability"
 			rows="10"
 			value="#{availabilitiesController.listAllRoomAvailabilities()}"
-			iterationStatusVar="it" styleClass="table table-bordered">
+			iterationStatusVar="it" styleClass="table table-striped">
 
 			<f:facet name="noData">
-				Nema traženih podataka
+				#{msg['no.data']}
 			</f:facet>
 
 			<rich:column id="roomColumn" sortBy="#{roomAvailability.room.name}">
 				<f:facet name="header">
-							Ucionica
-						</f:facet>
+					Ucionica
+				</f:facet>
 				<h:outputText value="#{roomAvailability.room}" />
 			</rich:column>
 
 			<rich:column id="typeColumn">
 				<f:facet name="header">
-								Tip termina
-							</f:facet>
+					Tip termina
+				</f:facet>
 				<h:outputText value="#{roomAvailability.type}" />
 			</rich:column>
 
@@ -337,9 +337,9 @@
 					Brisanje
 				</f:facet>
 				<a4j:commandLink
-					oncomplete="#{rich:component('deleteAvailabilityWarning')}.show()"
+					oncomplete="#{rich:component('deleteAvailabilityConfirmation')}.show()"
 					execute="@this" render="@none" title="Obriši termin za ucionicu">
-					<h:graphicImage value="/images/delete.gif" alt="delete" />
+					<h:graphicImage value="/images/delete.png" alt="delete" />
 					<a4j:param value="#{it.index}"
 						assignTo="#{availabilitiesController.selectedAvailabilityIndex}" />
 					<a4j:param value="Room"
@@ -423,7 +423,7 @@
 				<div class="row text-right">
 					<h:commandButton
 						action="#{availabilitiesController.addRoomAvailability()}"
-						value="Sacuvaj" styleClass="btn btn-sm btn-primary">
+						value="#{msg['element.save']}" styleClass="btn btn-sm btn-primary">
 						<a4j:ajax render="@form" />
 					</h:commandButton>
 				</div>
@@ -431,8 +431,7 @@
 		</a4j:region>
 	</rich:collapsiblePanel>
 
-	<!-- POPUP ZA POTVRDU BRISANJA -->
-	<rich:popupPanel id="deleteAvailabilityWarning" modal="false"
+	<rich:popupPanel id="deleteAvailabilityConfirmation" modal="false"
 		autosized="true" resizeable="false" styleClass="panel panel-info"
 		headerClass="panel-heading">
 		<f:facet name="header">
@@ -440,16 +439,16 @@
 		</f:facet>
 		<f:facet name="controls">
 			<h:outputLink value="#"
-				onclick="#{rich:component('deleteAvailabilityWarning')}.hide(); return false;"
+				onclick="#{rich:component('deleteAvailabilityConfirmation')}.hide(); return false;"
 				style="color: inherit"> X </h:outputLink>
 		</f:facet>
 		<p>Da li ste sigurni da želite da obrišete izabrani termin?</p>
 		<a4j:commandButton
 			action="#{availabilitiesController.deleteAvailability()}"
 			value="Obriši"
-			oncomplete="#{rich:component('deleteAvailabilityWarning')}.hide();"
+			oncomplete="#{rich:component('deleteAvailabilityConfirmation')}.hide();"
 			execute="@this" render="@form" />
-		<a4j:commandButton value="Odustani"
-			onclick="#{rich:component('deleteAvailabilityWarning')}.hide(); return false;" />
+		<a4j:commandButton value="#{msg.cancel}"
+			onclick="#{rich:component('deleteAvailabilityConfirmation')}.hide(); return false;" />
 	</rich:popupPanel>
 </ui:composition>

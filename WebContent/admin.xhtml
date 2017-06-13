@@ -11,20 +11,20 @@
 
 		<rich:dataTable id="departmentList" var="department" rows="5"
 			value="#{departmentController.listDepartments()}"
-			iterationStatusVar="it" styleClass="table table-bordered">
+			iterationStatusVar="it" styleClass="table table-striped">
 
 			<rich:column id="departmentColumn" sortBy="#{department.toString()}">
 				<f:facet name="header">
-						Smer
-					</f:facet>
+					Smer
+				</f:facet>
 				<h:outputText value="#{department.toString()}" />
 			</rich:column>
 
 			<rich:column id="studyProgramColumn"
 				sortBy="#{department.studyProgram}">
 				<f:facet name="header">
-						Studijski program
-					</f:facet>
+					Studijski program
+				</f:facet>
 				<h:outputText value="#{department.studyProgram}" />
 			</rich:column>
 
@@ -33,9 +33,9 @@
 					Brisanje
 				</f:facet>
 				<a4j:commandLink
-					oncomplete="#{rich:component('deleteDepartmentWarning')}.show()"
+					oncomplete="#{rich:component('deleteDepartmentConfirmation')}.show()"
 					execute="@this" render="@none" title="Obriši smer">
-					<h:graphicImage value="/images/delete.gif" alt="delete" />
+					<h:graphicImage value="/images/delete.png" alt="delete" />
 					<a4j:param value="#{it.index}"
 						assignTo="#{departmentController.selectedDepartmentIndex}" />
 				</a4j:commandLink>
@@ -46,57 +46,60 @@
 			</f:facet>
 		</rich:dataTable>
 
-		<!-- POPUP ZA POTVRDU BRISANJA -->
-		<rich:popupPanel id="deleteDepartmentWarning" modal="false"
+		<rich:popupPanel id="deleteDepartmentConfirmation" modal="false"
 			autosized="true" resizeable="false" styleClass="panel panel-info"
 			headerClass="panel-heading">
 			<f:facet name="header">
-				<h:outputText value="Upozorenje" />
+				<h:outputText value="#{msg.warning}" />
 			</f:facet>
 			<f:facet name="controls">
 				<h:outputLink value="#"
-					onclick="#{rich:component('deleteDepartmentWarning')}.hide(); return false;"
+					onclick="#{rich:component('deleteDepartmentConfirmation')}.hide(); return false;"
 					style="color: inherit"> X </h:outputLink>
 			</f:facet>
 			<p>Da li ste sigurni da želite da obrišete smer?</p>
 			<a4j:commandButton
 				action="#{departmentController.deleteDepartment()}" value="Obriši"
-				oncomplete="#{rich:component('deleteDepartmentWarning')}.hide();">
+				oncomplete="#{rich:component('deleteDepartmentConfirmation')}.hide();">
 				<a4j:ajax execute="@this" render="@form" />
 			</a4j:commandButton>
-			<a4j:commandButton value="Odustani"
-				onclick="#{rich:component('deleteDepartmentWarning')}.hide(); return false;" />
+			<a4j:commandButton value="#{msg.cancel}"
+				onclick="#{rich:component('deleteDepartmentConfirmation')}.hide(); return false;" />
 		</rich:popupPanel>
 
 		<a4j:region>
 			<div class="container">
-				<div class="row">
-					<div class="col-sm-4">
-						<h:outputLabel value="Unesite naziv smera: " />
+				<div class="row form-group">
+					<div class="col-sm-3">
+						<h:outputLabel value="Unesite naziv smera: "
+							styleClass="col-form-label" />
 					</div>
-					<div class="col-sm-4">
+					<div class="col-sm-6">
 						<h:inputText id="departmentName" label="Naziv smera"
-							value="#{departmentController.newDepartment.name}" />
+							value="#{departmentController.newDepartment.name}"
+							styleClass="form-control" />
 					</div>
-					<div class="col-sm-4">
+					<div class="col-sm-3">
 						<rich:message for="departmentName" ajaxRendered="true" />
 					</div>
 				</div>
-				<div class="row">
-					<div class="col-sm-4">
-						<h:outputLabel value="Unesite studijski program: " />
+				<div class="row form-group">
+					<div class="col-sm-3">
+						<h:outputLabel value="Unesite studijski program: "
+							styleClass="col-form-label" />
 					</div>
-					<div class="col-sm-4">
+					<div class="col-sm-6">
 						<h:inputText id="studyProgram" label="Studijski program"
-							value="#{departmentController.newDepartment.studyProgram}" />
+							value="#{departmentController.newDepartment.studyProgram}"
+							styleClass="form-control" />
 					</div>
-					<div class="col-sm-4">
+					<div class="col-sm-3">
 						<rich:message for="studyProgram" ajaxRendered="true" />
 					</div>
 				</div>
 				<div class="row text-right">
 					<h:commandButton action="#{departmentController.addDepartment()}"
-						value="Dodaj smer" styleClass="btn btn-sm btn-primary">
+						value="Dodaj smer" styleClass="btn btn-md btn-primary">
 						<a4j:ajax render="@form" />
 					</h:commandButton>
 				</div>
@@ -120,7 +123,7 @@
 
 		<rich:dataTable id="semesterList" var="semester" rows="5"
 			value="#{semesterController.listSemesters()}" iterationStatusVar="it"
-			styleClass="table table-bordered">
+			styleClass="table table-striped">
 
 			<rich:column id="semesterColumn" sortBy="#{semester.toString()}">
 				<f:facet name="header">
@@ -197,7 +200,7 @@
 
 				<div class="row text-right">
 					<h:commandButton action="#{semesterController.addNewSemester()}"
-						value="Sacuvaj" styleClass="btn btn-sm btn-primary">
+						value="#{msg['element.save']}" styleClass="btn btn-sm btn-primary">
 						<a4j:ajax render="@form" />
 					</h:commandButton>
 				</div>

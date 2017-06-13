@@ -16,37 +16,37 @@
 		<rich:dataTable id="numDaysGroupRestrictionList" var="restriction"
 			rows="10"
 			value="#{restrictionsController.listNumDaysGroupRestrictions()}"
-			iterationStatusVar="it" styleClass="table table-bordered">
+			iterationStatusVar="it" styleClass="table table-striped">
 
 			<f:facet name="noData">
-				Nema traženih podataka
+				#{msg['no.data']}
 			</f:facet>
 
 			<rich:column sortBy="#{restriction.group.name}">
 				<f:facet name="header">
-						Naziv grupe
-					</f:facet>
+					Naziv grupe
+				</f:facet>
 				<h:outputText value="#{restriction.group.name}" />
 			</rich:column>
 
 			<rich:column>
 				<f:facet name="header">
-						Minimum
-					</f:facet>
+					Minimum
+				</f:facet>
 				<h:outputText value="#{restriction.min}" />
 			</rich:column>
 
 			<rich:column>
 				<f:facet name="header">
-						Optimum
-					</f:facet>
+					Optimum
+				</f:facet>
 				<h:outputText value="#{restriction.opt}" />
 			</rich:column>
 
 			<rich:column>
 				<f:facet name="header">
-						Maksimum
-					</f:facet>
+					Maksimum
+				</f:facet>
 				<h:outputText value="#{restriction.max}" />
 			</rich:column>
 
@@ -55,9 +55,9 @@
 					Brisanje
 				</f:facet>
 				<a4j:commandLink
-					oncomplete="#{rich:component('deleteRestrictionWarning')}.show()"
+					oncomplete="#{rich:component('deleteRestrictionConfirmation')}.show()"
 					execute="@this" render="@none" title="Obriši ogranicenje za grupu">
-					<h:graphicImage value="/images/delete.gif" alt="delete" />
+					<h:graphicImage value="/images/delete.png" alt="delete" />
 					<a4j:param value="#{it.index}"
 						assignTo="#{restrictionsController.selectedRestrictionIndex}" />
 					<a4j:param value="GroupNumDays"
@@ -133,37 +133,37 @@
 		<rich:dataTable id="numDaysTeacherRestrictionList" var="restriction"
 			rows="10"
 			value="#{restrictionsController.listNumDaysTeacherRestrictionList()}"
-			iterationStatusVar="it" styleClass="table table-bordered">
+			iterationStatusVar="it" styleClass="table table-striped">
 
 			<f:facet name="noData">
-				Nema traženih podataka
+				#{msg['no.data']}
 			</f:facet>
 
 			<rich:column sortBy="#{restriction.teacher}">
 				<f:facet name="header">
-						Profesor
-					</f:facet>
+					Profesor
+				</f:facet>
 				<h:outputText value="#{restriction.teacher}" />
 			</rich:column>
 
 			<rich:column>
 				<f:facet name="header">
-						Minimum
-					</f:facet>
+					Minimum
+				</f:facet>
 				<h:outputText value="#{restriction.min}" />
 			</rich:column>
 
 			<rich:column>
 				<f:facet name="header">
-						Optimum
-					</f:facet>
+					Optimum
+				</f:facet>
 				<h:outputText value="#{restriction.opt}" />
 			</rich:column>
 
 			<rich:column>
 				<f:facet name="header">
-						Maksimum
-					</f:facet>
+					Maksimum
+				</f:facet>
 				<h:outputText value="#{restriction.max}" />
 			</rich:column>
 
@@ -172,10 +172,10 @@
 					Brisanje
 				</f:facet>
 				<a4j:commandLink
-					oncomplete="#{rich:component('deleteRestrictionWarning')}.show()"
+					oncomplete="#{rich:component('deleteRestrictionConfirmation')}.show()"
 					execute="@this" render="@none"
 					title="Obriši ogranicenje za profesora">
-					<h:graphicImage value="/images/delete.gif" alt="delete" />
+					<h:graphicImage value="/images/delete.png" alt="delete" />
 					<a4j:param value="#{it.index}"
 						assignTo="#{restrictionsController.selectedRestrictionIndex}" />
 					<a4j:param value="TeacherNumDays"
@@ -240,7 +240,7 @@
 				<div class="row text-right">
 					<h:commandButton styleClass="btn btn-sm btn-primary"
 						action="#{restrictionsController.addNewNumDaysTeacherRestriction()}"
-						value="Sacuvaj">
+						value="#{msg['element.save']}">
 						<a4j:ajax render=":numDaysTeacherRestrictionList" />
 					</h:commandButton>
 				</div>
@@ -259,37 +259,37 @@
 		<rich:dataTable id="idlesGroupRestrictionList" var="restriction"
 			rows="10"
 			value="#{restrictionsController.listGroupIdlesRestrictionList()}"
-			iterationStatusVar="it" styleClass="table table-bordered">
+			iterationStatusVar="it" styleClass="table table-striped">
 
 			<f:facet name="noData">
-				Nema traženih podataka
+				#{msg['no.data']}
 			</f:facet>
 
 			<rich:column sortBy="#{restriction.group.name}">
 				<f:facet name="header">
-						Naziv grupe
-					</f:facet>
+					Naziv grupe
+				</f:facet>
 				<h:outputText value="#{restriction.group.name}" />
 			</rich:column>
 
 			<rich:column>
 				<f:facet name="header">
-						Maksimum
-					</f:facet>
+					Maksimum
+				</f:facet>
 				<h:outputText value="#{restriction.max}" />
 			</rich:column>
 
 			<rich:column>
 				<f:facet name="header">
-						Višestruke pauze
-					</f:facet>
+					Višestruke pauze
+				</f:facet>
 				<h:outputText value="#{restriction.multiple}" />
 			</rich:column>
 
 			<rich:column>
 				<f:facet name="header">
-						Broj dana
-					</f:facet>
+					Broj dana
+				</f:facet>
 				<h:outputText value="#{restriction.days}" />
 			</rich:column>
 
@@ -298,9 +298,9 @@
 					Brisanje
 				</f:facet>
 				<a4j:commandLink
-					oncomplete="#{rich:component('deleteRestrictionWarning')}.show()"
+					oncomplete="#{rich:component('deleteRestrictionConfirmation')}.show()"
 					execute="@this" render="@none" title="Obriši ogranicenje za grupu">
-					<h:graphicImage value="/images/delete.gif" alt="delete" />
+					<h:graphicImage value="/images/delete.png" alt="delete" />
 					<a4j:param value="#{it.index}"
 						assignTo="#{restrictionsController.selectedRestrictionIndex}" />
 					<a4j:param value="GroupIdles"
@@ -363,7 +363,7 @@
 				<div class="row text-right">
 					<h:commandButton styleClass="btn btn-sm btn-primary"
 						action="#{restrictionsController.addIdlesGroupRestriction()}"
-						value="Sacuvaj">
+						value="#{msg['element.save']}">
 						<a4j:ajax render=":idlesGroupRestrictionList" />
 					</h:commandButton>
 				</div>
@@ -377,37 +377,37 @@
 		<rich:dataTable id="idlesTeacherRestrictionList" var="restriction"
 			rows="10"
 			value="#{restrictionsController.listTeacherIdlesRestrictionList()}"
-			iterationStatusVar="it" styleClass="table table-bordered">
+			iterationStatusVar="it" styleClass="table table-striped">
 
 			<f:facet name="noData">
-				Nema traženih podataka
+				#{msg['no.data']}
 			</f:facet>
 
 			<rich:column sortBy="#{restriction.teacher}">
 				<f:facet name="header">
-						Profesor
-					</f:facet>
+					Profesor
+				</f:facet>
 				<h:outputText value="#{restriction.teacher}" />
 			</rich:column>
 
 			<rich:column>
 				<f:facet name="header">
-						Maksimum
-					</f:facet>
+					Maksimum
+				</f:facet>
 				<h:outputText value="#{restriction.max}" />
 			</rich:column>
 
 			<rich:column>
 				<f:facet name="header">
-						Višestruke pauze
-					</f:facet>
+					Višestruke pauze
+				</f:facet>
 				<h:outputText value="#{restriction.multiple}" />
 			</rich:column>
 
 			<rich:column>
 				<f:facet name="header">
-						Broj dana
-					</f:facet>
+					Broj dana
+				</f:facet>
 				<h:outputText value="#{restriction.days}" />
 			</rich:column>
 
@@ -416,10 +416,10 @@
 					Brisanje
 				</f:facet>
 				<a4j:commandLink
-					oncomplete="#{rich:component('deleteRestrictionWarning')}.show()"
+					oncomplete="#{rich:component('deleteRestrictionConfirmation')}.show()"
 					execute="@this" render="@none"
 					title="Obriši ogranicenje za profesora">
-					<h:graphicImage value="/images/delete.gif" alt="delete" />
+					<h:graphicImage value="/images/delete.png" alt="delete" />
 					<a4j:param value="#{it.index}"
 						assignTo="#{restrictionsController.selectedRestrictionIndex}" />
 					<a4j:param value="TeacherIdles"
@@ -484,7 +484,7 @@
 				<div class="row text-right">
 					<h:commandButton styleClass="btn btn-sm btn-primary"
 						action="#{restrictionsController.addIdlesTeacherRestriction()}"
-						value="Sacuvaj">
+						value="#{msg['element.save']}">
 						<a4j:ajax render=":idlesTeacherRestrictionList" />
 					</h:commandButton>
 				</div>
@@ -503,30 +503,30 @@
 		<rich:dataTable id="loadsGroupRestrictionList" var="restriction"
 			rows="10"
 			value="#{restrictionsController.listGroupLoadRestrictionList()}"
-			iterationStatusVar="it" styleClass="table table-bordered">
+			iterationStatusVar="it" styleClass="table table-striped">
 
 			<f:facet name="noData">
-				Nema traženih podataka
+				#{msg['no.data']}
 			</f:facet>
 
 			<rich:column sortBy="#{restriction.group.name}">
 				<f:facet name="header">
-						Naziv grupe
-					</f:facet>
+					Naziv grupe
+				</f:facet>
 				<h:outputText value="#{restriction.group.name}" />
 			</rich:column>
 
 			<rich:column>
 				<f:facet name="header">
-						Minimum
-					</f:facet>
+					Minimum
+				</f:facet>
 				<h:outputText value="#{restriction.min}" />
 			</rich:column>
 
 			<rich:column>
 				<f:facet name="header">
-						Maksimum
-					</f:facet>
+					Maksimum
+				</f:facet>
 				<h:outputText value="#{restriction.max}" />
 			</rich:column>
 
@@ -535,9 +535,9 @@
 					Brisanje
 				</f:facet>
 				<a4j:commandLink
-					oncomplete="#{rich:component('deleteRestrictionWarning')}.show()"
+					oncomplete="#{rich:component('deleteRestrictionConfirmation')}.show()"
 					execute="@this" render="@none" title="Obriši ogranicenje za grupu">
-					<h:graphicImage value="/images/delete.gif" alt="delete" />
+					<h:graphicImage value="/images/delete.png" alt="delete" />
 					<a4j:param value="#{it.index}"
 						assignTo="#{restrictionsController.selectedRestrictionIndex}" />
 					<a4j:param value="GroupLoad"
@@ -593,7 +593,7 @@
 				<div class="row text-right">
 					<h:commandButton styleClass="btn btn-sm btn-primary"
 						action="#{restrictionsController.addLoadGroupRestriction()}"
-						value="Sacuvaj">
+						value="#{msg['element.save']}">
 						<a4j:ajax render=":loadsGroupRestrictionList" />
 					</h:commandButton>
 				</div>
@@ -607,30 +607,30 @@
 		<rich:dataTable id="loadsTeacherRestrictionList" var="restriction"
 			rows="10"
 			value="#{restrictionsController.listTeacherLoadRestrictionList()}"
-			iterationStatusVar="it" styleClass="table table-bordered">
+			iterationStatusVar="it" styleClass="table table-striped">
 
 			<f:facet name="noData">
-				Nema traženih podataka
+				#{msg['no.data']}
 			</f:facet>
 
 			<rich:column sortBy="#{restriction.teacher}">
 				<f:facet name="header">
-						Profesor
-					</f:facet>
+					Profesor
+				</f:facet>
 				<h:outputText value="#{restriction.teacher}" />
 			</rich:column>
 
 			<rich:column>
 				<f:facet name="header">
-						Minimum
-					</f:facet>
+					Minimum
+				</f:facet>
 				<h:outputText value="#{restriction.min}" />
 			</rich:column>
 
 			<rich:column>
 				<f:facet name="header">
-						Maksimum
-					</f:facet>
+					Maksimum
+				</f:facet>
 				<h:outputText value="#{restriction.max}" />
 			</rich:column>
 
@@ -639,10 +639,10 @@
 					Brisanje
 				</f:facet>
 				<a4j:commandLink
-					oncomplete="#{rich:component('deleteRestrictionWarning')}.show()"
+					oncomplete="#{rich:component('deleteRestrictionConfirmation')}.show()"
 					execute="@this" render="@none"
 					title="Obriši ogranicenje za profesora">
-					<h:graphicImage value="/images/delete.gif" alt="delete" />
+					<h:graphicImage value="/images/delete.png" alt="delete" />
 					<a4j:param value="#{it.index}"
 						assignTo="#{restrictionsController.selectedRestrictionIndex}" />
 					<a4j:param value="TeacherLoad"
@@ -700,7 +700,7 @@
 				<div class="row text-right">
 					<h:commandButton styleClass="btn btn-sm btn-primary"
 						action="#{restrictionsController.addLoadTeacherRestriction()}"
-						value="Sacuvaj">
+						value="#{msg['element.save']}">
 						<a4j:ajax render=":loadsTeacherRestrictionList" />
 					</h:commandButton>
 				</div>
@@ -708,25 +708,25 @@
 		</a4j:region>
 	</rich:collapsiblePanel>
 
-	<!-- POPUP ZA POTVRDU BRISANJA -->
-	<rich:popupPanel id="deleteRestrictionWarning" modal="false"
+	<rich:popupPanel id="deleteRestrictionConfirmation" modal="false"
 		autosized="true" resizeable="false" styleClass="panel panel-info"
 		headerClass="panel-heading">
 		<f:facet name="header">
-			<h:outputText value="Upozorenje" />
+			<h:outputText value="#{msg.warning}" />
 		</f:facet>
 		<f:facet name="controls">
 			<h:outputLink value="#"
-				onclick="#{rich:component('deleteRestrictionWarning')}.hide(); return false;"
+				onclick="#{rich:component('deleteRestrictionConfirmation')}.hide(); return false;"
 				style="color: inherit"> X </h:outputLink>
 		</f:facet>
 		<p>Da li ste sigurni da želite da obrišete ogranicenje?</p>
 		<a4j:commandButton
-			action="#{restrictionsController.deleteRestriction()}" value="Obriši"
-			oncomplete="#{rich:component('deleteRestrictionWarning')}.hide();"
+			action="#{restrictionsController.deleteRestriction()}"
+			value="#{msg['element.delete']}"
+			oncomplete="#{rich:component('deleteRestrictionConfirmation')}.hide();"
 			execute="@this" render="@form" />
-		<a4j:commandButton value="Odustani"
-			onclick="#{rich:component('deleteRestrictionWarning')}.hide(); return false;" />
+		<a4j:commandButton value="#{msg.cancel}"
+			onclick="#{rich:component('deleteRestrictionConfirmation')}.hide(); return false;" />
 	</rich:popupPanel>
 
 </ui:composition>
