@@ -137,7 +137,7 @@
 
 			<h:outputLabel value="#{msg.userType}" />
 			<h:selectOneRadio id="updateUserType" required="true"
-				label="#{msg.userType}" value="type">
+				label="#{msg.userType}" value="#{usersController.selectedUser.type}">
 				<f:selectItem itemLabel="#{msg['user.profesor']}" itemValue="1" />
 				<f:selectItem itemLabel="#{msg['user.administrator']}" itemValue="2" />
 			</h:selectOneRadio>
