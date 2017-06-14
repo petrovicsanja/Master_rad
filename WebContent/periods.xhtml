@@ -5,7 +5,9 @@
 	xmlns:rich="http://richfaces.org/rich"
 	xmlns:a4j="http://richfaces.org/a4j">
 
-	<rich:panel header="Izlistavanje termina">
+	<rich:panel header="Izlistavanje termina"
+		styleClass="panel panel-primary" headerClass="panel-heading"
+		bodyClass="panel-body">
 		<rich:list value="#{periodsController.allPeriods}" id="periodsList"
 			var="period">
 			<h:outputText value="#{period.day}" />
@@ -14,7 +16,9 @@
 		</rich:list>
 	</rich:panel>
 
-	<rich:panel header="Unos i izmena termina" rendered="#{user.type eq 2}">
+	<rich:panel header="Unos i izmena termina" rendered="#{user.type eq 2}"
+		styleClass="panel panel-primary" headerClass="panel-heading"
+		bodyClass="panel-body">
 		<h:panelGrid id="insertPeriods" columns="3">
 			<h:outputLabel value="Unesite duzinu trajanja termina/casa:" />
 			<h:inputText value="#{periodsController.termLength}" />
@@ -54,7 +58,7 @@
 
 			<h:commandButton value="#{msg['element.save']}"
 				action="#{periodsController.addPeriods()}"
-				styleClass="btn btn-sm btn-primary">
+				styleClass="btn btn-md btn-primary">
 				<f:ajax execute="insertPeriods" render="@form" />
 			</h:commandButton>
 		</h:panelGrid>

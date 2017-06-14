@@ -24,9 +24,12 @@
 	<h:form id="contentForm" onkeypress="return event.keyCode != 13;">
 		<h:messages layout="table" globalOnly="true" infoClass="bg-success"
 			errorClass="bg-danger" />
+			
 		<rich:tabPanel id="dataOverviewTabPanel" switchType="ajax"
-			immediate="true" styleClass="panel" rendered="#{not empty user}"
-			activeItem="#{loginController.activeTab}">
+			immediate="true" rendered="#{not empty user}"
+			activeItem="#{loginController.activeTab}"
+			styleClass="panel panel-primary" bodyClass="panel-body">
+			
 			<rich:tab header="#{msg['admin_page']}" name="admin"
 				rendered="#{user.type eq 2}">
 				<h2>#{msg['admin_page']}</h2>

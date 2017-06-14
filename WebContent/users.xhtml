@@ -8,7 +8,10 @@
 
 	<rich:collapsiblePanel header="#{msg['subheading.users.list']}"
 		switchType="client" styleClass="panel panel-primary"
-		headerClass="panel-heading" bodyClass="panel-body">
+		headerClass="panel-heading" bodyClass="panel-body"
+		rightCollapsedIcon="/images/minus.png"
+		rightExpandedIcon="/images/plus.png">
+
 		<rich:dataTable id="userList" var="userRecord" rows="10"
 			value="#{usersController.listUsers()}" iterationStatusVar="it"
 			filterVar="filterValue" styleClass="table table-striped">
@@ -155,17 +158,20 @@
 	<rich:collapsiblePanel header="#{msg['subheading.users.add']}"
 		switchType="client" rendered="#{user.type eq 2}"
 		styleClass="panel panel-primary" headerClass="panel-heading"
-		bodyClass="panel-body">
+		bodyClass="panel-body" rightCollapsedIcon="/images/minus.png"
+		rightExpandedIcon="/images/plus.png">
 
 		<a4j:region>
 			<div class="container">
 				<div class="row form-group">
 					<div class="col-sm-3">
-						<h:outputLabel value="#{msg.firstName}" styleClass="col-form-label"/>
+						<h:outputLabel value="#{msg.firstName}"
+							styleClass="col-form-label" />
 					</div>
 					<div class="col-sm-6">
 						<h:inputText id="newUserName" label="#{msg.firstName}"
-							value="#{usersController.newUser.firstName}" required="true" styleClass="form-control" />
+							value="#{usersController.newUser.firstName}" required="true"
+							styleClass="form-control" />
 					</div>
 					<div class="col-sm-3">
 						<rich:message for="newUserName" ajaxRendered="true" />
@@ -173,11 +179,12 @@
 				</div>
 				<div class="row form-group">
 					<div class="col-sm-3">
-						<h:outputLabel value="#{msg.lastName}" styleClass="col-form-label"/>
+						<h:outputLabel value="#{msg.lastName}" styleClass="col-form-label" />
 					</div>
 					<div class="col-sm-6">
 						<h:inputText id="newUserSurname" label="#{msg.lastName}"
-							value="#{usersController.newUser.lastName}" required="true" styleClass="form-control"/>
+							value="#{usersController.newUser.lastName}" required="true"
+							styleClass="form-control" />
 					</div>
 					<div class="col-sm-3">
 						<rich:message for="newUserSurname" ajaxRendered="true" />
@@ -185,11 +192,12 @@
 				</div>
 				<div class="row form-group">
 					<div class="col-sm-3">
-						<h:outputLabel value="#{msg.username}" styleClass="col-form-label"/>
+						<h:outputLabel value="#{msg.username}" styleClass="col-form-label" />
 					</div>
 					<div class="col-sm-6">
 						<h:inputText id="newUserUsername" label="#{msg.username}"
-							value="#{usersController.newUser.username}" required="true" styleClass="form-control"/>
+							value="#{usersController.newUser.username}" required="true"
+							styleClass="form-control" />
 					</div>
 					<div class="col-sm-3">
 						<rich:message for="newUserUsername" ajaxRendered="true" />
@@ -197,11 +205,12 @@
 				</div>
 				<div class="row form-group">
 					<div class="col-sm-3">
-						<h:outputLabel value="#{msg.password}" styleClass="col-form-label"/>
+						<h:outputLabel value="#{msg.password}" styleClass="col-form-label" />
 					</div>
 					<div class="col-sm-6">
 						<h:inputSecret id="newUserPassword" label="#{msg.password}"
-							value="#{usersController.newUser.password}" required="true" styleClass="form-control"/>
+							value="#{usersController.newUser.password}" required="true"
+							styleClass="form-control" />
 					</div>
 					<div class="col-sm-3">
 						<rich:message for="newUserPassword" ajaxRendered="true" />
@@ -209,11 +218,12 @@
 				</div>
 				<div class="row form-check">
 					<div class="col-sm-3">
-						<h:outputLabel value="#{msg.userType}" styleClass="col-form-label"/>
+						<h:outputLabel value="#{msg.userType}" styleClass="col-form-label" />
 					</div>
 					<div class="col-sm-6">
-						<h:selectOneRadio id="newUserType" required="true" styleClass="form-check-input"
-							label="Tip korisnika" value="#{usersController.newUser.type}">
+						<h:selectOneRadio id="newUserType" required="true"
+							styleClass="form-check-input" label="Tip korisnika"
+							value="#{usersController.newUser.type}">
 							<f:selectItem id="profesor" itemLabel="#{msg['user.profesor']}"
 								itemValue="1" />
 							<f:selectItem id="admin" itemLabel="#{msg['user.administrator']}"

@@ -7,7 +7,8 @@
 
 	<rich:collapsiblePanel header="Izlistavanje časova" switchType="client"
 		styleClass="panel panel-primary" headerClass="panel-heading"
-		bodyClass="panel-body">
+		bodyClass="panel-body" rightCollapsedIcon="/images/minus.png"
+		rightExpandedIcon="/images/plus.png">
 		<a4j:region>
 			<div class="row">
 				<div class="col-sm-3">
@@ -39,11 +40,11 @@
 		<rich:dataTable id="subjectLessonsList" var="lesson" rows="10"
 			value="#{lessonsController.subjectLessonsList}"
 			iterationStatusVar="it" styleClass="table table-striped">
-			
+
 			<f:facet name="noData">
 				Za odabrani kriterijum nema traženih podataka
 			</f:facet>
-			
+
 			<rich:column>
 				<f:facet name="header">
 					Ime predmeta
@@ -134,12 +135,15 @@
 
 	<rich:collapsiblePanel header="Unos časova" switchType="client"
 		styleClass="panel panel-primary" headerClass="panel-heading"
-		bodyClass="panel-body">
+		bodyClass="panel-body" rightCollapsedIcon="/images/minus.png"
+		rightExpandedIcon="/images/plus.png">
+
 		<a4j:region>
 			<div class="container">
 				<div class="row form-group">
 					<div class="col-sm-3">
-						<h:outputLabel value="Izaberite predmet:" styleClass="col-form-label"/>
+						<h:outputLabel value="Izaberite predmet:"
+							styleClass="col-form-label" />
 					</div>
 					<div class="col-sm-6">
 						<h:selectOneMenu id="lessonSubject"
@@ -160,7 +164,8 @@
 
 				<div class="row form-group">
 					<div class="col-sm-3">
-						<h:outputLabel value="Izaberite profesore:" styleClass="col-form-label"/>
+						<h:outputLabel value="Izaberite profesore:"
+							styleClass="col-form-label" />
 					</div>
 					<div class="col-sm-3">
 						<h:selectOneMenu id="lessonTeacher" styleClass="col-sm-9"
@@ -175,7 +180,7 @@
 						</h:selectOneMenu>
 
 						<h:commandButton action="#{lessonsController.addTeacherToList()}"
-							value="Dodaj" styleClass="btn btn-sm btn-primary">
+							value="Dodaj" styleClass="btn btn-sm btn-primary margin-left10">
 							<f:ajax execute="lessonTeacher" render="@form" />
 						</h:commandButton>
 					</div>
@@ -196,7 +201,8 @@
 
 				<div class="row form-group">
 					<div class="col-sm-3">
-						<h:outputLabel value="Izaberite grupe:" styleClass="col-form-label"/>
+						<h:outputLabel value="Izaberite grupe:"
+							styleClass="col-form-label" />
 					</div>
 					<div class="col-sm-3">
 						<h:selectOneMenu id="lessonGroup" styleClass="col-sm-9"
@@ -210,7 +216,7 @@
 						</h:selectOneMenu>
 
 						<h:commandButton action="#{lessonsController.addGroupToList()}"
-							value="Dodaj" styleClass="btn btn-sm btn-primary">
+							value="Dodaj" styleClass="btn btn-sm btn-primary margin-left10">
 							<f:ajax execute="lessonGroup" render="@form" />
 						</h:commandButton>
 					</div>
@@ -231,7 +237,8 @@
 
 				<div class="row form-group">
 					<div class="col-sm-3">
-						<h:outputLabel value="Unesite termine:" styleClass="col-form-label"/>
+						<h:outputLabel value="Unesite termine:"
+							styleClass="col-form-label" />
 					</div>
 					<div class="col-sm-6">
 						<h:inputText id="lessonTerms" value="#{lessonsController.terms}"
@@ -244,7 +251,7 @@
 
 				<div class="row form-group">
 					<div class="col-sm-3">
-						<h:outputLabel value="Napomena: " styleClass="col-form-label"/>
+						<h:outputLabel value="Napomena: " styleClass="col-form-label" />
 					</div>
 					<div class="col-sm-6">
 						<h:inputTextarea id="lessonNote" value="#{lessonsController.note}"
@@ -254,7 +261,7 @@
 
 				<div class="row form-group">
 					<div class="col-sm-3">
-						<h:outputLabel value="Izaberite sale:" styleClass="col-form-label"/>
+						<h:outputLabel value="Izaberite sale:" styleClass="col-form-label" />
 					</div>
 					<div class="col-sm-9">
 						<rich:pickList value="#{lessonsController.selectedRooms}"
@@ -266,11 +273,11 @@
 								#{room.name}
 							</rich:column>
 							<rich:column>
-								<f:facet name="header">Velicina</f:facet>
+								<f:facet name="header">#{msg.size}</f:facet>
                     			#{room.size}
                 			</rich:column>
 							<rich:column>
-								<f:facet name="header">Zgrada</f:facet>
+								<f:facet name="header">#{msg.building}</f:facet>
                     			#{room.building}
                 			</rich:column>
 						</rich:pickList>
@@ -278,8 +285,9 @@
 				</div>
 
 				<div class="row text-right">
-					<h:commandButton styleClass="btn btn-sm btn-primary"
-						action="#{lessonsController.addLesson()}" value="#{msg['element.save']}">
+					<h:commandButton styleClass="btn btn-md btn-primary"
+						action="#{lessonsController.addLesson()}"
+						value="#{msg['element.save']}">
 						<a4j:ajax render="@form" />
 					</h:commandButton>
 				</div>

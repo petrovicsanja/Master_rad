@@ -1,246 +1,260 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-                xmlns:f="http://xmlns.jcp.org/jsf/core"
-                xmlns:h="http://xmlns.jcp.org/jsf/html"
-                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-                xmlns:rich="http://richfaces.org/rich"
-                xmlns:a4j="http://richfaces.org/a4j">
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j">
 
-    <rich:collapsiblePanel header="Upravljanje smerovima"
-                           switchType="client" styleClass="panel panel-primary"
-                           headerClass="panel-heading" bodyClass="panel-body">
+	<rich:collapsiblePanel header="Upravljanje smerovima"
+		switchType="client" styleClass="panel panel-primary"
+		headerClass="panel-heading" bodyClass="panel-body"
+		rightCollapsedIcon="/images/minus.png"
+		rightExpandedIcon="/images/plus.png">
 
-        <rich:dataTable id="departmentList" var="department" rows="5"
-                        value="#{departmentController.listDepartments()}"
-                        iterationStatusVar="it" styleClass="table table-striped">
+		<rich:dataTable id="departmentList" var="department" rows="5"
+			value="#{departmentController.listDepartments()}"
+			iterationStatusVar="it" styleClass="table table-striped">
 
-            <rich:column id="departmentColumn" sortBy="#{department.toString()}">
-                <f:facet name="header">
-                    Smer
+			<rich:column id="departmentColumn" sortBy="#{department.toString()}">
+				<f:facet name="header">
+                    #{msg.department}
                 </f:facet>
-                <h:outputText value="#{department.toString()}"/>
-            </rich:column>
+				<h:outputText value="#{department.toString()}" />
+			</rich:column>
 
-            <rich:column id="studyProgramColumn"
-                         sortBy="#{department.studyProgram}">
-                <f:facet name="header">
-                    Studijski program
+			<rich:column id="studyProgramColumn"
+				sortBy="#{department.studyProgram}">
+				<f:facet name="header">
+                    #{msg.studyProgram}
                 </f:facet>
-                <h:outputText value="#{department.studyProgram}"/>
-            </rich:column>
+				<h:outputText value="#{department.studyProgram}" />
+			</rich:column>
 
-            <rich:column styleClass="text-center">
-                <f:facet name="header">
-                    Brisanje
+			<rich:column styleClass="text-center">
+				<f:facet name="header">
+                    #{msg['column.delete']}
                 </f:facet>
-                <a4j:commandLink
-                        oncomplete="#{rich:component('deleteDepartmentConfirmation')}.show()"
-                        execute="@this" render="@none" title="Obriši smer">
-                    <h:graphicImage value="/images/delete.png" alt="delete"/>
-                    <a4j:param value="#{it.index}"
-                               assignTo="#{departmentController.selectedDepartmentIndex}"/>
-                </a4j:commandLink>
-            </rich:column>
+				<a4j:commandLink
+					oncomplete="#{rich:component('deleteDepartmentConfirmation')}.show()"
+					execute="@this" render="@none" title="#{msg['element.delete']}">
+					<h:graphicImage value="/images/delete.png" alt="delete" />
+					<a4j:param value="#{it.index}"
+						assignTo="#{departmentController.selectedDepartmentIndex}" />
+				</a4j:commandLink>
+			</rich:column>
 
-            <f:facet name="footer">
-                <rich:dataScroller renderIfSinglePage="false"/>
-            </f:facet>
-        </rich:dataTable>
+			<f:facet name="footer">
+				<rich:dataScroller renderIfSinglePage="false" />
+			</f:facet>
+		</rich:dataTable>
 
-        <rich:popupPanel id="deleteDepartmentConfirmation" modal="false"
-                         autosized="true" resizeable="false" styleClass="panel panel-info"
-                         headerClass="panel-heading">
-            <f:facet name="header">
-                <h:outputText value="#{msg.warning}"/>
-            </f:facet>
-            <f:facet name="controls">
-                <h:outputLink value="#"
-                              onclick="#{rich:component('deleteDepartmentConfirmation')}.hide(); return false;"
-                              style="color: inherit"> X
+		<rich:popupPanel id="deleteDepartmentConfirmation" modal="false"
+			autosized="true" resizeable="false" styleClass="panel panel-info"
+			headerClass="panel-heading">
+			<f:facet name="header">
+				<h:outputText value="#{msg.warning}" />
+			</f:facet>
+			<f:facet name="controls">
+				<h:outputLink value="#"
+					onclick="#{rich:component('deleteDepartmentConfirmation')}.hide(); return false;"
+					style="color: inherit"> X
                 </h:outputLink>
-            </f:facet>
-            <p>Da li ste sigurni da želite da obrišete smer?</p>
-            <a4j:commandButton
-                    action="#{departmentController.deleteDepartment()}" value="Obriši"
-                    oncomplete="#{rich:component('deleteDepartmentConfirmation')}.hide();">
-                <a4j:ajax execute="@this" render="@form"/>
-            </a4j:commandButton>
-            <a4j:commandButton value="#{msg.cancel}"
-                               onclick="#{rich:component('deleteDepartmentConfirmation')}.hide(); return false;"/>
-        </rich:popupPanel>
+			</f:facet>
+			<p>#{msg['department.delete.confirmation']}</p>
+			<a4j:commandButton
+				action="#{departmentController.deleteDepartment()}"
+				value="#{msg['element.delete']}"
+				oncomplete="#{rich:component('deleteDepartmentConfirmation')}.hide();">
+				<a4j:ajax execute="@this" render="@form" />
+			</a4j:commandButton>
+			<a4j:commandButton value="#{msg.cancel}"
+				onclick="#{rich:component('deleteDepartmentConfirmation')}.hide(); return false;" />
+		</rich:popupPanel>
 
-        <a4j:region>
-            <div class="page-header">
-                <h4>Unos novog smera</h4>
-            </div>
-            <div class="container">
-                <div class="row form-group">
-                    <div class="col-sm-3">
-                        <h:outputLabel value="Unesite naziv smera: "
-                                       styleClass="col-form-label"/>
-                    </div>
-                    <div class="col-sm-6">
-                        <h:inputText id="departmentName" label="Naziv smera"
-                                     value="#{departmentController.newDepartment.name}"
-                                     styleClass="form-control"/>
-                    </div>
-                    <div class="col-sm-3">
-                        <rich:message for="departmentName" ajaxRendered="true"/>
-                    </div>
-                </div>
-                <div class="row form-group">
-                    <div class="col-sm-3">
-                        <h:outputLabel value="Unesite studijski program: "
-                                       styleClass="col-form-label"/>
-                    </div>
-                    <div class="col-sm-6">
-                        <h:inputText id="studyProgram" label="Studijski program"
-                                     value="#{departmentController.newDepartment.studyProgram}"
-                                     styleClass="form-control"/>
-                    </div>
-                    <div class="col-sm-3">
-                        <rich:message for="studyProgram" ajaxRendered="true"/>
-                    </div>
-                </div>
-                <div class="row text-right">
-                    <h:commandButton action="#{departmentController.addDepartment()}"
-                                     value="#{msg['element.save']}" styleClass="btn btn-md btn-primary">
-                        <a4j:ajax render="@form"/>
-                    </h:commandButton>
-                </div>
-            </div>
-        </a4j:region>
-    </rich:collapsiblePanel>
+		<a4j:region>
+			<div class="page-header">
+				<h4>#{msg['subheading.department.add']}</h4>
+			</div>
+			<div class="container">
+				<div class="row form-group">
+					<div class="col-sm-3">
+						<h:outputLabel value="#{msg.name}" styleClass="col-form-label" />
+					</div>
+					<div class="col-sm-6">
+						<h:inputText id="departmentName" label="#{msg.name}"
+							value="#{departmentController.newDepartment.name}"
+							styleClass="form-control" />
+					</div>
+					<div class="col-sm-3">
+						<rich:message for="departmentName" ajaxRendered="true" />
+					</div>
+				</div>
+				<div class="row form-group">
+					<div class="col-sm-3">
+						<h:outputLabel value="#{msg.studyProgram}"
+							styleClass="col-form-label" />
+					</div>
+					<div class="col-sm-6">
+						<h:inputText id="studyProgram" label="#{msg.studyProgram}"
+							value="#{departmentController.newDepartment.studyProgram}"
+							styleClass="form-control" />
+					</div>
+					<div class="col-sm-3">
+						<rich:message for="studyProgram" ajaxRendered="true" />
+					</div>
+				</div>
+				<div class="row text-right">
+					<h:commandButton action="#{departmentController.addDepartment()}"
+						value="#{msg['element.save']}" styleClass="btn btn-md btn-primary">
+						<a4j:ajax render="@form" />
+					</h:commandButton>
+				</div>
+			</div>
+		</a4j:region>
+	</rich:collapsiblePanel>
 
-    <rich:collapsiblePanel id="semesterPanel" header="Semestar"
-                           switchType="client" styleClass="panel panel-primary"
-                           headerClass="panel-heading" bodyClass="panel-body">
+	<rich:collapsiblePanel id="semesterPanel" header="Semestar"
+		switchType="client" styleClass="panel panel-primary"
+		headerClass="panel-heading" bodyClass="panel-body"
+		rightCollapsedIcon="/images/minus.png"
+		rightExpandedIcon="/images/plus.png">
 
-        <div class="row">
-            <div class="col-sm-3">
-                <h:outputLabel value="Trenutno aktivni semestar: "/>
-            </div>
-            <div class="col-sm-6">
-                <h:outputLabel
-                        value="#{semesterController.activeSemester==null ? 'Trenutno nijedan semestar nije aktivan' : semesterController.activeSemester}"/>
-            </div>
-        </div>
+		<div class="row">
+			<div class="col-sm-3">
+				<h:outputLabel value="Trenutno aktivni semestar: " />
+			</div>
+			<div class="col-sm-6">
+				<h:outputLabel styleClass="red"
+					value="#{semesterController.activeSemester==null ? 'Trenutno nijedan semestar nije aktivan' : semesterController.activeSemester}" />
+			</div>
+		</div>
 
-        <rich:dataTable id="semesterList" var="semester" rows="5"
-                        value="#{semesterController.listSemesters()}" iterationStatusVar="it"
-                        styleClass="table table-striped">
+		<p></p>
 
-            <rich:column id="semesterColumn" sortBy="#{semester.toString()}">
-                <f:facet name="header">
-                    Semestar
+		<rich:dataTable id="semesterList" var="semester" rows="5"
+			value="#{semesterController.listSemesters()}" iterationStatusVar="it"
+			styleClass="table table-striped">
+
+			<rich:column id="semesterColumn" sortBy="#{semester.toString()}">
+				<f:facet name="header">
+                    #{msg.semester}
                 </f:facet>
-                <h:outputText value="#{semester.toString()}"/>
-            </rich:column>
+				<h:outputText value="#{semester.toString()}" />
+			</rich:column>
 
-            <rich:column id="statusColumn">
-                <f:facet name="header">
-                    Status
+			<rich:column id="statusColumn">
+				<f:facet name="header">
+                    #{msg.status}
                 </f:facet>
-                <h:outputText
-                        value="#{semester.active==true ? 'aktivan' : 'neaktivan'}"/>
-            </rich:column>
+				<h:outputText
+					value="#{semester.active==true ? 'aktivan' : 'neaktivan'}" />
+			</rich:column>
 
-            <rich:column id="actionColumn" styleClass="text-center">
-                <f:facet name="header">
-                    Aktivacija/Deaktivacija
+			<rich:column id="actionColumn" styleClass="text-center">
+				<f:facet name="header">
+                    #{msg['column.activate']}
                 </f:facet>
-                <h:commandButton styleClass="btn btn-sm"
-                                 action="#{semesterController.activateSemester(semester.id)}"
-                                 value="Aktivacija">
-                    <f:ajax execute="@this" render="@form"/>
-                </h:commandButton>
-                <h:commandButton styleClass="btn btn-sm"
-                                 action="#{semesterController.deactivateSemester(semester.id)}"
-                                 value="Deaktivacija">
-                    <f:ajax execute="@this" render="@form"/>
-                </h:commandButton>
-            </rich:column>
-        </rich:dataTable>
+				<h:commandButton styleClass="btn btn-sm btn-primary"
+					action="#{semesterController.activateSemester(semester.id)}"
+					value="Aktivacija">
+					<f:ajax execute="@this" render="@form" />
+				</h:commandButton>
+				<h:commandButton styleClass="btn btn-sm btn-primary margin-left10"
+					action="#{semesterController.deactivateSemester(semester.id)}"
+					value="Deaktivacija">
+					<f:ajax execute="@this" render="@form" />
+				</h:commandButton>
+			</rich:column>
+		</rich:dataTable>
 
-        <a4j:region>
-            <div class="page-header">
-                <h4>Unos novog semestra</h4>
-            </div>
-            <div class="container">
-                <div class="row form-group">
-                    <div class="col-sm-3">
-                        <h:outputLabel value="Skolska godina: " styleClass="col-form-label"/>
-                    </div>
-                    <div class="col-sm-6">
-                        <h:inputText id="schoolYear" value="#{semesterController.schoolYear}" required="true"
-                                     styleClass="form-control"/>
-                    </div>
-                    <div class="col-sm-3">
-                        <rich:message for="schoolYear" ajaxRendered="true"/>
-                    </div>
-                </div>
+		<a4j:region>
+			<div class="page-header">
+				<h4>#{msg['subheading.semester.add']}</h4>
+			</div>
+			<div class="container">
+				<div class="row form-group">
+					<div class="col-sm-3">
+						<h:outputLabel value="Skolska godina: "
+							styleClass="col-form-label" />
+					</div>
+					<div class="col-sm-6">
+						<h:inputText id="schoolYear"
+							value="#{semesterController.schoolYear}" required="true"
+							styleClass="form-control" />
+					</div>
+					<div class="col-sm-3">
+						<rich:message for="schoolYear" ajaxRendered="true" />
+					</div>
+				</div>
 
-                <div class="row form-group">
-                    <div class="col-sm-3">
-                        <h:outputLabel value="Pocetak semestra: " styleClass="col-form-label"/>
-                    </div>
-                    <div class="col-sm-6">
-                        <rich:calendar id="semesterStartDate" value="#{semesterController.startDate}" required="true"
-                                       styleClass="form-control"/>
-                    </div>
-                    <div class="col-sm-3">
-                        <rich:message for="semesterStartDate" ajaxRendered="true"/>
-                    </div>
-                </div>
+				<div class="row form-group">
+					<div class="col-sm-3">
+						<h:outputLabel value="Pocetak semestra: "
+							styleClass="col-form-label" />
+					</div>
+					<div class="col-sm-6">
+						<rich:calendar id="semesterStartDate"
+							value="#{semesterController.startDate}" required="true" />
+					</div>
+					<div class="col-sm-3">
+						<rich:message for="semesterStartDate" ajaxRendered="true" />
+					</div>
+				</div>
 
-                <div class="row form-group">
-                    <div class="col-sm-3">
-                        <h:outputLabel value="Kraj semestra: " styleClass="col-form-label"/>
-                    </div>
-                    <div class="col-sm-6">
-                        <rich:calendar id="semesterEndDate" value="#{semesterController.endDate}" required="true"
-                                       styleClass="form-control"/>
-                    </div>
-                    <div class="col-sm-3">
-                        <rich:message for="semesterEndDate" ajaxRendered="true"/>
-                    </div>
-                </div>
+				<div class="row form-group">
+					<div class="col-sm-3">
+						<h:outputLabel value="Kraj semestra: " styleClass="col-form-label" />
+					</div>
+					<div class="col-sm-6">
+						<rich:calendar id="semesterEndDate"
+							value="#{semesterController.endDate}" required="true" />
+					</div>
+					<div class="col-sm-3">
+						<rich:message for="semesterEndDate" ajaxRendered="true" />
+					</div>
+				</div>
 
-                <div class="row form-group">
-                    <div class="col-sm-3">
-                        <h:outputLabel value="Tip semestra: " styleClass="col-form-label"/>
-                    </div>
-                    <div class="col-sm-6">
-                        <h:selectOneMenu id="semesterOrdinalNumber" value="#{semesterController.ordinalNumber}"
-                                         required="true" styleClass="form-control">
-                            <f:selectItem itemLabel="Zimski" itemValue="1"/>
-                            <f:selectItem itemLabel="Letnji" itemValue="2"/>
-                        </h:selectOneMenu>
-                    </div>
-                    <div class="col-sm-3">
-                        <rich:message for="semesterOrdinalNumber" ajaxRendered="true"/>
-                    </div>
-                </div>
+				<div class="row form-group">
+					<div class="col-sm-3">
+						<h:outputLabel value="Tip semestra: " styleClass="col-form-label" />
+					</div>
+					<div class="col-sm-6">
+						<h:selectOneMenu id="semesterOrdinalNumber"
+							value="#{semesterController.ordinalNumber}" required="true"
+							styleClass="form-control">
+							<f:selectItem itemLabel="Zimski" itemValue="1" />
+							<f:selectItem itemLabel="Letnji" itemValue="2" />
+						</h:selectOneMenu>
+					</div>
+					<div class="col-sm-3">
+						<rich:message for="semesterOrdinalNumber" ajaxRendered="true" />
+					</div>
+				</div>
 
-                <div class="row text-right">
-                    <h:commandButton action="#{semesterController.addNewSemester()}"
-                                     value="#{msg['element.save']}" styleClass="btn btn-md btn-primary">
-                        <a4j:ajax render="@form"/>
-                    </h:commandButton>
-                </div>
-            </div>
-        </a4j:region>
-    </rich:collapsiblePanel>
+				<div class="row text-right">
+					<h:commandButton action="#{semesterController.addNewSemester()}"
+						value="#{msg['element.save']}" styleClass="btn btn-md btn-primary">
+						<a4j:ajax render="@form" />
+					</h:commandButton>
+				</div>
+			</div>
+		</a4j:region>
+	</rich:collapsiblePanel>
 
-    <rich:collapsiblePanel header="Kreiranje rasporeda casova"
-                           switchType="client" styleClass="panel panel-primary"
-                           headerClass="panel-heading" bodyClass="panel-body">
+	<rich:collapsiblePanel header="#{msg['subheading.timetable']}"
+		switchType="client" styleClass="panel panel-primary"
+		headerClass="panel-heading" bodyClass="panel-body"
+		rightCollapsedIcon="/images/minus.png"
+		rightExpandedIcon="/images/plus.png">
 
-        <h:commandButton styleClass="btn btn-md btn-success margin10"
-                         action="#{timetableController.createTimetable()}"
-                         value="KREIRAJ NOVI RASPORED"/>
+		<h:commandButton styleClass="btn btn-md btn-success margin10"
+			action="#{timetableController.createTimetable()}"
+			value="#{msg['timetable.new']}">
+			<f:ajax execute="@this" />
+		</h:commandButton>
 
-        <h:commandButton styleClass="btn btn-md btn-success margin10"
-                         action="timetable" value="TEKUĆI RAPORED ČASOVA"/>
-    </rich:collapsiblePanel>
+		<h:commandButton styleClass="btn btn-md btn-success margin10"
+			action="timetable" value="#{msg['timetable.list']}" />
+	</rich:collapsiblePanel>
 
 </ui:composition>

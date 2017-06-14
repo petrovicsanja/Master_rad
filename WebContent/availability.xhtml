@@ -7,7 +7,9 @@
 
 	<rich:collapsiblePanel header="Dostupni/nedostupni termini - profesori"
 		switchType="client" styleClass="panel panel-primary"
-		headerClass="panel-heading" bodyClass="panel-body">
+		headerClass="panel-heading" bodyClass="panel-body"
+		rightCollapsedIcon="/images/minus.png"
+		rightExpandedIcon="/images/plus.png">
 
 		<rich:dataTable id="teacherAvailabilitiesList"
 			var="teacherAvailability" rows="10"
@@ -153,7 +155,10 @@
 
 	<rich:collapsiblePanel header="Dostupni/nedostupni termini - grupe"
 		switchType="client" styleClass="panel panel-primary"
-		headerClass="panel-heading" bodyClass="panel-body" expanded="false">
+		headerClass="panel-heading" bodyClass="panel-body" expanded="false"
+		rightCollapsedIcon="/images/minus.png"
+		rightExpandedIcon="/images/plus.png">
+
 		<rich:dataTable id="groupAvailabilitiesList" var="groupAvailability"
 			rows="10"
 			value="#{availabilitiesController.listAllGroupAvailabilities()}"
@@ -294,7 +299,10 @@
 
 	<rich:collapsiblePanel header="Dostupni/nedostupni termini - ucionice"
 		switchType="client" styleClass="panel panel-primary"
-		headerClass="panel-heading" bodyClass="panel-body" expanded="false">
+		headerClass="panel-heading" bodyClass="panel-body" expanded="false"
+		rightCollapsedIcon="/images/minus.png"
+		rightExpandedIcon="/images/plus.png">
+
 		<rich:dataTable id="roomAvailabilitiesList" var="roomAvailability"
 			rows="10"
 			value="#{availabilitiesController.listAllRoomAvailabilities()}"

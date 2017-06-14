@@ -8,7 +8,10 @@
 
 	<rich:collapsiblePanel header="#{msg['subheading.rooms.list']}"
 		switchType="client" styleClass="panel panel-primary"
-		headerClass="panel-heading" bodyClass="panel-body">
+		headerClass="panel-heading" bodyClass="panel-body"
+		rightCollapsedIcon="/images/minus.png"
+		rightExpandedIcon="/images/plus.png">
+
 		<rich:dataTable id="roomList" var="room" rows="10"
 			value="#{roomsController.listClassrooms()}" iterationStatusVar="it"
 			filterVar="filterValue" styleClass="table table-striped">
@@ -161,7 +164,8 @@
 	<rich:collapsiblePanel header="#{msg['subheading.rooms.add']}"
 		switchType="client" rendered="#{user.type eq 2}"
 		styleClass="panel panel-primary" headerClass="panel-heading"
-		bodyClass="panel-body">
+		bodyClass="panel-body" rightCollapsedIcon="/images/minus.png"
+		rightExpandedIcon="/images/plus.png">
 
 		<a4j:region>
 			<div class="container">
