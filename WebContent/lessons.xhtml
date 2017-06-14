@@ -27,7 +27,7 @@
 				<div class="col-sm-3">
 					<h:commandButton
 						action="#{lessonsController.listLessonsForSubject()}"
-						value="Pretrazi">
+						value="Pretrazi" styleClass="btn btn-sm btn-primary">
 						<a4j:ajax render="@form" />
 					</h:commandButton>
 				</div>
@@ -137,11 +137,11 @@
 		bodyClass="panel-body">
 		<a4j:region>
 			<div class="container">
-				<div class="row">
+				<div class="row form-group">
 					<div class="col-sm-3">
-						<h:outputLabel value="Izaberite predmet:" />
+						<h:outputLabel value="Izaberite predmet:" styleClass="col-form-label"/>
 					</div>
-					<div class="col-sm-3">
+					<div class="col-sm-6">
 						<h:selectOneMenu id="lessonSubject"
 							value="#{lessonsController.subject}" required="true"
 							label="Izbor predmeta" converter="#{subjectConverter}">
@@ -158,9 +158,9 @@
 					</div>
 				</div>
 
-				<div class="row">
+				<div class="row form-group">
 					<div class="col-sm-3">
-						<h:outputLabel value="Izaberite profesore:" />
+						<h:outputLabel value="Izaberite profesore:" styleClass="col-form-label"/>
 					</div>
 					<div class="col-sm-3">
 						<h:selectOneMenu id="lessonTeacher" styleClass="col-sm-9"
@@ -175,7 +175,7 @@
 						</h:selectOneMenu>
 
 						<h:commandButton action="#{lessonsController.addTeacherToList()}"
-							value="Dodaj" styleClass="col-sm-3 btn btn-sm btn-primary">
+							value="Dodaj" styleClass="btn btn-sm btn-primary">
 							<f:ajax execute="lessonTeacher" render="@form" />
 						</h:commandButton>
 					</div>
@@ -194,9 +194,9 @@
 					</div>
 				</div>
 
-				<div class="row">
+				<div class="row form-group">
 					<div class="col-sm-3">
-						<h:outputLabel value="Izaberite grupe:" />
+						<h:outputLabel value="Izaberite grupe:" styleClass="col-form-label"/>
 					</div>
 					<div class="col-sm-3">
 						<h:selectOneMenu id="lessonGroup" styleClass="col-sm-9"
@@ -210,7 +210,7 @@
 						</h:selectOneMenu>
 
 						<h:commandButton action="#{lessonsController.addGroupToList()}"
-							value="Dodaj" styleClass="col-sm-3 btn btn-sm btn-primary">
+							value="Dodaj" styleClass="btn btn-sm btn-primary">
 							<f:ajax execute="lessonGroup" render="@form" />
 						</h:commandButton>
 					</div>
@@ -229,11 +229,11 @@
 					</div>
 				</div>
 
-				<div class="row">
+				<div class="row form-group">
 					<div class="col-sm-3">
-						<h:outputLabel value="Unesite termine:" />
+						<h:outputLabel value="Unesite termine:" styleClass="col-form-label"/>
 					</div>
-					<div class="col-sm-3">
+					<div class="col-sm-6">
 						<h:inputText id="lessonTerms" value="#{lessonsController.terms}"
 							required="true" label="Unos termina" />
 					</div>
@@ -242,9 +242,9 @@
 					</div>
 				</div>
 
-				<div class="row">
+				<div class="row form-group">
 					<div class="col-sm-3">
-						<h:outputLabel value="Napomena: " />
+						<h:outputLabel value="Napomena: " styleClass="col-form-label"/>
 					</div>
 					<div class="col-sm-6">
 						<h:inputTextarea id="lessonNote" value="#{lessonsController.note}"
@@ -252,9 +252,9 @@
 					</div>
 				</div>
 
-				<div class="row">
+				<div class="row form-group">
 					<div class="col-sm-3">
-						<h:outputLabel value="Izaberite sale:" />
+						<h:outputLabel value="Izaberite sale:" styleClass="col-form-label"/>
 					</div>
 					<div class="col-sm-9">
 						<rich:pickList value="#{lessonsController.selectedRooms}"
