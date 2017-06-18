@@ -72,7 +72,7 @@ public class PeriodsController {
 	public int getNumberOfWorkingDays() {
 		List<String> distinctPeriods = new ArrayList<>();
 		for (Period period : getAllPeriods()) {
-			if (distinctPeriods.contains(period.getDay())) {
+			if (!distinctPeriods.contains(period.getDay())) {
 				distinctPeriods.add(period.getDay());
 			}
 		}
