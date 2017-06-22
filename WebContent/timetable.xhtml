@@ -11,18 +11,23 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
 	<h:outputStylesheet library="css" name="bootstrap.min.css" />
+	<h:outputStylesheet library="css" name="style.css" />
 
 	<title>Raspored časova</title>
 </h:head>
 <h:body>
-	<div class="row">
+	<div class="container-fluid">
 		<h:form>
 			<div class="col-sm-3">
 				<div class="row">
-					<h:selectOneMenu id="timetableTeachers" required="true"
+					<h:outputLabel value="TODO: Skolska godina i semestar" styleClass="margin10" />
+				</div>
+			
+				<div class="row leftMenu">
+					<h:selectOneMenu id="timetableTeachers"
 						value="#{timetableController.selectedTeacher}"
-						converter="#{teacherConverter}">
-						<f:selectItem itemLabel="-- Izaberite profesora --"
+						converter="#{teacherConverter}" styleClass="col-sm-10 margin10">
+						<f:selectItem itemLabel="#{msg['select.teacher']}"
 							itemValue="#{null}" />
 						<f:selectItems value="#{timetableController.listTeachers()}"
 							var="teacher" itemLabel="#{teacher.toString()}"
@@ -33,10 +38,10 @@
 				</div>
 
 				<div class="row">
-					<h:selectOneMenu id="timetableGroups" required="true"
+					<h:selectOneMenu id="timetableGroups"
 						value="#{timetableController.selectedGroup}"
-						converter="#{groupConverter}">
-						<f:selectItem itemLabel="-- Izaberite grupu --"
+						converter="#{groupConverter}" styleClass="col-sm-10 margin10">
+						<f:selectItem itemLabel="#{msg['select.group']}"
 							itemValue="#{null}" />
 						<f:selectItems value="#{timetableController.listGroups()}"
 							var="group" itemLabel="#{group.toString()}" itemValue="#{group}" />
@@ -46,16 +51,21 @@
 				</div>
 
 				<div class="row">
-					<h:selectOneMenu id="timetableRooms" required="true"
+					<h:selectOneMenu id="timetableRooms"
 						value="#{timetableController.selectedRoom}"
-						converter="#{roomConverter}">
-						<f:selectItem itemLabel="-- Izaberite ucionicu --"
+						converter="#{roomConverter}" styleClass="col-sm-10 margin10">
+						<f:selectItem itemLabel="#{msg['select.room']}"
 							itemValue="#{null}" />
 						<f:selectItems value="#{timetableController.listRooms()}"
 							var="room" itemLabel="#{room.toString()}" itemValue="#{room}" />
 						<f:ajax event="change" execute="@this" render="@all"
 							listener="#{timetableController.getTimeTableForRoom()}" />
 					</h:selectOneMenu>
+				</div>
+
+				<div class="row">
+					<h:commandLink action="dataOverview?faces-redirect=true" styleClass="margin10"
+						value="Povratak - Pregled podataka" immediate="true" />
 				</div>
 			</div>
 		</h:form>

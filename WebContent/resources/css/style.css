@@ -17,3 +17,11 @@
 .padding10 {
 	padding: 10px;
 }
+
+.fullWidth {
+	width: 100%;
+}
+
+.leftMenu {
+	margin-top: 50px;
+}

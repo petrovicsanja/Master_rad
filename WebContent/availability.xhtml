@@ -5,7 +5,8 @@
 	xmlns:rich="http://richfaces.org/rich"
 	xmlns:a4j="http://richfaces.org/a4j">
 
-	<rich:collapsiblePanel header="Dostupni/nedostupni termini - profesori"
+	<rich:collapsiblePanel
+		header="#{msg['subheading.availabilities.teacher']}"
 		switchType="client" styleClass="panel panel-primary"
 		headerClass="panel-heading" bodyClass="panel-body"
 		rightCollapsedIcon="/images/minus.png"
@@ -98,7 +99,7 @@
 						<h:selectOneMenu id="teacherAvailability" required="true"
 							value="#{availabilitiesController.teacher}"
 							converter="#{teacherConverter}" rendered="#{user.type eq 2}">
-							<f:selectItem itemLabel="-- Izaberite profesora --"
+							<f:selectItem itemLabel="#{msg['select.teacher']}"
 								itemValue="#{null}" />
 							<f:selectItems
 								value="#{availabilitiesController.listAllTeachers()}"
@@ -153,7 +154,8 @@
 		</a4j:region>
 	</rich:collapsiblePanel>
 
-	<rich:collapsiblePanel header="Dostupni/nedostupni termini - grupe"
+	<rich:collapsiblePanel
+		header="#{msg['subheading.availabilities.groups']}"
 		switchType="client" styleClass="panel panel-primary"
 		headerClass="panel-heading" bodyClass="panel-body" expanded="false"
 		rightCollapsedIcon="/images/minus.png"
@@ -246,7 +248,7 @@
 						<h:selectOneMenu id="groupAvailability" required="true"
 							value="#{availabilitiesController.group}"
 							converter="#{groupConverter}">
-							<f:selectItem itemLabel="-- Izaberite grupu --"
+							<f:selectItem itemLabel="#{msg['select.group']}"
 								itemValue="#{null}" />
 							<f:selectItems
 								value="#{availabilitiesController.listAllGroups()}" var="group"
@@ -297,9 +299,10 @@
 		</a4j:region>
 	</rich:collapsiblePanel>
 
-	<rich:collapsiblePanel header="Dostupni/nedostupni termini - ucionice"
-		switchType="client" styleClass="panel panel-primary"
-		headerClass="panel-heading" bodyClass="panel-body" expanded="false"
+	<rich:collapsiblePanel
+		header="#{msg['subheading.availabilities.rooms']}" switchType="client"
+		styleClass="panel panel-primary" headerClass="panel-heading"
+		bodyClass="panel-body" expanded="false"
 		rightCollapsedIcon="/images/minus.png"
 		rightExpandedIcon="/images/plus.png">
 
@@ -389,7 +392,7 @@
 						<h:selectOneMenu id="roomAvailability" required="true"
 							value="#{availabilitiesController.room}"
 							converter="#{roomConverter}">
-							<f:selectItem itemLabel="-- Izaberite ucionicu --"
+							<f:selectItem itemLabel="#{msg['select.room']}"
 								itemValue="#{null}" />
 							<f:selectItems value="#{availabilitiesController.listAllRooms()}"
 								var="room" itemLabel="#{room.toString()}" itemValue="#{room}" />
@@ -443,14 +446,14 @@
 		autosized="true" resizeable="false" styleClass="panel panel-info"
 		headerClass="panel-heading">
 		<f:facet name="header">
-			<h:outputText value="Upozorenje" />
+			<h:outputText value="#{msg.warning}" />
 		</f:facet>
 		<f:facet name="controls">
 			<h:outputLink value="#"
 				onclick="#{rich:component('deleteAvailabilityConfirmation')}.hide(); return false;"
 				style="color: inherit"> X </h:outputLink>
 		</f:facet>
-		<p>Da li ste sigurni da želite da obrišete izabrani termin?</p>
+		<p>#{msg['availability.delete.confirmation']}</p>
 		<a4j:commandButton
 			action="#{availabilitiesController.deleteAvailability()}"
 			value="Obriši"

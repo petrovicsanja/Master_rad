@@ -5,14 +5,14 @@
 	xmlns:rich="http://richfaces.org/rich"
 	xmlns:a4j="http://richfaces.org/a4j">
 
-	<rich:collapsiblePanel header="Ogranicenja na broj radnih dana"
-		switchType="client" styleClass="panel panel-primary"
-		headerClass="panel-heading" bodyClass="panel-body"
-		rightCollapsedIcon="/images/minus.png"
+	<rich:collapsiblePanel
+		header="#{msg['subheading.restrictions.numDays']}" switchType="client"
+		styleClass="panel panel-primary" headerClass="panel-heading"
+		bodyClass="panel-body" rightCollapsedIcon="/images/minus.png"
 		rightExpandedIcon="/images/plus.png">
 
 		<div class="page-header">
-			<h3>Grupe</h3>
+			<h3>#{msg.groups}</h3>
 		</div>
 
 		<rich:dataTable id="numDaysGroupRestrictionList" var="restriction"
@@ -97,7 +97,7 @@
 						<h:selectOneMenu id="restrictionNumDaysGroup" required="true"
 							value="#{restrictionsController.newGroupNumDays.group}"
 							converter="#{groupConverter}">
-							<f:selectItem itemLabel="-- Izaberite grupu --"
+							<f:selectItem itemLabel="#{msg['select.group']}"
 								itemValue="#{null}" />
 							<f:selectItems value="#{restrictionsController.listAllGroups()}"
 								var="group" itemLabel="#{group.name}" itemValue="#{group}" />
@@ -216,7 +216,7 @@
 						<h:selectOneMenu id="restrictionNumDaysTeacher" required="true"
 							value="#{restrictionsController.newTeacherNumDays.teacher}"
 							converter="#{teacherConverter}">
-							<f:selectItem itemLabel="-- Izaberite profesora --"
+							<f:selectItem itemLabel="#{msg['select.teacher']}"
 								itemValue="#{null}" />
 							<f:selectItems
 								value="#{restrictionsController.listAllTeachers()}"
@@ -250,14 +250,14 @@
 		</a4j:region>
 	</rich:collapsiblePanel>
 
-	<rich:collapsiblePanel header="Pauze u toku nastave"
+	<rich:collapsiblePanel header="#{msg['subheading.restrictions.idles']}"
 		switchType="client" styleClass="panel panel-primary"
 		headerClass="panel-heading" bodyClass="panel-body" expanded="false"
 		rightCollapsedIcon="/images/minus.png"
 		rightExpandedIcon="/images/plus.png">
 
 		<div class="page-header">
-			<h3>Grupe</h3>
+			<h3>#{msg.groups}</h3>
 		</div>
 
 		<rich:dataTable id="idlesGroupRestrictionList" var="restriction"
@@ -343,7 +343,7 @@
 						<h:selectOneMenu id="restrictionIdlesGroup" required="true"
 							value="#{restrictionsController.newGroupIdles.group}"
 							converter="#{groupConverter}">
-							<f:selectItem itemLabel="-- Izaberite grupu --"
+							<f:selectItem itemLabel="#{msg['select.group']}"
 								itemValue="#{null}" />
 							<f:selectItems value="#{restrictionsController.listAllGroups()}"
 								var="group" itemLabel="#{group.name}" itemValue="#{group}" />
@@ -462,7 +462,7 @@
 						<h:selectOneMenu id="restrictionIdlesTeacher" required="true"
 							value="#{restrictionsController.newTeacherIdles.teacher}"
 							converter="#{teacherConverter}">
-							<f:selectItem itemLabel="-- Izaberite profesora --"
+							<f:selectItem itemLabel="#{msg['select.teacher']}"
 								itemValue="#{null}" />
 							<f:selectItems
 								value="#{restrictionsController.listAllTeachers()}"
@@ -496,14 +496,14 @@
 		</a4j:region>
 	</rich:collapsiblePanel>
 
-	<rich:collapsiblePanel header="Broj termina u toku dana"
+	<rich:collapsiblePanel header="#{msg['subheading.restrictions.loads']}"
 		switchType="client" styleClass="panel panel-primary"
 		headerClass="panel-heading" bodyClass="panel-body" expanded="false"
 		rightCollapsedIcon="/images/minus.png"
 		rightExpandedIcon="/images/plus.png">
 
 		<div class="page-header">
-			<h3>Grupe</h3>
+			<h3>#{msg.groups}</h3>
 		</div>
 
 		<rich:dataTable id="loadsGroupRestrictionList" var="restriction"
@@ -579,7 +579,7 @@
 						<h:selectOneMenu id="restrictionLoadsGroup" required="true"
 							value="#{restrictionsController.newGroupLoad.group}"
 							converter="#{groupConverter}">
-							<f:selectItem itemLabel="-- Izaberite grupu --"
+							<f:selectItem itemLabel="#{msg['select.group']}"
 								itemValue="#{null}" />
 							<f:selectItems value="#{restrictionsController.listAllGroups()}"
 								var="group" itemLabel="#{group.name}" itemValue="#{group}" />
@@ -684,7 +684,7 @@
 						<h:selectOneMenu id="restrictionLoadsTeacher" required="true"
 							value="#{restrictionsController.newTeacherLoad.teacher}"
 							converter="#{teacherConverter}">
-							<f:selectItem itemLabel="-- Izaberite profesora --"
+							<f:selectItem itemLabel="#{msg['select.teacher']}"
 								itemValue="#{null}" />
 							<f:selectItems
 								value="#{restrictionsController.listAllTeachers()}"
@@ -725,7 +725,7 @@
 				onclick="#{rich:component('deleteRestrictionConfirmation')}.hide(); return false;"
 				style="color: inherit"> X </h:outputLink>
 		</f:facet>
-		<p>Da li ste sigurni da želite da obrišete ogranicenje?</p>
+		<p>#{msg['restriction.delete.confirmation']}</p>
 		<a4j:commandButton
 			action="#{restrictionsController.deleteRestriction()}"
 			value="#{msg['element.delete']}"

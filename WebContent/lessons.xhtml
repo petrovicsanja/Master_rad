@@ -18,7 +18,7 @@
 					<h:selectOneMenu
 						value="#{lessonsController.lessonsSearchSubjectId}"
 						required="true" label="Izbor predmeta">
-						<f:selectItem itemLabel="-- Izaberite predmet --"
+						<f:selectItem itemLabel="#{msg['select.subject']}"
 							itemValue="#{null}" />
 						<f:selectItems value="#{lessonsController.listAllSubjects()}"
 							var="subject" itemLabel="#{subject.toString()}"
@@ -149,7 +149,7 @@
 						<h:selectOneMenu id="lessonSubject"
 							value="#{lessonsController.subject}" required="true"
 							label="Izbor predmeta" converter="#{subjectConverter}">
-							<f:selectItem itemLabel="-- Izaberite predmet --"
+							<f:selectItem itemLabel="#{msg['select.subject']}"
 								itemValue="#{null}" />
 							<f:selectItems value="#{lessonsController.listAllSubjects()}"
 								var="subject" itemLabel="#{subject.toString()}"
@@ -171,7 +171,7 @@
 						<h:selectOneMenu id="lessonTeacher" styleClass="col-sm-9"
 							value="#{lessonsController.teacher}" required="true"
 							label="Izbor profesora" converter="#{teacherConverter}">
-							<f:selectItem itemLabel="-- Izaberite profesora --"
+							<f:selectItem itemLabel="#{msg['select.teacher']}"
 								itemValue="#{null}" />
 							<f:selectItems value="#{lessonsController.listAllTeachers()}"
 								var="teacher" itemLabel="#{teacher.toString()}"
@@ -208,7 +208,7 @@
 						<h:selectOneMenu id="lessonGroup" styleClass="col-sm-9"
 							value="#{lessonsController.group}" required="true"
 							label="Izbor grupe" converter="#{groupConverter}">
-							<f:selectItem itemLabel="-- Izaberite grupu --"
+							<f:selectItem itemLabel="#{msg['select.group']}"
 								itemValue="#{null}" />
 							<f:selectItems value="#{lessonsController.listAllGroups()}"
 								var="group" itemLabel="#{group.toString()}" itemValue="#{group}" />

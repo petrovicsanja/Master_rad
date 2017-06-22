@@ -253,8 +253,8 @@
 			<f:ajax execute="@this" />
 		</h:commandButton>
 
-		<h:commandButton styleClass="btn btn-md btn-success margin10"
-			action="timetable" value="#{msg['timetable.list']}" />
+		<h:commandButton styleClass="btn btn-md btn-success margin10" immediate="true"
+			action="timetable?faces-redirect=true" value="#{msg['timetable.list']}" />
 	</rich:collapsiblePanel>
 
 </ui:composition>
