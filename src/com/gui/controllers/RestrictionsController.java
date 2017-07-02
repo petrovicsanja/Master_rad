@@ -3,9 +3,11 @@ package com.gui.controllers;
 import java.util.List;
 
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 
 import com.ejb.services.RestrictionsService;
 import com.jpa.entities.Group;
@@ -139,6 +141,8 @@ public class RestrictionsController {
 			newGroupNumDays = new GroupNumDays();
 		} else {
 			System.out.println("Conditions for NumDays restriction are not fulfilled.");
+			FacesContext.getCurrentInstance().addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Uslovi za unos ograničenja nisu ispunjeni.", null));
 		}
 	}
 
@@ -156,6 +160,8 @@ public class RestrictionsController {
 			newTeacherNumDays = new TeacherNumDays();
 		} else {
 			System.out.println("Conditions for NumDays restriction are not fulfilled.");
+			FacesContext.getCurrentInstance().addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Uslovi za unos ograničenja nisu ispunjeni.", null));
 		}
 	}
 

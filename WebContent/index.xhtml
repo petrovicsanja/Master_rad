@@ -19,7 +19,7 @@
 	<div class="container">
 		<h:form styleClass="form-signin">
 			<h2 class="form-signin-heading">#{msg['heading.login']}</h2>
-		
+
 			<h:panelGrid columns="1" rendered="#{empty user}">
 				<h:panelGroup rendered="#{loginController.message ne null}">
 					<div class="alert alert-info">
@@ -30,10 +30,11 @@
 				<h:panelGroup>
 					<div class="row">
 						<div class="col-sm-5">
-							<h:outputLabel for="username" value="#{msg.username}"/>
+							<h:outputLabel for="username" value="#{msg.username}" />
 						</div>
 						<div class="col-sm-7">
-							<h:inputText id="username" value="#{loginController.username}"  styleClass="form-control"/>
+							<h:inputText id="username" value="#{loginController.username}"
+								styleClass="form-control" />
 						</div>
 					</div>
 				</h:panelGroup>
@@ -44,14 +45,16 @@
 							<h:outputLabel for="password" value="#{msg.password}" />
 						</div>
 						<div class="col-sm-7">
-							<h:inputSecret id="password" value="#{loginController.password}" styleClass="form-control" />
+							<h:inputSecret id="password" value="#{loginController.password}"
+								styleClass="form-control" />
 						</div>
 					</div>
 				</h:panelGroup>
 
 				<h:panelGroup>
-					<h:commandButton value="#{msg.login}" action="#{loginController.login()}"
-						rendered="#{empty user}" styleClass="btn btn-lg btn-primary btn-block" />
+					<h:commandButton value="#{msg.login}"
+						action="#{loginController.login()}" rendered="#{empty user}"
+						styleClass="btn btn-lg btn-primary btn-block" />
 					<h:commandButton value="#{msg.logout}"
 						action="#{loginController.logout()}" rendered="#{not empty user}"
 						styleClass="btn btn-lg btn-warning" />

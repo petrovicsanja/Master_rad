@@ -20,16 +20,20 @@
 	<h:outputLabel value="Dobrodošli, #{loginController.user.firstName}"
 		rendered="#{not empty user}" />
 	<br />
-	<br />
+
 	<h:form id="contentForm" onkeypress="return event.keyCode != 13;">
-		<h:messages layout="table" globalOnly="true" infoClass="bg-success"
-			errorClass="bg-danger" />
-			
+
+		<h:panelGroup id="globalMessage">
+			<h:messages layout="table" globalOnly="true" showDetail="false"
+				showSummary="true" styleClass="alert" infoClass="alert-info"
+				errorClass="alert-danger" warnClass="alert-warning" />
+		</h:panelGroup>
+
 		<rich:tabPanel id="dataOverviewTabPanel" switchType="ajax"
 			immediate="true" rendered="#{not empty user}"
 			activeItem="#{loginController.activeTab}"
 			styleClass="panel panel-primary" bodyClass="panel-body">
-			
+
 			<rich:tab header="#{msg['admin_page']}" name="admin"
 				rendered="#{user.type eq 2}">
 				<h2>#{msg['admin_page']}</h2>
@@ -69,10 +73,11 @@
 			</rich:tab>
 		</rich:tabPanel>
 	</h:form>
-	
+
 	<h:form id="logoutForm" styleClass="text-right">
-		<h:commandButton value="#{msg.logout}" action="#{loginController.logout()}"
-			rendered="#{not empty user}" styleClass="btn btn-lg btn-warning logout-btn" />
+		<h:commandButton value="#{msg.logout}"
+			action="#{loginController.logout()}" rendered="#{not empty user}"
+			styleClass="btn btn-lg btn-warning logout-btn" />
 	</h:form>
 </h:body>
 </html>

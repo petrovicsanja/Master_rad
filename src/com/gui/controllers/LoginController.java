@@ -1,7 +1,6 @@
 package com.gui.controllers;
 
 import javax.ejb.EJB;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
@@ -41,10 +40,9 @@ public class LoginController {
 			this.message = null;
 		} else {
 			System.out.println("Korisnik nije pronadjen");
-			context.addMessage(null, new FacesMessage("Neuspesno logovanje. Molimo pokusajte ponovo."));
 			this.username = null;
 			this.password = null;
-			this.message = context.getMessageList().get(0).toString();
+			this.message = "Neuspešno logovanje. Molimo pokušajte ponovo.";
 		}
 		return action;
 	}
