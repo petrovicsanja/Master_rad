@@ -4,6 +4,14 @@ import java.util.List;
 
 import com.jpa.entities.Group;
 
+/**
+ * Business interface - It is used for defining the set of methods that are
+ * available to client
+ * 
+ * @author sanja
+ *
+ */
+
 public interface GroupsService {
 
 	/**

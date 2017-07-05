@@ -7,43 +7,47 @@ import com.jpa.entities.User;
 /**
  * @author Sanja
  *
- *         Interfejs koji sluzi za definisanje skupa metoda koje su dostupne
- *         klijentima tzv. business interface
+ *         Business interface - It is used for defining the set of methods that
+ *         are available to client
  */
 public interface UsersService {
 	/**
-	 * Pretraga korisnika u bazi na osnovu korisnickog imena i sifre
+	 * Search for user by username and password
 	 * 
-	 * @return User Nadjeni korisnik ili null ukoliko korisnik nije pronadjen
+	 * @return Found user or null
 	 */
 	User findUser(String username, String password);
 
 	/**
-	 * Dodavanje novog korisnika u bazu
+	 * Adding new user to the database
+	 * 
+	 * @param user
 	 */
 	void addUser(User user);
 
 	/**
-	 * Izlistavanje svih korisnika iz baze
+	 * Listing all users
 	 * 
 	 * @return List<User> Lista korisnika
 	 */
 	List<User> listUsers();
 
 	/**
-	 * Pretraga korisnika u bazi na osnovu prosledjenog id-a
+	 * Search for user by id
 	 * 
 	 * @return User
 	 */
 	User findUserById(Long userId);
 
 	/**
-	 * Brisanje korisnika iz baze na osnovu prosledjenog id-a
+	 * Delete existing user by id
 	 */
 	User deleteUser(Long userId);
 
 	/**
-	 * Izmena podataka vec postojeceg korisnika u bazi
+	 * Updating existing user
+	 * 
+	 * @param user
 	 */
 	void updateUser(User user);
 }

@@ -13,8 +13,8 @@ import com.jpa.entities.User;
 /**
  * @author Sanja
  *
- *         Interfejs koji sluzi za definisanje skupa metoda koje su dostupne
- *         klijentima tzv. business interface
+ *         Business interface - It is used for defining the set of methods that
+ *         are available to client
  */
 public interface AvailabilitiesService {
 

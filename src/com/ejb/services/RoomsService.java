@@ -4,6 +4,13 @@ import java.util.List;
 
 import com.jpa.entities.Room;
 
+/**
+ * Business interface - It is used for defining the set of methods that are
+ * available to client
+ * 
+ * @author sanja
+ *
+ */
 public interface RoomsService {
 
 	/**
@@ -14,23 +21,26 @@ public interface RoomsService {
 	public List<Room> listClassrooms();
 
 	/**
-	 * Delete room
+	 * Delete existing room by id
 	 * 
-	 * @param Long roomId
+	 * @param Long
+	 *            roomId
 	 */
 	public void deleteClassroom(Long roomId);
 
 	/**
 	 * Add new classroom
 	 * 
-	 * @param Room room
+	 * @param Room
+	 *            room
 	 */
 	public void addClassroom(Room room);
 
 	/**
 	 * Update classroom
 	 * 
-	 * @param Room room
+	 * @param Room
+	 *            room
 	 */
 	public void updateClassroom(Room room);
 }
