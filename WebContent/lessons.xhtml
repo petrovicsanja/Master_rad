@@ -265,8 +265,10 @@
 					</div>
 					<div class="col-sm-9">
 						<rich:pickList value="#{lessonsController.selectedRooms}"
-							var="room" listHeight="200px" converter="#{roomConverter}"
-							required="true">
+							var="room" listHeight="200px" listWidth="400px"
+							converter="#{roomConverter}" required="true"
+							addAllText="Dodaj sve" addText="Dodaj" removeAllText="Ukloni sve"
+							removeText="Ukloni">
 							<f:selectItems value="#{lessonsController.listAllRooms()}" />
 							<rich:column>
 								<f:facet name="header">Naziv sale</f:facet>
