@@ -17,6 +17,14 @@ import com.jpa.entities.Semester;
 import com.jpa.entities.TeacherAvailability;
 import com.jpa.entities.User;
 
+/**
+ * Implementation of services to work with teachers', groups' and rooms'
+ * availability data
+ * 
+ * @author sanja
+ *
+ */
+
 @Stateless
 public class AvailabilitiesServiceImpl implements AvailabilitiesService {
 

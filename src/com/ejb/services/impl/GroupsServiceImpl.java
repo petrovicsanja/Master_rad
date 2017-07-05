@@ -10,6 +10,13 @@ import javax.persistence.TypedQuery;
 import com.ejb.services.GroupsService;
 import com.jpa.entities.Group;
 
+/**
+ * Implementation of services to work with group data
+ * 
+ * @author sanja
+ *
+ */
+
 @Stateless
 public class GroupsServiceImpl implements GroupsService {
 

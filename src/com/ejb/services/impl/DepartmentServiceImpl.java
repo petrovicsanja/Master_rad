@@ -10,6 +10,13 @@ import javax.persistence.TypedQuery;
 import com.ejb.services.DepartmentService;
 import com.jpa.entities.Department;
 
+/**
+ * Implementation of services to work with department data
+ * 
+ * @author sanja
+ *
+ */
+
 @Stateless
 public class DepartmentServiceImpl implements DepartmentService {
 

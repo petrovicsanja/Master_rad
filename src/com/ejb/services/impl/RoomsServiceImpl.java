@@ -10,6 +10,13 @@ import javax.persistence.TypedQuery;
 import com.ejb.services.RoomsService;
 import com.jpa.entities.Room;
 
+/**
+ * Implementation of services to work with room data
+ * 
+ * @author sanja
+ *
+ */
+
 @Stateless
 public class RoomsServiceImpl implements RoomsService {
 

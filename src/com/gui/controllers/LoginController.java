@@ -34,12 +34,12 @@ public class LoginController {
 		FacesContext context = FacesContext.getCurrentInstance();
 
 		if (user != null) {
-			System.out.println("Korisnik je uspesno ulogovan.");
+			System.out.println("User is successfully loged in, id: " + user.getId());
 			action = "dataOverview?faces-redirect=true";
 			context.getExternalContext().getSessionMap().put("user", user);
 			this.message = null;
 		} else {
-			System.out.println("Korisnik nije pronadjen");
+			System.out.println("User cannot be found.");
 			this.username = null;
 			this.password = null;
 			this.message = "Neuspešno logovanje. Molimo pokušajte ponovo.";

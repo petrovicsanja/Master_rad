@@ -33,6 +33,14 @@ import com.jpa.entities.TeacherNumDays;
 import com.jpa.entities.User;
 import com.jpa.entities.enums.AvailabilityType;
 
+/**
+ * Implementation of services to work with all data that is needed for timetable
+ * to be created or listed
+ * 
+ * @author sanja
+ *
+ */
+
 @Stateless
 public class TimetableServiceImpl implements TimetableService {
 

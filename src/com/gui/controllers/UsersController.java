@@ -59,6 +59,7 @@ public class UsersController {
 
 	public void deleteUser() {
 		User userToDelete = userList.get(selectedUserIndex);
+
 		usersService.deleteUser(userToDelete.getId());
 		userList.remove(userToDelete);
 	}

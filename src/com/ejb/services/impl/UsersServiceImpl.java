@@ -11,6 +11,13 @@ import javax.persistence.TypedQuery;
 import com.ejb.services.UsersService;
 import com.jpa.entities.User;
 
+/**
+ * Implementation of services to work with user data
+ * 
+ * @author sanja
+ *
+ */
+
 @Stateless
 public class UsersServiceImpl implements UsersService {
 
@@ -18,9 +25,9 @@ public class UsersServiceImpl implements UsersService {
 	private EntityManager em;
 
 	/**
-	 * Pretraga korisnika u bazi na osnovu korisnickog imena i sifre
+	 * User search by username and password
 	 * 
-	 * @return User Nadjeni korisnik ili null ukoliko korisnik nije pronadjen
+	 * @return User Found user or null
 	 */
 	@Override
 	public User findUser(String username, String password) {
@@ -40,7 +47,7 @@ public class UsersServiceImpl implements UsersService {
 	}
 
 	/**
-	 * Dodavanje novog korisnika u bazu
+	 * Adding new user
 	 */
 	@Override
 	public void addUser(User user) {
@@ -49,9 +56,9 @@ public class UsersServiceImpl implements UsersService {
 	}
 
 	/**
-	 * Izlistavanje svih korisnika iz baze
+	 * Listing all users
 	 * 
-	 * @return List<User> Lista korisnika
+	 * @return List<User> List of users
 	 */
 	@Override
 	public List<User> listUsers() {
@@ -60,7 +67,7 @@ public class UsersServiceImpl implements UsersService {
 	}
 
 	/**
-	 * Pretraga korisnika u bazi na osnovu prosledjenog id-a
+	 * User search by id
 	 * 
 	 * @return User
 	 */
@@ -70,17 +77,18 @@ public class UsersServiceImpl implements UsersService {
 	}
 
 	/**
-	 * Brisanje korisnika iz baze na osnovu prosledjenog id-a
+	 * Removing user from the database selected by id
 	 */
 	@Override
-	public void deleteUser(Long userId) {
+	public User deleteUser(Long userId) {
 		User userToDelete = em.find(User.class, userId);
 		em.remove(userToDelete);
 		System.out.println("User is successfully deleted from the database, id: " + userId);
+		return userToDelete;
 	}
 
 	/**
-	 * Izmena podataka vec postojeceg korisnika u bazi
+	 * Updating user data
 	 */
 	@Override
 	public void updateUser(User user) {

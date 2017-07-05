@@ -10,6 +10,13 @@ import javax.persistence.TypedQuery;
 import com.ejb.services.SubjectsService;
 import com.jpa.entities.Subject;
 
+/**
+ * Implementation of services to work with subject data
+ * 
+ * @author sanja
+ *
+ */
+
 @Stateless
 public class SubjectsServiceImpl implements SubjectsService {
 

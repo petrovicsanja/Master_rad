@@ -17,6 +17,13 @@ import com.jpa.entities.Semester;
 import com.jpa.entities.Subject;
 import com.jpa.entities.User;
 
+/**
+ * Implementation of services to work with lesson data
+ * 
+ * @author sanja
+ *
+ */
+
 @Stateless
 public class LessonsServiceImpl implements LessonsService {
 

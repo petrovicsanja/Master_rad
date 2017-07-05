@@ -16,34 +16,34 @@ public interface UsersService {
 	 * 
 	 * @return User Nadjeni korisnik ili null ukoliko korisnik nije pronadjen
 	 */
-	public User findUser(String username, String password);
+	User findUser(String username, String password);
 
 	/**
 	 * Dodavanje novog korisnika u bazu
 	 */
-	public void addUser(User user);
+	void addUser(User user);
 
 	/**
 	 * Izlistavanje svih korisnika iz baze
 	 * 
 	 * @return List<User> Lista korisnika
 	 */
-	public List<User> listUsers();
+	List<User> listUsers();
 
 	/**
 	 * Pretraga korisnika u bazi na osnovu prosledjenog id-a
 	 * 
 	 * @return User
 	 */
-	public User findUserById(Long userId);
+	User findUserById(Long userId);
 
 	/**
 	 * Brisanje korisnika iz baze na osnovu prosledjenog id-a
 	 */
-	public void deleteUser(Long userId);
+	User deleteUser(Long userId);
 
 	/**
 	 * Izmena podataka vec postojeceg korisnika u bazi
 	 */
-	public void updateUser(User user);
+	void updateUser(User user);
 }

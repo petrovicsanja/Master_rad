@@ -12,6 +12,13 @@ import javax.persistence.TypedQuery;
 import com.ejb.services.SemesterService;
 import com.jpa.entities.Semester;
 
+/**
+ * Implementation of services to work with semester data
+ * 
+ * @author sanja
+ *
+ */
+
 @Stateless
 public class SemesterServiceImpl implements SemesterService {
 

@@ -36,7 +36,7 @@ public interface RestrictionsService {
 	 * @param GroupNumDays
 	 *            groupNumDays
 	 */
-	void addNewNumDaysGroupRestriction(GroupNumDays groupNumDays, Semester activeSemester);
+	GroupNumDays addNewNumDaysGroupRestriction(GroupNumDays groupNumDays, Semester activeSemester);
 
 	/**
 	 * Add new restriction about number of working days per week for teacher
@@ -44,7 +44,7 @@ public interface RestrictionsService {
 	 * @param TeacherNumDays
 	 *            teacherNumDays
 	 */
-	void addNewNumDaysTeacherRestriction(TeacherNumDays teacherNumDays, Semester activeSemester);
+	TeacherNumDays addNewNumDaysTeacherRestriction(TeacherNumDays teacherNumDays, Semester activeSemester);
 
 	/**
 	 * Add new restriction about idles for group
@@ -52,7 +52,7 @@ public interface RestrictionsService {
 	 * @param GroupIdles
 	 *            groupIdles
 	 */
-	public void addIdlesGroupRestriction(GroupIdles groupIdles, Semester activeSemester);
+	GroupIdles addIdlesGroupRestriction(GroupIdles groupIdles, Semester activeSemester);
 
 	/**
 	 * Add new restriction about idles for teacher
@@ -60,7 +60,7 @@ public interface RestrictionsService {
 	 * @param TeacherIdles
 	 *            teacherIdles
 	 */
-	void addIdlesTeacherRestriction(TeacherIdles teacherIdles, Semester activeSemester);
+	TeacherIdles addIdlesTeacherRestriction(TeacherIdles teacherIdles, Semester activeSemester);
 
 	/**
 	 * Add new restriction about minimum and maximum number of classes per day
@@ -69,7 +69,7 @@ public interface RestrictionsService {
 	 * @param GroupLoad
 	 *            groupLoad
 	 */
-	void addLoadGroupRestriction(GroupLoad groupLoad, Semester activeSemester);
+	GroupLoad addLoadGroupRestriction(GroupLoad groupLoad, Semester activeSemester);
 
 	/**
 	 * Add new restriction about minimum and maximum number of classes per day
@@ -78,7 +78,7 @@ public interface RestrictionsService {
 	 * @param TeacherLoad
 	 *            teacherLoad
 	 */
-	void addLoadTeacherRestriction(TeacherLoad teacherLoad, Semester activeSemester);
+	TeacherLoad addLoadTeacherRestriction(TeacherLoad teacherLoad, Semester activeSemester);
 
 	void deleteNumDaysGroupRestriction(Long groupNumDaysId);
 

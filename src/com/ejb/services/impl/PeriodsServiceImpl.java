@@ -12,6 +12,13 @@ import javax.persistence.TypedQuery;
 import com.ejb.services.PeriodsService;
 import com.jpa.entities.Period;
 
+/**
+ * Implementation of services to work with period data
+ * 
+ * @author sanja
+ *
+ */
+
 @Stateless
 public class PeriodsServiceImpl implements PeriodsService {
 

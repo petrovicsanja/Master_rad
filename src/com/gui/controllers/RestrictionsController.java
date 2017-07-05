@@ -135,12 +135,19 @@ public class RestrictionsController {
 				&& (periodsController.getNumberOfWorkingDays() >= newGroupNumDays.getMax());
 
 		if (numDaysCondition && newGroupNumDays.getGroup() != null) {
-			restrictionsService.addNewNumDaysGroupRestriction(newGroupNumDays, semesterController.getActiveSemester());
+			GroupNumDays restrictionToAdd = restrictionsService.addNewNumDaysGroupRestriction(newGroupNumDays,
+					semesterController.getActiveSemester());
+
+			if (restrictionToAdd == null) {
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+						"Ograničenje za izabranu grupu u trenutno aktivnom semestru već postoji.", null));
+				return;
+			}
+
 			groupNumDaysRestrictionList.add(newGroupNumDays);
 
 			newGroupNumDays = new GroupNumDays();
 		} else {
-			System.out.println("Conditions for NumDays restriction are not fulfilled.");
 			FacesContext.getCurrentInstance().addMessage(null,
 					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Uslovi za unos ograničenja nisu ispunjeni.", null));
 		}
@@ -153,8 +160,15 @@ public class RestrictionsController {
 				&& (periodsController.getNumberOfWorkingDays() >= newTeacherNumDays.getMax());
 
 		if (numDaysCondition && newTeacherNumDays.getTeacher() != null) {
-			restrictionsService.addNewNumDaysTeacherRestriction(newTeacherNumDays,
+			TeacherNumDays restrictionToAdd = restrictionsService.addNewNumDaysTeacherRestriction(newTeacherNumDays,
 					semesterController.getActiveSemester());
+
+			if (restrictionToAdd == null) {
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+						"Ograničenje za izabranog profesora u trenutno aktivnom semestru već postoji.", null));
+				return;
+			}
+
 			teacherNumDaysRestrictionList.add(newTeacherNumDays);
 
 			newTeacherNumDays = new TeacherNumDays();
@@ -167,7 +181,15 @@ public class RestrictionsController {
 
 	public void addIdlesGroupRestriction() {
 		if (newGroupIdles.getGroup() != null) {
-			restrictionsService.addIdlesGroupRestriction(newGroupIdles, semesterController.getActiveSemester());
+			GroupIdles restrictionToAdd = restrictionsService.addIdlesGroupRestriction(newGroupIdles,
+					semesterController.getActiveSemester());
+
+			if (restrictionToAdd == null) {
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+						"Ograničenje za izabranu grupu u trenutno aktivnom semestru već postoji.", null));
+				return;
+			}
+
 			groupIdlesRestrictionList.add(newGroupIdles);
 
 			newGroupIdles = new GroupIdles();
@@ -176,7 +198,15 @@ public class RestrictionsController {
 
 	public void addIdlesTeacherRestriction() {
 		if (newTeacherIdles.getTeacher() != null) {
-			restrictionsService.addIdlesTeacherRestriction(newTeacherIdles, semesterController.getActiveSemester());
+			TeacherIdles restrictionToAdd = restrictionsService.addIdlesTeacherRestriction(newTeacherIdles,
+					semesterController.getActiveSemester());
+
+			if (restrictionToAdd == null) {
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+						"Ograničenje za izabranog profesora u trenutno aktivnom semestru već postoji.", null));
+				return;
+			}
+
 			teacherIdlesRestrictionList.add(newTeacherIdles);
 
 			newTeacherIdles = new TeacherIdles();
@@ -185,7 +215,15 @@ public class RestrictionsController {
 
 	public void addLoadGroupRestriction() {
 		if (newGroupLoad.getGroup() != null) {
-			restrictionsService.addLoadGroupRestriction(newGroupLoad, semesterController.getActiveSemester());
+			GroupLoad restrictionToAdd = restrictionsService.addLoadGroupRestriction(newGroupLoad,
+					semesterController.getActiveSemester());
+
+			if (restrictionToAdd == null) {
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+						"Ograničenje za izabranu grupu u trenutno aktivnom semestru već postoji.", null));
+				return;
+			}
+
 			groupLoadRestrictionList.add(newGroupLoad);
 
 			newGroupLoad = new GroupLoad();
@@ -194,7 +232,15 @@ public class RestrictionsController {
 
 	public void addLoadTeacherRestriction() {
 		if (newTeacherLoad.getTeacher() != null) {
-			restrictionsService.addLoadTeacherRestriction(newTeacherLoad, semesterController.getActiveSemester());
+			TeacherLoad restrictionToAdd = restrictionsService.addLoadTeacherRestriction(newTeacherLoad,
+					semesterController.getActiveSemester());
+
+			if (restrictionToAdd == null) {
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+						"Ograničenje za izabranog profesora u trenutno aktivnom semestru već postoji.", null));
+				return;
+			}
+
 			teacherLoadRestrictionList.add(newTeacherLoad);
 
 			newTeacherLoad = new TeacherLoad();

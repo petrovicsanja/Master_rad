@@ -16,6 +16,14 @@ import com.jpa.entities.TeacherIdles;
 import com.jpa.entities.TeacherLoad;
 import com.jpa.entities.TeacherNumDays;
 
+/**
+ * Implementation of services to work with num days, idles and loads restriction
+ * data for teachers and groups
+ * 
+ * @author sanja
+ *
+ */
+
 @Stateless
 public class RestrictionsServiceImpl implements RestrictionsService {
 
@@ -102,46 +110,111 @@ public class RestrictionsServiceImpl implements RestrictionsService {
 	}
 
 	@Override
-	public void addNewNumDaysGroupRestriction(GroupNumDays groupNumDays, Semester activeSemester) {
+	public GroupNumDays addNewNumDaysGroupRestriction(GroupNumDays groupNumDays, Semester activeSemester) {
+		TypedQuery<GroupNumDays> existingRestriction = em.createQuery(
+				"SELECT r FROM GroupNumDays r WHERE r.semester.id = :semesterId AND r.group.id = :groupId",
+				GroupNumDays.class);
+		existingRestriction.setParameter("semesterId", activeSemester.getId());
+		existingRestriction.setParameter("groupId", groupNumDays.getGroup().getId());
+
+		if (existingRestriction.getResultList().size() > 0) {
+			return null;
+		}
+
 		groupNumDays.setSemester(activeSemester);
 		em.persist(groupNumDays);
 		System.out.println("New num days group restriction is successfuly added to the database.");
-
+		return groupNumDays;
 	}
 
 	@Override
-	public void addNewNumDaysTeacherRestriction(TeacherNumDays teacherNumDays, Semester activeSemester) {
+	public TeacherNumDays addNewNumDaysTeacherRestriction(TeacherNumDays teacherNumDays, Semester activeSemester) {
+		TypedQuery<TeacherNumDays> existingRestriction = em.createQuery(
+				"SELECT r FROM TeacherNumDays r WHERE r.semester.id = :semesterId AND r.teacher.id = :teacherId",
+				TeacherNumDays.class);
+		existingRestriction.setParameter("semesterId", activeSemester.getId());
+		existingRestriction.setParameter("teacherId", teacherNumDays.getTeacher().getId());
+
+		if (existingRestriction.getResultList().size() > 0) {
+			return null;
+		}
+
 		teacherNumDays.setSemester(activeSemester);
 		em.persist(teacherNumDays);
 		System.out.println("New num days teacher restriction is successfuly added to the database.");
+		return teacherNumDays;
 	}
 
 	@Override
-	public void addIdlesGroupRestriction(GroupIdles groupIdles, Semester activeSemester) {
+	public GroupIdles addIdlesGroupRestriction(GroupIdles groupIdles, Semester activeSemester) {
+		TypedQuery<GroupIdles> existingRestriction = em.createQuery(
+				"SELECT r FROM GroupIdles r WHERE r.semester.id = :semesterId AND r.group.id = :groupId",
+				GroupIdles.class);
+		existingRestriction.setParameter("semesterId", activeSemester.getId());
+		existingRestriction.setParameter("groupId", groupIdles.getGroup().getId());
+
+		if (existingRestriction.getResultList().size() > 0) {
+			return null;
+		}
+
 		groupIdles.setSemester(activeSemester);
 		em.persist(groupIdles);
 		System.out.println("New idles group restriction is successfuly added to the database.");
+		return groupIdles;
 	}
 
 	@Override
-	public void addIdlesTeacherRestriction(TeacherIdles teacherIdles, Semester activeSemester) {
+	public TeacherIdles addIdlesTeacherRestriction(TeacherIdles teacherIdles, Semester activeSemester) {
+		TypedQuery<TeacherIdles> existingRestriction = em.createQuery(
+				"SELECT r FROM TeacherIdles r WHERE r.semester.id = :semesterId AND r.teacher.id = :teacherId",
+				TeacherIdles.class);
+		existingRestriction.setParameter("semesterId", activeSemester.getId());
+		existingRestriction.setParameter("teacherId", teacherIdles.getTeacher().getId());
+
+		if (existingRestriction.getResultList().size() > 0) {
+			return null;
+		}
+
 		teacherIdles.setSemester(activeSemester);
 		em.persist(teacherIdles);
 		System.out.println("New idles teacher restriction is successfuly added to the database.");
+		return teacherIdles;
 	}
 
 	@Override
-	public void addLoadGroupRestriction(GroupLoad groupLoad, Semester activeSemester) {
+	public GroupLoad addLoadGroupRestriction(GroupLoad groupLoad, Semester activeSemester) {
+		TypedQuery<GroupLoad> existingRestriction = em.createQuery(
+				"SELECT r FROM GroupLoad r WHERE r.semester.id = :semesterId AND r.group.id = :groupId",
+				GroupLoad.class);
+		existingRestriction.setParameter("semesterId", activeSemester.getId());
+		existingRestriction.setParameter("groupId", groupLoad.getGroup().getId());
+
+		if (existingRestriction.getResultList().size() > 0) {
+			return null;
+		}
+
 		groupLoad.setSemester(activeSemester);
 		em.persist(groupLoad);
 		System.out.println("New load group restriction is successfuly added to the database");
+		return groupLoad;
 	}
 
 	@Override
-	public void addLoadTeacherRestriction(TeacherLoad teacherLoad, Semester activeSemester) {
+	public TeacherLoad addLoadTeacherRestriction(TeacherLoad teacherLoad, Semester activeSemester) {
+		TypedQuery<TeacherLoad> existingRestriction = em.createQuery(
+				"SELECT r FROM TeacherLoad r WHERE r.semester.id = :semesterId AND r.teacher.id = :teacherId",
+				TeacherLoad.class);
+		existingRestriction.setParameter("semesterId", activeSemester.getId());
+		existingRestriction.setParameter("teacherId", teacherLoad.getTeacher().getId());
+
+		if (existingRestriction.getResultList().size() > 0) {
+			return null;
+		}
+
 		teacherLoad.setSemester(activeSemester);
 		em.persist(teacherLoad);
 		System.out.println("New load teacher restriction is successfuly added to the database");
+		return teacherLoad;
 	}
 
 	@Override
