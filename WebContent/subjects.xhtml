@@ -103,12 +103,14 @@
 		<h:panelGrid id="subjectUpdateGrid" columns="3">
 			<h:outputLabel value="Unesite naziv predmeta:" />
 			<h:inputText id="updateSubjectName" label="Naziv predmeta"
-				value="#{subjectsController.subjectToUpdate.name}" required="true" />
+				value="#{subjectsController.subjectToUpdate.name}" required="true"
+				requiredMessage="#{msg['error.missingValue']}" />
 			<rich:message for="updateSubjectName" ajaxRendered="true" />
 
 			<h:outputLabel value="Unesite oznaku predmeta:" />
 			<h:inputText id="updateSubjectMark" label="Oznaka predmeta"
-				value="#{subjectsController.subjectToUpdate.mark}" required="true" />
+				value="#{subjectsController.subjectToUpdate.mark}" required="true"
+				requiredMessage="#{msg['error.missingValue']}" />
 			<rich:message for="updateSubjectMark" ajaxRendered="true" />
 
 			<a4j:commandButton action="#{subjectsController.updateSubject()}"
@@ -135,6 +137,7 @@
 					<div class="col-sm-6">
 						<h:inputText id="newSubjectName" label="#{msg.name}"
 							value="#{subjectsController.newSubject.name}" required="true"
+							requiredMessage="#{msg['error.missingValue']}"
 							styleClass="form-control" />
 					</div>
 					<div class="col-sm-3">
@@ -148,6 +151,7 @@
 					<div class="col-sm-6">
 						<h:inputText id="newSubjectMark" label="#{msg.mark}"
 							value="#{subjectsController.newSubject.mark}" required="true"
+							requiredMessage="#{msg['error.missingValue']}"
 							styleClass="form-control" />
 					</div>
 					<div class="col-sm-3">

@@ -83,7 +83,8 @@
 					<div class="col-sm-6">
 						<h:inputText id="departmentName" label="#{msg.name}"
 							value="#{departmentController.newDepartment.name}"
-							styleClass="form-control" />
+							styleClass="form-control" required="true"
+							requiredMessage="#{msg['error.missingValue']}" />
 					</div>
 					<div class="col-sm-3">
 						<rich:message for="departmentName" ajaxRendered="true" />
@@ -97,7 +98,8 @@
 					<div class="col-sm-6">
 						<h:inputText id="studyProgram" label="#{msg.studyProgram}"
 							value="#{departmentController.newDepartment.studyProgram}"
-							styleClass="form-control" />
+							styleClass="form-control" required="true"
+							requiredMessage="#{msg['error.missingValue']}" />
 					</div>
 					<div class="col-sm-3">
 						<rich:message for="studyProgram" ajaxRendered="true" />
@@ -174,12 +176,13 @@
 			<div class="container">
 				<div class="row form-group">
 					<div class="col-sm-3">
-						<h:outputLabel value="Skolska godina: "
+						<h:outputLabel value="Školska godina: "
 							styleClass="col-form-label" />
 					</div>
 					<div class="col-sm-6">
 						<h:inputText id="schoolYear"
 							value="#{semesterController.schoolYear}" required="true"
+							requiredMessage="#{msg['error.missingValue']}"
 							styleClass="form-control" />
 					</div>
 					<div class="col-sm-3">
@@ -189,12 +192,13 @@
 
 				<div class="row form-group">
 					<div class="col-sm-3">
-						<h:outputLabel value="Pocetak semestra: "
+						<h:outputLabel value="Početak semestra: "
 							styleClass="col-form-label" />
 					</div>
 					<div class="col-sm-6">
 						<rich:calendar id="semesterStartDate"
-							value="#{semesterController.startDate}" required="true" />
+							value="#{semesterController.startDate}" required="true"
+							requiredMessage="#{msg['error.missingValue']}" />
 					</div>
 					<div class="col-sm-3">
 						<rich:message for="semesterStartDate" ajaxRendered="true" />
@@ -207,7 +211,8 @@
 					</div>
 					<div class="col-sm-6">
 						<rich:calendar id="semesterEndDate"
-							value="#{semesterController.endDate}" required="true" />
+							value="#{semesterController.endDate}" required="true"
+							requiredMessage="#{msg['error.missingValue']}" />
 					</div>
 					<div class="col-sm-3">
 						<rich:message for="semesterEndDate" ajaxRendered="true" />
@@ -221,6 +226,7 @@
 					<div class="col-sm-6">
 						<h:selectOneMenu id="semesterOrdinalNumber"
 							value="#{semesterController.ordinalNumber}" required="true"
+							requiredMessage="#{msg['error.missingValue']}"
 							styleClass="form-control">
 							<f:selectItem itemLabel="Zimski" itemValue="1" />
 							<f:selectItem itemLabel="Letnji" itemValue="2" />
@@ -253,8 +259,9 @@
 			<f:ajax execute="@this" />
 		</h:commandButton>
 
-		<h:commandButton styleClass="btn btn-md btn-success margin10" immediate="true"
-			action="timetable?faces-redirect=true" value="#{msg['timetable.list']}" />
+		<h:commandButton styleClass="btn btn-md btn-success margin10"
+			immediate="true" action="timetable?faces-redirect=true"
+			value="#{msg['timetable.list']}" />
 	</rich:collapsiblePanel>
 
 </ui:composition>

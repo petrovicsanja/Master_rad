@@ -20,7 +20,7 @@
 		styleClass="panel panel-primary" headerClass="panel-heading"
 		bodyClass="panel-body">
 		<h:panelGrid id="insertPeriods" columns="3">
-			<h:outputLabel value="Unesite duzinu trajanja termina/casa:" />
+			<h:outputLabel value="#{msg['periods.termsLength']}" />
 			<h:inputText value="#{periodsController.termLength}" />
 			<h:outputLabel value="minuta" />
 
@@ -40,7 +40,7 @@
 			<h:inputText value="#{periodsController.termsWednesday}" />
 			<h:outputLabel value="" />
 
-			<h:outputLabel value="Cetvrtak: " />
+			<h:outputLabel value="Četvrtak: " />
 			<h:inputText value="#{periodsController.termsThursday}" />
 			<h:outputLabel value="" />
 

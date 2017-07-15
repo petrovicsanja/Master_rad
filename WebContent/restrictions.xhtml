@@ -26,7 +26,7 @@
 
 			<rich:column sortBy="#{restriction.group.name}">
 				<f:facet name="header">
-					Naziv grupe
+					Grupa
 				</f:facet>
 				<h:outputText value="#{restriction.group.name}" />
 			</rich:column>
@@ -58,7 +58,7 @@
 				</f:facet>
 				<a4j:commandLink
 					oncomplete="#{rich:component('deleteRestrictionConfirmation')}.show()"
-					execute="@this" render="@none" title="Obriši ogranicenje za grupu">
+					execute="@this" render="@none" title="#{msg['element.delete']}">
 					<h:graphicImage value="/images/delete.png" alt="delete" />
 					<a4j:param value="#{it.index}"
 						assignTo="#{restrictionsController.selectedRestrictionIndex}" />
@@ -74,7 +74,7 @@
 
 		<a4j:region rendered="#{user.type eq 2}">
 			<div class="page-header">
-				<h4>Unos ograničenja za grupu</h4>
+				<h4>#{msg['subheading.restrictions.group']}</h4>
 			</div>
 			<div class="container">
 				<div class="row">
@@ -82,21 +82,22 @@
 						<h:outputLabel value="Izaberite grupu:" />
 					</div>
 					<div class="col-sm-3">
-						<h:outputLabel value="Minimalan broj dana:" />
+						<h:outputLabel value="#{msg['restrictions.numDays.min']}" />
 					</div>
 					<div class="col-sm-3">
-						<h:outputLabel value="Optimalan broj dana:" />
+						<h:outputLabel value="#{msg['restrictions.numDays.opt']}" />
 					</div>
 					<div class="col-sm-3">
-						<h:outputLabel value="Maksimalan broj dana:" />
+						<h:outputLabel value="#{msg['restrictions.numDays.max']}" />
 					</div>
 				</div>
 
 				<div class="row">
 					<div class="col-sm-3">
 						<h:selectOneMenu id="restrictionNumDaysGroup" required="true"
+							requiredMessage="#{msg['error.missingValue']}"
 							value="#{restrictionsController.newGroupNumDays.group}"
-							converter="#{groupConverter}">
+							converter="#{groupConverter}" label="Grupa">
 							<f:selectItem itemLabel="#{msg['select.group']}"
 								itemValue="#{null}" />
 							<f:selectItems value="#{restrictionsController.listAllGroups()}"
@@ -105,16 +106,37 @@
 						</h:selectOneMenu>
 					</div>
 					<div class="col-sm-3">
-						<h:inputText required="true"
+						<h:inputText id="groupNumDaysMin" required="true"
+							requiredMessage="#{msg['error.missingValue']}"
 							value="#{restrictionsController.newGroupNumDays.min}" />
 					</div>
 					<div class="col-sm-3">
-						<h:inputText required="true"
+						<h:inputText required="true" id="groupNumDaysOpt"
+							requiredMessage="#{msg['error.missingValue']}"
 							value="#{restrictionsController.newGroupNumDays.opt}" />
 					</div>
 					<div class="col-sm-3">
-						<h:inputText required="true"
+						<h:inputText required="true" id="groupNumDaysMax"
+							requiredMessage="#{msg['error.missingValue']}"
 							value="#{restrictionsController.newGroupNumDays.max}" />
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-sm-3">
+						<rich:message for="restrictionNumDaysGroup" ajaxRendered="true" />
+					</div>
+
+					<div class="col-sm-3">
+						<rich:message for="groupNumDaysMin" ajaxRendered="true" />
+					</div>
+
+					<div class="col-sm-3">
+						<rich:message for="groupNumDaysOpt" ajaxRendered="true" />
+					</div>
+
+					<div class="col-sm-3">
+						<rich:message for="groupNumDaysMax" ajaxRendered="true" />
 					</div>
 				</div>
 
@@ -169,7 +191,7 @@
 				<h:outputText value="#{restriction.max}" />
 			</rich:column>
 
-			<rich:column styleClass="text-center" rendered="#{user.type eq 2}">
+			<rich:column styleClass="text-center">
 				<f:facet name="header">
 					Brisanje
 				</f:facet>
@@ -190,9 +212,9 @@
 			</f:facet>
 		</rich:dataTable>
 
-		<a4j:region rendered="#{user.type eq 2}">
+		<a4j:region>
 			<div class="page-header">
-				<h4>Unos ograničenja za profesora</h4>
+				<h4>#{msg['subheading.restrictions.teacher']}</h4>
 			</div>
 
 			<div class="container">
@@ -201,21 +223,23 @@
 						<h:outputLabel value="Izaberite profesora:" />
 					</div>
 					<div class="col-sm-3">
-						<h:outputLabel value="Minimalan broj dana:" />
+						<h:outputLabel value="#{msg['restrictions.numDays.min']}" />
 					</div>
 					<div class="col-sm-3">
-						<h:outputLabel value="Optimalan broj dana:" />
+						<h:outputLabel value="#{msg['restrictions.numDays.opt']}" />
 					</div>
 					<div class="col-sm-3">
-						<h:outputLabel value="Maksimalan broj dana:" />
+						<h:outputLabel value="#{msg['restrictions.numDays.max']}" />
 					</div>
 				</div>
 
 				<div class="row">
 					<div class="col-sm-3">
 						<h:selectOneMenu id="restrictionNumDaysTeacher" required="true"
+							requiredMessage="#{msg['error.missingValue']}"
 							value="#{restrictionsController.newTeacherNumDays.teacher}"
-							converter="#{teacherConverter}">
+							converter="#{teacherConverter}" rendered="#{user.type eq 2}"
+							label="Profesor">
 							<f:selectItem itemLabel="#{msg['select.teacher']}"
 								itemValue="#{null}" />
 							<f:selectItems
@@ -224,18 +248,42 @@
 								itemValue="#{teacher}" />
 							<f:ajax event="change" execute="@this" />
 						</h:selectOneMenu>
+
+						<h:outputLabel value="#{user.toString()}"
+							rendered="#{user.type eq 1}" />
 					</div>
 					<div class="col-sm-3">
-						<h:inputText required="true"
+						<h:inputText id="teacherNumDaysMin" required="true"
+							requiredMessage="#{msg['error.missingValue']}"
 							value="#{restrictionsController.newTeacherNumDays.min}" />
 					</div>
 					<div class="col-sm-3">
-						<h:inputText required="true"
+						<h:inputText id="teacherNumDaysOpt" required="true"
+							requiredMessage="#{msg['error.missingValue']}"
 							value="#{restrictionsController.newTeacherNumDays.opt}" />
 					</div>
 					<div class="col-sm-3">
-						<h:inputText required="true"
+						<h:inputText id="teacherNumDaysMax" required="true"
+							requiredMessage="#{msg['error.missingValue']}"
 							value="#{restrictionsController.newTeacherNumDays.max}" />
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-sm-3">
+						<rich:message for="restrictionNumDaysTeacher" ajaxRendered="true" />
+					</div>
+
+					<div class="col-sm-3">
+						<rich:message for="teacherNumDaysMin" ajaxRendered="true" />
+					</div>
+
+					<div class="col-sm-3">
+						<rich:message for="teacherNumDaysOpt" ajaxRendered="true" />
+					</div>
+
+					<div class="col-sm-3">
+						<rich:message for="teacherNumDaysMax" ajaxRendered="true" />
 					</div>
 				</div>
 
@@ -271,7 +319,7 @@
 
 			<rich:column sortBy="#{restriction.group.name}">
 				<f:facet name="header">
-					Naziv grupe
+					Grupa
 				</f:facet>
 				<h:outputText value="#{restriction.group.name}" />
 			</rich:column>
@@ -319,7 +367,7 @@
 
 		<a4j:region rendered="#{user.type eq 2}">
 			<div class="page-header">
-				<h4>Unos ograničenja za grupu</h4>
+				<h4>#{msg['subheading.restrictions.group']}</h4>
 			</div>
 
 			<div class="container">
@@ -328,21 +376,22 @@
 						<h:outputLabel value="Izaberite grupu:" />
 					</div>
 					<div class="col-sm-3">
-						<h:outputLabel value="Maksimalna duzina pauza u toku dana:" />
+						<h:outputLabel value="#{msg['restrictions.idles.max']}:" />
 					</div>
 					<div class="col-sm-3">
-						<h:outputLabel value="Dozvoljene visestruke pauze u toku dana:" />
+						<h:outputLabel value="#{msg['restrictions.idles.multiple']}" />
 					</div>
 					<div class="col-sm-3">
-						<h:outputLabel value="Broj dana u kojima postoje pauze:" />
+						<h:outputLabel value="#{msg['restrictions.idles.days']}" />
 					</div>
 				</div>
 
 				<div class="row">
 					<div class="col-sm-3">
 						<h:selectOneMenu id="restrictionIdlesGroup" required="true"
+							requiredMessage="#{msg['error.missingValue']}"
 							value="#{restrictionsController.newGroupIdles.group}"
-							converter="#{groupConverter}">
+							converter="#{groupConverter}" label="Grupa">
 							<f:selectItem itemLabel="#{msg['select.group']}"
 								itemValue="#{null}" />
 							<f:selectItems value="#{restrictionsController.listAllGroups()}"
@@ -351,7 +400,8 @@
 						</h:selectOneMenu>
 					</div>
 					<div class="col-sm-3">
-						<h:inputText required="true"
+						<h:inputText id="groupIdlesMax" required="true"
+							requiredMessage="#{msg['error.missingValue']}"
 							value="#{restrictionsController.newGroupIdles.max}" />
 					</div>
 					<div class="col-sm-3">
@@ -359,8 +409,27 @@
 							value="#{restrictionsController.newGroupIdles.multiple}" />
 					</div>
 					<div class="col-sm-3">
-						<h:inputText required="true"
+						<h:inputText id="groupIdlesDays" required="true"
+							requiredMessage="#{msg['error.missingValue']}"
 							value="#{restrictionsController.newGroupIdles.days}" />
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-sm-3">
+						<rich:message for="restrictionIdlesGroup" ajaxRendered="true" />
+					</div>
+
+					<div class="col-sm-3">
+						<rich:message for="groupIdlesMax" ajaxRendered="true" />
+					</div>
+
+					<div class="col-sm-3">
+						<h:outputLabel value="" />
+					</div>
+
+					<div class="col-sm-3">
+						<rich:message for="groupIdlesDays" ajaxRendered="true" />
 					</div>
 				</div>
 
@@ -415,7 +484,7 @@
 				<h:outputText value="#{restriction.days}" />
 			</rich:column>
 
-			<rich:column styleClass="text-center" rendered="#{user.type eq 2}">
+			<rich:column styleClass="text-center">
 				<f:facet name="header">
 					Brisanje
 				</f:facet>
@@ -436,9 +505,9 @@
 			</f:facet>
 		</rich:dataTable>
 
-		<a4j:region rendered="#{user.type eq 2}">
+		<a4j:region>
 			<div class="page-header">
-				<h4>Unos ograničenja za profesora</h4>
+				<h4>#{msg['subheading.restrictions.teacher']}</h4>
 			</div>
 
 			<div class="container">
@@ -447,21 +516,23 @@
 						<h:outputLabel value="Izaberite profesora:" />
 					</div>
 					<div class="col-sm-3">
-						<h:outputLabel value="Maksimalna duzina pauza u toku dana:" />
+						<h:outputLabel value="#{msg['restrictions.idles.max']}:" />
 					</div>
 					<div class="col-sm-3">
-						<h:outputLabel value="Dozvoljene visestruke pauze u toku dana:" />
+						<h:outputLabel value="#{msg['restrictions.idles.multiple']}" />
 					</div>
 					<div class="col-sm-3">
-						<h:outputLabel value="Broj dana u kojima postoje pauze:" />
+						<h:outputLabel value="#{msg['restrictions.idles.days']}" />
 					</div>
 				</div>
 
 				<div class="row">
 					<div class="col-sm-3">
 						<h:selectOneMenu id="restrictionIdlesTeacher" required="true"
+							requiredMessage="#{msg['error.missingValue']}"
 							value="#{restrictionsController.newTeacherIdles.teacher}"
-							converter="#{teacherConverter}">
+							converter="#{teacherConverter}" rendered="#{user.type eq 2}"
+							label="Profesor">
 							<f:selectItem itemLabel="#{msg['select.teacher']}"
 								itemValue="#{null}" />
 							<f:selectItems
@@ -470,9 +541,13 @@
 								itemValue="#{teacher}" />
 							<f:ajax event="change" execute="@this" />
 						</h:selectOneMenu>
+
+						<h:outputLabel value="#{user.toString()}"
+							rendered="#{user.type eq 1}" />
 					</div>
 					<div class="col-sm-3">
-						<h:inputText required="true"
+						<h:inputText id="teacherIdlesMax" required="true"
+							requiredMessage="#{msg['error.missingValue']}"
 							value="#{restrictionsController.newTeacherIdles.max}" />
 					</div>
 					<div class="col-sm-3">
@@ -480,8 +555,27 @@
 							value="#{restrictionsController.newTeacherIdles.multiple}" />
 					</div>
 					<div class="col-sm-3">
-						<h:inputText required="true"
+						<h:inputText id="teacherIdlesDays" required="true"
+							requiredMessage="#{msg['error.missingValue']}"
 							value="#{restrictionsController.newTeacherIdles.days}" />
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-sm-3">
+						<rich:message for="restrictionIdlesTeacher" ajaxRendered="true" />
+					</div>
+
+					<div class="col-sm-3">
+						<rich:message for="teacherIdlesMax" ajaxRendered="true" />
+					</div>
+
+					<div class="col-sm-3">
+						<h:outputLabel value="" />
+					</div>
+
+					<div class="col-sm-3">
+						<rich:message for="teacherIdlesDays" ajaxRendered="true" />
 					</div>
 				</div>
 
@@ -517,7 +611,7 @@
 
 			<rich:column sortBy="#{restriction.group.name}">
 				<f:facet name="header">
-					Naziv grupe
+					Grupa
 				</f:facet>
 				<h:outputText value="#{restriction.group.name}" />
 			</rich:column>
@@ -558,7 +652,7 @@
 
 		<a4j:region rendered="#{user.type eq 2}">
 			<div class="page-header">
-				<h4>Unos ograničenja za grupu</h4>
+				<h4>#{msg['subheading.restrictions.group']}</h4>
 			</div>
 
 			<div class="container">
@@ -567,18 +661,19 @@
 						<h:outputLabel value="Izaberite grupu:" />
 					</div>
 					<div class="col-sm-3">
-						<h:outputLabel value="Najmanji broj termina:" />
+						<h:outputLabel value="#{msg['restrictions.loads.min']}" />
 					</div>
 					<div class="col-sm-3">
-						<h:outputLabel value="Najveci broj termina:" />
+						<h:outputLabel value="#{msg['restrictions.loads.max']}" />
 					</div>
 				</div>
 
 				<div class="row">
 					<div class="col-sm-3">
 						<h:selectOneMenu id="restrictionLoadsGroup" required="true"
+							requiredMessage="#{msg['error.missingValue']}"
 							value="#{restrictionsController.newGroupLoad.group}"
-							converter="#{groupConverter}">
+							converter="#{groupConverter}" label="Grupa">
 							<f:selectItem itemLabel="#{msg['select.group']}"
 								itemValue="#{null}" />
 							<f:selectItems value="#{restrictionsController.listAllGroups()}"
@@ -587,12 +682,28 @@
 						</h:selectOneMenu>
 					</div>
 					<div class="col-sm-3">
-						<h:inputText required="true"
+						<h:inputText id="groupLoadMin" required="true"
+							requiredMessage="#{msg['error.missingValue']}"
 							value="#{restrictionsController.newGroupLoad.min}" />
 					</div>
 					<div class="col-sm-3">
-						<h:inputText required="true"
+						<h:inputText id="groupLoadMax" required="true"
+							requiredMessage="#{msg['error.missingValue']}"
 							value="#{restrictionsController.newGroupLoad.max}" />
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-sm-3">
+						<rich:message for="restrictionLoadsGroup" ajaxRendered="true" />
+					</div>
+
+					<div class="col-sm-3">
+						<rich:message for="groupLoadMin" ajaxRendered="true" />
+					</div>
+
+					<div class="col-sm-3">
+						<rich:message for="groupLoadMax" ajaxRendered="true" />
 					</div>
 				</div>
 
@@ -640,7 +751,7 @@
 				<h:outputText value="#{restriction.max}" />
 			</rich:column>
 
-			<rich:column styleClass="text-center" rendered="#{user.type eq 2}">
+			<rich:column styleClass="text-center">
 				<f:facet name="header">
 					Brisanje
 				</f:facet>
@@ -661,9 +772,9 @@
 			</f:facet>
 		</rich:dataTable>
 
-		<a4j:region rendered="#{user.type eq 2}">
+		<a4j:region>
 			<div class="page-header">
-				<h4>Unos ograničenja za profesora</h4>
+				<h4>#{msg['subheading.restrictions.teacher']}</h4>
 			</div>
 
 			<div class="container">
@@ -672,18 +783,20 @@
 						<h:outputLabel value="Izaberite profesora:" />
 					</div>
 					<div class="col-sm-3">
-						<h:outputLabel value="Najmanji broj termina:" />
+						<h:outputLabel value="#{msg['restrictions.loads.min']}" />
 					</div>
 					<div class="col-sm-3">
-						<h:outputLabel value="Najveci broj termina:" />
+						<h:outputLabel value="#{msg['restrictions.loads.max']}" />
 					</div>
 				</div>
 
 				<div class="row">
 					<div class="col-sm-3">
 						<h:selectOneMenu id="restrictionLoadsTeacher" required="true"
+							requiredMessage="#{msg['error.missingValue']}"
 							value="#{restrictionsController.newTeacherLoad.teacher}"
-							converter="#{teacherConverter}">
+							converter="#{teacherConverter}" rendered="#{user.type eq 2}"
+							label="Profesor">
 							<f:selectItem itemLabel="#{msg['select.teacher']}"
 								itemValue="#{null}" />
 							<f:selectItems
@@ -692,14 +805,33 @@
 								itemValue="#{teacher}" />
 							<f:ajax event="change" execute="@this" />
 						</h:selectOneMenu>
+
+						<h:outputLabel value="#{user.toString()}"
+							rendered="#{user.type eq 1}" />
 					</div>
 					<div class="col-sm-3">
-						<h:inputText required="true"
+						<h:inputText id="teacherLoadMin" required="true"
+							requiredMessage="#{msg['error.missingValue']}"
 							value="#{restrictionsController.newTeacherLoad.min}" />
 					</div>
 					<div class="col-sm-3">
-						<h:inputText required="true"
+						<h:inputText id="teacherLoadMax" required="true"
+							requiredMessage="#{msg['error.missingValue']}"
 							value="#{restrictionsController.newTeacherLoad.max}" />
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-sm-3">
+						<rich:message for="restrictionLoadsTeacher" ajaxRendered="true" />
+					</div>
+
+					<div class="col-sm-3">
+						<rich:message for="teacherLoadMin" ajaxRendered="true" />
+					</div>
+
+					<div class="col-sm-3">
+						<rich:message for="teacherLoadMax" ajaxRendered="true" />
 					</div>
 				</div>
 

@@ -154,6 +154,10 @@ public class RestrictionsController {
 	}
 
 	public void addNewNumDaysTeacherRestriction() {
+		if (!loginController.isAdmin()) {
+			newTeacherNumDays.setTeacher(loginController.getUser());
+		}
+
 		boolean numDaysCondition = (newTeacherNumDays.getMin() >= 1)
 				&& (newTeacherNumDays.getOpt() >= newTeacherNumDays.getMin())
 				&& (newTeacherNumDays.getMax() >= newTeacherNumDays.getOpt())
@@ -197,6 +201,10 @@ public class RestrictionsController {
 	}
 
 	public void addIdlesTeacherRestriction() {
+		if (!loginController.isAdmin()) {
+			newTeacherIdles.setTeacher(loginController.getUser());
+		}
+
 		if (newTeacherIdles.getTeacher() != null) {
 			TeacherIdles restrictionToAdd = restrictionsService.addIdlesTeacherRestriction(newTeacherIdles,
 					semesterController.getActiveSemester());
@@ -231,6 +239,10 @@ public class RestrictionsController {
 	}
 
 	public void addLoadTeacherRestriction() {
+		if (!loginController.isAdmin()) {
+			newTeacherLoad.setTeacher(loginController.getUser());
+		}
+
 		if (newTeacherLoad.getTeacher() != null) {
 			TeacherLoad restrictionToAdd = restrictionsService.addLoadTeacherRestriction(newTeacherLoad,
 					semesterController.getActiveSemester());

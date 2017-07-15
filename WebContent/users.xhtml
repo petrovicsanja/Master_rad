@@ -126,12 +126,14 @@
 		<h:panelGrid columns="3" id="userUpdateGrid">
 			<h:outputLabel value="#{msg.firstName}" />
 			<h:inputText id="updateUserName" label="#{msg.firstName}"
-				value="#{usersController.selectedUser.firstName}" required="true" />
+				value="#{usersController.selectedUser.firstName}" required="true"
+				requiredMessage="#{msg['error.missingValue']}" />
 			<rich:message for="updateUserName" ajaxRendered="true" />
 
 			<h:outputLabel value="#{msg.lastName}" />
 			<h:inputText id="updateUserSurname" label="#{msg.lastName}"
-				value="#{usersController.selectedUser.lastName}" required="true" />
+				value="#{usersController.selectedUser.lastName}" required="true"
+				requiredMessage="#{msg['error.missingValue']}" />
 			<rich:message for="updateUserSurname" ajaxRendered="true" />
 
 			<h:outputLabel value="#{msg.username}" />
@@ -140,6 +142,7 @@
 
 			<h:outputLabel value="#{msg.userType}" />
 			<h:selectOneRadio id="updateUserType" required="true"
+				requiredMessage="#{msg['error.missingValue']}"
 				label="#{msg.userType}" value="#{usersController.selectedUser.type}">
 				<f:selectItem itemLabel="#{msg['user.profesor']}" itemValue="1" />
 				<f:selectItem itemLabel="#{msg['user.administrator']}" itemValue="2" />
@@ -171,6 +174,7 @@
 					<div class="col-sm-6">
 						<h:inputText id="newUserName" label="#{msg.firstName}"
 							value="#{usersController.newUser.firstName}" required="true"
+							requiredMessage="#{msg['error.missingValue']}"
 							styleClass="form-control" />
 					</div>
 					<div class="col-sm-3">
@@ -184,6 +188,7 @@
 					<div class="col-sm-6">
 						<h:inputText id="newUserSurname" label="#{msg.lastName}"
 							value="#{usersController.newUser.lastName}" required="true"
+							requiredMessage="#{msg['error.missingValue']}"
 							styleClass="form-control" />
 					</div>
 					<div class="col-sm-3">
@@ -197,6 +202,7 @@
 					<div class="col-sm-6">
 						<h:inputText id="newUserUsername" label="#{msg.username}"
 							value="#{usersController.newUser.username}" required="true"
+							requiredMessage="#{msg['error.missingValue']}"
 							styleClass="form-control" />
 					</div>
 					<div class="col-sm-3">
@@ -210,6 +216,7 @@
 					<div class="col-sm-6">
 						<h:inputSecret id="newUserPassword" label="#{msg.password}"
 							value="#{usersController.newUser.password}" required="true"
+							requiredMessage="#{msg['error.missingValue']}"
 							styleClass="form-control" />
 					</div>
 					<div class="col-sm-3">
@@ -222,6 +229,7 @@
 					</div>
 					<div class="col-sm-6">
 						<h:selectOneRadio id="newUserType" required="true"
+							requiredMessage="#{msg['error.missingValue']}"
 							styleClass="form-check-input" label="Tip korisnika"
 							value="#{usersController.newUser.type}">
 							<f:selectItem id="profesor" itemLabel="#{msg['user.profesor']}"

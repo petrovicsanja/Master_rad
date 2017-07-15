@@ -50,7 +50,7 @@
 				<h:outputText value="#{teacherAvailability.termNumber}" />
 			</rich:column>
 
-			<rich:column styleClass="text-center" rendered="#{user.type eq 2}">
+			<rich:column styleClass="text-center">
 				<f:facet name="header">
 					Brisanje
 				</f:facet>
@@ -72,7 +72,7 @@
 
 		<a4j:region>
 			<div class="page-header">
-				<h3>Unos vrsta termina za nastavnika</h3>
+				<h3>Unos vrsta termina za profesora</h3>
 			</div>
 
 			<div class="container">
@@ -97,7 +97,8 @@
 				<div class="row">
 					<div class="col-sm-3">
 						<h:selectOneMenu id="teacherAvailability" required="true"
-							value="#{availabilitiesController.teacher}"
+							requiredMessage="#{msg['error.missingValue']}"
+							value="#{availabilitiesController.teacher}" label="Profesor"
 							converter="#{teacherConverter}" rendered="#{user.type eq 2}">
 							<f:selectItem itemLabel="#{msg['select.teacher']}"
 								itemValue="#{null}" />
@@ -112,7 +113,9 @@
 							rendered="#{user.type eq 1}" />
 					</div>
 					<div class="col-sm-3">
-						<h:selectOneRadio layout="pageDirection"
+						<h:selectOneRadio id="teacherAvailabilityType"
+							layout="pageDirection" required="true"
+							requiredMessage="#{msg['error.missingValue']}"
 							value="#{availabilitiesController.teacherAvailabilityType}">
 							<f:selectItem itemValue="FORBIDDEN" itemLabel="Zabranjeni" />
 							<f:selectItem itemValue="UNDESIRABLE" itemLabel="Nepozeljni" />
@@ -121,9 +124,10 @@
 						</h:selectOneRadio>
 					</div>
 					<div class="col-sm-3">
-						<h:selectOneRadio
+						<h:selectOneRadio id="teacherAvailabilityDayMark"
 							value="#{availabilitiesController.teacherAvailabilityDayMark}"
-							layout="pageDirection">
+							layout="pageDirection" required="true"
+							requiredMessage="#{msg['error.missingValue']}">
 							<f:selectItems
 								value="#{availabilitiesController.listAllAvailablePeriods()}"
 								var="period" itemValue="#{period.dayMark}"
@@ -136,13 +140,34 @@
 					<div class="col-sm-3">
 						<h:selectManyCheckbox id="teacherAvailabilityTermNumbers"
 							value="#{availabilitiesController.teacherAvailabilityTermNumbers}"
-							layout="pageDirection">
+							layout="pageDirection" required="true"
+							requiredMessage="#{msg['error.missingValue']}">
 							<f:selectItems
 								value="#{availabilitiesController.teacherAvailabilityTermsForSelectedDay}"
 								var="term" itemValue="#{term}" itemLabel="#{term}" />
 						</h:selectManyCheckbox>
 					</div>
 				</div>
+
+				<div class="row">
+					<div class="col-sm-3">
+						<rich:message for="teacherAvailability" ajaxRendered="true" />
+					</div>
+
+					<div class="col-sm-3">
+						<rich:message for="teacherAvailabilityType" ajaxRendered="true" />
+					</div>
+
+					<div class="col-sm-3">
+						<rich:message for="teacherAvailabilityDayMark" ajaxRendered="true" />
+					</div>
+
+					<div class="col-sm-3">
+						<rich:message for="teacherAvailabilityTermNumbers"
+							ajaxRendered="true" />
+					</div>
+				</div>
+
 				<div class="row text-right">
 					<h:commandButton
 						action="#{availabilitiesController.addTeacherAvailability()}"
@@ -219,7 +244,7 @@
 			</f:facet>
 		</rich:dataTable>
 
-		<a4j:region>
+		<a4j:region rendered="#{user.type eq 2}">
 			<div class="page-header">
 				<h3>Unos vrsta termina za grupu</h3>
 			</div>
@@ -246,8 +271,9 @@
 				<div class="row">
 					<div class="col-sm-3">
 						<h:selectOneMenu id="groupAvailability" required="true"
+							requiredMessage="#{msg['error.missingValue']}"
 							value="#{availabilitiesController.group}"
-							converter="#{groupConverter}">
+							converter="#{groupConverter}" label="Grupa">
 							<f:selectItem itemLabel="#{msg['select.group']}"
 								itemValue="#{null}" />
 							<f:selectItems
@@ -257,7 +283,9 @@
 						</h:selectOneMenu>
 					</div>
 					<div class="col-sm-3">
-						<h:selectOneRadio layout="pageDirection"
+						<h:selectOneRadio id="groupAvailabilityType"
+							layout="pageDirection" required="true"
+							requiredMessage="#{msg['error.missingValue']}"
 							value="#{availabilitiesController.groupAvailabilityType}">
 							<f:selectItem itemValue="FORBIDDEN" itemLabel="Zabranjeni" />
 							<f:selectItem itemValue="UNDESIRABLE" itemLabel="Nepozeljni" />
@@ -266,9 +294,10 @@
 						</h:selectOneRadio>
 					</div>
 					<div class="col-sm-3">
-						<h:selectOneRadio
+						<h:selectOneRadio id="groupAvailabilityDayMark"
 							value="#{availabilitiesController.groupAvailabilityDayMark}"
-							layout="pageDirection">
+							layout="pageDirection" required="true"
+							requiredMessage="#{msg['error.missingValue']}">
 							<f:selectItems
 								value="#{availabilitiesController.listAllAvailablePeriods()}"
 								var="period" itemValue="#{period.dayMark}"
@@ -281,13 +310,34 @@
 					<div class="col-sm-3">
 						<h:selectManyCheckbox id="groupAvailabilityTermNumbers"
 							value="#{availabilitiesController.groupAvailabilityTermNumbers}"
-							layout="pageDirection">
+							layout="pageDirection" required="true"
+							requiredMessage="#{msg['error.missingValue']}">
 							<f:selectItems
 								value="#{availabilitiesController.groupAvailabilityTermsForSelectedDay}"
 								var="term" itemValue="#{term}" itemLabel="#{term}" />
 						</h:selectManyCheckbox>
 					</div>
 				</div>
+
+				<div class="row">
+					<div class="col-sm-3">
+						<rich:message for="groupAvailability" ajaxRendered="true" />
+					</div>
+
+					<div class="col-sm-3">
+						<rich:message for="groupAvailabilityType" ajaxRendered="true" />
+					</div>
+
+					<div class="col-sm-3">
+						<rich:message for="groupAvailabilityDayMark" ajaxRendered="true" />
+					</div>
+
+					<div class="col-sm-3">
+						<rich:message for="groupAvailabilityTermNumbers"
+							ajaxRendered="true" />
+					</div>
+				</div>
+
 				<div class="row text-right">
 					<h:commandButton
 						action="#{availabilitiesController.addGroupAvailability()}"
@@ -363,7 +413,7 @@
 			</f:facet>
 		</rich:dataTable>
 
-		<a4j:region>
+		<a4j:region rendered="#{user.type eq 2}">
 			<div class="page-header">
 				<h3>Unos vrsta termina za učionice</h3>
 			</div>
@@ -390,8 +440,9 @@
 				<div class="row">
 					<div class="col-sm-3">
 						<h:selectOneMenu id="roomAvailability" required="true"
+							requiredMessage="#{msg['error.missingValue']}"
 							value="#{availabilitiesController.room}"
-							converter="#{roomConverter}">
+							converter="#{roomConverter}" label="Učionica">
 							<f:selectItem itemLabel="#{msg['select.room']}"
 								itemValue="#{null}" />
 							<f:selectItems value="#{availabilitiesController.listAllRooms()}"
@@ -400,7 +451,8 @@
 						</h:selectOneMenu>
 					</div>
 					<div class="col-sm-3">
-						<h:selectOneRadio layout="pageDirection"
+						<h:selectOneRadio id="roomAvailabilityType" layout="pageDirection"
+							required="true" requiredMessage="#{msg['error.missingValue']}"
 							value="#{availabilitiesController.roomAvailabilityType}">
 							<f:selectItem itemValue="FORBIDDEN" itemLabel="Zabranjeni" />
 							<f:selectItem itemValue="UNDESIRABLE" itemLabel="Nepozeljni" />
@@ -409,9 +461,10 @@
 						</h:selectOneRadio>
 					</div>
 					<div class="col-sm-3">
-						<h:selectOneRadio
+						<h:selectOneRadio id="roomAvailabilityDayMark"
 							value="#{availabilitiesController.roomAvailabilityDayMark}"
-							layout="pageDirection">
+							layout="pageDirection" required="true"
+							requiredMessage="#{msg['error.missingValue']}">
 							<f:selectItems
 								value="#{availabilitiesController.listAllAvailablePeriods()}"
 								var="period" itemValue="#{period.dayMark}"
@@ -424,13 +477,34 @@
 					<div class="col-sm-3">
 						<h:selectManyCheckbox id="roomAvailabilityTermNumbers"
 							value="#{availabilitiesController.roomAvailabilityTermNumbers}"
-							layout="pageDirection">
+							layout="pageDirection" required="true"
+							requiredMessage="#{msg['error.missingValue']}">
 							<f:selectItems
 								value="#{availabilitiesController.roomAvailabilityTermsForSelectedDay}"
 								var="term" itemValue="#{term}" itemLabel="#{term}" />
 						</h:selectManyCheckbox>
 					</div>
 				</div>
+
+				<div class="row">
+					<div class="col-sm-3">
+						<rich:message for="roomAvailability" ajaxRendered="true" />
+					</div>
+
+					<div class="col-sm-3">
+						<rich:message for="roomAvailabilityType" ajaxRendered="true" />
+					</div>
+
+					<div class="col-sm-3">
+						<rich:message for="roomAvailabilityDayMark" ajaxRendered="true" />
+					</div>
+
+					<div class="col-sm-3">
+						<rich:message for="roomAvailabilityTermNumbers"
+							ajaxRendered="true" />
+					</div>
+				</div>
+
 				<div class="row text-right">
 					<h:commandButton
 						action="#{availabilitiesController.addRoomAvailability()}"

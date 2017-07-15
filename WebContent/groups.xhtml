@@ -123,11 +123,13 @@
 			<h:panelGrid id="groupUpdateGrid" columns="3">
 				<h:outputLabel value="#{msg.name}" />
 				<h:inputText id="groupUpdateName" label="#{msg.name}"
-					value="#{groupsController.groupToUpdate.name}" required="true" />
+					value="#{groupsController.groupToUpdate.name}" required="true"
+					requiredMessage="#{msg['error.missingValue']}" />
 				<rich:message for="groupUpdateName" ajaxRendered="true" />
 
 				<h:outputLabel value="Smer kojem grupa pripada" />
 				<h:selectOneMenu id="updateGroupDepartment" required="true"
+					requiredMessage="#{msg['error.missingValue']}"
 					value="#{groupsController.groupToUpdate.department}"
 					converter="#{departmentConverter}">
 					<f:selectItem itemLabel="-- Izaberite smer --" itemValue="#{null}" />
@@ -145,7 +147,8 @@
 
 				<h:outputLabel value="#{msg.mark}" />
 				<h:inputText id="groupUpdateMark" label="#{msg.mark}"
-					value="#{groupsController.groupToUpdate.mark}" required="true" />
+					value="#{groupsController.groupToUpdate.mark}" required="true"
+					requiredMessage="#{msg['error.missingValue']}" />
 				<rich:message for="groupUpdateMark" ajaxRendered="true" />
 
 				<a4j:commandButton action="#{groupsController.updateGroup()}"
@@ -174,6 +177,7 @@
 					<div class="col-sm-6">
 						<h:inputText id="newGroupName" label="#{msg.name}"
 							value="#{groupsController.newGroup.name}" required="true"
+							requiredMessage="#{msg['error.missingValue']}"
 							styleClass="form-control" />
 					</div>
 					<div class="col-sm-3">
@@ -188,6 +192,7 @@
 					</div>
 					<div class="col-sm-6">
 						<h:selectOneMenu id="newGroupDepartment" required="true"
+							requiredMessage="#{msg['error.missingValue']}"
 							styleClass="form-check-input"
 							value="#{groupsController.newGroup.department}"
 							converter="#{departmentConverter}">
@@ -225,6 +230,7 @@
 					<div class="col-sm-6">
 						<h:inputText id="newGroupMark" label="#{msg.mark}"
 							value="#{groupsController.newGroup.mark}" required="true"
+							requiredMessage="#{msg['error.missingValue']}"
 							styleClass="form-control" />
 					</div>
 					<div class="col-sm-3">

@@ -129,12 +129,14 @@
 		<h:panelGrid id="roomUpdateGrid" columns="3">
 			<h:outputLabel value="#{msg['name']}" />
 			<h:inputText id="updateRoomName" label="#{msg['name']}"
-				value="#{roomsController.classroomToUpdate.name}" required="true" />
+				value="#{roomsController.classroomToUpdate.name}" required="true"
+				requiredMessage="#{msg['error.missingValue']}" />
 			<rich:message for="updateRoomName" ajaxRendered="true" />
 
 			<h:outputLabel value="Sprat na kojem se učionica nalazi" />
 			<h:inputText id="updateRoomFloor" label="#{msg.floor}"
-				value="#{roomsController.classroomToUpdate.floor}" required="true" />
+				value="#{roomsController.classroomToUpdate.floor}" required="true"
+				requiredMessage="#{msg['error.missingValue']}" />
 			<rich:message for="updateRoomFloor" ajaxRendered="true" />
 
 			<h:outputLabel value="Zgrada u kojoj se učionica nalazi" />
@@ -149,7 +151,8 @@
 
 			<h:outputLabel value="#{msg.mark}" />
 			<h:inputText id="updateRoomMark" label="#{msg.mark}"
-				value="#{roomsController.classroomToUpdate.mark}" required="true" />
+				value="#{roomsController.classroomToUpdate.mark}" required="true"
+				requiredMessage="#{msg['error.missingValue']}" />
 			<rich:message for="updateRoomMark" ajaxRendered="true" />
 
 			<a4j:commandButton action="#{roomsController.updateClassroom()}"
@@ -176,6 +179,7 @@
 					<div class="col-sm-6">
 						<h:inputText id="newRoomName" label="#{msg.name}"
 							value="#{roomsController.newClassroom.name}" required="true"
+							requiredMessage="#{msg['error.missingValue']}"
 							styleClass="form-control" />
 					</div>
 					<div class="col-sm-3">
@@ -191,6 +195,7 @@
 					<div class="col-sm-6">
 						<h:inputText id="newRoomFloor" label="#{msg.floor}"
 							value="#{roomsController.newClassroom.floor}" required="true"
+							requiredMessage="#{msg['error.missingValue']}"
 							styleClass="form-control" />
 					</div>
 					<div class="col-sm-3">
@@ -232,6 +237,7 @@
 					<div class="col-sm-6">
 						<h:inputText id="newRoomMark" label="#{msg.mark}"
 							value="#{roomsController.newClassroom.mark}" required="true"
+							requiredMessage="#{msg['error.missingValue']}"
 							styleClass="form-control" />
 					</div>
 					<div class="col-sm-3">

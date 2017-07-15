@@ -17,7 +17,8 @@
 				<div class="col-sm-3">
 					<h:selectOneMenu
 						value="#{lessonsController.lessonsSearchSubjectId}"
-						required="true" label="Izbor predmeta">
+						required="true" requiredMessage="#{msg['error.missingValue']}"
+						label="Izbor predmeta">
 						<f:selectItem itemLabel="#{msg['select.subject']}"
 							itemValue="#{null}" />
 						<f:selectItems value="#{lessonsController.listAllSubjects()}"
@@ -28,7 +29,7 @@
 				<div class="col-sm-3">
 					<h:commandButton
 						action="#{lessonsController.listLessonsForSubject()}"
-						value="Pretrazi" styleClass="btn btn-sm btn-primary">
+						value="Pretraži" styleClass="btn btn-sm btn-primary">
 						<a4j:ajax render="@form" />
 					</h:commandButton>
 				</div>
@@ -72,7 +73,7 @@
 
 			<rich:column>
 				<f:facet name="header">
-					Fond casova
+					Fond časova
 				</f:facet>
 				<h:outputText value="#{lesson.terms}" />
 			</rich:column>
@@ -99,7 +100,7 @@
 				</f:facet>
 				<a4j:commandLink
 					oncomplete="#{rich:component('deleteLessonConfirmation')}.show()"
-					execute="@this" render="@none" title="Obriši ogranicenje za grupu">
+					execute="@this" render="@none" title="#{msg['element.delete']}">
 					<h:graphicImage value="/images/delete.png" alt="delete" />
 					<a4j:param value="#{it.index}"
 						assignTo="#{lessonsController.selectedLessonIndex}" />
@@ -123,7 +124,7 @@
 				onclick="#{rich:component('deleteLessonConfirmation')}.hide(); return false;"
 				style="color: inherit"> X </h:outputLink>
 		</f:facet>
-		<p>Da li ste sigurni da želite da obrišete cas?</p>
+		<p>#{msg['lesson.delete.confirmation']}</p>
 		<a4j:commandButton action="#{lessonsController.deleteLesson()}"
 			value="Obriši"
 			oncomplete="#{rich:component('deleteLessonConfirmation')}.hide();">
@@ -148,6 +149,7 @@
 					<div class="col-sm-6">
 						<h:selectOneMenu id="lessonSubject"
 							value="#{lessonsController.subject}" required="true"
+							requiredMessage="#{msg['error.missingValue']}"
 							label="Izbor predmeta" converter="#{subjectConverter}">
 							<f:selectItem itemLabel="#{msg['select.subject']}"
 								itemValue="#{null}" />
@@ -170,6 +172,7 @@
 					<div class="col-sm-3">
 						<h:selectOneMenu id="lessonTeacher" styleClass="col-sm-9"
 							value="#{lessonsController.teacher}" required="true"
+							requiredMessage="#{msg['error.missingValue']}"
 							label="Izbor profesora" converter="#{teacherConverter}">
 							<f:selectItem itemLabel="#{msg['select.teacher']}"
 								itemValue="#{null}" />
@@ -207,6 +210,7 @@
 					<div class="col-sm-3">
 						<h:selectOneMenu id="lessonGroup" styleClass="col-sm-9"
 							value="#{lessonsController.group}" required="true"
+							requiredMessage="#{msg['error.missingValue']}"
 							label="Izbor grupe" converter="#{groupConverter}">
 							<f:selectItem itemLabel="#{msg['select.group']}"
 								itemValue="#{null}" />
@@ -240,9 +244,13 @@
 						<h:outputLabel value="Unesite termine:"
 							styleClass="col-form-label" />
 					</div>
-					<div class="col-sm-6">
+					<div class="col-sm-3">
 						<h:inputText id="lessonTerms" value="#{lessonsController.terms}"
-							required="true" label="Unos termina" />
+							required="true" requiredMessage="#{msg['error.missingValue']}"
+							label="Unos termina" />
+					</div>
+					<div class="col-sm-3">
+						<h:outputLabel value="#{msg['lesson.periods.example']}" />
 					</div>
 					<div class="col-sm-3">
 						<rich:message for="lessonTerms" ajaxRendered="true" />
@@ -267,6 +275,7 @@
 						<rich:pickList value="#{lessonsController.selectedRooms}"
 							var="room" listHeight="200px" listWidth="400px"
 							converter="#{roomConverter}" required="true"
+							requiredMessage="#{msg['error.missingValue']}"
 							addAllText="Dodaj sve" addText="Dodaj" removeAllText="Ukloni sve"
 							removeText="Ukloni">
 							<f:selectItems value="#{lessonsController.listAllRooms()}" />
