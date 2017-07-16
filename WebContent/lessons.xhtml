@@ -94,6 +94,22 @@
 				<h:outputText value="#{lesson.note}" />
 			</rich:column>
 
+			<rich:column styleClass="text-center">
+				<f:facet name="header">
+					Status
+				</f:facet>
+				<a4j:commandButton styleClass="btn btn-sm btn-primary"
+					rendered="#{not lesson.approved and user.type eq 2}"
+					action="#{lessonsController.approveLesson()}" value="Odobri"
+					execute="@this" render="subjectLessonsList">
+					<a4j:param value="#{it.index}"
+						assignTo="#{lessonsController.selectedLessonIndex}" />
+				</a4j:commandButton>
+				<h:outputLabel rendered="#{not lesson.approved and user.type eq 1}"
+					value="Na čekanju" />
+				<h:outputLabel rendered="#{lesson.approved}" value="Odobreno" />
+			</rich:column>
+
 			<rich:column styleClass="text-center" rendered="#{user.type eq 2}">
 				<f:facet name="header">
 					Brisanje

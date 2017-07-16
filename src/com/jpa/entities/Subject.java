@@ -21,6 +21,9 @@ public class Subject {
 	@NotNull
 	private String mark;
 
+	@NotNull
+	private Boolean obligatory;
+
 	public Long getId() {
 		return id;
 	}
@@ -43,6 +46,14 @@ public class Subject {
 
 	public void setMark(String mark) {
 		this.mark = mark;
+	}
+
+	public Boolean getObligatory() {
+		return obligatory;
+	}
+
+	public void setObligatory(Boolean obligatory) {
+		this.obligatory = obligatory;
 	}
 
 	@Override

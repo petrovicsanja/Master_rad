@@ -19,8 +19,9 @@ public interface PeriodsService {
 	 * 
 	 * @param termsOfPeriods
 	 * @param termLength
+	 * @param termsStartTime
 	 */
-	public void addPeriods(HashMap<String, Integer> termsOfPeriods, Integer termLength);
+	public void addPeriods(HashMap<String, Integer> termsOfPeriods, Integer termLength, String termsStartTime);
 
 	/**
 	 * Listing all periods

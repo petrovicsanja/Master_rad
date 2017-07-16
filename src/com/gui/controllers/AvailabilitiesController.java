@@ -1,7 +1,9 @@
 package com.gui.controllers;
 
-import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -16,6 +18,7 @@ import com.jpa.entities.Room;
 import com.jpa.entities.RoomAvailability;
 import com.jpa.entities.TeacherAvailability;
 import com.jpa.entities.User;
+import com.jpa.entities.enums.AvailabilityType;
 
 @ManagedBean
 @ViewScoped
@@ -44,29 +47,29 @@ public class AvailabilitiesController {
 
 	// Teacher availability
 	private User teacher = null;
-	private String teacherAvailabilityDayMark;
+	private String teacherAvailabilityDayMark = null;
 	private Integer[] teacherAvailabilityTermNumbers;
-	private String teacherAvailabilityType;
+	private String teacherAvailabilityType = null;
 
-	private List<Integer> teacherAvailabilityTermsForSelectedDay = null;
+	private Map<Integer, String> teacherAvailabilityTermsForSelectedDay = null;
 	private List<TeacherAvailability> allTeacherAvailabilities = null;
 
 	// Group availability
 	private Group group = null;
-	private String groupAvailabilityDayMark;
+	private String groupAvailabilityDayMark = null;
 	private Integer[] groupAvailabilityTermNumbers;
-	private String groupAvailabilityType;
+	private String groupAvailabilityType = null;
 
-	private List<Integer> groupAvailabilityTermsForSelectedDay = null;
+	private Map<Integer, String> groupAvailabilityTermsForSelectedDay = null;
 	private List<GroupAvailability> allGroupAvailabilities = null;
 
 	// Room availability
 	private Room room = null;
-	private String roomAvailabilityDayMark;
+	private String roomAvailabilityDayMark = null;
 	private Integer[] roomAvailabilityTermNumbers;
-	private String roomAvailabilityType;
+	private String roomAvailabilityType = null;
 
-	private List<Integer> roomAvailabilityTermsForSelectedDay = null;
+	private Map<Integer, String> roomAvailabilityTermsForSelectedDay = null;
 	private List<RoomAvailability> allRoomAvailabilities = null;
 
 	// Indexes for deleting
@@ -90,19 +93,21 @@ public class AvailabilitiesController {
 	}
 
 	public void clearData(String objectType) {
-		if (objectType.equals("teacher")) {
+		if (objectType.equals("teacher") || objectType.equals("all")) {
 			teacher = null;
 			teacherAvailabilityType = null;
 			teacherAvailabilityDayMark = null;
 			teacherAvailabilityTermNumbers = null;
 			teacherAvailabilityTermsForSelectedDay = null;
-		} else if (objectType.equals("group")) {
+		}
+		if (objectType.equals("group") || objectType.equals("all")) {
 			group = null;
 			groupAvailabilityType = null;
 			groupAvailabilityDayMark = null;
 			groupAvailabilityTermNumbers = null;
 			groupAvailabilityTermsForSelectedDay = null;
-		} else {
+		}
+		if (objectType.equals("room") || objectType.equals("all")) {
 			room = null;
 			roomAvailabilityType = null;
 			roomAvailabilityDayMark = null;
@@ -116,13 +121,15 @@ public class AvailabilitiesController {
 			if (teacherAvailabilityTermsForSelectedDay != null) {
 				teacherAvailabilityTermsForSelectedDay.clear();
 			} else {
-				teacherAvailabilityTermsForSelectedDay = new ArrayList<>();
+				teacherAvailabilityTermsForSelectedDay = new LinkedHashMap<Integer, String>();
 			}
 
 			for (Period period : listAllAvailablePeriods()) {
 				if (period.getDayMark().equals(teacherAvailabilityDayMark)) {
+					List<String> termsTimeList = Arrays.asList(period.getTermsTime().split(","));
+
 					for (int i = 0; i < period.getTermsNumber(); i++) {
-						teacherAvailabilityTermsForSelectedDay.add(i + 1);
+						teacherAvailabilityTermsForSelectedDay.put(i + 1, termsTimeList.get(i).trim());
 					}
 					break;
 				}
@@ -135,13 +142,15 @@ public class AvailabilitiesController {
 			if (groupAvailabilityTermsForSelectedDay != null) {
 				groupAvailabilityTermsForSelectedDay.clear();
 			} else {
-				groupAvailabilityTermsForSelectedDay = new ArrayList<>();
+				groupAvailabilityTermsForSelectedDay = new LinkedHashMap<Integer, String>();
 			}
 
 			for (Period period : listAllAvailablePeriods()) {
 				if (period.getDayMark().equals(groupAvailabilityDayMark)) {
+					List<String> termsTimeList = Arrays.asList(period.getTermsTime().split(","));
+
 					for (int i = 0; i < period.getTermsNumber(); i++) {
-						groupAvailabilityTermsForSelectedDay.add(i + 1);
+						groupAvailabilityTermsForSelectedDay.put(i + 1, termsTimeList.get(i).trim());
 					}
 					break;
 				}
@@ -154,13 +163,15 @@ public class AvailabilitiesController {
 			if (roomAvailabilityTermsForSelectedDay != null) {
 				roomAvailabilityTermsForSelectedDay.clear();
 			} else {
-				roomAvailabilityTermsForSelectedDay = new ArrayList<>();
+				roomAvailabilityTermsForSelectedDay = new LinkedHashMap<Integer, String>();
 			}
 
 			for (Period period : listAllAvailablePeriods()) {
 				if (period.getDayMark().equals(roomAvailabilityDayMark)) {
+					List<String> termsTimeList = Arrays.asList(period.getTermsTime().split(","));
+
 					for (int i = 0; i < period.getTermsNumber(); i++) {
-						roomAvailabilityTermsForSelectedDay.add(i + 1);
+						roomAvailabilityTermsForSelectedDay.put(i + 1, termsTimeList.get(i).trim());
 					}
 					break;
 				}
@@ -247,6 +258,30 @@ public class AvailabilitiesController {
 		}
 	}
 
+	public String getAvailabilityTypeValue(String availabilityType) {
+		if (availabilityType.equals(AvailabilityType.DESIRABLE.toString())) {
+			return "Poželjni";
+		} else if (availabilityType.equals(AvailabilityType.FORBIDDEN.toString())) {
+			return "Zabranjeni";
+		} else if (availabilityType.equals(AvailabilityType.MANDATORY.toString())) {
+			return "Obavezni";
+		} else if (availabilityType.equals(AvailabilityType.UNDESIRABLE.toString())) {
+			return "Nepoželjni";
+		} else {
+			return "Obični";
+		}
+	}
+
+	public String getTermTime(int termNumber) {
+		List<Period> allAvailablePeriods = listAllAvailablePeriods();
+		if (allAvailablePeriods != null) {
+			List<String> termsTimeList = Arrays.asList(allAvailablePeriods.get(0).getTermsTime().split(","));
+
+			return termNumber + ". " + termsTimeList.get(termNumber - 1).trim();
+		}
+		return "";
+	}
+
 	/* Getters and setters */
 
 	public User getTeacher() {
@@ -263,14 +298,6 @@ public class AvailabilitiesController {
 
 	public void setTeacherAvailabilityDayMark(String teacherAvailabilityDayMark) {
 		this.teacherAvailabilityDayMark = teacherAvailabilityDayMark;
-	}
-
-	public List<Integer> getTeacherAvailabilityTermsForSelectedDay() {
-		return teacherAvailabilityTermsForSelectedDay;
-	}
-
-	public void setTeacherAvailabilityTermsForSelectedDay(List<Integer> teacherAvailabilityTermsForSelectedDay) {
-		this.teacherAvailabilityTermsForSelectedDay = teacherAvailabilityTermsForSelectedDay;
 	}
 
 	public Group getGroup() {
@@ -353,14 +380,6 @@ public class AvailabilitiesController {
 		this.groupAvailabilityType = groupAvailabilityType;
 	}
 
-	public List<Integer> getGroupAvailabilityTermsForSelectedDay() {
-		return groupAvailabilityTermsForSelectedDay;
-	}
-
-	public void setGroupAvailabilityTermsForSelectedDay(List<Integer> groupAvailabilityTermsForSelectedDay) {
-		this.groupAvailabilityTermsForSelectedDay = groupAvailabilityTermsForSelectedDay;
-	}
-
 	public String getRoomAvailabilityDayMark() {
 		return roomAvailabilityDayMark;
 	}
@@ -385,14 +404,6 @@ public class AvailabilitiesController {
 		this.roomAvailabilityType = roomAvailabilityType;
 	}
 
-	public List<Integer> getRoomAvailabilityTermsForSelectedDay() {
-		return roomAvailabilityTermsForSelectedDay;
-	}
-
-	public void setRoomAvailabilityTermsForSelectedDay(List<Integer> roomAvailabilityTermsForSelectedDay) {
-		this.roomAvailabilityTermsForSelectedDay = roomAvailabilityTermsForSelectedDay;
-	}
-
 	public int getSelectedAvailabilityIndex() {
 		return selectedAvailabilityIndex;
 	}
@@ -407,5 +418,29 @@ public class AvailabilitiesController {
 
 	public void setAvailabilityObject(String availabilityObject) {
 		this.availabilityObject = availabilityObject;
+	}
+
+	public Map<Integer, String> getTeacherAvailabilityTermsForSelectedDay() {
+		return teacherAvailabilityTermsForSelectedDay;
+	}
+
+	public void setTeacherAvailabilityTermsForSelectedDay(Map<Integer, String> teacherAvailabilityTermsForSelectedDay) {
+		this.teacherAvailabilityTermsForSelectedDay = teacherAvailabilityTermsForSelectedDay;
+	}
+
+	public Map<Integer, String> getGroupAvailabilityTermsForSelectedDay() {
+		return groupAvailabilityTermsForSelectedDay;
+	}
+
+	public void setGroupAvailabilityTermsForSelectedDay(Map<Integer, String> groupAvailabilityTermsForSelectedDay) {
+		this.groupAvailabilityTermsForSelectedDay = groupAvailabilityTermsForSelectedDay;
+	}
+
+	public Map<Integer, String> getRoomAvailabilityTermsForSelectedDay() {
+		return roomAvailabilityTermsForSelectedDay;
+	}
+
+	public void setRoomAvailabilityTermsForSelectedDay(Map<Integer, String> roomAvailabilityTermsForSelectedDay) {
+		this.roomAvailabilityTermsForSelectedDay = roomAvailabilityTermsForSelectedDay;
 	}
 }

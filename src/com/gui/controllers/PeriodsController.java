@@ -27,6 +27,7 @@ public class PeriodsController {
 	private Integer termsFriday = null;
 	private Integer termsSaturday = null;
 	private Integer termsSunday = null;
+	private String termsTime = null;
 	private List<Period> allPeriods = null;
 
 	@PostConstruct
@@ -58,8 +59,9 @@ public class PeriodsController {
 		termsOfPeriods.put("Nedelja", termsSunday);
 		termsSunday = null;
 
-		periodsService.addPeriods(termsOfPeriods, termLength);
+		periodsService.addPeriods(termsOfPeriods, termLength, termsTime);
 		allPeriods = periodsService.listAllPeriods();
+		termsTime = null;
 	}
 
 	public List<Period> listAllPeriods() {
@@ -145,6 +147,14 @@ public class PeriodsController {
 
 	public void setTermsSunday(Integer termsSunday) {
 		this.termsSunday = termsSunday;
+	}
+
+	public String getTermsTime() {
+		return termsTime;
+	}
+
+	public void setTermsTime(String termsStartTime) {
+		this.termsTime = termsStartTime;
 	}
 
 	public List<Period> getAllPeriods() {

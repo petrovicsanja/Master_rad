@@ -26,7 +26,7 @@ public class PeriodsServiceImpl implements PeriodsService {
 	private EntityManager em;
 
 	@Override
-	public void addPeriods(HashMap<String, Integer> termsOfPeriods, Integer termLength) {
+	public void addPeriods(HashMap<String, Integer> termsOfPeriods, Integer termLength, String termsStartTime) {
 		for (Map.Entry<String, Integer> entry : termsOfPeriods.entrySet()) {
 			if (entry.getValue() != null) {
 				Period period = getPeriodByDay(entry.getKey());
@@ -37,6 +37,7 @@ public class PeriodsServiceImpl implements PeriodsService {
 				period.setDayMark(entry.getKey().substring(0, 3).toLowerCase());
 				period.setTermsNumber(entry.getValue());
 				period.setTermLength(termLength);
+				period.setTermsTime(termsStartTime);
 				em.persist(period);
 				System.out.println(entry.getValue() + " terms are saved for " + entry.getKey().toLowerCase());
 			}

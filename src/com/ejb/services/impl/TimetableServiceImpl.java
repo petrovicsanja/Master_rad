@@ -186,8 +186,9 @@ public class TimetableServiceImpl implements TimetableService {
 		StringBuffer lessons = new StringBuffer("[lessons]");
 		lessons.append("\n");
 
-		TypedQuery<Lesson> lessonList = em
-				.createQuery("SELECT l FROM Lesson l WHERE l.semester.id = :semesterId ORDER BY l.id", Lesson.class);
+		TypedQuery<Lesson> lessonList = em.createQuery(
+				"SELECT l FROM Lesson l WHERE l.semester.id = :semesterId AND l.approved = 1 ORDER BY l.id",
+				Lesson.class);
 		lessonList.setParameter("semesterId", semesterId);
 
 		for (Lesson lesson : lessonList.getResultList()) {
@@ -261,22 +262,22 @@ public class TimetableServiceImpl implements TimetableService {
 			teacherAvailabilityList.setParameter("teacherId", teacherId);
 
 			for (TeacherAvailability teacherAvailability : teacherAvailabilityList.getResultList()) {
-				if (teacherAvailability.getType().equals(AvailabilityType.FORBIDDEN.toString())) {
+				if (teacherAvailability.getType().equals(AvailabilityType.FORBIDDEN)) {
 					if (forbidden.length() > 0) {
 						forbidden.append(",");
 					}
 					forbidden.append(teacherAvailability.getDayMark() + "_" + teacherAvailability.getTermNumber());
-				} else if (teacherAvailability.getType().equals(AvailabilityType.UNDESIRABLE.toString())) {
+				} else if (teacherAvailability.getType().equals(AvailabilityType.UNDESIRABLE)) {
 					if (undesirable.length() > 0) {
 						undesirable.append(",");
 					}
 					undesirable.append(teacherAvailability.getDayMark() + "_" + teacherAvailability.getTermNumber());
-				} else if (teacherAvailability.getType().equals(AvailabilityType.DESIRABLE.toString())) {
+				} else if (teacherAvailability.getType().equals(AvailabilityType.DESIRABLE)) {
 					if (desirable.length() > 0) {
 						desirable.append(",");
 					}
 					desirable.append(teacherAvailability.getDayMark() + "_" + teacherAvailability.getTermNumber());
-				} else if (teacherAvailability.getType().equals(AvailabilityType.MANDATORY.toString())) {
+				} else if (teacherAvailability.getType().equals(AvailabilityType.MANDATORY)) {
 					if (mandatory.length() > 0) {
 						mandatory.append(",");
 					}

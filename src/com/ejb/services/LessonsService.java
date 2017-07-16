@@ -30,10 +30,11 @@ public interface LessonsService {
 	 * @param rooms
 	 * @param note
 	 * @param activeSemester
+	 * @param isAdmin
 	 * @return Lesson
 	 */
 	Lesson addLesson(Set<User> teachers, Set<Group> groups, Subject subject, String terms, Set<Room> rooms, String note,
-			Semester activeSemester);
+			Semester activeSemester, boolean isAdmin);
 
 	/**
 	 * List all lessons
@@ -50,4 +51,11 @@ public interface LessonsService {
 	 * @param lessonId
 	 */
 	void deleteLesson(Long lessonId);
+
+	/**
+	 * Approving lesson by administrator
+	 * 
+	 * @param lessonId
+	 */
+	void approveLesson(Long lessonId);
 }

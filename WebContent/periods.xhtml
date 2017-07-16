@@ -14,6 +14,11 @@
 			<h:outputLabel value=" - " />
 			<h:outputText value="#{period.termsNumber}" />
 		</rich:list>
+
+		<h:outputLabel value="Vreme trajanja termina:" />
+		<br />
+		<h:outputLabel rendered="#{periodsController.allPeriods.size() gt 0}"
+			value="#{periodsController.allPeriods.get(0).termsTime}" />
 	</rich:panel>
 
 	<rich:panel header="Unos i izmena termina" rendered="#{user.type eq 2}"
@@ -55,6 +60,12 @@
 			<h:outputLabel value="Nedelja: " />
 			<h:inputText value="#{periodsController.termsSunday}" />
 			<h:outputLabel value="" />
+
+			<h:outputLabel value="#{msg['periods.startTime']}" />
+			<h:inputTextarea id="termsTime" rows="4" cols="30"
+				value="#{periodsController.termsTime}" required="true"
+				requiredMessage="#{msg['error.missingValue']}" />
+			<rich:message for="termsTime" ajaxRendered="true" />
 
 			<h:commandButton value="#{msg['element.save']}"
 				action="#{periodsController.addPeriods()}"

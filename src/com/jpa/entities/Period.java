@@ -26,6 +26,9 @@ public class Period {
 
 	private Integer termLength;
 
+	@NotNull
+	private String termsTime;
+
 	public Long getId() {
 		return id;
 	}
@@ -64,5 +67,13 @@ public class Period {
 
 	public void setTermLength(Integer termLength) {
 		this.termLength = termLength;
+	}
+
+	public String getTermsTime() {
+		return termsTime;
+	}
+
+	public void setTermsTime(String termsTime) {
+		this.termsTime = termsTime;
 	}
 }

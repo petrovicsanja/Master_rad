@@ -33,7 +33,8 @@
 				<f:facet name="header">
 					Tip termina
 				</f:facet>
-				<h:outputText value="#{teacherAvailability.type}" />
+				<h:outputText
+					value="#{availabilitiesController.getAvailabilityTypeValue(teacherAvailability.type)}" />
 			</rich:column>
 
 			<rich:column id="dayMarkColumn">
@@ -45,9 +46,10 @@
 
 			<rich:column id="termNumberColumn">
 				<f:facet name="header">
-					Redni broj termina
+					Redni broj i trajanje termina
 				</f:facet>
-				<h:outputText value="#{teacherAvailability.termNumber}" />
+				<h:outputText
+					value="#{availabilitiesController.getTermTime(teacherAvailability.termNumber)}" />
 			</rich:column>
 
 			<rich:column styleClass="text-center">
@@ -117,10 +119,14 @@
 							layout="pageDirection" required="true"
 							requiredMessage="#{msg['error.missingValue']}"
 							value="#{availabilitiesController.teacherAvailabilityType}">
-							<f:selectItem itemValue="FORBIDDEN" itemLabel="Zabranjeni" />
-							<f:selectItem itemValue="UNDESIRABLE" itemLabel="Nepozeljni" />
-							<f:selectItem itemValue="DESIRABLE" itemLabel="Pozeljni" />
-							<f:selectItem itemValue="MANDATORY" itemLabel="Obavezni" />
+							<f:selectItem itemValue="FORBIDDEN"
+								itemLabel="#{availabilitiesController.getAvailabilityTypeValue('FORBIDDEN')}" />
+							<f:selectItem itemValue="UNDESIRABLE"
+								itemLabel="#{availabilitiesController.getAvailabilityTypeValue('UNDESIRABLE')}" />
+							<f:selectItem itemValue="DESIRABLE"
+								itemLabel="#{availabilitiesController.getAvailabilityTypeValue('DESIRABLE')}" />
+							<f:selectItem itemValue="MANDATORY"
+								itemLabel="#{availabilitiesController.getAvailabilityTypeValue('MANDATORY')}" />
 						</h:selectOneRadio>
 					</div>
 					<div class="col-sm-3">
@@ -143,8 +149,8 @@
 							layout="pageDirection" required="true"
 							requiredMessage="#{msg['error.missingValue']}">
 							<f:selectItems
-								value="#{availabilitiesController.teacherAvailabilityTermsForSelectedDay}"
-								var="term" itemValue="#{term}" itemLabel="#{term}" />
+								value="#{availabilitiesController.teacherAvailabilityTermsForSelectedDay.entrySet()}"
+								var="term" itemValue="#{term.key}" itemLabel="#{term.value}" />
 						</h:selectManyCheckbox>
 					</div>
 				</div>
@@ -172,7 +178,8 @@
 					<h:commandButton
 						action="#{availabilitiesController.addTeacherAvailability()}"
 						value="#{msg['element.save']}" styleClass="btn btn-sm btn-primary">
-						<a4j:ajax render="@form" />
+						<a4j:ajax
+							render=":teacherAvailabilitiesList teacherAvailability teacherAvailabilityType teacherAvailabilityDayMark teacherAvailabilityTermNumbers" />
 					</h:commandButton>
 				</div>
 			</div>
@@ -207,7 +214,8 @@
 				<f:facet name="header">
 					Tip termina
 				</f:facet>
-				<h:outputText value="#{groupAvailability.type}" />
+				<h:outputText
+					value="#{availabilitiesController.getAvailabilityTypeValue(groupAvailability.type)}" />
 			</rich:column>
 
 			<rich:column id="dayMarkColumn">
@@ -287,10 +295,14 @@
 							layout="pageDirection" required="true"
 							requiredMessage="#{msg['error.missingValue']}"
 							value="#{availabilitiesController.groupAvailabilityType}">
-							<f:selectItem itemValue="FORBIDDEN" itemLabel="Zabranjeni" />
-							<f:selectItem itemValue="UNDESIRABLE" itemLabel="Nepozeljni" />
-							<f:selectItem itemValue="DESIRABLE" itemLabel="Pozeljni" />
-							<f:selectItem itemValue="MANDATORY" itemLabel="Obavezni" />
+							<f:selectItem itemValue="FORBIDDEN"
+								itemLabel="#{availabilitiesController.getAvailabilityTypeValue('FORBIDDEN')}" />
+							<f:selectItem itemValue="UNDESIRABLE"
+								itemLabel="#{availabilitiesController.getAvailabilityTypeValue('UNDESIRABLE')}" />
+							<f:selectItem itemValue="DESIRABLE"
+								itemLabel="#{availabilitiesController.getAvailabilityTypeValue('DESIRABLE')}" />
+							<f:selectItem itemValue="MANDATORY"
+								itemLabel="#{availabilitiesController.getAvailabilityTypeValue('MANDATORY')}" />
 						</h:selectOneRadio>
 					</div>
 					<div class="col-sm-3">
@@ -313,8 +325,8 @@
 							layout="pageDirection" required="true"
 							requiredMessage="#{msg['error.missingValue']}">
 							<f:selectItems
-								value="#{availabilitiesController.groupAvailabilityTermsForSelectedDay}"
-								var="term" itemValue="#{term}" itemLabel="#{term}" />
+								value="#{availabilitiesController.groupAvailabilityTermsForSelectedDay.entrySet()}"
+								var="term" itemValue="#{term.key}" itemLabel="#{term.value}" />
 						</h:selectManyCheckbox>
 					</div>
 				</div>
@@ -342,7 +354,8 @@
 					<h:commandButton
 						action="#{availabilitiesController.addGroupAvailability()}"
 						value="#{msg['element.save']}" styleClass="btn btn-sm btn-primary">
-						<a4j:ajax render="@form" />
+						<a4j:ajax
+							render=":groupAvailabilitiesList groupAvailability groupAvailabilityType groupAvailabilityDayMark groupAvailabilityTermNumbers" />
 					</h:commandButton>
 				</div>
 			</div>
@@ -376,7 +389,8 @@
 				<f:facet name="header">
 					Tip termina
 				</f:facet>
-				<h:outputText value="#{roomAvailability.type}" />
+				<h:outputText
+					value="#{availabilitiesController.getAvailabilityTypeValue(roomAvailability.type)}" />
 			</rich:column>
 
 			<rich:column id="dayMarkColumn">
@@ -454,10 +468,14 @@
 						<h:selectOneRadio id="roomAvailabilityType" layout="pageDirection"
 							required="true" requiredMessage="#{msg['error.missingValue']}"
 							value="#{availabilitiesController.roomAvailabilityType}">
-							<f:selectItem itemValue="FORBIDDEN" itemLabel="Zabranjeni" />
-							<f:selectItem itemValue="UNDESIRABLE" itemLabel="Nepozeljni" />
-							<f:selectItem itemValue="DESIRABLE" itemLabel="Pozeljni" />
-							<f:selectItem itemValue="MANDATORY" itemLabel="Obavezni" />
+							<f:selectItem itemValue="FORBIDDEN"
+								itemLabel="#{availabilitiesController.getAvailabilityTypeValue('FORBIDDEN')}" />
+							<f:selectItem itemValue="UNDESIRABLE"
+								itemLabel="#{availabilitiesController.getAvailabilityTypeValue('UNDESIRABLE')}" />
+							<f:selectItem itemValue="DESIRABLE"
+								itemLabel="#{availabilitiesController.getAvailabilityTypeValue('DESIRABLE')}" />
+							<f:selectItem itemValue="MANDATORY"
+								itemLabel="#{availabilitiesController.getAvailabilityTypeValue('MANDATORY')}" />
 						</h:selectOneRadio>
 					</div>
 					<div class="col-sm-3">
@@ -480,8 +498,8 @@
 							layout="pageDirection" required="true"
 							requiredMessage="#{msg['error.missingValue']}">
 							<f:selectItems
-								value="#{availabilitiesController.roomAvailabilityTermsForSelectedDay}"
-								var="term" itemValue="#{term}" itemLabel="#{term}" />
+								value="#{availabilitiesController.roomAvailabilityTermsForSelectedDay.entrySet()}"
+								var="term" itemValue="#{term.key}" itemLabel="#{term.value}" />
 						</h:selectManyCheckbox>
 					</div>
 				</div>
@@ -509,7 +527,8 @@
 					<h:commandButton
 						action="#{availabilitiesController.addRoomAvailability()}"
 						value="#{msg['element.save']}" styleClass="btn btn-sm btn-primary">
-						<a4j:ajax render="@form" />
+						<a4j:ajax
+							render=":roomAvailabilitiesList roomAvailability roomAvailabilityType roomAvailabilityDayMark roomAvailabilityTermNumbers" />
 					</h:commandButton>
 				</div>
 			</div>

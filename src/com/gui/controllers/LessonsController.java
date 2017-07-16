@@ -39,6 +39,9 @@ public class LessonsController {
 	@ManagedProperty(value = "#{semesterController}")
 	private SemesterController semesterController;
 
+	@ManagedProperty(value = "#{loginController}")
+	private LoginController loginController;
+
 	private Long lessonsSearchSubjectId;
 	private List<Lesson> subjectLessonsList;
 
@@ -109,7 +112,7 @@ public class LessonsController {
 	public void addLesson() {
 		Lesson newLesson = lessonsService.addLesson(new HashSet<User>(selectedTeachers),
 				new HashSet<Group>(selectedGroups), subject, terms, new HashSet<Room>(selectedRooms), note,
-				semesterController.getActiveSemester());
+				semesterController.getActiveSemester(), loginController.isAdmin());
 
 		if (lessonsSearchSubjectId != null && lessonsSearchSubjectId.equals(subject.getId())) {
 			subjectLessonsList.add(newLesson);
@@ -122,6 +125,12 @@ public class LessonsController {
 		Lesson lessonToDelete = subjectLessonsList.get(selectedLessonIndex);
 		lessonsService.deleteLesson(lessonToDelete.getId());
 		subjectLessonsList.remove(selectedLessonIndex);
+	}
+
+	public void approveLesson() {
+		Lesson lessonToApprove = subjectLessonsList.get(selectedLessonIndex);
+		lessonsService.approveLesson(lessonToApprove.getId());
+		lessonToApprove.setApproved(true);
 	}
 
 	/*
@@ -226,6 +235,10 @@ public class LessonsController {
 
 	public void setSemesterController(SemesterController semesterController) {
 		this.semesterController = semesterController;
+	}
+
+	public void setLoginController(LoginController loginController) {
+		this.loginController = loginController;
 	}
 
 	public int getSelectedLessonIndex() {

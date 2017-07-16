@@ -48,6 +48,9 @@ public class Lesson {
 	@NotNull
 	private Semester semester;
 
+	@NotNull
+	private Boolean approved;
+
 	public Long getId() {
 		return id;
 	}
@@ -110,5 +113,13 @@ public class Lesson {
 
 	public void setSemester(Semester semester) {
 		this.semester = semester;
+	}
+
+	public Boolean getApproved() {
+		return approved;
+	}
+
+	public void setApproved(Boolean approved) {
+		this.approved = approved;
 	}
 }

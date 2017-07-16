@@ -25,3 +25,7 @@
 .leftMenu {
 	margin-top: 50px;
 }
+
+.table-striped th {
+	text-align: left;
+}

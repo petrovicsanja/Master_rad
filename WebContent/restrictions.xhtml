@@ -144,7 +144,8 @@
 					<h:commandButton styleClass="btn btn-sm btn-primary"
 						action="#{restrictionsController.addNewNumDaysGroupRestriction()}"
 						value="#{msg['element.save']}">
-						<a4j:ajax render=":numDaysGroupRestrictionList :globalMessage" />
+						<a4j:ajax
+							render=":numDaysGroupRestrictionList :globalMessage restrictionNumDaysGroup groupNumDaysMin groupNumDaysOpt groupNumDaysMax" />
 					</h:commandButton>
 				</div>
 			</div>
@@ -291,7 +292,8 @@
 					<h:commandButton styleClass="btn btn-sm btn-primary"
 						action="#{restrictionsController.addNewNumDaysTeacherRestriction()}"
 						value="#{msg['element.save']}">
-						<a4j:ajax render=":numDaysTeacherRestrictionList :globalMessage" />
+						<a4j:ajax
+							render=":numDaysTeacherRestrictionList :globalMessage restrictionNumDaysTeacher teacherNumDaysMax teacherNumDaysOpt teacherNumDaysMin" />
 					</h:commandButton>
 				</div>
 			</div>
@@ -335,7 +337,9 @@
 				<f:facet name="header">
 					Višestruke pauze
 				</f:facet>
-				<h:outputText value="#{restriction.multiple}" />
+				<h:outputText rendered="#{restriction.multiple}" value="Dozvoljene" />
+				<h:outputText rendered="#{not restriction.multiple}"
+					value="Zabranjene" />
 			</rich:column>
 
 			<rich:column>
@@ -437,7 +441,8 @@
 					<h:commandButton styleClass="btn btn-sm btn-primary"
 						action="#{restrictionsController.addIdlesGroupRestriction()}"
 						value="#{msg['element.save']}">
-						<a4j:ajax render=":idlesGroupRestrictionList" />
+						<a4j:ajax
+							render=":idlesGroupRestrictionList restrictionIdlesGroup groupIdlesMax groupIdlesDays" />
 					</h:commandButton>
 				</div>
 			</div>
@@ -474,7 +479,9 @@
 				<f:facet name="header">
 					Višestruke pauze
 				</f:facet>
-				<h:outputText value="#{restriction.multiple}" />
+				<h:outputText rendered="#{restriction.multiple}" value="Dozvoljene" />
+				<h:outputText rendered="#{not restriction.multiple}"
+					value="Zabranjene" />
 			</rich:column>
 
 			<rich:column>
@@ -583,7 +590,8 @@
 					<h:commandButton styleClass="btn btn-sm btn-primary"
 						action="#{restrictionsController.addIdlesTeacherRestriction()}"
 						value="#{msg['element.save']}">
-						<a4j:ajax render=":idlesTeacherRestrictionList" />
+						<a4j:ajax
+							render=":idlesTeacherRestrictionList teacherIdlesDays teacherIdlesMax restrictionIdlesTeacher" />
 					</h:commandButton>
 				</div>
 			</div>
@@ -711,7 +719,8 @@
 					<h:commandButton styleClass="btn btn-sm btn-primary"
 						action="#{restrictionsController.addLoadGroupRestriction()}"
 						value="#{msg['element.save']}">
-						<a4j:ajax render=":loadsGroupRestrictionList" />
+						<a4j:ajax
+							render=":loadsGroupRestrictionList restrictionLoadsGroup groupLoadMin groupLoadMax" />
 					</h:commandButton>
 				</div>
 			</div>
@@ -839,7 +848,8 @@
 					<h:commandButton styleClass="btn btn-sm btn-primary"
 						action="#{restrictionsController.addLoadTeacherRestriction()}"
 						value="#{msg['element.save']}">
-						<a4j:ajax render=":loadsTeacherRestrictionList" />
+						<a4j:ajax
+							render=":loadsTeacherRestrictionList restrictionLoadsTeacher teacherLoadMin teacherLoadMax" />
 					</h:commandButton>
 				</div>
 			</div>

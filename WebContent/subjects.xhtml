@@ -40,6 +40,16 @@
 				<h:outputText value="#{subject.mark}" />
 			</rich:column>
 
+			<rich:column>
+				<f:facet name="header">
+					#{msg['subjects.type']}
+				</f:facet>
+				<h:outputText value="#{msg['subjects.obligatory']}"
+					rendered="#{subject.obligatory eq true}" />
+				<h:outputText value="#{msg['subjects.elective']}"
+					rendered="#{subject.obligatory eq false}" />
+			</rich:column>
+
 			<rich:column styleClass="text-center" rendered="#{user.type eq 2}">
 				<f:facet name="header">
 							#{msg['column.update']}
@@ -113,6 +123,18 @@
 				requiredMessage="#{msg['error.missingValue']}" />
 			<rich:message for="updateSubjectMark" ajaxRendered="true" />
 
+			<h:outputLabel value="#{msg['subjects.type']}" />
+			<h:selectOneRadio id="updateSubjectType" required="true"
+				requiredMessage="#{msg['error.missingValue']}"
+				label="#{msg['subjects.type']}"
+				value="#{subjectsController.newSubject.obligatory}">
+				<f:selectItem itemLabel="#{msg['subjects.obligatory']}"
+					itemValue="true" />
+				<f:selectItem itemLabel="#{msg['subjects.elective']}"
+					itemValue="false" />
+			</h:selectOneRadio>
+			<rich:message for="updateSubjectType" ajaxRendered="true" />
+
 			<a4j:commandButton action="#{subjectsController.updateSubject()}"
 				value="#{msg['element.save']}"
 				oncomplete="#{rich:component('subjectUpdate')}.hide();"
@@ -144,6 +166,7 @@
 						<rich:message for="newSubjectName" ajaxRendered="true" />
 					</div>
 				</div>
+
 				<div class="row form-group">
 					<div class="col-sm-3">
 						<h:outputLabel value="#{msg.mark}" styleClass="col-form-label" />
@@ -156,6 +179,27 @@
 					</div>
 					<div class="col-sm-3">
 						<rich:message for="newSubjectMark" ajaxRendered="true" />
+					</div>
+				</div>
+
+				<div class="row form-group">
+					<div class="col-sm-3">
+						<h:outputLabel value="#{msg['subjects.type']}"
+							styleClass="col-form-label" />
+					</div>
+					<div class="col-sm-6">
+						<h:selectOneRadio id="newSubjectType" required="true"
+							requiredMessage="#{msg['error.missingValue']}"
+							styleClass="form-check-input" label="#{msg['subjects.type']}"
+							value="#{subjectsController.newSubject.obligatory}">
+							<f:selectItem id="obavezan"
+								itemLabel="#{msg['subjects.obligatory']}" itemValue="true" />
+							<f:selectItem id="izborni"
+								itemLabel="#{msg['subjects.elective']}" itemValue="false" />
+						</h:selectOneRadio>
+					</div>
+					<div class="col-sm-3">
+						<rich:message for="newSubjectType" ajaxRendered="true" />
 					</div>
 				</div>
 

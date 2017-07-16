@@ -34,7 +34,7 @@ public class LessonsServiceImpl implements LessonsService {
 
 	@Override
 	public Lesson addLesson(Set<User> teachers, Set<Group> groups, Subject subject, String terms, Set<Room> rooms,
-			String note, Semester activeSemester) {
+			String note, Semester activeSemester, boolean isAdmin) {
 		Lesson newLesson = new Lesson();
 		newLesson.setTeachers(teachers);
 		newLesson.setGroups(groups);
@@ -43,6 +43,7 @@ public class LessonsServiceImpl implements LessonsService {
 		newLesson.setRooms(rooms);
 		newLesson.setNote(note);
 		newLesson.setSemester(activeSemester);
+		newLesson.setApproved(isAdmin);
 		em.persist(newLesson);
 
 		log.info("New lesson is successfully added to the database, id: " + newLesson.getId());
@@ -64,5 +65,12 @@ public class LessonsServiceImpl implements LessonsService {
 		Lesson lessonToDelete = em.find(Lesson.class, lessonId);
 		em.remove(lessonToDelete);
 		System.out.println("Lesson is seccussfully deleted from the database, id: " + lessonId);
+	}
+
+	@Override
+	public void approveLesson(Long lessonId) {
+		Lesson lessonToApprove = em.find(Lesson.class, lessonId);
+		lessonToApprove.setApproved(true);
+		System.out.println("Lesson is seccussfully approved, id: " + lessonId);
 	}
 }
