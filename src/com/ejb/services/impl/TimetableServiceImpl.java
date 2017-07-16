@@ -262,22 +262,22 @@ public class TimetableServiceImpl implements TimetableService {
 			teacherAvailabilityList.setParameter("teacherId", teacherId);
 
 			for (TeacherAvailability teacherAvailability : teacherAvailabilityList.getResultList()) {
-				if (teacherAvailability.getType().equals(AvailabilityType.FORBIDDEN)) {
+				if (teacherAvailability.getType().equals(AvailabilityType.FORBIDDEN.toString())) {
 					if (forbidden.length() > 0) {
 						forbidden.append(",");
 					}
 					forbidden.append(teacherAvailability.getDayMark() + "_" + teacherAvailability.getTermNumber());
-				} else if (teacherAvailability.getType().equals(AvailabilityType.UNDESIRABLE)) {
+				} else if (teacherAvailability.getType().equals(AvailabilityType.UNDESIRABLE.toString())) {
 					if (undesirable.length() > 0) {
 						undesirable.append(",");
 					}
 					undesirable.append(teacherAvailability.getDayMark() + "_" + teacherAvailability.getTermNumber());
-				} else if (teacherAvailability.getType().equals(AvailabilityType.DESIRABLE)) {
+				} else if (teacherAvailability.getType().equals(AvailabilityType.DESIRABLE.toString())) {
 					if (desirable.length() > 0) {
 						desirable.append(",");
 					}
 					desirable.append(teacherAvailability.getDayMark() + "_" + teacherAvailability.getTermNumber());
-				} else if (teacherAvailability.getType().equals(AvailabilityType.MANDATORY)) {
+				} else if (teacherAvailability.getType().equals(AvailabilityType.MANDATORY.toString())) {
 					if (mandatory.length() > 0) {
 						mandatory.append(",");
 					}
@@ -322,19 +322,31 @@ public class TimetableServiceImpl implements TimetableService {
 
 		for (Long groupId : distinctGroupList.getResultList()) {
 			TypedQuery<GroupAvailability> groupAvailabilityList = em.createQuery(
-					"SELECT a FROM GroupAvailability a WHERE a.semester.id = :semesterId AND a.group.id - :groupId ORDER BY a.id",
+					"SELECT a FROM GroupAvailability a WHERE a.semester.id = :semesterId AND a.group.id = :groupId ORDER BY a.id",
 					GroupAvailability.class);
 			groupAvailabilityList.setParameter("semesterId", semesterId);
 			groupAvailabilityList.setParameter("groupId", groupId);
 
 			for (GroupAvailability groupAvailability : groupAvailabilityList.getResultList()) {
-				if (groupAvailability.getType().equals(AvailabilityType.FORBIDDEN)) {
+				if (groupAvailability.getType().equals(AvailabilityType.FORBIDDEN.toString())) {
+					if (forbidden.length() > 0) {
+						forbidden.append(",");
+					}
 					forbidden.append(groupAvailability.getDayMark() + "_" + groupAvailability.getTermNumber());
-				} else if (groupAvailability.getType().equals(AvailabilityType.UNDESIRABLE)) {
+				} else if (groupAvailability.getType().equals(AvailabilityType.UNDESIRABLE.toString())) {
+					if (undesirable.length() > 0) {
+						undesirable.append(",");
+					}
 					undesirable.append(groupAvailability.getDayMark() + "_" + groupAvailability.getTermNumber());
-				} else if (groupAvailability.getType().equals(AvailabilityType.DESIRABLE)) {
+				} else if (groupAvailability.getType().equals(AvailabilityType.DESIRABLE.toString())) {
+					if (desirable.length() > 0) {
+						desirable.append(",");
+					}
 					desirable.append(groupAvailability.getDayMark() + "_" + groupAvailability.getTermNumber());
-				} else if (groupAvailability.getType().equals(AvailabilityType.MANDATORY)) {
+				} else if (groupAvailability.getType().equals(AvailabilityType.MANDATORY.toString())) {
+					if (mandatory.length() > 0) {
+						mandatory.append(",");
+					}
 					mandatory.append(groupAvailability.getDayMark() + "_" + groupAvailability.getTermNumber());
 				}
 			}
@@ -376,19 +388,31 @@ public class TimetableServiceImpl implements TimetableService {
 
 		for (Long roomId : distinctRoomList.getResultList()) {
 			TypedQuery<RoomAvailability> roomAvailabilityList = em.createQuery(
-					"SELECT a FROM RoomAvailability a WHERE a.semester.id = :semesterId AND a.room.id - :roomId ORDER BY a.id",
+					"SELECT a FROM RoomAvailability a WHERE a.semester.id = :semesterId AND a.room.id = :roomId ORDER BY a.id",
 					RoomAvailability.class);
 			roomAvailabilityList.setParameter("semesterId", semesterId);
 			roomAvailabilityList.setParameter("roomId", roomId);
 
 			for (RoomAvailability roomAvailability : roomAvailabilityList.getResultList()) {
-				if (roomAvailability.getType().equals(AvailabilityType.FORBIDDEN)) {
+				if (roomAvailability.getType().equals(AvailabilityType.FORBIDDEN.toString())) {
+					if (forbidden.length() > 0) {
+						forbidden.append(",");
+					}
 					forbidden.append(roomAvailability.getDayMark() + "_" + roomAvailability.getTermNumber());
-				} else if (roomAvailability.getType().equals(AvailabilityType.UNDESIRABLE)) {
+				} else if (roomAvailability.getType().equals(AvailabilityType.UNDESIRABLE.toString())) {
+					if (undesirable.length() > 0) {
+						undesirable.append(",");
+					}
 					undesirable.append(roomAvailability.getDayMark() + "_" + roomAvailability.getTermNumber());
-				} else if (roomAvailability.getType().equals(AvailabilityType.DESIRABLE)) {
+				} else if (roomAvailability.getType().equals(AvailabilityType.DESIRABLE.toString())) {
+					if (desirable.length() > 0) {
+						desirable.append(",");
+					}
 					desirable.append(roomAvailability.getDayMark() + "_" + roomAvailability.getTermNumber());
-				} else if (roomAvailability.getType().equals(AvailabilityType.MANDATORY)) {
+				} else if (roomAvailability.getType().equals(AvailabilityType.MANDATORY.toString())) {
+					if (mandatory.length() > 0) {
+						mandatory.append(",");
+					}
 					mandatory.append(roomAvailability.getDayMark() + "_" + roomAvailability.getTermNumber());
 				}
 			}
