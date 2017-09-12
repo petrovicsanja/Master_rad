@@ -143,6 +143,7 @@
 				<div class="row text-right">
 					<h:commandButton styleClass="btn btn-sm btn-primary"
 						action="#{restrictionsController.addNewNumDaysGroupRestriction()}"
+						disabled="#{restrictionsController.activeSemester eq null}"
 						value="#{msg['element.save']}">
 						<a4j:ajax
 							render=":numDaysGroupRestrictionList :globalMessage restrictionNumDaysGroup groupNumDaysMin groupNumDaysOpt groupNumDaysMax" />
@@ -291,6 +292,7 @@
 				<div class="row text-right">
 					<h:commandButton styleClass="btn btn-sm btn-primary"
 						action="#{restrictionsController.addNewNumDaysTeacherRestriction()}"
+						disabled="#{restrictionsController.activeSemester eq null}"
 						value="#{msg['element.save']}">
 						<a4j:ajax
 							render=":numDaysTeacherRestrictionList :globalMessage restrictionNumDaysTeacher teacherNumDaysMax teacherNumDaysOpt teacherNumDaysMin" />
@@ -440,6 +442,7 @@
 				<div class="row text-right">
 					<h:commandButton styleClass="btn btn-sm btn-primary"
 						action="#{restrictionsController.addIdlesGroupRestriction()}"
+						disabled="#{restrictionsController.activeSemester eq null}"
 						value="#{msg['element.save']}">
 						<a4j:ajax
 							render=":idlesGroupRestrictionList restrictionIdlesGroup groupIdlesMax groupIdlesDays" />
@@ -589,6 +592,7 @@
 				<div class="row text-right">
 					<h:commandButton styleClass="btn btn-sm btn-primary"
 						action="#{restrictionsController.addIdlesTeacherRestriction()}"
+						disabled="#{restrictionsController.activeSemester eq null}"
 						value="#{msg['element.save']}">
 						<a4j:ajax
 							render=":idlesTeacherRestrictionList teacherIdlesDays teacherIdlesMax restrictionIdlesTeacher" />
@@ -718,6 +722,7 @@
 				<div class="row text-right">
 					<h:commandButton styleClass="btn btn-sm btn-primary"
 						action="#{restrictionsController.addLoadGroupRestriction()}"
+						disabled="#{restrictionsController.activeSemester eq null}"
 						value="#{msg['element.save']}">
 						<a4j:ajax
 							render=":loadsGroupRestrictionList restrictionLoadsGroup groupLoadMin groupLoadMax" />
@@ -847,6 +852,7 @@
 				<div class="row text-right">
 					<h:commandButton styleClass="btn btn-sm btn-primary"
 						action="#{restrictionsController.addLoadTeacherRestriction()}"
+						disabled="#{restrictionsController.activeSemester eq null}"
 						value="#{msg['element.save']}">
 						<a4j:ajax
 							render=":loadsTeacherRestrictionList restrictionLoadsTeacher teacherLoadMin teacherLoadMax" />

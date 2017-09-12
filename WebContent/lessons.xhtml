@@ -314,6 +314,7 @@
 				<div class="row text-right">
 					<h:commandButton styleClass="btn btn-md btn-primary"
 						action="#{lessonsController.addLesson()}"
+						disabled="#{lessonsController.activeSemester eq null}"
 						value="#{msg['element.save']}">
 						<a4j:ajax render="@form" />
 					</h:commandButton>

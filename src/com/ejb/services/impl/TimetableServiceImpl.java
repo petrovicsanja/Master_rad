@@ -111,9 +111,9 @@ public class TimetableServiceImpl implements TimetableService {
 		try {
 			List<String> lines = Files.readAllLines(path, ENCODING);
 
-			System.out.println("Cleaning up the timetable for specified semester...");
+			System.out.println("Cleaning up the timetable data before creating new for semester...");
 			int deletedRecs = cleanTimetableForSemester(activeSemester.getId());
-			System.out.println("Number of deleted timetable records: " + deletedRecs);
+			System.out.println("Number of deleted old timetable records: " + deletedRecs);
 
 			System.out.println("Parsing timetable data and saving into database...");
 

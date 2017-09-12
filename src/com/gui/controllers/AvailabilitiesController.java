@@ -16,6 +16,7 @@ import com.jpa.entities.GroupAvailability;
 import com.jpa.entities.Period;
 import com.jpa.entities.Room;
 import com.jpa.entities.RoomAvailability;
+import com.jpa.entities.Semester;
 import com.jpa.entities.TeacherAvailability;
 import com.jpa.entities.User;
 import com.jpa.entities.enums.AvailabilityType;
@@ -186,7 +187,7 @@ public class AvailabilitiesController {
 
 		List<TeacherAvailability> teacherAvailabilityList = availabilitiesService.addTeacherAvailability(teacher,
 				teacherAvailabilityDayMark, teacherAvailabilityTermNumbers, teacherAvailabilityType,
-				semesterController.getActiveSemester());
+				getActiveSemester());
 
 		allTeacherAvailabilities.addAll(teacherAvailabilityList);
 
@@ -195,8 +196,7 @@ public class AvailabilitiesController {
 
 	public void addGroupAvailability() {
 		List<GroupAvailability> groupAvailabilityList = availabilitiesService.addGroupAvailability(group,
-				groupAvailabilityDayMark, groupAvailabilityTermNumbers, groupAvailabilityType,
-				semesterController.getActiveSemester());
+				groupAvailabilityDayMark, groupAvailabilityTermNumbers, groupAvailabilityType, getActiveSemester());
 
 		allGroupAvailabilities.addAll(groupAvailabilityList);
 
@@ -205,8 +205,7 @@ public class AvailabilitiesController {
 
 	public void addRoomAvailability() {
 		List<RoomAvailability> roomAvailabilityList = availabilitiesService.addRoomAvailability(room,
-				roomAvailabilityDayMark, roomAvailabilityTermNumbers, roomAvailabilityType,
-				semesterController.getActiveSemester());
+				roomAvailabilityDayMark, roomAvailabilityTermNumbers, roomAvailabilityType, getActiveSemester());
 
 		allRoomAvailabilities.addAll(roomAvailabilityList);
 
@@ -214,30 +213,28 @@ public class AvailabilitiesController {
 	}
 
 	public List<TeacherAvailability> listAllTeacherAvailabilities() {
-		if (allTeacherAvailabilities == null && semesterController.getActiveSemester() != null) {
+		if (allTeacherAvailabilities == null && getActiveSemester() != null) {
 			if (loginController.isAdmin()) {
 				allTeacherAvailabilities = availabilitiesService
-						.listAllTeacherAvailabilities(semesterController.getActiveSemester().getId());
+						.listAllTeacherAvailabilities(getActiveSemester().getId());
 			} else {
 				allTeacherAvailabilities = availabilitiesService.listAllAvailabilitiesForTeacher(
-						loginController.getUser().getId(), semesterController.getActiveSemester().getId());
+						loginController.getUser().getId(), getActiveSemester().getId());
 			}
 		}
 		return allTeacherAvailabilities;
 	}
 
 	public List<GroupAvailability> listAllGroupAvailabilities() {
-		if (allGroupAvailabilities == null && semesterController.getActiveSemester() != null) {
-			allGroupAvailabilities = availabilitiesService
-					.listAllGroupAvailabilities(semesterController.getActiveSemester().getId());
+		if (allGroupAvailabilities == null && getActiveSemester() != null) {
+			allGroupAvailabilities = availabilitiesService.listAllGroupAvailabilities(getActiveSemester().getId());
 		}
 		return allGroupAvailabilities;
 	}
 
 	public List<RoomAvailability> listAllRoomAvailabilities() {
-		if (allRoomAvailabilities == null && semesterController.getActiveSemester() != null) {
-			allRoomAvailabilities = availabilitiesService
-					.listAllRoomAvailabilities(semesterController.getActiveSemester().getId());
+		if (allRoomAvailabilities == null && getActiveSemester() != null) {
+			allRoomAvailabilities = availabilitiesService.listAllRoomAvailabilities(getActiveSemester().getId());
 		}
 		return allRoomAvailabilities;
 	}
@@ -338,6 +335,10 @@ public class AvailabilitiesController {
 
 	public void setSemesterController(SemesterController semesterController) {
 		this.semesterController = semesterController;
+	}
+
+	public Semester getActiveSemester() {
+		return semesterController.getActiveSemester();
 	}
 
 	public Integer[] getTeacherAvailabilityTermNumbers() {

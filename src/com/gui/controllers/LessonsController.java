@@ -14,6 +14,7 @@ import com.ejb.services.LessonsService;
 import com.jpa.entities.Group;
 import com.jpa.entities.Lesson;
 import com.jpa.entities.Room;
+import com.jpa.entities.Semester;
 import com.jpa.entities.Subject;
 import com.jpa.entities.User;
 
@@ -76,8 +77,7 @@ public class LessonsController {
 	}
 
 	public void listLessonsForSubject() {
-		subjectLessonsList = lessonsService.listLessons(lessonsSearchSubjectId,
-				semesterController.getActiveSemester().getId());
+		subjectLessonsList = lessonsService.listLessons(lessonsSearchSubjectId, getActiveSemester().getId());
 	}
 
 	public void addTeacherToList() {
@@ -112,7 +112,7 @@ public class LessonsController {
 	public void addLesson() {
 		Lesson newLesson = lessonsService.addLesson(new HashSet<User>(selectedTeachers),
 				new HashSet<Group>(selectedGroups), subject, terms, new HashSet<Room>(selectedRooms), note,
-				semesterController.getActiveSemester(), loginController.isAdmin());
+				getActiveSemester(), loginController.isAdmin());
 
 		if (lessonsSearchSubjectId != null && lessonsSearchSubjectId.equals(subject.getId())) {
 			subjectLessonsList.add(newLesson);
@@ -136,6 +136,10 @@ public class LessonsController {
 	/*
 	 * Getters and setters
 	 */
+
+	public Semester getActiveSemester() {
+		return semesterController.getActiveSemester();
+	}
 
 	public Long getLessonsSearchSubjectId() {
 		return lessonsSearchSubjectId;

@@ -84,7 +84,7 @@
 						<h:inputText id="departmentName" label="#{msg.name}"
 							value="#{departmentController.newDepartment.name}"
 							styleClass="form-control" required="true"
-							requiredMessage="#{msg['error.missingValue']}"/>	
+							requiredMessage="#{msg['error.missingValue']}" />
 					</div>
 					<div class="col-sm-3">
 						<rich:message for="departmentName" ajaxRendered="true" />
@@ -255,6 +255,7 @@
 
 		<h:commandButton styleClass="btn btn-md btn-success margin10"
 			action="#{timetableController.createTimetable()}"
+			disabled="#{semesterController.activeSemester eq null}"
 			value="#{msg['timetable.new']}">
 			<f:ajax execute="@this" />
 		</h:commandButton>

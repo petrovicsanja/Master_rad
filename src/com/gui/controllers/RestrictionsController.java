@@ -14,6 +14,7 @@ import com.jpa.entities.Group;
 import com.jpa.entities.GroupIdles;
 import com.jpa.entities.GroupLoad;
 import com.jpa.entities.GroupNumDays;
+import com.jpa.entities.Semester;
 import com.jpa.entities.TeacherIdles;
 import com.jpa.entities.TeacherLoad;
 import com.jpa.entities.TeacherNumDays;
@@ -78,41 +79,36 @@ public class RestrictionsController {
 	}
 
 	public List<GroupNumDays> listNumDaysGroupRestrictions() {
-		groupNumDaysRestrictionList = restrictionsService
-				.listNumDaysGroupRestrictions(semesterController.getActiveSemester());
+		groupNumDaysRestrictionList = restrictionsService.listNumDaysGroupRestrictions(getActiveSemester());
 		return groupNumDaysRestrictionList;
 	}
 
 	public List<TeacherNumDays> listNumDaysTeacherRestrictionList() {
 		Long teacherId = loginController.isAdmin() ? null : loginController.getUser().getId();
 		teacherNumDaysRestrictionList = restrictionsService.listNumDaysTeacherRestrictions(teacherId,
-				semesterController.getActiveSemester());
+				getActiveSemester());
 		return teacherNumDaysRestrictionList;
 	}
 
 	public List<GroupIdles> listGroupIdlesRestrictionList() {
-		groupIdlesRestrictionList = restrictionsService
-				.listIdlesGroupRestrictions(semesterController.getActiveSemester());
+		groupIdlesRestrictionList = restrictionsService.listIdlesGroupRestrictions(getActiveSemester());
 		return groupIdlesRestrictionList;
 	}
 
 	public List<TeacherIdles> listTeacherIdlesRestrictionList() {
 		Long teacherId = loginController.isAdmin() ? null : loginController.getUser().getId();
-		teacherIdlesRestrictionList = restrictionsService.listIdlesTeacherRestrictions(teacherId,
-				semesterController.getActiveSemester());
+		teacherIdlesRestrictionList = restrictionsService.listIdlesTeacherRestrictions(teacherId, getActiveSemester());
 		return teacherIdlesRestrictionList;
 	}
 
 	public List<GroupLoad> listGroupLoadRestrictionList() {
-		groupLoadRestrictionList = restrictionsService
-				.listLoadGroupRestrictions(semesterController.getActiveSemester());
+		groupLoadRestrictionList = restrictionsService.listLoadGroupRestrictions(getActiveSemester());
 		return groupLoadRestrictionList;
 	}
 
 	public List<TeacherLoad> listTeacherLoadRestrictionList() {
 		Long teacherId = loginController.isAdmin() ? null : loginController.getUser().getId();
-		teacherLoadRestrictionList = restrictionsService.listLoadTeacherRestrictions(teacherId,
-				semesterController.getActiveSemester());
+		teacherLoadRestrictionList = restrictionsService.listLoadTeacherRestrictions(teacherId, getActiveSemester());
 		return teacherLoadRestrictionList;
 	}
 
@@ -124,7 +120,7 @@ public class RestrictionsController {
 
 		if (numDaysCondition && newGroupNumDays.getGroup() != null) {
 			GroupNumDays restrictionToAdd = restrictionsService.addNewNumDaysGroupRestriction(newGroupNumDays,
-					semesterController.getActiveSemester());
+					getActiveSemester());
 
 			if (restrictionToAdd == null) {
 				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
@@ -151,7 +147,7 @@ public class RestrictionsController {
 
 		if (numDaysCondition && newTeacherNumDays.getTeacher() != null) {
 			TeacherNumDays restrictionToAdd = restrictionsService.addNewNumDaysTeacherRestriction(newTeacherNumDays,
-					semesterController.getActiveSemester());
+					getActiveSemester());
 
 			if (restrictionToAdd == null) {
 				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
@@ -170,7 +166,7 @@ public class RestrictionsController {
 	public void addIdlesGroupRestriction() {
 		if (newGroupIdles.getGroup() != null) {
 			GroupIdles restrictionToAdd = restrictionsService.addIdlesGroupRestriction(newGroupIdles,
-					semesterController.getActiveSemester());
+					getActiveSemester());
 
 			if (restrictionToAdd == null) {
 				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
@@ -189,7 +185,7 @@ public class RestrictionsController {
 
 		if (newTeacherIdles.getTeacher() != null) {
 			TeacherIdles restrictionToAdd = restrictionsService.addIdlesTeacherRestriction(newTeacherIdles,
-					semesterController.getActiveSemester());
+					getActiveSemester());
 
 			if (restrictionToAdd == null) {
 				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
@@ -203,8 +199,7 @@ public class RestrictionsController {
 
 	public void addLoadGroupRestriction() {
 		if (newGroupLoad.getGroup() != null) {
-			GroupLoad restrictionToAdd = restrictionsService.addLoadGroupRestriction(newGroupLoad,
-					semesterController.getActiveSemester());
+			GroupLoad restrictionToAdd = restrictionsService.addLoadGroupRestriction(newGroupLoad, getActiveSemester());
 
 			if (restrictionToAdd == null) {
 				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
@@ -223,7 +218,7 @@ public class RestrictionsController {
 
 		if (newTeacherLoad.getTeacher() != null) {
 			TeacherLoad restrictionToAdd = restrictionsService.addLoadTeacherRestriction(newTeacherLoad,
-					semesterController.getActiveSemester());
+					getActiveSemester());
 
 			if (restrictionToAdd == null) {
 				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
@@ -260,6 +255,10 @@ public class RestrictionsController {
 	/*
 	 * Getters and setters
 	 */
+
+	public Semester getActiveSemester() {
+		return semesterController.getActiveSemester();
+	}
 
 	public void setGroupsController(GroupsController groupsController) {
 		this.groupsController = groupsController;

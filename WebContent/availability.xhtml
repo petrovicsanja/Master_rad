@@ -177,6 +177,7 @@
 				<div class="row text-right">
 					<h:commandButton
 						action="#{availabilitiesController.addTeacherAvailability()}"
+						disabled="#{availabilitiesController.activeSemester eq null}"
 						value="#{msg['element.save']}" styleClass="btn btn-sm btn-primary">
 						<a4j:ajax
 							render=":teacherAvailabilitiesList teacherAvailability teacherAvailabilityType teacherAvailabilityDayMark teacherAvailabilityTermNumbers" />
@@ -353,6 +354,7 @@
 				<div class="row text-right">
 					<h:commandButton
 						action="#{availabilitiesController.addGroupAvailability()}"
+						disabled="#{availabilitiesController.activeSemester eq null}"
 						value="#{msg['element.save']}" styleClass="btn btn-sm btn-primary">
 						<a4j:ajax
 							render=":groupAvailabilitiesList groupAvailability groupAvailabilityType groupAvailabilityDayMark groupAvailabilityTermNumbers" />
@@ -526,6 +528,7 @@
 				<div class="row text-right">
 					<h:commandButton
 						action="#{availabilitiesController.addRoomAvailability()}"
+						disabled="#{availabilitiesController.activeSemester eq null}"
 						value="#{msg['element.save']}" styleClass="btn btn-sm btn-primary">
 						<a4j:ajax
 							render=":roomAvailabilitiesList roomAvailability roomAvailabilityType roomAvailabilityDayMark roomAvailabilityTermNumbers" />
