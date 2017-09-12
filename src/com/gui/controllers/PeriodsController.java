@@ -42,7 +42,7 @@ public class PeriodsController {
 		termsOfPeriods.put("Sreda", termsWednesday);
 		termsWednesday = null;
 
-		termsOfPeriods.put("Cetvrtak", termsThursday);
+		termsOfPeriods.put("Četvrtak", termsThursday);
 		termsThursday = null;
 
 		termsOfPeriods.put("Petak", termsFriday);
@@ -55,13 +55,56 @@ public class PeriodsController {
 		termsSunday = null;
 
 		periodsService.addPeriods(termsOfPeriods, termLength, termsTime);
-		allPeriods = periodsService.listAllPeriods();
+		sortPeriods(periodsService.listAllPeriods());
 		termsTime = null;
 	}
 
 	@PostConstruct
 	public void init() {
-		allPeriods = periodsService.listAllPeriods();
+		sortPeriods(periodsService.listAllPeriods());
+	}
+
+	private void sortPeriods(List<Period> unsortedPeriods) {
+		Period[] sortedPeriods = new Period[7];
+		for (Period p : unsortedPeriods) {
+			switch (p.getDayMark()) {
+			case "pon":
+				sortedPeriods[0] = p;
+				break;
+			case "uto":
+				sortedPeriods[1] = p;
+				break;
+			case "sre":
+				sortedPeriods[2] = p;
+				break;
+			case "cet":
+				sortedPeriods[3] = p;
+				break;
+			case "pet":
+				sortedPeriods[4] = p;
+				break;
+			case "sub":
+				sortedPeriods[5] = p;
+				break;
+			case "ned":
+				sortedPeriods[6] = p;
+				break;
+			default:
+				break;
+			}
+		}
+
+		if (allPeriods != null) {
+			allPeriods.clear();
+		} else {
+			allPeriods = new ArrayList<Period>();
+		}
+
+		for (Period tempP : sortedPeriods) {
+			if (tempP != null) {
+				allPeriods.add(tempP);
+			}
+		}
 	}
 
 	public List<String> getDistinctWorkingDays() {
