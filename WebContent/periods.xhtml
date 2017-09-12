@@ -32,6 +32,10 @@
 			<h:outputLabel value="#{msg['periods.termsLength']}" />
 			<h:inputText value="#{periodsController.termLength}" />
 			<h:outputLabel value="minuta" />
+			
+			<h:outputLabel value="" />
+			<h:outputLabel value="" />
+			<h:outputLabel value="" />
 
 			<h:outputLabel value="Radni dan" />
 			<h:outputLabel value="Broj termina u smeni" />
@@ -64,8 +68,12 @@
 			<h:outputLabel value="Nedelja: " />
 			<h:inputText value="#{periodsController.termsSunday}" />
 			<h:outputLabel value="" />
+			
+			<h:outputLabel value="" />
+			<h:outputLabel value="" />
+			<h:outputLabel value="" />
 
-			<h:outputLabel value="#{msg['periods.startTime']}" />
+			<h:outputLabel style="width: 250px" value="#{msg['periods.startTime']}" />
 			<h:inputTextarea id="termsTime" rows="4" cols="30"
 				value="#{periodsController.termsTime}" required="true"
 				requiredMessage="#{msg['error.missingValue']}" />
