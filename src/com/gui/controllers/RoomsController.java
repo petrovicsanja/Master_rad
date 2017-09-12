@@ -4,7 +4,7 @@ import java.util.List;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 
 import org.richfaces.component.SortOrder;
 import org.richfaces.model.Filter;
@@ -13,7 +13,7 @@ import com.ejb.services.RoomsService;
 import com.jpa.entities.Room;
 
 @ManagedBean
-@SessionScoped
+@ViewScoped
 public class RoomsController {
 
 	@EJB
@@ -42,27 +42,22 @@ public class RoomsController {
 	 * @return List<Room> List of all rooms
 	 */
 	public List<Room> listClassrooms() {
-		if (classroomList == null) {
-			classroomList = roomsService.listClassrooms();
-		}
+		classroomList = roomsService.listClassrooms();
 		return classroomList;
 	}
 
 	public void deleteClassroom() {
-		Room ucionicaZaBrisanje = classroomList.get(selectedClassroomIndex);
-		roomsService.deleteClassroom(ucionicaZaBrisanje.getId());
-		classroomList.remove(ucionicaZaBrisanje);
+		Room roomToDelete = classroomList.get(selectedClassroomIndex);
+		roomsService.deleteClassroom(roomToDelete.getId());
 	}
 
 	public void addClassroom() {
 		roomsService.addClassroom(newClassroom);
-		classroomList.add(newClassroom);
 		newClassroom = new Room();
 	}
 
 	public void updateClassroom() {
 		roomsService.updateClassroom(classroomToUpdate);
-		classroomList.set(selectedClassroomIndex, classroomToUpdate);
 	}
 
 	public Room findRoomById(Long roomId) {

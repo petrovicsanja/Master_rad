@@ -5,13 +5,13 @@ import java.util.List;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 
 import com.ejb.services.SemesterService;
 import com.jpa.entities.Semester;
 
 @ManagedBean
-@SessionScoped
+@ViewScoped
 public class SemesterController {
 
 	@EJB
@@ -26,42 +26,26 @@ public class SemesterController {
 	private Integer ordinalNumber;
 
 	public List<Semester> listSemesters() {
-		if (semesterList == null) {
-			semesterList = semesterService.listSemesters();
-		}
+		semesterList = semesterService.listSemesters();
 		return semesterList;
 	}
 
-	private Semester findSemesterById(Long semesterId) {
-		for (Semester semester : semesterList) {
-			if (semester.getId().equals(semesterId)) {
-				return semester;
-			}
-		}
-		return null;
-	}
-
 	public void addNewSemester() {
-		Semester newSemester = semesterService.addNewSemester(schoolYear, startDate, endDate, ordinalNumber);
-		semesterList.add(newSemester);
+		semesterService.addNewSemester(schoolYear, startDate, endDate, ordinalNumber);
 	}
 
 	public void activateSemester(Long semesterId) {
 		activeSemester = semesterService.activateSemester(semesterId);
-
-		// update record in data table
-		Semester semester = findSemesterById(semesterId);
-		semester.setActive(true);
 	}
 
 	public void deactivateSemester(Long semesterId) {
 		semesterService.deactivateSemester(semesterId);
 		activeSemester = null;
-
-		// update record in data table
-		Semester semester = findSemesterById(semesterId);
-		semester.setActive(false);
 	}
+
+	/*
+	 * Getters and setters
+	 */
 
 	public Semester getActiveSemester() {
 		if (activeSemester == null) {

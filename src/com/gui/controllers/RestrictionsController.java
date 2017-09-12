@@ -78,53 +78,41 @@ public class RestrictionsController {
 	}
 
 	public List<GroupNumDays> listNumDaysGroupRestrictions() {
-		if (groupNumDaysRestrictionList == null) {
-			groupNumDaysRestrictionList = restrictionsService
-					.listNumDaysGroupRestrictions(semesterController.getActiveSemester());
-		}
+		groupNumDaysRestrictionList = restrictionsService
+				.listNumDaysGroupRestrictions(semesterController.getActiveSemester());
 		return groupNumDaysRestrictionList;
 	}
 
 	public List<TeacherNumDays> listNumDaysTeacherRestrictionList() {
-		if (teacherNumDaysRestrictionList == null) {
-			Long teacherId = loginController.isAdmin() ? null : loginController.getUser().getId();
-			teacherNumDaysRestrictionList = restrictionsService.listNumDaysTeacherRestrictions(teacherId,
-					semesterController.getActiveSemester());
-		}
+		Long teacherId = loginController.isAdmin() ? null : loginController.getUser().getId();
+		teacherNumDaysRestrictionList = restrictionsService.listNumDaysTeacherRestrictions(teacherId,
+				semesterController.getActiveSemester());
 		return teacherNumDaysRestrictionList;
 	}
 
 	public List<GroupIdles> listGroupIdlesRestrictionList() {
-		if (groupIdlesRestrictionList == null) {
-			groupIdlesRestrictionList = restrictionsService
-					.listIdlesGroupRestrictions(semesterController.getActiveSemester());
-		}
+		groupIdlesRestrictionList = restrictionsService
+				.listIdlesGroupRestrictions(semesterController.getActiveSemester());
 		return groupIdlesRestrictionList;
 	}
 
 	public List<TeacherIdles> listTeacherIdlesRestrictionList() {
-		if (teacherIdlesRestrictionList == null) {
-			Long teacherId = loginController.isAdmin() ? null : loginController.getUser().getId();
-			teacherIdlesRestrictionList = restrictionsService.listIdlesTeacherRestrictions(teacherId,
-					semesterController.getActiveSemester());
-		}
+		Long teacherId = loginController.isAdmin() ? null : loginController.getUser().getId();
+		teacherIdlesRestrictionList = restrictionsService.listIdlesTeacherRestrictions(teacherId,
+				semesterController.getActiveSemester());
 		return teacherIdlesRestrictionList;
 	}
 
 	public List<GroupLoad> listGroupLoadRestrictionList() {
-		if (groupLoadRestrictionList == null) {
-			groupLoadRestrictionList = restrictionsService
-					.listLoadGroupRestrictions(semesterController.getActiveSemester());
-		}
+		groupLoadRestrictionList = restrictionsService
+				.listLoadGroupRestrictions(semesterController.getActiveSemester());
 		return groupLoadRestrictionList;
 	}
 
 	public List<TeacherLoad> listTeacherLoadRestrictionList() {
-		if (teacherLoadRestrictionList == null) {
-			Long teacherId = loginController.isAdmin() ? null : loginController.getUser().getId();
-			teacherLoadRestrictionList = restrictionsService.listLoadTeacherRestrictions(teacherId,
-					semesterController.getActiveSemester());
-		}
+		Long teacherId = loginController.isAdmin() ? null : loginController.getUser().getId();
+		teacherLoadRestrictionList = restrictionsService.listLoadTeacherRestrictions(teacherId,
+				semesterController.getActiveSemester());
 		return teacherLoadRestrictionList;
 	}
 
@@ -132,7 +120,7 @@ public class RestrictionsController {
 		boolean numDaysCondition = (newGroupNumDays.getMin() >= 1)
 				&& (newGroupNumDays.getOpt() >= newGroupNumDays.getMin())
 				&& (newGroupNumDays.getMax() >= newGroupNumDays.getOpt())
-				&& (periodsController.getNumberOfWorkingDays() >= newGroupNumDays.getMax());
+				&& (periodsController.getDistinctWorkingDays().size() >= newGroupNumDays.getMax());
 
 		if (numDaysCondition && newGroupNumDays.getGroup() != null) {
 			GroupNumDays restrictionToAdd = restrictionsService.addNewNumDaysGroupRestriction(newGroupNumDays,
@@ -143,8 +131,6 @@ public class RestrictionsController {
 						"Ograničenje za izabranu grupu u trenutno aktivnom semestru već postoji.", null));
 				return;
 			}
-
-			groupNumDaysRestrictionList.add(newGroupNumDays);
 
 			newGroupNumDays = new GroupNumDays();
 		} else {
@@ -161,7 +147,7 @@ public class RestrictionsController {
 		boolean numDaysCondition = (newTeacherNumDays.getMin() >= 1)
 				&& (newTeacherNumDays.getOpt() >= newTeacherNumDays.getMin())
 				&& (newTeacherNumDays.getMax() >= newTeacherNumDays.getOpt())
-				&& (periodsController.getNumberOfWorkingDays() >= newTeacherNumDays.getMax());
+				&& (periodsController.getDistinctWorkingDays().size() >= newTeacherNumDays.getMax());
 
 		if (numDaysCondition && newTeacherNumDays.getTeacher() != null) {
 			TeacherNumDays restrictionToAdd = restrictionsService.addNewNumDaysTeacherRestriction(newTeacherNumDays,
@@ -172,8 +158,6 @@ public class RestrictionsController {
 						"Ograničenje za izabranog profesora u trenutno aktivnom semestru već postoji.", null));
 				return;
 			}
-
-			teacherNumDaysRestrictionList.add(newTeacherNumDays);
 
 			newTeacherNumDays = new TeacherNumDays();
 		} else {
@@ -194,8 +178,6 @@ public class RestrictionsController {
 				return;
 			}
 
-			groupIdlesRestrictionList.add(newGroupIdles);
-
 			newGroupIdles = new GroupIdles();
 		}
 	}
@@ -215,8 +197,6 @@ public class RestrictionsController {
 				return;
 			}
 
-			teacherIdlesRestrictionList.add(newTeacherIdles);
-
 			newTeacherIdles = new TeacherIdles();
 		}
 	}
@@ -231,8 +211,6 @@ public class RestrictionsController {
 						"Ograničenje za izabranu grupu u trenutno aktivnom semestru već postoji.", null));
 				return;
 			}
-
-			groupLoadRestrictionList.add(newGroupLoad);
 
 			newGroupLoad = new GroupLoad();
 		}
@@ -253,8 +231,6 @@ public class RestrictionsController {
 				return;
 			}
 
-			teacherLoadRestrictionList.add(newTeacherLoad);
-
 			newTeacherLoad = new TeacherLoad();
 		}
 	}
@@ -263,27 +239,21 @@ public class RestrictionsController {
 		if (restrictionType.equals("GroupNumDays")) {
 			GroupNumDays groupNumDaysToDelete = groupNumDaysRestrictionList.get(selectedRestrictionIndex);
 			restrictionsService.deleteNumDaysGroupRestriction(groupNumDaysToDelete.getId());
-			groupNumDaysRestrictionList.remove(selectedRestrictionIndex);
 		} else if (restrictionType.equals("TeacherNumDays")) {
 			TeacherNumDays teacherNumDaysToDelete = teacherNumDaysRestrictionList.get(selectedRestrictionIndex);
 			restrictionsService.deleteNumDaysTeacherRestriction(teacherNumDaysToDelete.getId());
-			teacherNumDaysRestrictionList.remove(selectedRestrictionIndex);
 		} else if (restrictionType.equals("GroupIdles")) {
 			GroupIdles groupIdlesToDelete = groupIdlesRestrictionList.get(selectedRestrictionIndex);
 			restrictionsService.deleteIdlesGroupRestriction(groupIdlesToDelete.getId());
-			groupIdlesRestrictionList.remove(selectedRestrictionIndex);
 		} else if (restrictionType.equals("TeacherIdles")) {
 			TeacherIdles teacherIdlesToDelete = teacherIdlesRestrictionList.get(selectedRestrictionIndex);
 			restrictionsService.deleteIdlesTeacherRestriction(teacherIdlesToDelete.getId());
-			teacherIdlesRestrictionList.remove(selectedRestrictionIndex);
 		} else if (restrictionType.equals("GroupLoad")) {
 			GroupLoad groupLoadToDelete = groupLoadRestrictionList.get(selectedRestrictionIndex);
 			restrictionsService.deleteLoadGroupRestriction(groupLoadToDelete.getId());
-			groupLoadRestrictionList.remove(selectedRestrictionIndex);
 		} else if (restrictionType.equals("TeacherLoad")) {
 			TeacherLoad teacherLoadToDelete = teacherLoadRestrictionList.get(selectedRestrictionIndex);
 			restrictionsService.deleteLoadTeacherRestriction(teacherLoadToDelete.getId());
-			teacherLoadRestrictionList.remove(selectedRestrictionIndex);
 		}
 	}
 

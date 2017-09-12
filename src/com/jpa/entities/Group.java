@@ -25,6 +25,7 @@ public class Group {
 	@NotNull
 	private Department department;
 
+	@NotNull
 	private Integer size;
 
 	@NotNull
@@ -73,5 +74,16 @@ public class Group {
 	@Override
 	public String toString() {
 		return this.name;
+	}
+
+	@Override
+	public boolean equals(Object other) {
+		return (other != null && getClass() == other.getClass() && id != null) ? id.equals(((Group) other).id)
+				: (other == this);
+	}
+
+	@Override
+	public int hashCode() {
+		return (id != null) ? (getClass().hashCode() + id.hashCode()) : super.hashCode();
 	}
 }

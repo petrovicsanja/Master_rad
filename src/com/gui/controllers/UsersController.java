@@ -5,7 +5,7 @@ import java.util.List;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.model.SelectItem;
 
 import org.richfaces.component.SortOrder;
@@ -15,7 +15,7 @@ import com.ejb.services.UsersService;
 import com.jpa.entities.User;
 
 @ManagedBean
-@SessionScoped
+@ViewScoped
 public class UsersController {
 
 	@EJB
@@ -43,7 +43,6 @@ public class UsersController {
 
 	public void addUser() {
 		usersService.addUser(this.newUser);
-		userList.add(newUser);
 		newUser = new User();
 	}
 
@@ -51,22 +50,17 @@ public class UsersController {
 	 * @return List<User> List of all users
 	 */
 	public List<User> listUsers() {
-		if (userList == null) {
-			userList = usersService.listUsers();
-		}
+		userList = usersService.listUsers();
 		return userList;
 	}
 
 	public void deleteUser() {
 		User userToDelete = userList.get(selectedUserIndex);
-
 		usersService.deleteUser(userToDelete.getId());
-		userList.remove(userToDelete);
 	}
 
 	public void updateUser() {
 		usersService.updateUser(selectedUser);
-		userList.set(selectedUserIndex, selectedUser);
 	}
 
 	public User findUserById(Long userId) {

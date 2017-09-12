@@ -6,7 +6,7 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 
 import org.richfaces.component.SortOrder;
 import org.richfaces.model.Filter;
@@ -16,14 +16,14 @@ import com.jpa.entities.Department;
 import com.jpa.entities.Group;
 
 @ManagedBean
-@SessionScoped
+@ViewScoped
 public class GroupsController {
 
 	@EJB
 	private GroupsService groupsService;
 
-	@ManagedProperty(value = "#{departmentController}")
-	private DepartmentController departmentController;
+	@ManagedProperty(value = "#{departmentController.listDepartments()}")
+	private List<Department> departmentList;
 
 	private Group newGroup = new Group();
 	private List<Group> groupList = null;
@@ -45,30 +45,21 @@ public class GroupsController {
 
 	public void addGroup() {
 		groupsService.addGroup(newGroup);
-		groupList.add(newGroup);
 		newGroup = new Group();
 	}
 
-	public List<Department> listDepartments() {
-		return departmentController.listDepartments();
-	}
-
 	public List<Group> listGroups() {
-		if (groupList == null) {
-			groupList = groupsService.listGroups();
-		}
+		groupList = groupsService.listGroups();
 		return groupList;
 	}
 
 	public void deleteGroup() {
 		Group groupToDelete = groupList.get(selectedGroupIndex);
 		groupsService.deleteGroup(groupToDelete.getId());
-		groupList.remove(groupToDelete);
 	}
 
 	public void updateGroup() {
 		groupsService.updateGroup(groupToUpdate);
-		groupList.set(selectedGroupIndex, groupToUpdate);
 	}
 
 	public Group findGroupById(Long groupId) {
@@ -212,9 +203,13 @@ public class GroupsController {
 	public void setGroupToUpdate(Group groupToUpdate) {
 		this.groupToUpdate = groupToUpdate;
 	}
+	
+	public List<Department> getDepartmentList() {
+		return departmentList;
+	}
 
-	public void setDepartmentController(DepartmentController departmentController) {
-		this.departmentController = departmentController;
+	public void setDepartmentList(List<Department> departmentList) {
+		this.departmentList = departmentList;
 	}
 
 	public String getNameFilter() {

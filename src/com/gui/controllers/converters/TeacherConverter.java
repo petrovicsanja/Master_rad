@@ -18,20 +18,18 @@ public class TeacherConverter implements Converter {
 	private UsersController usersController;
 
 	@Override
-	public Object getAsObject(FacesContext context, UIComponent component,
-			String value) {
+	public Object getAsObject(FacesContext context, UIComponent component, String value) {
 		Long userId = Long.valueOf(value);
 		User user = usersController.findUserById(userId);
 		return user;
 	}
 
 	@Override
-	public String getAsString(FacesContext context, UIComponent component,
-			Object value) {
+	public String getAsString(FacesContext context, UIComponent component, Object value) {
 		if (value != null) {
 			User user = (User) value;
 			Long userId = user.getId();
-			return userId.toString();
+			return String.valueOf(userId);
 		}
 		return "";
 	}

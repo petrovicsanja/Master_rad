@@ -39,26 +39,21 @@ public class SubjectsController {
 	 * @return List<Subject> List of all subjects
 	 */
 	public List<Subject> listSubjects() {
-		if (subjectList == null) {
-			subjectList = subjectsService.listSubjects();
-		}
+		subjectList = subjectsService.listSubjects();
 		return subjectList;
 	}
 
 	public void deleteSubject() {
 		Subject subjectToDelete = subjectList.get(selectedSubjectIndex);
 		subjectsService.deleteSubject(subjectToDelete.getId());
-		subjectList.remove(subjectToDelete);
 	}
 
 	public void updateSubject() {
 		subjectsService.updateSubject(subjectToUpdate);
-		subjectList.set(selectedSubjectIndex, subjectToUpdate);
 	}
 
 	public void addSubject() {
 		subjectsService.addSubject(newSubject);
-		subjectList.add(newSubject);
 		newSubject = new Subject();
 	}
 

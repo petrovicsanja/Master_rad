@@ -41,6 +41,7 @@ public class SubjectsServiceImpl implements SubjectsService {
 		Subject subjectToUpdate = em.find(Subject.class, subject.getId());
 		subjectToUpdate.setName(subject.getName());
 		subjectToUpdate.setMark(subject.getMark());
+		subjectToUpdate.setObligatory(subject.getObligatory());
 		System.out.println("Subject is successfully updated in the database, id: " + subject.getId());
 	}
 

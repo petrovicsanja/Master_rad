@@ -33,6 +33,17 @@ public class Room {
 		return this.name;
 	}
 
+	@Override
+	public boolean equals(Object other) {
+		return (other != null && getClass() == other.getClass() && id != null) ? id.equals(((Room) other).id)
+				: (other == this);
+	}
+
+	@Override
+	public int hashCode() {
+		return (id != null) ? (getClass().hashCode() + id.hashCode()) : super.hashCode();
+	}
+
 	public Long getId() {
 		return id;
 	}

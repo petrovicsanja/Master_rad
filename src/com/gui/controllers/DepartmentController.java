@@ -4,13 +4,13 @@ import java.util.List;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 
 import com.ejb.services.DepartmentService;
 import com.jpa.entities.Department;
 
 @ManagedBean
-@SessionScoped
+@ViewScoped
 public class DepartmentController {
 
 	@EJB
@@ -21,10 +21,18 @@ public class DepartmentController {
 	private Department newDepartment = new Department();
 
 	public List<Department> listDepartments() {
-		if (departmentList == null) {
-			departmentList = departmentService.listDepartments();
-		}
+		departmentList = departmentService.listDepartments();
 		return departmentList;
+	}
+
+	public void deleteDepartment() {
+		Department departmentToDelete = departmentList.get(selectedDepartmentIndex);
+		departmentService.deleteDepartment(departmentToDelete.getId());
+	}
+
+	public void addDepartment() {
+		departmentService.addDepartment(newDepartment);
+		newDepartment = new Department();
 	}
 
 	public Department findDepartmentById(Long departmentId) {
@@ -34,18 +42,6 @@ public class DepartmentController {
 			}
 		}
 		return null;
-	}
-
-	public void deleteDepartment() {
-		Department departmentToDelete = departmentList.get(selectedDepartmentIndex);
-		departmentService.deleteDepartment(departmentToDelete.getId());
-		departmentList.remove(departmentToDelete);
-	}
-
-	public void addDepartment() {
-		departmentService.addDepartment(newDepartment);
-		departmentList.add(newDepartment);
-		newDepartment = new Department();
 	}
 
 	/*

@@ -11,14 +11,18 @@
 		<rich:list value="#{periodsController.allPeriods}" id="periodsList"
 			var="period">
 			<h:outputText value="#{period.day}" />
-			<h:outputLabel value=" - " />
+			<h:outputLabel value=": &#160;" escape="false" />
 			<h:outputText value="#{period.termsNumber}" />
 		</rich:list>
 
 		<h:outputLabel value="Vreme trajanja termina:" />
 		<br />
-		<h:outputLabel rendered="#{periodsController.allPeriods.size() gt 0}"
-			value="#{periodsController.allPeriods.get(0).termsTime}" />
+		<ul style="font-weight:400;">
+			<ui:repeat value="#{periodsController.termsTimeValues}" var="term"
+				varStatus="termStatus">
+				<li><h:outputLabel value="#{termStatus.index + 1}: &#160; #{term}" /></li>
+			</ui:repeat>
+		</ul>
 	</rich:panel>
 
 	<rich:panel header="Unos i izmena termina" rendered="#{user.type eq 2}"

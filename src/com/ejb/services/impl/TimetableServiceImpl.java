@@ -8,6 +8,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -30,6 +33,7 @@ import com.jpa.entities.TeacherAvailability;
 import com.jpa.entities.TeacherIdles;
 import com.jpa.entities.TeacherLoad;
 import com.jpa.entities.TeacherNumDays;
+import com.jpa.entities.Timetable;
 import com.jpa.entities.User;
 import com.jpa.entities.enums.AvailabilityType;
 
@@ -83,6 +87,121 @@ public class TimetableServiceImpl implements TimetableService {
 
 		System.out.println("Done!");
 		return timetableResult.toString();
+	}
+
+	private int cleanTimetableForSemester(Long semesterId) {
+		TypedQuery<Timetable> cleanTimetable = em
+				.createQuery("SELECT t FROM Timetable t WHERE t.semester.id = :semesterId", Timetable.class);
+		cleanTimetable.setParameter("semesterId", semesterId);
+
+		int i = 0;
+		for (Timetable timetableRec : cleanTimetable.getResultList()) {
+			em.remove(timetableRec);
+			i++;
+		}
+
+		return i;
+	}
+
+	@Override
+	public void parseTimetableData(Semester activeSemester) {
+		String fileName = "timetable/timetable.ttbl";
+		Path path = Paths.get(fileName);
+
+		try {
+			List<String> lines = Files.readAllLines(path, ENCODING);
+
+			System.out.println("Cleaning up the timetable for specified semester...");
+			int deletedRecs = cleanTimetableForSemester(activeSemester.getId());
+			System.out.println("Number of deleted timetable records: " + deletedRecs);
+
+			System.out.println("Parsing timetable data and saving into database...");
+
+			for (String line : lines) {
+				String[] lineData = line.split("\t");
+
+				if (lineData.length > 1) {
+					Timetable timetableRec = new Timetable();
+
+					// teachers
+					String[] teachers = lineData[0].split(",");
+					Set<User> teachersSet = new HashSet<User>();
+					for (String teacher : teachers) {
+						Long teacherId = Long.valueOf(teacher.trim().replaceAll("\\D+", ""));
+						teachersSet.add(em.find(User.class, teacherId));
+					}
+					timetableRec.setTeachers(teachersSet);
+
+					// groups
+					String[] groups = lineData[1].split(",");
+					Set<Group> groupsSet = new HashSet<Group>();
+					for (String group : groups) {
+						Long groupId = Long.valueOf(group.trim().replaceAll("\\D+", ""));
+						groupsSet.add(em.find(Group.class, groupId));
+					}
+					timetableRec.setGroups(groupsSet);
+
+					// subject
+					Long subjectId = Long.valueOf(lineData[2].trim().replaceAll("\\D+", ""));
+					timetableRec.setSubject(em.find(Subject.class, subjectId));
+
+					// lessonLength
+					timetableRec.setLessonLength(Integer.valueOf(lineData[3].trim()));
+
+					// room
+					Long roomId = Long.valueOf(lineData[4].trim().replaceAll("\\D+", ""));
+					timetableRec.setRoom(em.find(Room.class, roomId));
+
+					// dayMark
+					timetableRec.setDayMark(lineData[5].trim());
+
+					// startTerm
+					timetableRec.setStartTerm(Integer.valueOf(lineData[6].trim()));
+
+					// semester
+					timetableRec.setSemester(activeSemester);
+
+					em.persist(timetableRec);
+				}
+			}
+			System.out.println("Done!");
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.out.println("File timetable.ttbl does not exist!");
+		}
+	}
+
+	@Override
+	public List<Timetable> getTimetableDataForTeacher(Semester semester, User teacher) {
+		TypedQuery<Timetable> timetableList = em.createQuery(
+				"SELECT t from Timetable t WHERE t.semester.id = :semesterId AND :teacher MEMBER OF t.teachers ORDER BY t.startTerm",
+				Timetable.class);
+		timetableList.setParameter("semesterId", semester.getId());
+		timetableList.setParameter("teacher", teacher);
+
+		return timetableList.getResultList();
+	}
+
+	@Override
+	public List<Timetable> getTimetableDataForGroup(Semester semester, Group group) {
+		TypedQuery<Timetable> timetableList = em.createQuery(
+				"SELECT t from Timetable t WHERE t.semester.id = :semesterId AND :group MEMBER OF t.groups ORDER BY t.startTerm",
+				Timetable.class);
+		timetableList.setParameter("semesterId", semester.getId());
+		timetableList.setParameter("group", group);
+
+		return timetableList.getResultList();
+	}
+
+	@Override
+	public List<Timetable> getTimetableDataForRoom(Semester semester, Room room) {
+		TypedQuery<Timetable> timetableList = em.createQuery(
+				"SELECT t from Timetable t WHERE t.semester.id = :semesterId AND t.room.id = :roomId ORDER BY t.startTerm",
+				Timetable.class);
+		timetableList.setParameter("semesterId", semester.getId());
+		timetableList.setParameter("roomId", room.getId());
+
+		return timetableList.getResultList();
 	}
 
 	private StringBuffer getPeriods() {

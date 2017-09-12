@@ -28,7 +28,7 @@ public class SubjectConverter implements Converter {
 		if (value != null) {
 			Subject subject = (Subject) value;
 			Long subjectId = subject.getId();
-			return subjectId.toString();
+			return String.valueOf(subjectId);
 		}
 		return "";
 	}

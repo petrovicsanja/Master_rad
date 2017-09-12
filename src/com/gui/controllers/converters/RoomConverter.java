@@ -29,7 +29,7 @@ public class RoomConverter implements Converter {
 		if (value != null) {
 			Room room = (Room) value;
 			Long roomId = room.getId();
-			return roomId.toString();
+			return String.valueOf(roomId);
 		}
 		return "";
 	}

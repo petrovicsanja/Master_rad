@@ -30,11 +30,6 @@ public class PeriodsController {
 	private String termsTime = null;
 	private List<Period> allPeriods = null;
 
-	@PostConstruct
-	public void init() {
-		listAllPeriods();
-	}
-
 	public void addPeriods() {
 		HashMap<String, Integer> termsOfPeriods = new HashMap<>();
 
@@ -64,21 +59,30 @@ public class PeriodsController {
 		termsTime = null;
 	}
 
-	public List<Period> listAllPeriods() {
-		if (allPeriods == null) {
-			allPeriods = periodsService.listAllPeriods();
-		}
-		return allPeriods;
+	@PostConstruct
+	public void init() {
+		allPeriods = periodsService.listAllPeriods();
 	}
 
-	public int getNumberOfWorkingDays() {
+	public List<String> getDistinctWorkingDays() {
 		List<String> distinctPeriods = new ArrayList<>();
 		for (Period period : getAllPeriods()) {
 			if (!distinctPeriods.contains(period.getDay())) {
 				distinctPeriods.add(period.getDay());
 			}
 		}
-		return distinctPeriods.size();
+		return distinctPeriods;
+	}
+
+	public List<String> getTermsTimeValues() {
+		List<String> termsTime = new ArrayList<String>();
+
+		String[] terms = allPeriods.get(0).getTermsTime().split(",");
+		for (String term : terms) {
+			termsTime.add(term.trim());
+		}
+
+		return termsTime;
 	}
 
 	/*

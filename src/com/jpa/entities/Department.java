@@ -42,6 +42,17 @@ public class Department {
 		return this.name;
 	}
 
+	@Override
+	public boolean equals(Object other) {
+		return (other != null && getClass() == other.getClass() && id != null) ? id.equals(((Department) other).id)
+				: (other == this);
+	}
+
+	@Override
+	public int hashCode() {
+		return (id != null) ? (getClass().hashCode() + id.hashCode()) : super.hashCode();
+	}
+
 	public String getStudyProgram() {
 		return studyProgram;
 	}

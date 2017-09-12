@@ -28,7 +28,7 @@ public class DepartmentConverter implements Converter {
 		if (value != null) {
 			Department department = (Department) value;
 			Long departmentId = department.getId();
-			return departmentId.toString();
+			return String.valueOf(departmentId);
 		}
 		return "";
 	}

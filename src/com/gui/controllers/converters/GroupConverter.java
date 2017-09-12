@@ -28,7 +28,7 @@ public class GroupConverter implements Converter {
 		if (value != null) {
 			Group group = (Group) value;
 			Long groupId = group.getId();
-			return groupId.toString();
+			return String.valueOf(groupId);
 		}
 		return "";
 	}

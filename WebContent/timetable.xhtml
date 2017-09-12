@@ -20,16 +20,17 @@
 		<h:form>
 			<div class="col-sm-3">
 				<div class="row">
-					<h:outputLabel value="TODO: Skolska godina i semestar" styleClass="margin10" />
+					<h:outputLabel value="TODO: Skolska godina i semestar"
+						styleClass="margin10" />
 				</div>
-			
+
 				<div class="row leftMenu">
 					<h:selectOneMenu id="timetableTeachers"
 						value="#{timetableController.selectedTeacher}"
 						converter="#{teacherConverter}" styleClass="col-sm-10 margin10">
 						<f:selectItem itemLabel="#{msg['select.teacher']}"
 							itemValue="#{null}" />
-						<f:selectItems value="#{timetableController.listTeachers()}"
+						<f:selectItems value="#{timetableController.teacherList}"
 							var="teacher" itemLabel="#{teacher.toString()}"
 							itemValue="#{teacher}" />
 						<f:ajax event="change" execute="@this" render="@all"
@@ -43,7 +44,7 @@
 						converter="#{groupConverter}" styleClass="col-sm-10 margin10">
 						<f:selectItem itemLabel="#{msg['select.group']}"
 							itemValue="#{null}" />
-						<f:selectItems value="#{timetableController.listGroups()}"
+						<f:selectItems value="#{timetableController.groupList}"
 							var="group" itemLabel="#{group.toString()}" itemValue="#{group}" />
 						<f:ajax event="change" execute="@this" render="@all"
 							listener="#{timetableController.getTimetableForGroup()}" />
@@ -56,17 +57,18 @@
 						converter="#{roomConverter}" styleClass="col-sm-10 margin10">
 						<f:selectItem itemLabel="#{msg['select.room']}"
 							itemValue="#{null}" />
-						<f:selectItems value="#{timetableController.listRooms()}"
-							var="room" itemLabel="#{room.toString()}" itemValue="#{room}" />
+						<f:selectItems value="#{timetableController.roomList}" var="room"
+							itemLabel="#{room.toString()}" itemValue="#{room}" />
 						<f:ajax event="change" execute="@this" render="@all"
 							listener="#{timetableController.getTimeTableForRoom()}" />
 					</h:selectOneMenu>
 				</div>
 
-				<br/>
+				<br />
 				<div class="row">
-					<h:commandLink action="dataOverview?faces-redirect=true" styleClass="margin10"
-						value="Povratak - Pregled podataka" immediate="true" />
+					<h:commandLink action="dataOverview?faces-redirect=true"
+						styleClass="margin10" value="Povratak - Pregled podataka"
+						immediate="true" />
 				</div>
 			</div>
 		</h:form>
@@ -84,10 +86,12 @@
 			</div>
 
 			<div class="row">
-				<h:outputLabel value="#{timetableController.heading}" />
+				<h:outputLabel styleClass="timetable-header" value="#{timetableController.heading}" />
 			</div>
 
-			<div class="row"></div>
+			<div class="row">
+				<h:outputText class="col-sm-12" value="#{timetableController.info}" escape="false" />
+			</div>
 		</div>
 	</div>
 </h:body>

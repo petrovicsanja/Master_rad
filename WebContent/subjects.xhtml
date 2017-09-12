@@ -50,10 +50,10 @@
 					rendered="#{subject.obligatory eq false}" />
 			</rich:column>
 
-			<rich:column styleClass="text-center" rendered="#{user.type eq 2}">
+			<rich:column rendered="#{user.type eq 2}">
 				<f:facet name="header">
-							#{msg['column.update']}
-					</f:facet>
+						#{msg['column.update']}
+				</f:facet>
 				<a4j:commandLink
 					oncomplete="#{rich:component('deleteSubjectConfirmation')}.show()"
 					execute="@this" render="@none" title="#{msg['element.delete']}">
@@ -127,7 +127,7 @@
 			<h:selectOneRadio id="updateSubjectType" required="true"
 				requiredMessage="#{msg['error.missingValue']}"
 				label="#{msg['subjects.type']}"
-				value="#{subjectsController.newSubject.obligatory}">
+				value="#{subjectsController.subjectToUpdate.obligatory}">
 				<f:selectItem itemLabel="#{msg['subjects.obligatory']}"
 					itemValue="true" />
 				<f:selectItem itemLabel="#{msg['subjects.elective']}"
@@ -192,10 +192,8 @@
 							requiredMessage="#{msg['error.missingValue']}"
 							styleClass="form-check-input" label="#{msg['subjects.type']}"
 							value="#{subjectsController.newSubject.obligatory}">
-							<f:selectItem id="obavezan"
-								itemLabel="#{msg['subjects.obligatory']}" itemValue="true" />
-							<f:selectItem id="izborni"
-								itemLabel="#{msg['subjects.elective']}" itemValue="false" />
+							<f:selectItem itemLabel="#{msg['subjects.obligatory']}" itemValue="true" />
+							<f:selectItem itemLabel="#{msg['subjects.elective']}" itemValue="false" />
 						</h:selectOneRadio>
 					</div>
 					<div class="col-sm-3">

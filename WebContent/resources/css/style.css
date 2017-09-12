@@ -29,3 +29,19 @@
 .table-striped th {
 	text-align: left;
 }
+
+#timetable {
+	margin-top: 30px;
+}
+
+#timetable td {
+	border-color: black;
+}
+
+.timetable-header {
+	margin-top: 20px;
+}
+
+.timetable-cell-colored {
+	background-color: #FEDF9E;
+}

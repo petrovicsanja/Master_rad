@@ -89,7 +89,7 @@ public class AvailabilitiesController {
 	}
 
 	public List<Period> listAllAvailablePeriods() {
-		return periodsController.listAllPeriods();
+		return periodsController.getAllPeriods();
 	}
 
 	public void clearData(String objectType) {

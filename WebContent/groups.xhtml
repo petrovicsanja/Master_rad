@@ -59,7 +59,7 @@
 				<h:outputText value="#{group.mark}" />
 			</rich:column>
 
-			<rich:column rendered="#{user.type eq 2}" styleClass="text-center">
+			<rich:column rendered="#{user.type eq 2}">
 				<f:facet name="header">
 					#{msg['column.update']}
 				</f:facet>
@@ -131,9 +131,9 @@
 				<h:selectOneMenu id="updateGroupDepartment" required="true"
 					requiredMessage="#{msg['error.missingValue']}"
 					value="#{groupsController.groupToUpdate.department}"
-					converter="#{departmentConverter}">
+					converter="#{departmentConverter}" label="Smer">
 					<f:selectItem itemLabel="-- Izaberite smer --" itemValue="#{null}" />
-					<f:selectItems value="#{groupsController.listDepartments()}"
+					<f:selectItems value="#{groupsController.departmentList}"
 						var="department" itemLabel="#{department.name}"
 						itemValue="#{department}" />
 					<f:ajax event="change" execute="@this" />
@@ -193,12 +193,11 @@
 					<div class="col-sm-6">
 						<h:selectOneMenu id="newGroupDepartment" required="true"
 							requiredMessage="#{msg['error.missingValue']}"
-							styleClass="form-check-input"
-							value="#{groupsController.newGroup.department}"
-							converter="#{departmentConverter}">
+							styleClass="form-check-input" converter="#{departmentConverter}"
+							value="#{groupsController.newGroup.department}" label="Smer">
 							<f:selectItem itemLabel="-- Izaberite smer --"
 								itemValue="#{null}" />
-							<f:selectItems value="#{groupsController.listDepartments()}"
+							<f:selectItems value="#{groupsController.departmentList}"
 								var="department" itemLabel="#{department.name}"
 								itemValue="#{department}" />
 							<f:ajax event="change" execute="@this" />
