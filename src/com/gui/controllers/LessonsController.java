@@ -57,6 +57,7 @@ public class LessonsController {
 	private Set<Group> selectedGroups = new HashSet<Group>();
 	private String terms;
 	private String note;
+	private Lesson lessonToUpdate = null;
 
 	private int selectedLessonIndex;
 
@@ -98,7 +99,7 @@ public class LessonsController {
 		selectedGroups.add(group);
 	}
 
-	private void resetFields() {
+	public void resetFields() {
 		subject = null;
 		group = null;
 		teacher = null;
@@ -107,15 +108,32 @@ public class LessonsController {
 		selectedGroups.clear();
 		selectedTeachers.clear();
 		selectedRooms.clear();
+		lessonToUpdate = null;
 	}
 
 	public void addLesson() {
-		Lesson newLesson = lessonsService.addLesson(new HashSet<User>(selectedTeachers),
-				new HashSet<Group>(selectedGroups), subject, terms, new HashSet<Room>(selectedRooms), note,
-				getActiveSemester(), loginController.isAdmin());
+		Lesson lesson;
+		boolean update = false;
+
+		if (lessonToUpdate != null) {
+			lesson = lessonToUpdate;
+			update = true;
+		} else {
+			lesson = new Lesson();
+		}
+		lesson.setTeachers(selectedTeachers);
+		lesson.setGroups(selectedGroups);
+		lesson.setSubject(subject);
+		lesson.setTerms(terms);
+		lesson.setRooms(new HashSet<Room>(selectedRooms));
+		lesson.setNote(note);
+		lesson.setSemester(getActiveSemester());
+		lesson.setApproved(loginController.isAdmin());
+
+		lesson = lessonsService.addLesson(lesson, update);
 
 		if (lessonsSearchSubjectId != null && lessonsSearchSubjectId.equals(subject.getId())) {
-			subjectLessonsList.add(newLesson);
+			listLessonsForSubject();
 		}
 
 		resetFields();
@@ -131,6 +149,16 @@ public class LessonsController {
 		Lesson lessonToApprove = subjectLessonsList.get(selectedLessonIndex);
 		lessonsService.approveLesson(lessonToApprove.getId());
 		lessonToApprove.setApproved(true);
+	}
+
+	public void updateLesson() {
+		lessonToUpdate = subjectLessonsList.get(selectedLessonIndex);
+		selectedGroups = lessonToUpdate.getGroups();
+		selectedTeachers = lessonToUpdate.getTeachers();
+		selectedRooms = new ArrayList<Room>(lessonToUpdate.getRooms());
+		subject = lessonToUpdate.getSubject();
+		note = lessonToUpdate.getNote();
+		terms = lessonToUpdate.getTerms();
 	}
 
 	/*

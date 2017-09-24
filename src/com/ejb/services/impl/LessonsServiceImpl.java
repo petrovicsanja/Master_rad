@@ -1,7 +1,6 @@
 package com.ejb.services.impl;
 
 import java.util.List;
-import java.util.Set;
 import java.util.logging.Logger;
 
 import javax.ejb.Stateless;
@@ -10,12 +9,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
 import com.ejb.services.LessonsService;
-import com.jpa.entities.Group;
 import com.jpa.entities.Lesson;
-import com.jpa.entities.Room;
-import com.jpa.entities.Semester;
-import com.jpa.entities.Subject;
-import com.jpa.entities.User;
 
 /**
  * Implementation of services to work with lesson data
@@ -33,21 +27,26 @@ public class LessonsServiceImpl implements LessonsService {
 	private EntityManager em;
 
 	@Override
-	public Lesson addLesson(Set<User> teachers, Set<Group> groups, Subject subject, String terms, Set<Room> rooms,
-			String note, Semester activeSemester, boolean isAdmin) {
-		Lesson newLesson = new Lesson();
-		newLesson.setTeachers(teachers);
-		newLesson.setGroups(groups);
-		newLesson.setSubject(subject);
-		newLesson.setTerms(terms);
-		newLesson.setRooms(rooms);
-		newLesson.setNote(note);
-		newLesson.setSemester(activeSemester);
-		newLesson.setApproved(isAdmin);
-		em.persist(newLesson);
+	public Lesson addLesson(Lesson lesson, boolean update) {
+		if (update) {
+			Lesson lessonToUpdate = em.find(Lesson.class, lesson.getId());
+			lessonToUpdate.setTeachers(lesson.getTeachers());
+			lessonToUpdate.setGroups(lesson.getGroups());
+			lessonToUpdate.setSubject(lesson.getSubject());
+			lessonToUpdate.setRooms(lesson.getRooms());
+			lessonToUpdate.setTerms(lesson.getTerms());
+			lessonToUpdate.setNote(lesson.getNote());
+			lessonToUpdate.setApproved(lesson.getApproved());
+			lessonToUpdate.setSemester(lesson.getSemester());
+			log.info("Lesson is successfully updated in the database, id: " + lessonToUpdate.getId());
 
-		log.info("New lesson is successfully added to the database, id: " + newLesson.getId());
-		return newLesson;
+			return lessonToUpdate;
+		}
+
+		em.persist(lesson);
+		log.info("New lesson is successfully added to the database, id: " + lesson.getId());
+
+		return lesson;
 	}
 
 	@Override

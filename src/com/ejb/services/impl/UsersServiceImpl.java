@@ -6,7 +6,6 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
-import javax.persistence.PersistenceException;
 import javax.persistence.TypedQuery;
 
 import com.ejb.services.UsersService;
@@ -83,14 +82,10 @@ public class UsersServiceImpl implements UsersService {
 	@Override
 	public User deleteUser(Long userId) {
 		User userToDelete = em.find(User.class, userId);
-		try {
-			em.remove(userToDelete);
-			System.out.println("User is successfully deleted from the database, id: " + userId);
-			return userToDelete;
-		} catch (PersistenceException e) {
-			System.out.println("Test");
-			return null;
-		}
+
+		em.remove(userToDelete);
+		System.out.println("User is successfully deleted from the database, id: " + userId);
+		return userToDelete;
 	}
 
 	/**

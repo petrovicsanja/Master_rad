@@ -149,7 +149,11 @@ public class AvailabilitiesController {
 	}
 
 	public void listAllGroupAvailableTermsForSelectedDay() {
-		if (!groupAvailabilityDayMark.isEmpty()) {
+		if (selectedGroupAvailability != null) {
+			groupAvailabilityDayMark = selectedGroupAvailability.getDayMark();
+		}
+
+		if (groupAvailabilityDayMark != null && !groupAvailabilityDayMark.isEmpty()) {
 			if (groupAvailabilityTermsForSelectedDay != null) {
 				groupAvailabilityTermsForSelectedDay.clear();
 			} else {
@@ -170,7 +174,11 @@ public class AvailabilitiesController {
 	}
 
 	public void listAllRoomAvailableTermsForSelectedDay() {
-		if (!roomAvailabilityDayMark.isEmpty()) {
+		if (selectedRoomAvailability != null) {
+			roomAvailabilityDayMark = selectedRoomAvailability.getDayMark();
+		}
+
+		if (roomAvailabilityDayMark != null && !roomAvailabilityDayMark.isEmpty()) {
 			if (roomAvailabilityTermsForSelectedDay != null) {
 				roomAvailabilityTermsForSelectedDay.clear();
 			} else {

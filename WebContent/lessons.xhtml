@@ -15,7 +15,7 @@
 					<h:outputLabel value="Izaberite predmet: " />
 				</div>
 				<div class="col-sm-3">
-					<h:selectOneMenu
+					<h:selectOneMenu id="lessonsSearchSubject"
 						value="#{lessonsController.lessonsSearchSubjectId}"
 						required="true" requiredMessage="#{msg['error.missingValue']}"
 						label="Izbor predmeta">
@@ -30,7 +30,8 @@
 					<h:commandButton
 						action="#{lessonsController.listLessonsForSubject()}"
 						value="Pretraži" styleClass="btn btn-sm btn-primary">
-						<a4j:ajax render="@form" />
+						<a4j:ajax execute="lessonsSearchSubject"
+							render="subjectLessonsList" />
 					</h:commandButton>
 				</div>
 			</div>
@@ -112,8 +113,14 @@
 
 			<rich:column rendered="#{user.type eq 2}">
 				<f:facet name="header">
-					Brisanje
+					#{msg['column.update']}
 				</f:facet>
+				<a4j:commandLink action="#{lessonsController.updateLesson()}"
+					execute="@this" render="@form" title="#{msg['element.update']}">
+					<h:graphicImage value="/images/edit.png" alt="edit" />
+					<a4j:param value="#{it.index}"
+						assignTo="#{lessonsController.selectedLessonIndex}" />
+				</a4j:commandLink>
 				<a4j:commandLink
 					oncomplete="#{rich:component('deleteLessonConfirmation')}.show()"
 					execute="@this" render="@none" title="#{msg['element.delete']}">
@@ -150,7 +157,7 @@
 			onclick="#{rich:component('deleteLessonConfirmation')}.hide(); return false;" />
 	</rich:popupPanel>
 
-	<rich:collapsiblePanel header="Unos časova" switchType="client"
+	<rich:collapsiblePanel id="lessonForm" header="Unos i izmena časova" switchType="client"
 		styleClass="panel panel-primary" headerClass="panel-heading"
 		bodyClass="panel-body" rightCollapsedIcon="/images/minus.png"
 		rightExpandedIcon="/images/plus.png">
@@ -187,7 +194,8 @@
 					</div>
 					<div class="col-sm-3">
 						<h:selectOneMenu id="lessonTeacher" styleClass="col-sm-9"
-							value="#{lessonsController.teacher}" required="true"
+							value="#{lessonsController.teacher}"
+							required="#{lessonsController.selectedTeachers.size() eq 0}"
 							requiredMessage="#{msg['error.missingValue']}"
 							label="Izbor profesora" converter="#{teacherConverter}">
 							<f:selectItem itemLabel="#{msg['select.teacher']}"
@@ -225,7 +233,8 @@
 					</div>
 					<div class="col-sm-3">
 						<h:selectOneMenu id="lessonGroup" styleClass="col-sm-9"
-							value="#{lessonsController.group}" required="true"
+							value="#{lessonsController.group}"
+							required="#{lessonsController.selectedGroups.size() eq 0}"
 							requiredMessage="#{msg['error.missingValue']}"
 							label="Izbor grupe" converter="#{groupConverter}">
 							<f:selectItem itemLabel="#{msg['select.group']}"
@@ -317,6 +326,11 @@
 						disabled="#{lessonsController.activeSemester eq null}"
 						value="#{msg['element.save']}">
 						<a4j:ajax render="@form" />
+					</h:commandButton>
+
+					<h:commandButton action="#{lessonsController.resetFields()}"
+						value="Reset" immediate="true" styleClass="btn btn-md btn-primary">
+						<f:ajax render="lessonForm" />
 					</h:commandButton>
 				</div>
 			</div>
