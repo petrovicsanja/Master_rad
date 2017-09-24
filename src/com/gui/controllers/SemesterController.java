@@ -25,6 +25,8 @@ public class SemesterController {
 	private Date endDate;
 	private Integer ordinalNumber;
 
+	private Semester selectedSemester;
+
 	public List<Semester> listSemesters() {
 		semesterList = semesterService.listSemesters();
 		return semesterList;
@@ -41,6 +43,10 @@ public class SemesterController {
 	public void deactivateSemester(Long semesterId) {
 		semesterService.deactivateSemester(semesterId);
 		activeSemester = null;
+	}
+
+	public void updateSemester() {
+		semesterService.updateSemester(selectedSemester);
 	}
 
 	/*
@@ -88,5 +94,13 @@ public class SemesterController {
 
 	public void setOrdinalNumber(Integer ordinalNumber) {
 		this.ordinalNumber = ordinalNumber;
+	}
+
+	public Semester getSelectedSemester() {
+		return selectedSemester;
+	}
+
+	public void setSelectedSemester(Semester selectedSemester) {
+		this.selectedSemester = selectedSemester;
 	}
 }

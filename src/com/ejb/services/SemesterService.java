@@ -53,4 +53,11 @@ public interface SemesterService {
 	 * @param semesterId
 	 */
 	void deactivateSemester(Long semesterId);
+
+	/**
+	 * Update existing semester
+	 * 
+	 * @param semester
+	 */
+	void updateSemester(Semester semester);
 }

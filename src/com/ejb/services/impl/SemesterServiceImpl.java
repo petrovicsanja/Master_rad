@@ -91,4 +91,14 @@ public class SemesterServiceImpl implements SemesterService {
 
 		System.out.println("Semester is successfully deactivated.");
 	}
+
+	@Override
+	public void updateSemester(Semester semester) {
+		Semester semesterToUpdate = em.find(Semester.class, semester.getId());
+
+		semesterToUpdate.setSchoolYear(semester.getSchoolYear());
+		semesterToUpdate.setStartDate(semester.getStartDate());
+		semesterToUpdate.setEndDate(semester.getEndDate());
+		semesterToUpdate.setOrdinalNumber(semester.getOrdinalNumber());
+	}
 }

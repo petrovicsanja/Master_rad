@@ -167,7 +167,71 @@
 					<f:ajax execute="@this" render="@form" />
 				</h:commandButton>
 			</rich:column>
+
+			<rich:column>
+				<f:facet name="header">
+					#{msg['column.update']}
+				</f:facet>
+				<a4j:commandLink
+					oncomplete="#{rich:component('semesterUpdate')}.show()"
+					execute="@this" render="semesterUpdate"
+					title="#{msg['element.update']}">
+					<h:graphicImage value="/images/edit.png" alt="edit" />
+					<f:setPropertyActionListener value="#{semester}"
+						target="#{semesterController.selectedSemester}" />
+				</a4j:commandLink>
+			</rich:column>
 		</rich:dataTable>
+
+		<rich:popupPanel id="semesterUpdate" autosized="true"
+			resizeable="false" domElementAttachment="parent"
+			styleClass="panel panel-info" headerClass="panel-heading">
+			<f:facet name="header">
+				<h:outputText value="#{msg['element.update']}" />
+			</f:facet>
+			<f:facet name="controls">
+				<h:outputLink value="#"
+					onclick="#{rich:component('semesterUpdate')}.hide(); return false;"
+					style="color: inherit"> X </h:outputLink>
+			</f:facet>
+			<h:panelGrid columns="3">
+				<h:outputLabel value="Školska godina: " />
+				<h:inputText id="updateSchoolYear"
+					value="#{semesterController.selectedSemester.schoolYear}"
+					required="true" requiredMessage="#{msg['error.missingValue']}"
+					styleClass="form-control" />
+				<rich:message for="updateSchoolYear" ajaxRendered="true" />
+
+				<h:outputLabel value="Početak semestra: " />
+				<rich:calendar id="updateSemesterStartDate"
+					value="#{semesterController.selectedSemester.startDate}"
+					required="true" requiredMessage="#{msg['error.missingValue']}" />
+				<rich:message for="updateSemesterStartDate" ajaxRendered="true" />
+
+				<h:outputLabel value="Kraj semestra: " />
+				<rich:calendar id="updateSemesterEndDate"
+					value="#{semesterController.selectedSemester.endDate}"
+					required="true" requiredMessage="#{msg['error.missingValue']}" />
+				<rich:message for="updateSemesterEndDate" ajaxRendered="true" />
+
+				<h:outputLabel value="Tip semestra: " />
+				<h:selectOneMenu id="updateSemesterOrdinalNumber"
+					value="#{semesterController.selectedSemester.ordinalNumber}"
+					required="true" requiredMessage="#{msg['error.missingValue']}"
+					styleClass="form-control">
+					<f:selectItem itemLabel="Zimski" itemValue="1" />
+					<f:selectItem itemLabel="Letnji" itemValue="2" />
+				</h:selectOneMenu>
+				<rich:message for="updateSemesterEndDate" ajaxRendered="true" />
+
+				<a4j:commandButton action="#{semesterController.updateSemester()}"
+					value="#{msg['element.save']}"
+					oncomplete="#{rich:component('semesterUpdate')}.hide();"
+					execute="semesterUpdate" render="semesterList" />
+				<a4j:commandButton value="#{msg.cancel}"
+					onclick="#{rich:component('semesterUpdate')}.hide(); return false;" />
+			</h:panelGrid>
+		</rich:popupPanel>
 
 		<a4j:region>
 			<div class="page-header">
