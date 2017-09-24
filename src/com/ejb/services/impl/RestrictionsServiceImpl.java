@@ -260,4 +260,67 @@ public class RestrictionsServiceImpl implements RestrictionsService {
 		em.remove(teacherLoadToDelete);
 		System.out.println("Teacher load restriction is successfully deleted from the database, id:" + teacherLoadId);
 	}
+
+	/*
+	 * Update methods
+	 */
+
+	@Override
+	public void updateNumDaysGroupRestriction(GroupNumDays groupNumDays) {
+		GroupNumDays groupNumDaysToUpdate = em.find(GroupNumDays.class, groupNumDays.getId());
+		groupNumDaysToUpdate.setMin(groupNumDays.getMin());
+		groupNumDaysToUpdate.setOpt(groupNumDays.getOpt());
+		groupNumDaysToUpdate.setMax(groupNumDays.getMax());
+		System.out.println(
+				"NumDays restriction for group is successfully updated in the database, id: " + groupNumDays.getId());
+	}
+
+	@Override
+	public void updateNumDaysTeacherRestriction(TeacherNumDays teacherNumDays) {
+		TeacherNumDays teacherNumDaysToUpdate = em.find(TeacherNumDays.class, teacherNumDays.getId());
+		teacherNumDaysToUpdate.setMin(teacherNumDays.getMin());
+		teacherNumDaysToUpdate.setOpt(teacherNumDays.getOpt());
+		teacherNumDaysToUpdate.setMax(teacherNumDays.getMax());
+		System.out.println("NumDays restriction for teacher is successfully updated in the database, id: "
+				+ teacherNumDays.getId());
+	}
+
+	@Override
+	public void updateIdlesGroupRestriction(GroupIdles groupIdles) {
+		GroupIdles groupIdlesToUpdate = em.find(GroupIdles.class, groupIdles.getId());
+		groupIdlesToUpdate.setDays(groupIdles.getDays());
+		groupIdlesToUpdate.setMax(groupIdles.getMax());
+		groupIdlesToUpdate.setMultiple(groupIdles.getMultiple());
+		System.out.println(
+				"Idles restriction for group is successfully updated in the database, id: " + groupIdles.getId());
+	}
+
+	@Override
+	public void updateIdlesTeacherRestriction(TeacherIdles teacherIdles) {
+		TeacherIdles teacherIdlesToUpdate = em.find(TeacherIdles.class, teacherIdles.getId());
+		teacherIdlesToUpdate.setDays(teacherIdles.getDays());
+		teacherIdlesToUpdate.setMax(teacherIdles.getMax());
+		teacherIdlesToUpdate.setMultiple(teacherIdles.getMultiple());
+		System.out.println(
+				"Idles restriction for teacher is successfully updated in the database, id: " + teacherIdles.getId());
+	}
+
+	@Override
+	public void updateLoadGroupRestriction(GroupLoad groupLoad) {
+		GroupLoad groupLoadToUpdate = em.find(GroupLoad.class, groupLoad.getId());
+		groupLoadToUpdate.setMax(groupLoad.getMax());
+		groupLoadToUpdate.setMin(groupLoad.getMin());
+		System.out.println(
+				"Load restriction for group is successfully updated in the database, id: " + groupLoad.getId());
+
+	}
+
+	@Override
+	public void updateLoadTeacherRestriction(TeacherLoad teacherLoad) {
+		TeacherLoad teacherLoadToUpdate = em.find(TeacherLoad.class, teacherLoad.getId());
+		teacherLoadToUpdate.setMax(teacherLoad.getMax());
+		teacherLoadToUpdate.setMin(teacherLoad.getMin());
+		System.out.println(
+				"Load restriction for teacher is successfully updated in the database, id: " + teacherLoad.getId());
+	}
 }

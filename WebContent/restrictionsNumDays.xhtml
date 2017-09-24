@@ -1,0 +1,413 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j">
+
+	<rich:collapsiblePanel
+		header="#{msg['subheading.restrictions.numDays']}" switchType="client"
+		styleClass="panel panel-primary" headerClass="panel-heading"
+		bodyClass="panel-body" rightCollapsedIcon="/images/minus.png"
+		rightExpandedIcon="/images/plus.png">
+
+		<div class="page-header">
+			<h3>#{msg.groups}</h3>
+		</div>
+
+		<rich:dataTable id="numDaysGroupRestrictionList" var="restriction"
+			rows="10"
+			value="#{restrictionsController.listNumDaysGroupRestrictions()}"
+			iterationStatusVar="it" styleClass="table table-striped">
+
+			<f:facet name="noData">
+				#{msg['no.data']}
+			</f:facet>
+
+			<rich:column sortBy="#{restriction.group.name}">
+				<f:facet name="header">
+					Grupa
+				</f:facet>
+				<h:outputText value="#{restriction.group.name}" />
+			</rich:column>
+
+			<rich:column>
+				<f:facet name="header">
+					Minimum
+				</f:facet>
+				<h:outputText value="#{restriction.min}" />
+			</rich:column>
+
+			<rich:column>
+				<f:facet name="header">
+					Optimum
+				</f:facet>
+				<h:outputText value="#{restriction.opt}" />
+			</rich:column>
+
+			<rich:column>
+				<f:facet name="header">
+					Maksimum
+				</f:facet>
+				<h:outputText value="#{restriction.max}" />
+			</rich:column>
+
+			<rich:column rendered="#{user.type eq 2}">
+				<f:facet name="header">
+					#{msg['column.update']}
+				</f:facet>
+				<a4j:commandLink
+					oncomplete="#{rich:component('numDaysGroupUpdate')}.show()"
+					execute="@this" render="numDaysGroupUpdate"
+					title="#{msg['element.update']}">
+					<h:graphicImage value="/images/edit.png" alt="edit" />
+					<a4j:param value="#{it.index}"
+						assignTo="#{restrictionsController.selectedRestrictionIndex}" />
+					<f:setPropertyActionListener value="#{restriction}"
+						target="#{restrictionsController.selectedGroupNumDays}" />
+				</a4j:commandLink>
+				<a4j:commandLink
+					oncomplete="#{rich:component('deleteRestrictionConfirmation')}.show()"
+					execute="@this" render="@none" title="#{msg['element.delete']}">
+					<h:graphicImage value="/images/delete.png" alt="delete" />
+					<a4j:param value="#{it.index}"
+						assignTo="#{restrictionsController.selectedRestrictionIndex}" />
+					<a4j:param value="GroupNumDays"
+						assignTo="#{restrictionsController.restrictionType}" />
+				</a4j:commandLink>
+			</rich:column>
+
+			<f:facet name="footer">
+				<rich:dataScroller renderIfSinglePage="false" />
+			</f:facet>
+		</rich:dataTable>
+
+		<rich:popupPanel id="numDaysGroupUpdate" autosized="true"
+			resizeable="false" domElementAttachment="parent"
+			styleClass="panel panel-info" headerClass="panel-heading">
+			<f:facet name="header">
+				<h:outputText value="#{msg['element.update']}" />
+			</f:facet>
+			<f:facet name="controls">
+				<h:outputLink value="#"
+					onclick="#{rich:component('numDaysGroupUpdate')}.hide(); return false;"
+					style="color: inherit"> X </h:outputLink>
+			</f:facet>
+
+			<h:outputLabel
+				value="Grupa: #{restrictionsController.selectedGroupNumDays.group}" />
+
+			<h:panelGrid columns="3" id="numDaysGroupUpdateGrid">
+				<h:outputLabel value="#{msg['restrictions.numDays.min']}" />
+				<h:inputText id="updateGroupNumDaysMin" required="true"
+					requiredMessage="#{msg['error.missingValue']}"
+					value="#{restrictionsController.selectedGroupNumDays.min}" />
+				<rich:message for="updateGroupNumDaysMin" ajaxRendered="true" />
+
+				<h:outputLabel value="#{msg['restrictions.numDays.opt']}" />
+				<h:inputText id="updateGroupNumDaysOpt" required="true"
+					requiredMessage="#{msg['error.missingValue']}"
+					value="#{restrictionsController.selectedGroupNumDays.opt}" />
+				<rich:message for="updateGroupNumDaysOpt" ajaxRendered="true" />
+
+				<h:outputLabel value="#{msg['restrictions.numDays.max']}" />
+				<h:inputText id="updateGroupNumDaysMax" required="true"
+					requiredMessage="#{msg['error.missingValue']}"
+					value="#{restrictionsController.selectedGroupNumDays.max}" />
+				<rich:message for="updateGroupNumDaysMax" ajaxRendered="true" />
+
+				<a4j:commandButton
+					action="#{restrictionsController.updateNumDaysGroupRestriction()}"
+					value="#{msg['element.save']}"
+					oncomplete="#{rich:component('numDaysGroupUpdate')}.hide();"
+					execute="numDaysGroupUpdate" render="numDaysGroupRestrictionList" />
+				<a4j:commandButton value="#{msg.cancel}"
+					onclick="#{rich:component('numDaysGroupUpdate')}.hide(); return false;" />
+			</h:panelGrid>
+		</rich:popupPanel>
+
+		<a4j:region rendered="#{user.type eq 2}">
+			<div class="page-header">
+				<h4>#{msg['subheading.restrictions.group']}</h4>
+			</div>
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-3">
+						<h:outputLabel value="Izaberite grupu:" />
+					</div>
+					<div class="col-sm-3">
+						<h:outputLabel value="#{msg['restrictions.numDays.min']}" />
+					</div>
+					<div class="col-sm-3">
+						<h:outputLabel value="#{msg['restrictions.numDays.opt']}" />
+					</div>
+					<div class="col-sm-3">
+						<h:outputLabel value="#{msg['restrictions.numDays.max']}" />
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-sm-3">
+						<h:selectOneMenu id="restrictionNumDaysGroup" required="true"
+							requiredMessage="#{msg['error.missingValue']}"
+							value="#{restrictionsController.newGroupNumDays.group}"
+							converter="#{groupConverter}" label="Grupa">
+							<f:selectItem itemLabel="#{msg['select.group']}"
+								itemValue="#{null}" />
+							<f:selectItems value="#{restrictionsController.listAllGroups()}"
+								var="group" itemLabel="#{group.name}" itemValue="#{group}" />
+							<f:ajax event="change" execute="@this" />
+						</h:selectOneMenu>
+					</div>
+					<div class="col-sm-3">
+						<h:inputText id="groupNumDaysMin" required="true"
+							requiredMessage="#{msg['error.missingValue']}"
+							value="#{restrictionsController.newGroupNumDays.min}" />
+					</div>
+					<div class="col-sm-3">
+						<h:inputText required="true" id="groupNumDaysOpt"
+							requiredMessage="#{msg['error.missingValue']}"
+							value="#{restrictionsController.newGroupNumDays.opt}" />
+					</div>
+					<div class="col-sm-3">
+						<h:inputText required="true" id="groupNumDaysMax"
+							requiredMessage="#{msg['error.missingValue']}"
+							value="#{restrictionsController.newGroupNumDays.max}" />
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-sm-3">
+						<rich:message for="restrictionNumDaysGroup" ajaxRendered="true" />
+					</div>
+
+					<div class="col-sm-3">
+						<rich:message for="groupNumDaysMin" ajaxRendered="true" />
+					</div>
+
+					<div class="col-sm-3">
+						<rich:message for="groupNumDaysOpt" ajaxRendered="true" />
+					</div>
+
+					<div class="col-sm-3">
+						<rich:message for="groupNumDaysMax" ajaxRendered="true" />
+					</div>
+				</div>
+
+				<div class="row text-right">
+					<h:commandButton styleClass="btn btn-sm btn-primary"
+						action="#{restrictionsController.addNewNumDaysGroupRestriction()}"
+						disabled="#{restrictionsController.activeSemester eq null}"
+						value="#{msg['element.save']}">
+						<a4j:ajax
+							render=":numDaysGroupRestrictionList :globalMessage restrictionNumDaysGroup groupNumDaysMin groupNumDaysOpt groupNumDaysMax" />
+					</h:commandButton>
+				</div>
+			</div>
+		</a4j:region>
+
+		<div class="page-header">
+			<h3>Profesori</h3>
+		</div>
+
+		<rich:dataTable id="numDaysTeacherRestrictionList" var="restriction"
+			rows="10"
+			value="#{restrictionsController.listNumDaysTeacherRestrictionList()}"
+			iterationStatusVar="it" styleClass="table table-striped">
+
+			<f:facet name="noData">
+				#{msg['no.data']}
+			</f:facet>
+
+			<rich:column sortBy="#{restriction.teacher}">
+				<f:facet name="header">
+					Profesor
+				</f:facet>
+				<h:outputText value="#{restriction.teacher}" />
+			</rich:column>
+
+			<rich:column>
+				<f:facet name="header">
+					Minimum
+				</f:facet>
+				<h:outputText value="#{restriction.min}" />
+			</rich:column>
+
+			<rich:column>
+				<f:facet name="header">
+					Optimum
+				</f:facet>
+				<h:outputText value="#{restriction.opt}" />
+			</rich:column>
+
+			<rich:column>
+				<f:facet name="header">
+					Maksimum
+				</f:facet>
+				<h:outputText value="#{restriction.max}" />
+			</rich:column>
+
+			<rich:column>
+				<f:facet name="header">
+					#{msg['column.update']}
+				</f:facet>
+				<a4j:commandLink
+					oncomplete="#{rich:component('numDaysTeacherUpdate')}.show()"
+					execute="@this" render="numDaysTeacherUpdate"
+					title="#{msg['element.update']}">
+					<h:graphicImage value="/images/edit.png" alt="edit" />
+					<a4j:param value="#{it.index}"
+						assignTo="#{restrictionsController.selectedRestrictionIndex}" />
+					<f:setPropertyActionListener value="#{restriction}"
+						target="#{restrictionsController.selectedTeacherNumDays}" />
+				</a4j:commandLink>
+				<a4j:commandLink
+					oncomplete="#{rich:component('deleteRestrictionConfirmation')}.show()"
+					execute="@this" render="@none"
+					title="Obriši ogranicenje za profesora">
+					<h:graphicImage value="/images/delete.png" alt="delete" />
+					<a4j:param value="#{it.index}"
+						assignTo="#{restrictionsController.selectedRestrictionIndex}" />
+					<a4j:param value="TeacherNumDays"
+						assignTo="#{restrictionsController.restrictionType}" />
+				</a4j:commandLink>
+			</rich:column>
+
+			<f:facet name="footer">
+				<rich:dataScroller renderIfSinglePage="false" />
+			</f:facet>
+		</rich:dataTable>
+
+		<rich:popupPanel id="numDaysTeacherUpdate" autosized="true"
+			resizeable="false" domElementAttachment="parent"
+			styleClass="panel panel-info" headerClass="panel-heading">
+			<f:facet name="header">
+				<h:outputText value="#{msg['element.update']}" />
+			</f:facet>
+			<f:facet name="controls">
+				<h:outputLink value="#"
+					onclick="#{rich:component('numDaysTeacherUpdate')}.hide(); return false;"
+					style="color: inherit"> X </h:outputLink>
+			</f:facet>
+
+			<h:outputLabel
+				value="Profesor: #{restrictionsController.selectedTeacherNumDays.teacher}" />
+
+			<h:panelGrid columns="3" id="numDaysTeacherUpdateGrid">
+				<h:outputLabel value="#{msg['restrictions.numDays.min']}" />
+				<h:inputText id="updateTeacherNumDaysMin" required="true"
+					requiredMessage="#{msg['error.missingValue']}"
+					value="#{restrictionsController.selectedTeacherNumDays.min}" />
+				<rich:message for="updateTeacherNumDaysMin" ajaxRendered="true" />
+
+				<h:outputLabel value="#{msg['restrictions.numDays.opt']}" />
+				<h:inputText id="updateTeacherNumDaysOpt" required="true"
+					requiredMessage="#{msg['error.missingValue']}"
+					value="#{restrictionsController.selectedTeacherNumDays.opt}" />
+				<rich:message for="updateTeacherNumDaysOpt" ajaxRendered="true" />
+
+				<h:outputLabel value="#{msg['restrictions.numDays.max']}" />
+				<h:inputText id="updateTeacherNumDaysMax" required="true"
+					requiredMessage="#{msg['error.missingValue']}"
+					value="#{restrictionsController.selectedTeacherNumDays.max}" />
+				<rich:message for="updateTeacherNumDaysMax" ajaxRendered="true" />
+
+				<a4j:commandButton
+					action="#{restrictionsController.updateNumDaysTeacherRestriction()}"
+					value="#{msg['element.save']}"
+					oncomplete="#{rich:component('numDaysTeacherUpdate')}.hide();"
+					execute="numDaysTeacherUpdate"
+					render="numDaysTeacherRestrictionList" />
+				<a4j:commandButton value="#{msg.cancel}"
+					onclick="#{rich:component('numDaysTeacherUpdate')}.hide(); return false;" />
+			</h:panelGrid>
+		</rich:popupPanel>
+
+		<a4j:region>
+			<div class="page-header">
+				<h4>#{msg['subheading.restrictions.teacher']}</h4>
+			</div>
+
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-3">
+						<h:outputLabel value="Profesor:" />
+					</div>
+					<div class="col-sm-3">
+						<h:outputLabel value="#{msg['restrictions.numDays.min']}" />
+					</div>
+					<div class="col-sm-3">
+						<h:outputLabel value="#{msg['restrictions.numDays.opt']}" />
+					</div>
+					<div class="col-sm-3">
+						<h:outputLabel value="#{msg['restrictions.numDays.max']}" />
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-sm-3">
+						<h:selectOneMenu id="restrictionNumDaysTeacher" required="true"
+							requiredMessage="#{msg['error.missingValue']}"
+							value="#{restrictionsController.newTeacherNumDays.teacher}"
+							converter="#{teacherConverter}" rendered="#{user.type eq 2}"
+							label="Profesor">
+							<f:selectItem itemLabel="#{msg['select.teacher']}"
+								itemValue="#{null}" />
+							<f:selectItems
+								value="#{restrictionsController.listAllTeachers()}"
+								var="teacher" itemLabel="#{teacher.toString()}"
+								itemValue="#{teacher}" />
+							<f:ajax event="change" execute="@this" />
+						</h:selectOneMenu>
+
+						<h:outputLabel value="#{user.toString()}"
+							rendered="#{user.type eq 1}" />
+					</div>
+					<div class="col-sm-3">
+						<h:inputText id="teacherNumDaysMin" required="true"
+							requiredMessage="#{msg['error.missingValue']}"
+							value="#{restrictionsController.newTeacherNumDays.min}" />
+					</div>
+					<div class="col-sm-3">
+						<h:inputText id="teacherNumDaysOpt" required="true"
+							requiredMessage="#{msg['error.missingValue']}"
+							value="#{restrictionsController.newTeacherNumDays.opt}" />
+					</div>
+					<div class="col-sm-3">
+						<h:inputText id="teacherNumDaysMax" required="true"
+							requiredMessage="#{msg['error.missingValue']}"
+							value="#{restrictionsController.newTeacherNumDays.max}" />
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-sm-3">
+						<rich:message for="restrictionNumDaysTeacher" ajaxRendered="true" />
+					</div>
+
+					<div class="col-sm-3">
+						<rich:message for="teacherNumDaysMin" ajaxRendered="true" />
+					</div>
+
+					<div class="col-sm-3">
+						<rich:message for="teacherNumDaysOpt" ajaxRendered="true" />
+					</div>
+
+					<div class="col-sm-3">
+						<rich:message for="teacherNumDaysMax" ajaxRendered="true" />
+					</div>
+				</div>
+
+				<div class="row text-right">
+					<h:commandButton styleClass="btn btn-sm btn-primary"
+						action="#{restrictionsController.addNewNumDaysTeacherRestriction()}"
+						disabled="#{restrictionsController.activeSemester eq null}"
+						value="#{msg['element.save']}">
+						<a4j:ajax
+							render=":numDaysTeacherRestrictionList :globalMessage restrictionNumDaysTeacher teacherNumDaysMax teacherNumDaysOpt teacherNumDaysMin" />
+					</h:commandButton>
+				</div>
+			</div>
+		</a4j:region>
+	</rich:collapsiblePanel>
+</ui:composition>

@@ -91,4 +91,16 @@ public interface RestrictionsService {
 	void deleteLoadGroupRestriction(Long groupLoadId);
 
 	void deleteLoadTeacherRestriction(Long teacherLoadId);
+
+	void updateNumDaysGroupRestriction(GroupNumDays groupNumDays);
+
+	void updateNumDaysTeacherRestriction(TeacherNumDays teacherNumDays);
+
+	void updateIdlesGroupRestriction(GroupIdles groupIdles);
+
+	void updateIdlesTeacherRestriction(TeacherIdles teacherIdles);
+
+	void updateLoadGroupRestriction(GroupLoad groupLoad);
+
+	void updateLoadTeacherRestriction(TeacherLoad teacherLoad);
 }

@@ -45,26 +45,32 @@ public class RestrictionsController {
 	// Group num days restriction
 	private List<GroupNumDays> groupNumDaysRestrictionList = null;
 	private GroupNumDays newGroupNumDays = new GroupNumDays();
+	private GroupNumDays selectedGroupNumDays;
 
 	// Teacher num days restriction
 	private List<TeacherNumDays> teacherNumDaysRestrictionList = null;
 	private TeacherNumDays newTeacherNumDays = new TeacherNumDays();
+	private TeacherNumDays selectedTeacherNumDays;
 
 	// Group idles restriction
 	private List<GroupIdles> groupIdlesRestrictionList = null;
 	private GroupIdles newGroupIdles = new GroupIdles();
+	private GroupIdles selectedGroupIdles;
 
 	// Teacher idles restriction
 	private List<TeacherIdles> teacherIdlesRestrictionList = null;
 	private TeacherIdles newTeacherIdles = new TeacherIdles();
+	private TeacherIdles selectedTeacherIdles;
 
 	// Group load restriction
 	private List<GroupLoad> groupLoadRestrictionList = null;
 	private GroupLoad newGroupLoad = new GroupLoad();
+	private GroupLoad selectedGroupLoad;
 
 	// Teacher load restriction
 	private List<TeacherLoad> teacherLoadRestrictionList = null;
 	private TeacherLoad newTeacherLoad = new TeacherLoad();
+	private TeacherLoad selectedTeacherLoad;
 
 	// Indexes for deleting
 	private int selectedRestrictionIndex;
@@ -253,6 +259,34 @@ public class RestrictionsController {
 	}
 
 	/*
+	 * Update methods
+	 */
+
+	public void updateNumDaysGroupRestriction() {
+		restrictionsService.updateNumDaysGroupRestriction(selectedGroupNumDays);
+	}
+
+	public void updateNumDaysTeacherRestriction() {
+		restrictionsService.updateNumDaysTeacherRestriction(selectedTeacherNumDays);
+	}
+
+	public void updateIdlesGroupRestriction() {
+		restrictionsService.updateIdlesGroupRestriction(selectedGroupIdles);
+	}
+
+	public void updateIdlesTeacherRestriction() {
+		restrictionsService.updateIdlesTeacherRestriction(selectedTeacherIdles);
+	}
+
+	public void updateLoadGroupRestriction() {
+		restrictionsService.updateLoadGroupRestriction(selectedGroupLoad);
+	}
+
+	public void updateLoadTeacherRestriction() {
+		restrictionsService.updateLoadTeacherRestriction(selectedTeacherLoad);
+	}
+
+	/*
 	 * Getters and setters
 	 */
 
@@ -342,5 +376,53 @@ public class RestrictionsController {
 
 	public void setRestrictionType(String restrictionType) {
 		this.restrictionType = restrictionType;
+	}
+
+	public GroupNumDays getSelectedGroupNumDays() {
+		return selectedGroupNumDays;
+	}
+
+	public void setSelectedGroupNumDays(GroupNumDays selectedGroupNumDays) {
+		this.selectedGroupNumDays = selectedGroupNumDays;
+	}
+
+	public TeacherNumDays getSelectedTeacherNumDays() {
+		return selectedTeacherNumDays;
+	}
+
+	public void setSelectedTeacherNumDays(TeacherNumDays selectedTeacherNumDays) {
+		this.selectedTeacherNumDays = selectedTeacherNumDays;
+	}
+
+	public GroupIdles getSelectedGroupIdles() {
+		return selectedGroupIdles;
+	}
+
+	public void setSelectedGroupIdles(GroupIdles selectedGroupIdles) {
+		this.selectedGroupIdles = selectedGroupIdles;
+	}
+
+	public TeacherIdles getSelectedTeacherIdles() {
+		return selectedTeacherIdles;
+	}
+
+	public void setSelectedTeacherIdles(TeacherIdles selectedTeacherIdles) {
+		this.selectedTeacherIdles = selectedTeacherIdles;
+	}
+
+	public GroupLoad getSelectedGroupLoad() {
+		return selectedGroupLoad;
+	}
+
+	public void setSelectedGroupLoad(GroupLoad selectedGroupLoad) {
+		this.selectedGroupLoad = selectedGroupLoad;
+	}
+
+	public TeacherLoad getSelectedTeacherLoad() {
+		return selectedTeacherLoad;
+	}
+
+	public void setSelectedTeacherLoad(TeacherLoad selectedTeacherLoad) {
+		this.selectedTeacherLoad = selectedTeacherLoad;
 	}
 }

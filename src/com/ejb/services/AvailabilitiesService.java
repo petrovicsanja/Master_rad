@@ -18,26 +18,32 @@ import com.jpa.entities.User;
  */
 public interface AvailabilitiesService {
 
-	public List<TeacherAvailability> addTeacherAvailability(User teacher, String dayMark, Integer[] termNumbers,
-			String type, Semester activeSemester);
-
-	public List<GroupAvailability> addGroupAvailability(Group group, String dayMark, Integer[] termNumbers, String type,
+	List<TeacherAvailability> addTeacherAvailability(User teacher, String dayMark, Integer[] termNumbers, String type,
 			Semester activeSemester);
 
-	public List<RoomAvailability> addRoomAvailability(Room room, String dayMark, Integer[] termNumbers, String type,
+	List<GroupAvailability> addGroupAvailability(Group group, String dayMark, Integer[] termNumbers, String type,
 			Semester activeSemester);
 
-	public List<TeacherAvailability> listAllTeacherAvailabilities(Long semesterId);
+	List<RoomAvailability> addRoomAvailability(Room room, String dayMark, Integer[] termNumbers, String type,
+			Semester activeSemester);
 
-	public List<GroupAvailability> listAllGroupAvailabilities(Long semesterId);
+	List<TeacherAvailability> listAllTeacherAvailabilities(Long semesterId);
 
-	public List<RoomAvailability> listAllRoomAvailabilities(Long semesterId);
+	List<GroupAvailability> listAllGroupAvailabilities(Long semesterId);
 
-	public List<TeacherAvailability> listAllAvailabilitiesForTeacher(Long teacherId, Long semesterId);
+	List<RoomAvailability> listAllRoomAvailabilities(Long semesterId);
 
-	public void deleteTeacherAvailability(Long teacherAvailabilityId);
+	List<TeacherAvailability> listAllAvailabilitiesForTeacher(Long teacherId, Long semesterId);
 
-	public void deleteGroupAvailability(Long groupAvailabilityId);
+	void deleteTeacherAvailability(Long teacherAvailabilityId);
 
-	public void deleteRoomAvailability(Long roomAvailabilityId);
+	void deleteGroupAvailability(Long groupAvailabilityId);
+
+	void deleteRoomAvailability(Long roomAvailabilityId);
+
+	void updateTeacherAvailability(TeacherAvailability teacherAvailability);
+
+	void updateGroupAvailability(GroupAvailability groupAvailability);
+
+	void updateRoomAvailability(RoomAvailability roomAvailability);
 }

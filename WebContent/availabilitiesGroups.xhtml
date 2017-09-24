@@ -1,0 +1,274 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j">
+
+	<rich:collapsiblePanel
+		header="#{msg['subheading.availabilities.groups']}"
+		switchType="client" styleClass="panel panel-primary"
+		headerClass="panel-heading" bodyClass="panel-body" expanded="false"
+		rightCollapsedIcon="/images/minus.png"
+		rightExpandedIcon="/images/plus.png">
+
+		<rich:dataTable id="groupAvailabilitiesList" var="groupAvailability"
+			rows="10"
+			value="#{availabilitiesController.listAllGroupAvailabilities()}"
+			iterationStatusVar="it" styleClass="table table-striped">
+
+			<f:facet name="noData">
+				#{msg['no.data']}
+			</f:facet>
+
+			<rich:column id="groupColumn"
+				sortBy="#{groupAvailability.group.name}">
+				<f:facet name="header">
+					Grupa
+				</f:facet>
+				<h:outputText value="#{groupAvailability.group}" />
+			</rich:column>
+
+			<rich:column id="typeColumn">
+				<f:facet name="header">
+					Tip termina
+				</f:facet>
+				<h:outputText
+					value="#{availabilitiesController.getAvailabilityTypeValue(groupAvailability.type)}" />
+			</rich:column>
+
+			<rich:column id="dayMarkColumn">
+				<f:facet name="header">
+					Oznaka termina
+				</f:facet>
+				<h:outputText value="#{groupAvailability.dayMark}" />
+			</rich:column>
+
+			<rich:column id="termNumberColumn">
+				<f:facet name="header">
+					Redni broj i trajanje termina
+				</f:facet>
+				<h:outputText
+					value="#{availabilitiesController.getTermTime(groupAvailability.termNumber)}" />
+			</rich:column>
+
+			<rich:column rendered="#{user.type eq 2}">
+				<f:facet name="header">
+					#{msg['column.update']}
+				</f:facet>
+				<a4j:commandLink
+					oncomplete="#{rich:component('availabilityGroupUpdate')}.show(); #{availabilitiesController.listAllGroupAvailableTermsForSelectedDay()};"
+					execute="@this" render="availabilityGroupUpdate"
+					title="#{msg['element.update']}">
+					<h:graphicImage value="/images/edit.png" alt="edit" />
+					<a4j:param value="#{it.index}"
+						assignTo="#{availabilitiesController.selectedAvailabilityIndex}" />
+					<f:setPropertyActionListener value="#{groupAvailability}"
+						target="#{availabilitiesController.selectedGroupAvailability}" />
+				</a4j:commandLink>
+				<a4j:commandLink
+					oncomplete="#{rich:component('deleteAvailabilityConfirmation')}.show()"
+					execute="@this" render="@none" title="Obriši termin za grupu">
+					<h:graphicImage value="/images/delete.png" alt="delete" />
+					<a4j:param value="#{it.index}"
+						assignTo="#{availabilitiesController.selectedAvailabilityIndex}" />
+					<a4j:param value="Group"
+						assignTo="#{availabilitiesController.availabilityObject}" />
+				</a4j:commandLink>
+			</rich:column>
+
+			<f:facet name="footer">
+				<rich:dataScroller renderIfSinglePage="false" />
+			</f:facet>
+		</rich:dataTable>
+
+		<rich:popupPanel id="availabilityGroupUpdate" autosized="true"
+			resizeable="false" domElementAttachment="parent"
+			styleClass="panel panel-info" headerClass="panel-heading">
+			<f:facet name="header">
+				<h:outputText value="#{msg['element.update']}" />
+			</f:facet>
+			<f:facet name="controls">
+				<h:outputLink value="#"
+					onclick="#{rich:component('availabilityGroupUpdate')}.hide(); return false;"
+					style="color: inherit"> X </h:outputLink>
+			</f:facet>
+
+			<h:outputLabel
+				value="Grupa: #{availabilitiesController.selectedGroupAvailability.group}" />
+
+			<h:panelGrid columns="3" id="availabilityGroupUpdateGrid"
+				styleClass="margin-top10">
+				<h:outputLabel value="#{msg['availability.type']}" />
+				<h:selectOneRadio id="updateGroupAvailabilityType"
+					layout="pageDirection" required="true"
+					requiredMessage="#{msg['error.missingValue']}"
+					value="#{availabilitiesController.selectedGroupAvailability.type}">
+					<f:selectItem itemValue="FORBIDDEN"
+						itemLabel="#{availabilitiesController.getAvailabilityTypeValue('FORBIDDEN')}" />
+					<f:selectItem itemValue="UNDESIRABLE"
+						itemLabel="#{availabilitiesController.getAvailabilityTypeValue('UNDESIRABLE')}" />
+					<f:selectItem itemValue="DESIRABLE"
+						itemLabel="#{availabilitiesController.getAvailabilityTypeValue('DESIRABLE')}" />
+					<f:selectItem itemValue="MANDATORY"
+						itemLabel="#{availabilitiesController.getAvailabilityTypeValue('MANDATORY')}" />
+				</h:selectOneRadio>
+				<rich:message for="updateGroupAvailabilityType" ajaxRendered="true" />
+
+				<h:outputLabel value="" />
+				<h:outputLabel value="" />
+				<h:outputLabel value="" />
+
+				<h:outputLabel value="#{msg['availability.dayMark']}" />
+				<h:selectOneRadio id="updateGroupAvailabilityDayMark"
+					value="#{availabilitiesController.selectedGroupAvailability.dayMark}"
+					layout="pageDirection" required="true"
+					requiredMessage="#{msg['error.missingValue']}">
+					<f:selectItems
+						value="#{availabilitiesController.listAllAvailablePeriods()}"
+						var="period" itemValue="#{period.dayMark}"
+						itemLabel="#{period.day}" />
+					<f:ajax event="click" execute="@this"
+						render="updateGroupAvailabilityTermNumber"
+						listener="#{availabilitiesController.listAllGroupAvailableTermsForSelectedDay()}" />
+				</h:selectOneRadio>
+				<rich:message for="updateGroupAvailabilityDayMark"
+					ajaxRendered="true" />
+
+				<h:outputLabel value="" />
+				<h:outputLabel value="" />
+				<h:outputLabel value="" />
+
+				<h:outputLabel value="#{msg['availability.termNumber']}" />
+				<h:selectOneRadio id="updateGroupAvailabilityTermNumber"
+					value="#{availabilitiesController.selectedGroupAvailability.termNumber}"
+					layout="pageDirection" required="true"
+					requiredMessage="#{msg['error.missingValue']}">
+					<f:selectItems
+						value="#{availabilitiesController.groupAvailabilityTermsForSelectedDay.entrySet()}"
+						var="term" itemValue="#{term.key}" itemLabel="#{term.value}" />
+				</h:selectOneRadio>
+				<rich:message for="updateGroupAvailabilityTermNumber"
+					ajaxRendered="true" />
+
+				<a4j:commandButton
+					action="#{availabilitiesController.updateGroupAvailability()}"
+					value="#{msg['element.save']}"
+					oncomplete="#{rich:component('availabilityGroupUpdate')}.hide();"
+					execute="availabilityGroupUpdate" render="groupAvailabilitiesList" />
+				<a4j:commandButton value="#{msg.cancel}"
+					onclick="#{rich:component('availabilityGroupUpdate')}.hide(); return false;" />
+			</h:panelGrid>
+		</rich:popupPanel>
+
+		<a4j:region rendered="#{user.type eq 2}">
+			<div class="page-header">
+				<h3>Unos vrsta termina za grupu</h3>
+			</div>
+
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-3">
+						<h:outputLabel value="Grupa:" />
+					</div>
+
+					<div class="col-sm-3">
+						<h:outputLabel value="Vrsta termina:" />
+					</div>
+
+					<div class="col-sm-3">
+						<h:outputLabel value="Radni dan:" />
+					</div>
+
+					<div class="col-sm-3">
+						<h:outputLabel value="Redni broj termina:" />
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-sm-3">
+						<h:selectOneMenu id="groupAvailability" required="true"
+							requiredMessage="#{msg['error.missingValue']}"
+							value="#{availabilitiesController.group}"
+							converter="#{groupConverter}" label="Grupa">
+							<f:selectItem itemLabel="#{msg['select.group']}"
+								itemValue="#{null}" />
+							<f:selectItems
+								value="#{availabilitiesController.listAllGroups()}" var="group"
+								itemLabel="#{group.toString()}" itemValue="#{group}" />
+							<f:ajax event="change" execute="@this" />
+						</h:selectOneMenu>
+					</div>
+					<div class="col-sm-3">
+						<h:selectOneRadio id="groupAvailabilityType"
+							layout="pageDirection" required="true"
+							requiredMessage="#{msg['error.missingValue']}"
+							value="#{availabilitiesController.groupAvailabilityType}">
+							<f:selectItem itemValue="FORBIDDEN"
+								itemLabel="#{availabilitiesController.getAvailabilityTypeValue('FORBIDDEN')}" />
+							<f:selectItem itemValue="UNDESIRABLE"
+								itemLabel="#{availabilitiesController.getAvailabilityTypeValue('UNDESIRABLE')}" />
+							<f:selectItem itemValue="DESIRABLE"
+								itemLabel="#{availabilitiesController.getAvailabilityTypeValue('DESIRABLE')}" />
+							<f:selectItem itemValue="MANDATORY"
+								itemLabel="#{availabilitiesController.getAvailabilityTypeValue('MANDATORY')}" />
+						</h:selectOneRadio>
+					</div>
+					<div class="col-sm-3">
+						<h:selectOneRadio id="groupAvailabilityDayMark"
+							value="#{availabilitiesController.groupAvailabilityDayMark}"
+							layout="pageDirection" required="true"
+							requiredMessage="#{msg['error.missingValue']}">
+							<f:selectItems
+								value="#{availabilitiesController.listAllAvailablePeriods()}"
+								var="period" itemValue="#{period.dayMark}"
+								itemLabel="#{period.day}" />
+							<f:ajax event="click" execute="@this"
+								render="groupAvailabilityTermNumbers"
+								listener="#{availabilitiesController.listAllGroupAvailableTermsForSelectedDay()}" />
+						</h:selectOneRadio>
+					</div>
+					<div class="col-sm-3">
+						<h:selectManyCheckbox id="groupAvailabilityTermNumbers"
+							value="#{availabilitiesController.groupAvailabilityTermNumbers}"
+							layout="pageDirection" required="true"
+							requiredMessage="#{msg['error.missingValue']}">
+							<f:selectItems
+								value="#{availabilitiesController.groupAvailabilityTermsForSelectedDay.entrySet()}"
+								var="term" itemValue="#{term.key}" itemLabel="#{term.value}" />
+						</h:selectManyCheckbox>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-sm-3">
+						<rich:message for="groupAvailability" ajaxRendered="true" />
+					</div>
+
+					<div class="col-sm-3">
+						<rich:message for="groupAvailabilityType" ajaxRendered="true" />
+					</div>
+
+					<div class="col-sm-3">
+						<rich:message for="groupAvailabilityDayMark" ajaxRendered="true" />
+					</div>
+
+					<div class="col-sm-3">
+						<rich:message for="groupAvailabilityTermNumbers"
+							ajaxRendered="true" />
+					</div>
+				</div>
+
+				<div class="row text-right">
+					<h:commandButton
+						action="#{availabilitiesController.addGroupAvailability()}"
+						disabled="#{availabilitiesController.activeSemester eq null}"
+						value="#{msg['element.save']}" styleClass="btn btn-sm btn-primary">
+						<a4j:ajax
+							render=":groupAvailabilitiesList groupAvailability groupAvailabilityType groupAvailabilityDayMark groupAvailabilityTermNumbers" />
+					</h:commandButton>
+				</div>
+			</div>
+		</a4j:region>
+	</rich:collapsiblePanel>
+</ui:composition>

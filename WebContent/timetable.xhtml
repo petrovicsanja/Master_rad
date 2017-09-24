@@ -19,10 +19,6 @@
 	<div class="container-fluid">
 		<h:form>
 			<div class="col-sm-3">
-				<div class="row">
-					<h:outputLabel value="TODO: Skolska godina i semestar"
-						styleClass="margin10" />
-				</div>
 
 				<div class="row leftMenu">
 					<h:selectOneMenu id="timetableTeachers"
@@ -79,6 +75,10 @@
 			</div>
 
 			<div class="row">
+				<h:outputLabel value="#{timetableController.activeSemester}" />
+			</div>
+
+			<div class="row margin-top10">
 				<h:form>
 					<h:commandLink action="#{timetableController.download()}"
 						value="Preuzmi tts fajl" immediate="true" />
@@ -86,11 +86,13 @@
 			</div>
 
 			<div class="row">
-				<h:outputLabel styleClass="timetable-header" value="#{timetableController.heading}" />
+				<h:outputLabel styleClass="timetable-header"
+					value="#{timetableController.heading}" />
 			</div>
 
 			<div class="row">
-				<h:outputText styleClass="full-width" value="#{timetableController.info}" escape="false" />
+				<h:outputText styleClass="full-width"
+					value="#{timetableController.info}" escape="false" />
 			</div>
 		</div>
 	</div>

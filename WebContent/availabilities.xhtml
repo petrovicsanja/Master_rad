@@ -1,0 +1,34 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j">
+
+	<ui:include src="/availabilitiesTeachers.xhtml" />
+
+	<ui:include src="/availabilitiesGroups.xhtml" />
+
+	<ui:include src="/availabilitiesRooms.xhtml" />
+
+	<rich:popupPanel id="deleteAvailabilityConfirmation" modal="false"
+		autosized="true" resizeable="false" styleClass="panel panel-info"
+		headerClass="panel-heading">
+		<f:facet name="header">
+			<h:outputText value="#{msg.warning}" />
+		</f:facet>
+		<f:facet name="controls">
+			<h:outputLink value="#"
+				onclick="#{rich:component('deleteAvailabilityConfirmation')}.hide(); return false;"
+				style="color: inherit"> X </h:outputLink>
+		</f:facet>
+		<p>#{msg['availability.delete.confirmation']}</p>
+		<a4j:commandButton
+			action="#{availabilitiesController.deleteAvailability()}"
+			value="Obriši"
+			oncomplete="#{rich:component('deleteAvailabilityConfirmation')}.hide();"
+			execute="@this" render="@form" />
+		<a4j:commandButton value="#{msg.cancel}"
+			onclick="#{rich:component('deleteAvailabilityConfirmation')}.hide(); return false;" />
+	</rich:popupPanel>
+</ui:composition>

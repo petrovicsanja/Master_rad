@@ -1,0 +1,413 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j">
+
+	<rich:collapsiblePanel header="#{msg['subheading.restrictions.idles']}"
+		switchType="client" styleClass="panel panel-primary"
+		headerClass="panel-heading" bodyClass="panel-body" expanded="false"
+		rightCollapsedIcon="/images/minus.png"
+		rightExpandedIcon="/images/plus.png">
+
+		<div class="page-header">
+			<h3>#{msg.groups}</h3>
+		</div>
+
+		<rich:dataTable id="idlesGroupRestrictionList" var="restriction"
+			rows="10"
+			value="#{restrictionsController.listGroupIdlesRestrictionList()}"
+			iterationStatusVar="it" styleClass="table table-striped">
+
+			<f:facet name="noData">
+				#{msg['no.data']}
+			</f:facet>
+
+			<rich:column sortBy="#{restriction.group.name}">
+				<f:facet name="header">
+					Grupa
+				</f:facet>
+				<h:outputText value="#{restriction.group.name}" />
+			</rich:column>
+
+			<rich:column>
+				<f:facet name="header">
+					Maksimum
+				</f:facet>
+				<h:outputText value="#{restriction.max}" />
+			</rich:column>
+
+			<rich:column>
+				<f:facet name="header">
+					Višestruke pauze
+				</f:facet>
+				<h:outputText rendered="#{restriction.multiple}" value="Dozvoljene" />
+				<h:outputText rendered="#{not restriction.multiple}"
+					value="Zabranjene" />
+			</rich:column>
+
+			<rich:column>
+				<f:facet name="header">
+					Broj dana
+				</f:facet>
+				<h:outputText value="#{restriction.days}" />
+			</rich:column>
+
+			<rich:column rendered="#{user.type eq 2}">
+				<f:facet name="header">
+					#{msg['column.update']}
+				</f:facet>
+				<a4j:commandLink
+					oncomplete="#{rich:component('idlesGroupUpdate')}.show()"
+					execute="@this" render="idlesGroupUpdate"
+					title="#{msg['element.update']}">
+					<h:graphicImage value="/images/edit.png" alt="edit" />
+					<a4j:param value="#{it.index}"
+						assignTo="#{restrictionsController.selectedRestrictionIndex}" />
+					<f:setPropertyActionListener value="#{restriction}"
+						target="#{restrictionsController.selectedGroupIdles}" />
+				</a4j:commandLink>
+				<a4j:commandLink
+					oncomplete="#{rich:component('deleteRestrictionConfirmation')}.show()"
+					execute="@this" render="@none" title="Obriši ogranicenje za grupu">
+					<h:graphicImage value="/images/delete.png" alt="delete" />
+					<a4j:param value="#{it.index}"
+						assignTo="#{restrictionsController.selectedRestrictionIndex}" />
+					<a4j:param value="GroupIdles"
+						assignTo="#{restrictionsController.restrictionType}" />
+				</a4j:commandLink>
+			</rich:column>
+
+			<f:facet name="footer">
+				<rich:dataScroller renderIfSinglePage="false" />
+			</f:facet>
+		</rich:dataTable>
+
+		<rich:popupPanel id="idlesGroupUpdate" autosized="true"
+			resizeable="false" domElementAttachment="parent"
+			styleClass="panel panel-info" headerClass="panel-heading">
+			<f:facet name="header">
+				<h:outputText value="#{msg['element.update']}" />
+			</f:facet>
+			<f:facet name="controls">
+				<h:outputLink value="#"
+					onclick="#{rich:component('idlesGroupUpdate')}.hide(); return false;"
+					style="color: inherit"> X </h:outputLink>
+			</f:facet>
+
+			<h:outputLabel
+				value="Grupa: #{restrictionsController.selectedGroupIdles.group}" />
+
+			<h:panelGrid columns="3" id="idlesGroupUpdateGrid">
+				<h:outputLabel value="#{msg['restrictions.idles.max']}:" />
+				<h:inputText id="updateGroupIdlesMax" required="true"
+					requiredMessage="#{msg['error.missingValue']}"
+					value="#{restrictionsController.selectedGroupIdles.max}" />
+				<rich:message for="updateGroupIdlesMax" ajaxRendered="true" />
+
+				<h:outputLabel value="#{msg['restrictions.idles.multiple']}:" />
+				<h:selectBooleanCheckbox
+					value="#{restrictionsController.selectedGroupIdles.multiple}" />
+				<h:outputLabel value="" />
+
+				<h:outputLabel value="#{msg['restrictions.idles.days']}:" />
+				<h:inputText id="updateGroupIdlesDays" required="true"
+					requiredMessage="#{msg['error.missingValue']}"
+					value="#{restrictionsController.selectedGroupIdles.days}" />
+				<rich:message for="updateGroupIdlesDays" ajaxRendered="true" />
+
+				<a4j:commandButton
+					action="#{restrictionsController.updateIdlesGroupRestriction()}"
+					value="#{msg['element.save']}"
+					oncomplete="#{rich:component('idlesGroupUpdate')}.hide();"
+					execute="idlesGroupUpdate" render="idlesGroupRestrictionList" />
+				<a4j:commandButton value="#{msg.cancel}"
+					onclick="#{rich:component('idlesGroupUpdate')}.hide(); return false;" />
+			</h:panelGrid>
+		</rich:popupPanel>
+
+		<a4j:region rendered="#{user.type eq 2}">
+			<div class="page-header">
+				<h4>#{msg['subheading.restrictions.group']}</h4>
+			</div>
+
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-3">
+						<h:outputLabel value="Izaberite grupu:" />
+					</div>
+					<div class="col-sm-3">
+						<h:outputLabel value="#{msg['restrictions.idles.max']}:" />
+					</div>
+					<div class="col-sm-3">
+						<h:outputLabel value="#{msg['restrictions.idles.multiple']}" />
+					</div>
+					<div class="col-sm-3">
+						<h:outputLabel value="#{msg['restrictions.idles.days']}" />
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-sm-3">
+						<h:selectOneMenu id="restrictionIdlesGroup" required="true"
+							requiredMessage="#{msg['error.missingValue']}"
+							value="#{restrictionsController.newGroupIdles.group}"
+							converter="#{groupConverter}" label="Grupa">
+							<f:selectItem itemLabel="#{msg['select.group']}"
+								itemValue="#{null}" />
+							<f:selectItems value="#{restrictionsController.listAllGroups()}"
+								var="group" itemLabel="#{group.name}" itemValue="#{group}" />
+							<f:ajax event="change" execute="@this" />
+						</h:selectOneMenu>
+					</div>
+					<div class="col-sm-3">
+						<h:inputText id="groupIdlesMax" required="true"
+							requiredMessage="#{msg['error.missingValue']}"
+							value="#{restrictionsController.newGroupIdles.max}" />
+					</div>
+					<div class="col-sm-3">
+						<h:selectBooleanCheckbox
+							value="#{restrictionsController.newGroupIdles.multiple}" />
+					</div>
+					<div class="col-sm-3">
+						<h:inputText id="groupIdlesDays" required="true"
+							requiredMessage="#{msg['error.missingValue']}"
+							value="#{restrictionsController.newGroupIdles.days}" />
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-sm-3">
+						<rich:message for="restrictionIdlesGroup" ajaxRendered="true" />
+					</div>
+
+					<div class="col-sm-3">
+						<rich:message for="groupIdlesMax" ajaxRendered="true" />
+					</div>
+
+					<div class="col-sm-3">
+						<h:outputLabel value="" />
+					</div>
+
+					<div class="col-sm-3">
+						<rich:message for="groupIdlesDays" ajaxRendered="true" />
+					</div>
+				</div>
+
+				<div class="row text-right">
+					<h:commandButton styleClass="btn btn-sm btn-primary"
+						action="#{restrictionsController.addIdlesGroupRestriction()}"
+						disabled="#{restrictionsController.activeSemester eq null}"
+						value="#{msg['element.save']}">
+						<a4j:ajax
+							render=":idlesGroupRestrictionList restrictionIdlesGroup groupIdlesMax groupIdlesDays" />
+					</h:commandButton>
+				</div>
+			</div>
+		</a4j:region>
+
+		<div class="page-header">
+			<h3>Profesori</h3>
+		</div>
+
+		<rich:dataTable id="idlesTeacherRestrictionList" var="restriction"
+			rows="10"
+			value="#{restrictionsController.listTeacherIdlesRestrictionList()}"
+			iterationStatusVar="it" styleClass="table table-striped">
+
+			<f:facet name="noData">
+				#{msg['no.data']}
+			</f:facet>
+
+			<rich:column sortBy="#{restriction.teacher}">
+				<f:facet name="header">
+					Profesor
+				</f:facet>
+				<h:outputText value="#{restriction.teacher}" />
+			</rich:column>
+
+			<rich:column>
+				<f:facet name="header">
+					Maksimum
+				</f:facet>
+				<h:outputText value="#{restriction.max}" />
+			</rich:column>
+
+			<rich:column>
+				<f:facet name="header">
+					Višestruke pauze
+				</f:facet>
+				<h:outputText rendered="#{restriction.multiple}" value="Dozvoljene" />
+				<h:outputText rendered="#{not restriction.multiple}"
+					value="Zabranjene" />
+			</rich:column>
+
+			<rich:column>
+				<f:facet name="header">
+					Broj dana
+				</f:facet>
+				<h:outputText value="#{restriction.days}" />
+			</rich:column>
+
+			<rich:column>
+				<f:facet name="header">
+					#{msg['column.update']}
+				</f:facet>
+				<a4j:commandLink
+					oncomplete="#{rich:component('idlesTeacherUpdate')}.show()"
+					execute="@this" render="idlesTeacherUpdate"
+					title="#{msg['element.update']}">
+					<h:graphicImage value="/images/edit.png" alt="edit" />
+					<a4j:param value="#{it.index}"
+						assignTo="#{restrictionsController.selectedRestrictionIndex}" />
+					<f:setPropertyActionListener value="#{restriction}"
+						target="#{restrictionsController.selectedTeacherIdles}" />
+				</a4j:commandLink>
+				<a4j:commandLink
+					oncomplete="#{rich:component('deleteRestrictionConfirmation')}.show()"
+					execute="@this" render="@none"
+					title="Obriši ogranicenje za profesora">
+					<h:graphicImage value="/images/delete.png" alt="delete" />
+					<a4j:param value="#{it.index}"
+						assignTo="#{restrictionsController.selectedRestrictionIndex}" />
+					<a4j:param value="TeacherIdles"
+						assignTo="#{restrictionsController.restrictionType}" />
+				</a4j:commandLink>
+			</rich:column>
+
+			<f:facet name="footer">
+				<rich:dataScroller renderIfSinglePage="false" />
+			</f:facet>
+		</rich:dataTable>
+
+		<rich:popupPanel id="idlesTeacherUpdate" autosized="true"
+			resizeable="false" domElementAttachment="parent"
+			styleClass="panel panel-info" headerClass="panel-heading">
+			<f:facet name="header">
+				<h:outputText value="#{msg['element.update']}" />
+			</f:facet>
+			<f:facet name="controls">
+				<h:outputLink value="#"
+					onclick="#{rich:component('idlesTeacherUpdate')}.hide(); return false;"
+					style="color: inherit"> X </h:outputLink>
+			</f:facet>
+
+			<h:outputLabel
+				value="Profesor: #{restrictionsController.selectedTeacherIdles.teacher}" />
+
+			<h:panelGrid columns="3" id="idlesTeacherUpdateGrid">
+				<h:outputLabel value="#{msg['restrictions.idles.max']}:" />
+				<h:inputText id="updateTeacherIdlesMax" required="true"
+					requiredMessage="#{msg['error.missingValue']}"
+					value="#{restrictionsController.selectedTeacherIdles.max}" />
+				<rich:message for="updateTeacherIdlesMax" ajaxRendered="true" />
+
+				<h:outputLabel value="#{msg['restrictions.idles.multiple']}:" />
+				<h:selectBooleanCheckbox
+					value="#{restrictionsController.selectedTeacherIdles.multiple}" />
+				<h:outputLabel value="" />
+
+				<h:outputLabel value="#{msg['restrictions.idles.days']}:" />
+				<h:inputText id="updateTeacherIdlesDays" required="true"
+					requiredMessage="#{msg['error.missingValue']}"
+					value="#{restrictionsController.selectedTeacherIdles.days}" />
+				<rich:message for="updateTeacherIdlesDays" ajaxRendered="true" />
+
+				<a4j:commandButton
+					action="#{restrictionsController.updateIdlesTeacherRestriction()}"
+					value="#{msg['element.save']}"
+					oncomplete="#{rich:component('idlesTeacherUpdate')}.hide();"
+					execute="idlesTeacherUpdate" render="idlesTeacherRestrictionList" />
+				<a4j:commandButton value="#{msg.cancel}"
+					onclick="#{rich:component('idlesTeacherUpdate')}.hide(); return false;" />
+			</h:panelGrid>
+		</rich:popupPanel>
+
+		<a4j:region>
+			<div class="page-header">
+				<h4>#{msg['subheading.restrictions.teacher']}</h4>
+			</div>
+
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-3">
+						<h:outputLabel value="Izaberite profesora:" />
+					</div>
+					<div class="col-sm-3">
+						<h:outputLabel value="#{msg['restrictions.idles.max']}:" />
+					</div>
+					<div class="col-sm-3">
+						<h:outputLabel value="#{msg['restrictions.idles.multiple']}" />
+					</div>
+					<div class="col-sm-3">
+						<h:outputLabel value="#{msg['restrictions.idles.days']}" />
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-sm-3">
+						<h:selectOneMenu id="restrictionIdlesTeacher" required="true"
+							requiredMessage="#{msg['error.missingValue']}"
+							value="#{restrictionsController.newTeacherIdles.teacher}"
+							converter="#{teacherConverter}" rendered="#{user.type eq 2}"
+							label="Profesor">
+							<f:selectItem itemLabel="#{msg['select.teacher']}"
+								itemValue="#{null}" />
+							<f:selectItems
+								value="#{restrictionsController.listAllTeachers()}"
+								var="teacher" itemLabel="#{teacher.toString()}"
+								itemValue="#{teacher}" />
+							<f:ajax event="change" execute="@this" />
+						</h:selectOneMenu>
+
+						<h:outputLabel value="#{user.toString()}"
+							rendered="#{user.type eq 1}" />
+					</div>
+					<div class="col-sm-3">
+						<h:inputText id="teacherIdlesMax" required="true"
+							requiredMessage="#{msg['error.missingValue']}"
+							value="#{restrictionsController.newTeacherIdles.max}" />
+					</div>
+					<div class="col-sm-3">
+						<h:selectBooleanCheckbox
+							value="#{restrictionsController.newTeacherIdles.multiple}" />
+					</div>
+					<div class="col-sm-3">
+						<h:inputText id="teacherIdlesDays" required="true"
+							requiredMessage="#{msg['error.missingValue']}"
+							value="#{restrictionsController.newTeacherIdles.days}" />
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-sm-3">
+						<rich:message for="restrictionIdlesTeacher" ajaxRendered="true" />
+					</div>
+
+					<div class="col-sm-3">
+						<rich:message for="teacherIdlesMax" ajaxRendered="true" />
+					</div>
+
+					<div class="col-sm-3">
+						<h:outputLabel value="" />
+					</div>
+
+					<div class="col-sm-3">
+						<rich:message for="teacherIdlesDays" ajaxRendered="true" />
+					</div>
+				</div>
+
+				<div class="row text-right">
+					<h:commandButton styleClass="btn btn-sm btn-primary"
+						action="#{restrictionsController.addIdlesTeacherRestriction()}"
+						disabled="#{restrictionsController.activeSemester eq null}"
+						value="#{msg['element.save']}">
+						<a4j:ajax
+							render=":idlesTeacherRestrictionList teacherIdlesDays teacherIdlesMax restrictionIdlesTeacher" />
+					</h:commandButton>
+				</div>
+			</div>
+		</a4j:region>
+	</rich:collapsiblePanel>
+</ui:composition>

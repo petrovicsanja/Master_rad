@@ -152,4 +152,42 @@ public class AvailabilitiesServiceImpl implements AvailabilitiesService {
 		em.remove(roomAvailabilityToDelete);
 		System.out.println("Room availability is successfully deleted from the database, id: " + roomAvailabilityId);
 	}
+
+	/*
+	 * Update methods
+	 */
+
+	@Override
+	public void updateTeacherAvailability(TeacherAvailability teacherAvailability) {
+		TeacherAvailability teacherAvailabilityToUpdate = em.find(TeacherAvailability.class,
+				teacherAvailability.getId());
+		teacherAvailabilityToUpdate.setDayMark(teacherAvailability.getDayMark());
+		teacherAvailabilityToUpdate.setTermNumber(teacherAvailability.getTermNumber());
+		teacherAvailabilityToUpdate.setType(teacherAvailability.getType());
+
+		System.out.println(
+				"Teacher availability is successfully updated in the database, id: " + teacherAvailability.getId());
+	}
+
+	@Override
+	public void updateGroupAvailability(GroupAvailability groupAvailability) {
+		GroupAvailability groupAvailabilityToUpdate = em.find(GroupAvailability.class, groupAvailability.getId());
+		groupAvailabilityToUpdate.setDayMark(groupAvailability.getDayMark());
+		groupAvailabilityToUpdate.setTermNumber(groupAvailability.getTermNumber());
+		groupAvailabilityToUpdate.setType(groupAvailability.getType());
+
+		System.out.println(
+				"Group availability is successfully updated in the database, id: " + groupAvailability.getId());
+	}
+
+	@Override
+	public void updateRoomAvailability(RoomAvailability roomAvailability) {
+		RoomAvailability roomAvailabilityToUpdate = em.find(RoomAvailability.class, roomAvailability.getId());
+		roomAvailabilityToUpdate.setDayMark(roomAvailability.getDayMark());
+		roomAvailabilityToUpdate.setTermNumber(roomAvailability.getTermNumber());
+		roomAvailabilityToUpdate.setType(roomAvailability.getType());
+
+		System.out
+				.println("Room availability is successfully updated in the database, id: " + roomAvailability.getId());
+	}
 }

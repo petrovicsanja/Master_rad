@@ -227,6 +227,10 @@ public class TimetableController {
 	public void setSelectedRoom(Room selectedRoom) {
 		this.selectedRoom = selectedRoom;
 	}
+	
+	public Semester getActiveSemester() {
+		return activeSemester;
+	}
 
 	public void setActiveSemester(Semester activeSemester) {
 		this.activeSemester = activeSemester;

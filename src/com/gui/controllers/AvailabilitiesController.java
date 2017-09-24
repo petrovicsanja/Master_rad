@@ -55,6 +55,8 @@ public class AvailabilitiesController {
 	private Map<Integer, String> teacherAvailabilityTermsForSelectedDay = null;
 	private List<TeacherAvailability> allTeacherAvailabilities = null;
 
+	private TeacherAvailability selectedTeacherAvailability;
+
 	// Group availability
 	private Group group = null;
 	private String groupAvailabilityDayMark = null;
@@ -64,6 +66,8 @@ public class AvailabilitiesController {
 	private Map<Integer, String> groupAvailabilityTermsForSelectedDay = null;
 	private List<GroupAvailability> allGroupAvailabilities = null;
 
+	private GroupAvailability selectedGroupAvailability;
+
 	// Room availability
 	private Room room = null;
 	private String roomAvailabilityDayMark = null;
@@ -72,6 +76,8 @@ public class AvailabilitiesController {
 
 	private Map<Integer, String> roomAvailabilityTermsForSelectedDay = null;
 	private List<RoomAvailability> allRoomAvailabilities = null;
+
+	private RoomAvailability selectedRoomAvailability;
 
 	// Indexes for deleting
 	private int selectedAvailabilityIndex;
@@ -118,7 +124,11 @@ public class AvailabilitiesController {
 	}
 
 	public void listAllTeacherAvailableTermsForSelectedDay() {
-		if (!teacherAvailabilityDayMark.isEmpty()) {
+		if (selectedTeacherAvailability != null) {
+			teacherAvailabilityDayMark = selectedTeacherAvailability.getDayMark();
+		}
+
+		if (teacherAvailabilityDayMark != null && !teacherAvailabilityDayMark.isEmpty()) {
 			if (teacherAvailabilityTermsForSelectedDay != null) {
 				teacherAvailabilityTermsForSelectedDay.clear();
 			} else {
@@ -277,6 +287,22 @@ public class AvailabilitiesController {
 			return termNumber + ". " + termsTimeList.get(termNumber - 1).trim();
 		}
 		return "";
+	}
+
+	/*
+	 * Update methods
+	 */
+
+	public void updateTeacherAvailability() {
+		availabilitiesService.updateTeacherAvailability(selectedTeacherAvailability);
+	}
+
+	public void updateGroupAvailability() {
+
+	}
+
+	public void updateRoomAvailability() {
+
 	}
 
 	/* Getters and setters */
@@ -443,5 +469,29 @@ public class AvailabilitiesController {
 
 	public void setRoomAvailabilityTermsForSelectedDay(Map<Integer, String> roomAvailabilityTermsForSelectedDay) {
 		this.roomAvailabilityTermsForSelectedDay = roomAvailabilityTermsForSelectedDay;
+	}
+
+	public TeacherAvailability getSelectedTeacherAvailability() {
+		return selectedTeacherAvailability;
+	}
+
+	public void setSelectedTeacherAvailability(TeacherAvailability selectedTeacherAvailability) {
+		this.selectedTeacherAvailability = selectedTeacherAvailability;
+	}
+
+	public GroupAvailability getSelectedGroupAvailability() {
+		return selectedGroupAvailability;
+	}
+
+	public void setSelectedGroupAvailability(GroupAvailability selectedGroupAvailability) {
+		this.selectedGroupAvailability = selectedGroupAvailability;
+	}
+
+	public RoomAvailability getSelectedRoomAvailability() {
+		return selectedRoomAvailability;
+	}
+
+	public void setSelectedRoomAvailability(RoomAvailability selectedRoomAvailability) {
+		this.selectedRoomAvailability = selectedRoomAvailability;
 	}
 }
