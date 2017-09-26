@@ -41,8 +41,8 @@ public class SemesterServiceImpl implements SemesterService {
 
 	@Override
 	public List<Semester> listSemesters() {
-		TypedQuery<Semester> semesterList = em.createQuery("SELECT s FROM Semester s ORDER BY s.schoolYear",
-				Semester.class);
+		TypedQuery<Semester> semesterList = em
+				.createQuery("SELECT s FROM Semester s WHERE s.deleted = 0 ORDER BY s.schoolYear", Semester.class);
 		return semesterList.getResultList();
 	}
 
@@ -54,6 +54,7 @@ public class SemesterServiceImpl implements SemesterService {
 		semester.setEndDate(endDate);
 		semester.setOrdinalNumber(ordinalNumber);
 		semester.setActive(false);
+		semester.setDeleted(false);
 		em.persist(semester);
 
 		System.out.println("Semester is successfully added to the database, id: " + semester.getId());
@@ -77,7 +78,7 @@ public class SemesterServiceImpl implements SemesterService {
 			Semester semester = em.find(Semester.class, semesterId);
 			semester.setActive(true);
 
-			System.out.println("Semester is successfully activated.");
+			System.out.println("Semester is successfully activated, id: " + semesterId);
 			return semester;
 		}
 
@@ -89,7 +90,7 @@ public class SemesterServiceImpl implements SemesterService {
 		Semester semester = em.find(Semester.class, semesterId);
 		semester.setActive(false);
 
-		System.out.println("Semester is successfully deactivated.");
+		System.out.println("Semester is successfully deactivated, id: " + semesterId);
 	}
 
 	@Override
@@ -100,5 +101,15 @@ public class SemesterServiceImpl implements SemesterService {
 		semesterToUpdate.setStartDate(semester.getStartDate());
 		semesterToUpdate.setEndDate(semester.getEndDate());
 		semesterToUpdate.setOrdinalNumber(semester.getOrdinalNumber());
+
+		System.out.println("Semester is successfully updated in the database, id: " + semester.getId());
+	}
+
+	@Override
+	public void deleteSemester(Long semesterId) {
+		Semester semesterToDelete = em.find(Semester.class, semesterId);
+		semesterToDelete.setDeleted(true);
+
+		System.out.println("Semester is successfully deleted from the database, id: " + semesterId);
 	}
 }

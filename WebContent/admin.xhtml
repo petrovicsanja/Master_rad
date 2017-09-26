@@ -15,6 +15,10 @@
 			value="#{departmentController.listDepartments()}"
 			iterationStatusVar="it" styleClass="table table-striped">
 
+			<f:facet name="noData">
+				#{msg['no.data']}
+			</f:facet>
+
 			<rich:column id="departmentColumn" sortBy="#{department.toString()}">
 				<f:facet name="header">
                     #{msg.department}
@@ -137,6 +141,10 @@
 			value="#{semesterController.listSemesters()}" iterationStatusVar="it"
 			styleClass="table table-striped">
 
+			<f:facet name="noData">
+				#{msg['no.data']}
+			</f:facet>
+
 			<rich:column id="semesterColumn" sortBy="#{semester.toString()}">
 				<f:facet name="header">
                     #{msg.semester}
@@ -180,8 +188,37 @@
 					<f:setPropertyActionListener value="#{semester}"
 						target="#{semesterController.selectedSemester}" />
 				</a4j:commandLink>
+				<a4j:commandLink
+					oncomplete="#{rich:component('deleteSemesterConfirmation')}.show()"
+					execute="@this" render="@none" title="#{msg['element.delete']}">
+					<h:graphicImage value="/images/delete.png" alt="delete" />
+					<f:setPropertyActionListener value="#{semester}"
+						target="#{semesterController.selectedSemester}" />
+				</a4j:commandLink>
 			</rich:column>
 		</rich:dataTable>
+
+		<rich:popupPanel id="deleteSemesterConfirmation" modal="false"
+			autosized="true" resizeable="false" styleClass="panel panel-info"
+			headerClass="panel-heading">
+			<f:facet name="header">
+				<h:outputText value="#{msg.warning}" />
+			</f:facet>
+			<f:facet name="controls">
+				<h:outputLink value="#"
+					onclick="#{rich:component('deleteSemesterConfirmation')}.hide(); return false;"
+					style="color: inherit"> X
+                </h:outputLink>
+			</f:facet>
+			<p>#{msg['semester.delete.confirmation']}</p>
+			<a4j:commandButton action="#{semesterController.deleteSemester()}"
+				value="#{msg['element.delete']}"
+				oncomplete="#{rich:component('deleteSemesterConfirmation')}.hide();">
+				<a4j:ajax execute="@this" render="semesterList" />
+			</a4j:commandButton>
+			<a4j:commandButton value="#{msg.cancel}"
+				onclick="#{rich:component('deleteSemesterConfirmation')}.hide(); return false;" />
+		</rich:popupPanel>
 
 		<rich:popupPanel id="semesterUpdate" autosized="true"
 			resizeable="false" domElementAttachment="parent"

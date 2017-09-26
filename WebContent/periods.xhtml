@@ -16,13 +16,18 @@
 		</rich:list>
 
 		<h:outputLabel value="Vreme trajanja termina:" />
+
 		<br />
-		<ul style="font-weight:400;">
+		<ul style="font-weight: 400;">
 			<ui:repeat value="#{periodsController.termsTimeValues}" var="term"
 				varStatus="termStatus">
-				<li><h:outputLabel value="#{termStatus.index + 1}: &#160; #{term}" /></li>
+				<li><h:outputLabel
+						value="#{termStatus.index + 1}: &#160; #{term}" /></li>
 			</ui:repeat>
 		</ul>
+		
+		<h:outputLabel value="Trenutno nema unetih termina."
+			rendered="#{periodsController.allPeriods.size() eq 0}" />
 	</rich:panel>
 
 	<rich:panel header="Unos i izmena termina" rendered="#{user.type eq 2}"
@@ -32,7 +37,7 @@
 			<h:outputLabel value="#{msg['periods.termsLength']}" />
 			<h:inputText value="#{periodsController.termLength}" />
 			<h:outputLabel value="minuta" />
-			
+
 			<h:outputLabel value="" />
 			<h:outputLabel value="" />
 			<h:outputLabel value="" />
@@ -68,12 +73,13 @@
 			<h:outputLabel value="Nedelja: " />
 			<h:inputText value="#{periodsController.termsSunday}" />
 			<h:outputLabel value="" />
-			
+
 			<h:outputLabel value="" />
 			<h:outputLabel value="" />
 			<h:outputLabel value="" />
 
-			<h:outputLabel style="width: 250px" value="#{msg['periods.startTime']}" />
+			<h:outputLabel style="width: 250px"
+				value="#{msg['periods.startTime']}" />
 			<h:inputTextarea id="termsTime" rows="4" cols="30"
 				value="#{periodsController.termsTime}" required="true"
 				requiredMessage="#{msg['error.missingValue']}" />

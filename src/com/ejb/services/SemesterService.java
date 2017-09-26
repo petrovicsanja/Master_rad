@@ -60,4 +60,11 @@ public interface SemesterService {
 	 * @param semester
 	 */
 	void updateSemester(Semester semester);
+
+	/**
+	 * Set deleted flag for the specified semester to 1
+	 * 
+	 * @param semesterId
+	 */
+	void deleteSemester(Long semesterId);
 }

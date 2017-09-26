@@ -49,6 +49,10 @@ public class SemesterController {
 		semesterService.updateSemester(selectedSemester);
 	}
 
+	public void deleteSemester() {
+		semesterService.deleteSemester(selectedSemester.getId());
+	}
+
 	/*
 	 * Getters and setters
 	 */

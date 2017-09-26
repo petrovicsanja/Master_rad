@@ -120,9 +120,11 @@ public class PeriodsController {
 	public List<String> getTermsTimeValues() {
 		List<String> termsTime = new ArrayList<String>();
 
-		String[] terms = allPeriods.get(0).getTermsTime().split(",");
-		for (String term : terms) {
-			termsTime.add(term.trim());
+		if (allPeriods != null && allPeriods.size() > 0) {
+			String[] terms = allPeriods.get(0).getTermsTime().split(",");
+			for (String term : terms) {
+				termsTime.add(term.trim());
+			}
 		}
 
 		return termsTime;

@@ -32,6 +32,9 @@ public class Semester {
 	@NotNull
 	private String schoolYear;
 
+	@NotNull
+	private Boolean deleted;
+
 	public Long getId() {
 		return id;
 	}
@@ -78,6 +81,14 @@ public class Semester {
 
 	public void setSchoolYear(String schoolYear) {
 		this.schoolYear = schoolYear;
+	}
+
+	public Boolean getDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(Boolean deleted) {
+		this.deleted = deleted;
 	}
 
 	@Override

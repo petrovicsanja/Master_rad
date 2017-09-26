@@ -21,6 +21,9 @@ public class Department {
 	@NotNull
 	private String studyProgram;
 
+	@NotNull
+	private Boolean deleted;
+
 	public Long getId() {
 		return id;
 	}
@@ -59,5 +62,13 @@ public class Department {
 
 	public void setStudyProgram(String studyProgram) {
 		this.studyProgram = studyProgram;
+	}
+
+	public Boolean getDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(Boolean deleted) {
+		this.deleted = deleted;
 	}
 }

@@ -25,20 +25,21 @@ public class DepartmentServiceImpl implements DepartmentService {
 
 	@Override
 	public List<Department> listDepartments() {
-		TypedQuery<Department> departmentList = em.createQuery("SELECT d FROM Department d ORDER BY d.name",
-				Department.class);
+		TypedQuery<Department> departmentList = em
+				.createQuery("SELECT d FROM Department d WHERE d.deleted = 0 ORDER BY d.name", Department.class);
 		return departmentList.getResultList();
 	}
 
 	@Override
 	public void deleteDepartment(Long departmentId) {
 		Department departmentToDelete = em.find(Department.class, departmentId);
-		em.remove(departmentToDelete);
+		departmentToDelete.setDeleted(true);
 		System.out.println("Department is successfully deleted from the database, id: " + departmentId);
 	}
 
 	@Override
 	public void addDepartment(Department department) {
+		department.setDeleted(false);
 		em.persist(department);
 		System.out.println("New department is successfully added to the database, id: " + department.getId());
 	}
