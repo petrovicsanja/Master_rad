@@ -69,15 +69,8 @@
 
 			<rich:column rendered="#{user.type eq 2}">
 				<f:facet name="header">
-							#{msg['column.update']}
-					</f:facet>
-				<a4j:commandLink
-					oncomplete="#{rich:component('deleteRoomConfirmation')}.show()"
-					execute="@this" render="@none" title="#{msg['element.delete']}">
-					<h:graphicImage value="/images/delete.png" alt="delete" />
-					<a4j:param value="#{it.index}"
-						assignTo="#{roomsController.selectedClassroomIndex}" />
-				</a4j:commandLink>
+						#{msg['column.update']}
+				</f:facet>
 				<a4j:commandLink oncomplete="#{rich:component('roomUpdate')}.show()"
 					resetValues="true" execute="@this" render="roomUpdateGrid"
 					title="#{msg['element.update']}">
@@ -86,6 +79,13 @@
 						assignTo="#{roomsController.selectedClassroomIndex}" />
 					<f:setPropertyActionListener value="#{room}"
 						target="#{roomsController.classroomToUpdate}" />
+				</a4j:commandLink>
+				<a4j:commandLink
+					oncomplete="#{rich:component('deleteRoomConfirmation')}.show()"
+					execute="@this" render="@none" title="#{msg['element.delete']}">
+					<h:graphicImage value="/images/delete.png" alt="delete" />
+					<a4j:param value="#{it.index}"
+						assignTo="#{roomsController.selectedClassroomIndex}" />
 				</a4j:commandLink>
 			</rich:column>
 

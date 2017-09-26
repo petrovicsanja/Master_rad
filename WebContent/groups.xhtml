@@ -64,13 +64,6 @@
 					#{msg['column.update']}
 				</f:facet>
 				<a4j:commandLink
-					oncomplete="#{rich:component('deleteGroupConfirmation')}.show()"
-					execute="@this" render="@none" title="#{msg['element.delete']}">
-					<h:graphicImage value="/images/delete.png" alt="delete" />
-					<a4j:param value="#{it.index}"
-						assignTo="#{groupsController.selectedGroupIndex}" />
-				</a4j:commandLink>
-				<a4j:commandLink
 					oncomplete="#{rich:component('groupUpdate')}.show()"
 					resetValues="true" execute="@this" render="groupUpdateGrid"
 					title="#{msg['element.update']}">
@@ -79,6 +72,13 @@
 						assignTo="#{groupsController.selectedGroupIndex}" />
 					<f:setPropertyActionListener value="#{group}"
 						target="#{groupsController.groupToUpdate}" />
+				</a4j:commandLink>
+				<a4j:commandLink
+					oncomplete="#{rich:component('deleteGroupConfirmation')}.show()"
+					execute="@this" render="@none" title="#{msg['element.delete']}">
+					<h:graphicImage value="/images/delete.png" alt="delete" />
+					<a4j:param value="#{it.index}"
+						assignTo="#{groupsController.selectedGroupIndex}" />
 				</a4j:commandLink>
 			</rich:column>
 

@@ -55,13 +55,6 @@
 						#{msg['column.update']}
 				</f:facet>
 				<a4j:commandLink
-					oncomplete="#{rich:component('deleteSubjectConfirmation')}.show()"
-					execute="@this" render="@none" title="#{msg['element.delete']}">
-					<h:graphicImage value="/images/delete.png" alt="delete" />
-					<a4j:param value="#{it.index}"
-						assignTo="#{subjectsController.selectedSubjectIndex}" />
-				</a4j:commandLink>
-				<a4j:commandLink
 					oncomplete="#{rich:component('subjectUpdate')}.show()"
 					resetValues="true" execute="@this" render="subjectUpdateGrid"
 					title="#{msg['element.update']}">
@@ -70,6 +63,13 @@
 						assignTo="#{subjectsController.selectedSubjectIndex}" />
 					<f:setPropertyActionListener value="#{subject}"
 						target="#{subjectsController.subjectToUpdate}" />
+				</a4j:commandLink>
+				<a4j:commandLink
+					oncomplete="#{rich:component('deleteSubjectConfirmation')}.show()"
+					execute="@this" render="@none" title="#{msg['element.delete']}">
+					<h:graphicImage value="/images/delete.png" alt="delete" />
+					<a4j:param value="#{it.index}"
+						assignTo="#{subjectsController.selectedSubjectIndex}" />
 				</a4j:commandLink>
 			</rich:column>
 
@@ -192,8 +192,10 @@
 							requiredMessage="#{msg['error.missingValue']}"
 							styleClass="form-check-input" label="#{msg['subjects.type']}"
 							value="#{subjectsController.newSubject.obligatory}">
-							<f:selectItem itemLabel="#{msg['subjects.obligatory']}" itemValue="true" />
-							<f:selectItem itemLabel="#{msg['subjects.elective']}" itemValue="false" />
+							<f:selectItem itemLabel="#{msg['subjects.obligatory']}"
+								itemValue="true" />
+							<f:selectItem itemLabel="#{msg['subjects.elective']}"
+								itemValue="false" />
 						</h:selectOneRadio>
 					</div>
 					<div class="col-sm-3">

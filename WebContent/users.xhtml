@@ -68,13 +68,6 @@
 				<f:facet name="header">
 					#{msg['column.update']}
 				</f:facet>
-				<a4j:commandLink execute="@this" render="@none"
-					title="#{msg['element.delete']}"
-					oncomplete="#{rich:component('deleteUserConfirmation')}.show()">
-					<h:graphicImage value="/images/delete.png" alt="delete" />
-					<a4j:param value="#{it.index}"
-						assignTo="#{usersController.selectedUserIndex}" />
-				</a4j:commandLink>
 				<a4j:commandLink oncomplete="#{rich:component('userUpdate')}.show()"
 					execute="@this" render="userUpdateGrid"
 					title="#{msg['element.update']}">
@@ -83,6 +76,13 @@
 						assignTo="#{usersController.selectedUserIndex}" />
 					<f:setPropertyActionListener value="#{userRecord}"
 						target="#{usersController.selectedUser}" />
+				</a4j:commandLink>
+				<a4j:commandLink execute="@this" render="@none"
+					title="#{msg['element.delete']}" rendered="#{user.id ne userRecord.id}"
+					oncomplete="#{rich:component('deleteUserConfirmation')}.show()">
+					<h:graphicImage value="/images/delete.png" alt="delete" />
+					<a4j:param value="#{it.index}"
+						assignTo="#{usersController.selectedUserIndex}" />
 				</a4j:commandLink>
 			</rich:column>
 
