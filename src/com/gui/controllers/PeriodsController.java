@@ -77,7 +77,7 @@ public class PeriodsController {
 			case "sre":
 				sortedPeriods[2] = p;
 				break;
-			case "cet":
+			case "čet":
 				sortedPeriods[3] = p;
 				break;
 			case "pet":

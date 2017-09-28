@@ -22,8 +22,8 @@ public class GroupsController {
 	@EJB
 	private GroupsService groupsService;
 
-	@ManagedProperty(value = "#{departmentController.listDepartments()}")
-	private List<Department> departmentList;
+	@ManagedProperty(value = "#{departmentController}")
+	private DepartmentController departmentController;
 
 	private Group newGroup = new Group();
 	private List<Group> groupList = null;
@@ -69,6 +69,10 @@ public class GroupsController {
 			}
 		}
 		return null;
+	}
+
+	public List<Department> getDepartmentList() {
+		return departmentController.listDepartments();
 	}
 
 	/* Filtering */
@@ -203,13 +207,9 @@ public class GroupsController {
 	public void setGroupToUpdate(Group groupToUpdate) {
 		this.groupToUpdate = groupToUpdate;
 	}
-	
-	public List<Department> getDepartmentList() {
-		return departmentList;
-	}
 
-	public void setDepartmentList(List<Department> departmentList) {
-		this.departmentList = departmentList;
+	public void setDepartmentController(DepartmentController departmentController) {
+		this.departmentController = departmentController;
 	}
 
 	public String getNameFilter() {

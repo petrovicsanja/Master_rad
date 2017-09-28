@@ -174,7 +174,7 @@ public class TimetableServiceImpl implements TimetableService {
 	@Override
 	public List<Timetable> getTimetableDataForTeacher(Semester semester, User teacher) {
 		TypedQuery<Timetable> timetableList = em.createQuery(
-				"SELECT t from Timetable t WHERE t.semester.id = :semesterId AND :teacher MEMBER OF t.teachers ORDER BY t.startTerm",
+				"SELECT t from Timetable t WHERE t.semester.id = :semesterId AND :teacher MEMBER OF t.teachers ORDER BY t.startTerm ASC",
 				Timetable.class);
 		timetableList.setParameter("semesterId", semester.getId());
 		timetableList.setParameter("teacher", teacher);
@@ -185,7 +185,7 @@ public class TimetableServiceImpl implements TimetableService {
 	@Override
 	public List<Timetable> getTimetableDataForGroup(Semester semester, Group group) {
 		TypedQuery<Timetable> timetableList = em.createQuery(
-				"SELECT t from Timetable t WHERE t.semester.id = :semesterId AND :group MEMBER OF t.groups ORDER BY t.startTerm",
+				"SELECT t from Timetable t WHERE t.semester.id = :semesterId AND :group MEMBER OF t.groups ORDER BY t.startTerm ASC",
 				Timetable.class);
 		timetableList.setParameter("semesterId", semester.getId());
 		timetableList.setParameter("group", group);
@@ -196,7 +196,7 @@ public class TimetableServiceImpl implements TimetableService {
 	@Override
 	public List<Timetable> getTimetableDataForRoom(Semester semester, Room room) {
 		TypedQuery<Timetable> timetableList = em.createQuery(
-				"SELECT t from Timetable t WHERE t.semester.id = :semesterId AND t.room.id = :roomId ORDER BY t.startTerm",
+				"SELECT t from Timetable t WHERE t.semester.id = :semesterId AND t.room.id = :roomId ORDER BY t.startTerm ASC",
 				Timetable.class);
 		timetableList.setParameter("semesterId", semester.getId());
 		timetableList.setParameter("roomId", room.getId());

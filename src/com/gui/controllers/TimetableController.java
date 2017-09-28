@@ -155,7 +155,9 @@ public class TimetableController {
 						.filter(item -> day.substring(0, 3).equalsIgnoreCase(item.getDayMark()))
 						.collect(Collectors.toList());
 
-				for (Timetable timetableItem : timetableForWorkingDay) {
+				if (timetableForWorkingDay.size() > 0) {
+					int index = 0;
+					Timetable timetableItem = timetableForWorkingDay.get(index);
 					int termNumber = 1;
 
 					while (termNumber <= NUMBER_OF_TERMS) {
@@ -174,6 +176,9 @@ public class TimetableController {
 							timetableHtml.append(timetableItem.getRoom().toString() + "</td>");
 
 							termNumber += timetableItem.getLessonLength();
+							if (timetableForWorkingDay.size() > (index + 1)) {
+								timetableItem = timetableForWorkingDay.get(++index);
+							}
 						} else {
 							timetableHtml.append("<td></td>");
 							termNumber++;
@@ -227,7 +232,7 @@ public class TimetableController {
 	public void setSelectedRoom(Room selectedRoom) {
 		this.selectedRoom = selectedRoom;
 	}
-	
+
 	public Semester getActiveSemester() {
 		return activeSemester;
 	}

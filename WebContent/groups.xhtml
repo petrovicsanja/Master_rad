@@ -215,7 +215,8 @@
 					<div class="col-sm-6">
 						<h:inputText id="newGroupSize" label="#{msg.size}"
 							value="#{groupsController.newGroup.size}"
-							styleClass="form-control" />
+							styleClass="form-control" required="true"
+							requiredMessage="#{msg['error.missingValue']}" />
 					</div>
 					<div class="col-sm-3">
 						<rich:message for="newGroupSize" ajaxRendered="true" />
